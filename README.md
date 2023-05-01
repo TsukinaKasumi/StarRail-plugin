@@ -47,6 +47,3 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 <a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
 </a>
-
-
-![Alt](https://repobeats.axiom.co/api/embed/076d597ede41432208435f233d18cb20052fb90a.svg "Repobeats analytics image")
