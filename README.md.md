@@ -38,3 +38,15 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### #星铁抽卡分析角色/光锥/常驻/新手抽卡分析
 
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin?_from=gitee_search) 发送#扫码登录进行cookie的绑定，否则可能会报错
+
+
+## 贡献者
+
+感谢以下贡献者
+
+<a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
+</a>
+
+
+![Alt](https://repobeats.axiom.co/api/embed/076d597ede41432208435f233d18cb20052fb90a.svg "Repobeats analytics image")
