@@ -1,4 +1,4 @@
-# StarRAIL-plugin 介绍
+# StarRail-plugin 介绍
 
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板，体力以及米游社所拥有的的一切有关星轨的功能
 
@@ -19,6 +19,10 @@
 git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
 
+
+### 手动下载安装
+
+手工下载的 zip 压缩包，先将解压后的 StarRail-plugin-master 文件夹更名为 StarRail-plugin 放置在 Yunzai-Bot 目录下的 plugins 文件夹内
 ## 功能说明
 
 ### #星铁绑定UID:进行星铁的uid绑定
