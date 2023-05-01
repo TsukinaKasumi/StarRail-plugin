@@ -10,7 +10,7 @@
 2. 在Yunzai根目录打开终端执行以下命令，推荐使用git
 
 ```shell
-git clone https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
+git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
 
 食用方法
