@@ -16,7 +16,7 @@ export class hkrpg extends plugin {
       rule: [
         {
           /** 命令正则匹配 */
-          reg: '^#绑定星铁uid',
+          reg: '^#绑定星铁(uid|UID)?(\\s)*[1-9][0-9]{8}$',
           /** 执行方法 */
           fnc: 'bindSRUid'
         },
@@ -47,10 +47,40 @@ export class hkrpg extends plugin {
         {
           reg: '^#星铁抽卡分析',
           fnc: 'gatcha'
+        },
+        {
+          reg: '^#查看数据库',
+          fnc: 'cksj'
         }
       ]
     })
     this.User = new User(e)
+  }
+  async cksj (e) {
+    e.reply("全部数据"+e)
+    let user = this.e.sender.user_id
+    let ats = e.message.filter(m => m.type === 'at')
+    if (ats.length > 0) {
+      user = ats[0].qq
+    }
+    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    if (!uid) {
+      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+      return false
+    }
+    let ck = await this.User.getCk()
+    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+      await e.reply('未绑定ck')
+      return false
+    }
+    let api = new MysSRApi(uid, ck)
+    const { url, headers } = api.getUrl('srMonth')
+    let res = await fetch(url, {
+      headers
+    })
+    let cardData = await res.json()
+    let data = cardData.data
+    e.reply("data数据" + data)
   }
 
   async card (e) {
@@ -104,6 +134,7 @@ export class hkrpg extends plugin {
     let res = await fetch(url, {
       headers
     })
+    
     let cardData = await res.json()
     let data = cardData.data
     data.expeditions.forEach(ex => {
@@ -112,8 +143,10 @@ export class hkrpg extends plugin {
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力已全部恢复'
     } else {
-      data.ktl_full = `距离开拓力全部恢复还有${formatDuration(data.stamina_recover_time)}`
+      data.ktl_full = `距开拓力恢复满${formatDuration(data.stamina_recover_time)}`
     }
+    data.ktl_name = e.nickname
+    data.ktl_user_id = `http://q2.qlogo.cn/headimg_dl?dst_uin=${e.user_id}&amp;spec=640`
     await e.runtime.render('hkrpg', '/note/note.html', data)
   }
 
@@ -235,7 +268,7 @@ export class hkrpg extends plugin {
     }
     let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
     if (!authKey) {
-      await e.reply('未绑定抽卡链接')
+      await e.reply('未绑定抽卡链接，请点击链接查看说明\nhttps://starrailstation.com/cn/warp#import')
       return false
     }
     let result = {}
@@ -245,27 +278,28 @@ export class hkrpg extends plugin {
   }
 
   async help (e) {
-    let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板'
+    let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板\n＃星铁抽卡分析角色/光椎/常驻: 抽卡分析'
     await e.reply(helpData)
   }
 
   /** 复读 */
   async bindSRUid () {
-    /** 设置上下文，后续接收到内容会执行doRep方法 */
-    this.setContext('doBindSRUid')
-    /** 回复 */
-    await this.reply('请发送uid', false, { at: true })
-  }
+  //   /** 设置上下文，后续接收到内容会执行doRep方法 */
+  //   this.setContext('doBindSRUid')
+  //   /** 回复 */
+  //   await this.reply('请发送uid', false, { at: true })
+  // }
 
-  /** 接受内容 */
-  async doBindSRUid () {
-    let uid = this.e.msg.trim()
+  // /** 接受内容 */
+  // async doBindSRUid () {
+
+    let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ""))
     let user = this.e.sender.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
     /** 复读内容 */
     this.reply('绑定成功', false)
     /** 结束上下文 */
-    this.finish('doBindSRUid')
+    // this.finish('doBindSRUid')
   }
 
   async bindAuthKey (e) {
