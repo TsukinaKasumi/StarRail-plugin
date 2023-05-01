@@ -9,11 +9,11 @@
 
 用来过度使用的星轨插件，很少维护
 
-安装方法
+### 安装方法
 
 1. 进入Yunzai根目录
 
-2. 在Yunzai根目录打开终端执行以下命令，推荐使用git
+2. 推荐使用git进行安装，方便后续升级，在Yunzai根目录内打开终端执行以下命令
 
 ```shell
 git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
