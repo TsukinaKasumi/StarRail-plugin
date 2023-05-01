@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>acatar</title>
+</head>
+<body>
+<div class="container">
+  <div class="name">
+      <div class="icon">
+          <img src="{{icon}}"/>
+      </div>
+    <div>
+
+      <div class="rarity">
+          {{each rarity item}}
+          <img class="star" src="{{pluResPath}}/card/star.png"/>
+          {{/each}}
+      </div>
+      <div>
+        <div class="name-name">
+          <img class="element" src="{{pluResPath}}/card/{{element}}.png"/>
+            {{name}} <span class="rank">{{rank}}</span>
+        </div>
+        <div class="name-level">
+          等级 {{level}}
+        </div>
+
+      </div>
+
+    </div>
+      <div class="wq">
+          <img class="wq-icon" src="{{equip.icon}}"/>
+            <div class="wq-name">
+                <span style="font-weight: bold">{{equip.name}}</span> 等级 {{equip.level}}
+            </div>
+      </div>
+
+  </div>
+    <div class="syw">
+        <div class="syw-content">
+            {{each relics item}}
+            <div>
+                <img class="syw-icon" style="background: {{item.bg}};border: {{item.border}} solid 2px;" src="{{item.icon}}"/>
+            </div>
+            {{/each}}
+            {{each ornaments item}}
+            <div>
+                <img class="syw-icon" style="background: {{item.bg}};border: {{item.border}} solid 2px;" src="{{item.icon}}"/>
+            </div>
+            {{/each}}
+        </div>
+        <div class="mz">
+            {{each ranks item}}
+            <div class="mz-item">
+                <div>
+                    <img style="position: absolute;width: {{item.width}}%;left: 17px;top: {{item.top}}px" src="{{pluResPath}}/avatar/padlock.svg"/>
+                </div>
+                <img class="mz-icon" src="{{item.icon}}"/>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="logo">
+        <span style="font-weight: bold">Created By Yunzai & hkrpg-plugin</span>
+        uid {{uid}}
+    </div>
+
+
+</div>
+</body>
+</html>
+<style>
+    html {
+        width: 700px;
+    }
+    .wq {
+        position: absolute;
+        right: 20px;
+        top: 5px;
+        text-align: center;
+    }
+    .wq-icon {
+        margin-top: 10px;
+        width: 80px;
+    }
+    .wq-name {
+        color: white;
+    }
+    .syw {
+        padding-top: 10px;
+        display: flex;
+        padding-bottom: 150px;
+    }
+    .syw-content {
+        width: 200px;
+        height: 600px;
+        /*margin-left: 10px;*/
+        /*padding-left: 20px;*/
+        padding-bottom: 10px;
+        padding-top: 10px;
+        /*background: #4d4d4d;*/
+        /*opacity: 0.8;*/
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        /*display: flex;*/
+    }
+    .syw-icon {
+
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 30px;
+
+        width: 80px;
+        margin-bottom: 27px;
+    }
+  .container {
+    width: 700px;
+    background-image: url('{{image}}');
+    background-size: cover; /* 设置背景图片尺寸 */
+    background-position: center center; /* 设置背景图片位置 */
+  }
+  .name {
+    position: relative;
+    top: 10px;
+    border-radius: 10px;
+    /*border: #2e353e 1px solid;*/
+    /*height: 100px;*/
+    background: #4d4d4d;
+    opacity: 0.9;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 30px;
+    display: flex;
+  }
+  .mz {
+      padding-top: 30px;
+    position: absolute;
+      left: 580px;
+  }
+  .mz-item {
+    margin-left: 10px;
+    margin-right: 30px;
+    width: 90px;
+      height: 90px;
+      background: #838383;
+      border-radius: 45px;
+      margin-bottom: 24px;
+  }
+  .mz-icon {
+    width: 90px;
+  }
+  .rarity {
+    margin-left: 20px;
+    /*margin-top: 20px;*/
+    padding-top: 20px;
+  }
+  .star {
+    width: 20px;
+  }
+  .name-name {
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 20px;
+    font-size: 32px;
+    display: flex;
+    font-weight: bold;
+    color: #f5e8e2;
+    opacity: 1;
+  }
+  .name-level {
+    margin-top: 5px;
+    color: #f5e8e2;
+    margin-left: 20px;
+    font-size: 20px;
+    padding-bottom: 20px;
+  }
+  .element {
+    width: 44px;
+    margin-left: -10px;
+  }
+  .rank {
+      margin-left: 15px;
+      font-size: 28px;
+      background: #00691c;
+      border-radius: 2px;
+      padding-left: 5px;
+      padding-right: 5px;
+  }
+  .icon {
+    /*position: absolute;*/
+    /*right: 20px;*/
+    /*left: 10px;*/
+  }
+    .logo {
+        font-size: 24px;
+        color: #8f8f8f;
+        text-align: center;
+        margin-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>

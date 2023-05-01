@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>note</title>
+</head>
+<body>
+<div class="container">
+<div>
+    <div class="ktl">
+        <div>
+            <span class="ktl-title">开拓力</span>
+            <span class="ktl-value"> {{current_stamina}}/{{max_stamina}}</span>
+        </div>
+
+        <div class="ktl-full">
+            {{ktl_full}}
+        </div>
+    </div>
+    <div class="divider">
+
+    </div>
+    <div class="weituo">
+        <div class="weituo-title">
+            委托执行（{{accepted_epedition_num}}/{{total_expedition_num}}）
+        </div>
+        {{each expeditions ex}}
+        <div class="weituo-line">
+            <div class="weituo-name">{{ex.name}}</div>
+            {{each ex.avatars avatar}}
+            <img class="avatar" src="{{avatar}}"/>
+            {{/each}}
+            <div class="weituo-line-last">
+                <div style="color: #757575">
+                    剩余
+                </div>
+                <div>
+                    {{ex.remaining_time}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="logo">
+        Created By Yunzai & hkrpg-plugin
+    </div>
+</div>
+</div>
+</body>
+</html>
+<style>
+    .container {
+        width: 720px;
+        background: #faf9f7;
+        padding-bottom: 5px;
+    }
+    .ktl {
+        padding-top: 20px;
+        margin-left: 20px;
+    }
+    .ktl-title {
+        font-size: 20px;
+        color: #2e353e;
+    }
+    .ktl-value {
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .ktl-full {
+        margin-top: 5px;
+        font-size: 24px;
+        color: #d89d51;
+        font-weight: bold;
+    }
+    .divider {
+        width: 680px;
+        margin: 10px 20px;
+        border: #2e353e 1px solid;
+        height: 6px;
+        background: #d7bb6e;
+    }
+    .weituo {
+        margin-left: 20px;
+        margin-top: 10px;
+        width: 680px;
+        border-radius: 10px;
+        border: #d89d51 dashed 1px;
+    }
+    .weituo-title {
+        margin-left: 20px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    .weituo-line {
+        display: flex;
+        font-size: 16px;
+        border: #d2aa78 solid 2px;
+        border-radius: 0 20px 0 0;
+        height: 60px;
+        margin: 20px;
+    }
+    .weituo-name {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-left: 20px;
+        width: 50%;
+    }
+    .avatar {
+        margin-top: 10px;
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+    .weituo-line-last {
+        width: 140px;
+        text-align: center;
+        font-size: 16px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .logo {
+        font-size: 12px;
+        color: #8f8f8f;
+        text-align: center;
+        margin-top: 10px;
+    }
+    body {
+        font-family: PingFangSC-Medium, PingFang SC, sans-serif;
+        width: 720px;
+    }
+</style>
