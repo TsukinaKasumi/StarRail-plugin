@@ -20,7 +20,7 @@ export class StarRailManagement extends plugin {
 
   async checkAuth (e) {
     if (!e.isMaster) {
-      e.reply(`只有主人才能命令StarRail-Plugin哦~
+      e.reply(`只有主人才能命令我哦~
     (*/ω＼*)`)
       return false
     }
@@ -44,7 +44,7 @@ export class StarRailManagement extends plugin {
     const _path = process.cwd()
     exec(command, { cwd: `${_path}/plugins/StarRail-plugin/` }, async function (error, stdout, stderr) {
       if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
-        e.reply('目前已经是最新版星轨插件了了~')
+        e.reply('目前已经是最新版星轨插件了~')
         return true
       }
       if (error) {
@@ -73,7 +73,7 @@ export class StarRailManagement extends plugin {
             Bot.logger.error(`重启失败\n${error.stack}`)
             return true
           } else if (stdout) {
-            Bot.logger.mark('重启成功，运行已转为后台，查看日志请用命令：npm run log')
+            Bot.logger.mark('重启成功，运行已转为后台，查看日志请用命令：pnpm run log')
             Bot.logger.mark('停止后台运行命令：npm stop')
             process.exit()
           }
