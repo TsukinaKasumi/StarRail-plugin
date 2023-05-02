@@ -1,4 +1,14 @@
-# StarRail-plugin 介绍
+![logo](https://user-images.githubusercontent.com/21212372/235622221-7c5a5721-784b-4a31-9b24-60c88663548f.png)
+
+<div align=center> <h1>云崽QQ机器人的崩坏：星穹铁道插件</h1> </div>
+<div align=center>
+ <img src ="https://img.shields.io/github/issues/hewang1an/StarRail-plugin?logo=github"/>
+<!-- <img src ="https://img.shields.io/github/license/hewang1an/StarRail-plugin"/> -->
+<!-- <img src ="https://img.shields.io/github/v/tag/hewang1an/StarRail-plugin?label=latest%20version&logo=github"/> -->
+<img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
+</div>
+
+### 使用说明
 
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板，体力以及米游社所拥有的的一切有关星轨的功能
 
