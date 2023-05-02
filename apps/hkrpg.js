@@ -57,7 +57,7 @@ export class hkrpg extends plugin {
   async card (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0) {
+    if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
     let myself = false
@@ -101,7 +101,7 @@ export class hkrpg extends plugin {
   async note (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0) {
+    if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -139,7 +139,8 @@ export class hkrpg extends plugin {
   async month (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0) {
+    
+    > 0) {
       user = ats[0].qq
     }
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -169,7 +170,7 @@ export class hkrpg extends plugin {
     if (!uid) {
       let user = this.e.sender.user_id
       let ats = e.message.filter(m => m.type === 'at')
-      if (ats.length > 0) {
+      if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
       }
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -250,7 +251,7 @@ export class hkrpg extends plugin {
     }
     // let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0) {
+    if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
     let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
