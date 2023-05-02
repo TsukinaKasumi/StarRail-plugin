@@ -4,6 +4,7 @@ import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import { gatchaType, statistics } from '../utils/gatcha.js'
+import {getAuthKeyByStoken} from "../utils/authkey.js";
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -21,7 +22,7 @@ export class hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: '^#星铁卡片',
+          reg: '^#星铁(卡片|探索)',
           fnc: 'card'
         },
         {
@@ -47,20 +48,23 @@ export class hkrpg extends plugin {
         {
           reg: '^#星铁抽卡分析',
           fnc: 'gatcha'
-        },     
+        }
       ]
     })
     this.User = new User(e)
   }
+
   async card (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0) {
       user = ats[0].qq
     }
+    let myself = false
     let uid = e.msg.replace(/^#星铁卡片/, '')
     if (!uid) {
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+      myself = true
     }
     if (!uid) {
       await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
@@ -78,7 +82,20 @@ export class hkrpg extends plugin {
       headers
     })
     let cardData = await res.json()
-    await e.runtime.render('StarRail-plugin', '/card/card.html', cardData.data)
+    let result = cardData.data
+    if (myself) {
+      let userUrl = api.getUrl('srUser')
+      res = await fetch(userUrl.url, {
+        headers: userUrl.headers
+      })
+      let userData = await res.json()
+      result = Object.assign(cardData.data, userData.data.list[0])
+      result.level = result.level + '级'
+    } else {
+      result.game_uid = uid
+      result.nickname = '开拓者'
+    }
+    await e.runtime.render('hkrpg', '/card/card.html', result)
   }
 
   async note (e) {
@@ -103,7 +120,7 @@ export class hkrpg extends plugin {
     let res = await fetch(url, {
       headers
     })
-    
+
     let cardData = await res.json()
     let data = cardData.data
     data.expeditions.forEach(ex => {
@@ -221,6 +238,7 @@ export class hkrpg extends plugin {
   }
 
   async gatcha (e) {
+    let user = this.e.sender.user_id
     let type = 11
     let typeName = e.msg.replace(/^#星铁抽卡分析/, '')
     if (typeName.includes('常驻')) {
@@ -230,7 +248,7 @@ export class hkrpg extends plugin {
     } else if (typeName.includes('新手')) {
       type = 2
     }
-    let user = this.e.sender.user_id
+    // let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0) {
       user = ats[0].qq
@@ -259,10 +277,10 @@ export class hkrpg extends plugin {
   //   await this.reply('请发送uid', false, { at: true })
   // }
 
-  // /** 接受内容 */
-  // async doBindSRUid () {
+    // /** 接受内容 */
+    // async doBindSRUid () {
 
-    let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ""))
+    let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ''))
     let user = this.e.sender.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
     /** 复读内容 */

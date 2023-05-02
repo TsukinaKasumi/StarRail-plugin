@@ -7,10 +7,28 @@
 <body>
 <div>
     <div class="container">
-        <div class="title">
-            <img src="{{pluResPath}}/card/star.png"  style="width: 18px">
-            <div>数据总览</div>
+        <div class="user">
+            <div class="user-inner">
+                <div class="srlogo">
+<!--                    <img src="logo.png"/>-->
+                    <img src="{{pluResPath}}/card/logo.png"/>
+                </div>
+                <div class="role-name">
+                    {{nickname}} <span class="uid">{{game_uid}}</span>
+                </div>
+                <div class="region">
+                    {{region_name}} {{level}}
+                </div>
+                <div class="pamu">
+<!--                    <img class="pamu-img" src="pamu.png"/>-->
+                    <img class="pamu-img" src="{{pluResPath}}/card/pamu.png"/>
+                </div>
+            </div>
 
+        </div>
+        <div class="title">
+            <img src="{{pluResPath}}/card/star.png"  style="width: 36px">
+            <div>数据总览</div>
         </div>
         <div class="general">
             <div class="general-inner">
@@ -57,7 +75,7 @@
             </div>
         </div>
         <div class="title" style="margin-top: 20px">
-            <img src="{{pluResPath}}/card/star.png" alt="SVG image" style="width: 18px">
+            <img src="{{pluResPath}}/card/star.png" alt="SVG image" style="width: 36px">
             <div>我的角色</div>
         </div>
         <div class="general">
@@ -84,7 +102,7 @@
             </div>
         </div>
         <div class="logo">
-            Created By Yunzai & StarRail-plugin
+            Created By Yunzai & hkrpg-plugin
         </div>
     </div>
 
@@ -122,7 +140,7 @@
     .general {
         width: 744px;
         /*height: 132px;*/
-        padding-bottom: 10px;
+        padding-bottom: 20px;
 
         background-color: #f4f2e5;
         border-radius: 5px 25px 5px 5px;
@@ -130,12 +148,12 @@
     .general-inner {
         position: relative;
         top: 10px;
-        left: 10px;
         width: 720px;
-        padding-bottom: -10px;
-        /*height: 120px;*/
+        left: 10px;
+        /*padding-bottom: -10px;*/
+        /*height: calc(100% - 20px);*/
         background-color: #f4f2e5;
-        border-radius: 5px 25px 5px 5px;
+        border-radius: 5px 20px 5px 5px;
         border: #d0ba94 2px solid;
         display: flex;
         flex-wrap: wrap;
@@ -211,6 +229,7 @@
         width: 784px;
     }
     .container {
+        padding-top: 30px;
         margin: 10px;
     }
     .logo {
@@ -219,4 +238,54 @@
         text-align: center;
         margin-top: 10px;
     }
+    .user {
+        margin-top: 13px;
+        margin-left: 5px;
+        margin-right: 5px;
+        height: 140px;
+        background: #fcf3cc;
+        border: #f5daa9 1px solid;
+        border-radius: 20px;
+    }
+    .user-inner {
+        margin: 5px;
+        height: 126px;
+        background: #fcf3cc;
+        border: #f5daa9 2px solid;
+        border-radius: 15px;
+    }
+    .srlogo {
+        /*position: absolute;*/
+        width: 200px;
+        margin-top: 10px;
+    }
+    .srlogo img {
+        width: 220px;
+    }
+    .role-name {
+        position: absolute;
+        top: 90px;
+        left: 260px;
+        font-size: 30px;
+    }
+    .uid {
+        font-size: 24px;
+        color: #2e353e;
+    }
+    .region {
+        font-size: 24px;
+        color: #aaac9c;
+        position: absolute;
+        top: 130px;
+        left: 260px;
+    }
+    .pamu {
+        position: absolute;
+        left: 580px;
+        top: 20px;
+    }
+    .pamu-img {
+        width: 180px;
+    }
+
 </style>
