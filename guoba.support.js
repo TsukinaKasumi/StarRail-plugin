@@ -1,5 +1,7 @@
 import setting from "./utils/setting.js";
 import lodash from "lodash";
+import { pluginResources } from "./utils/path.js";
+import path from 'path'
 
 // 支持锅巴
 export function supportGuoba() {
