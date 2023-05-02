@@ -60,7 +60,7 @@ export class hkrpg extends plugin {
       user = ats[0].qq
     }
     let hasPersonalCK = false
-    let uid = e.msg.replace(/^#星铁卡片/, '')
+    let uid = e.msg.replace(/^#星铁(卡片|探索)/, '')
     if (!uid) {
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     }
