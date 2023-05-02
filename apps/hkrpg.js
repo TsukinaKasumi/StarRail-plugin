@@ -57,11 +57,12 @@ export class hkrpg extends plugin {
     })
     this.User = new User(e)
   }
-    get appconfig () {
-      return setting.getConfig("gachaHelp");
-  }
+  	get appconfig () {
+    return setting.getConfig("gachaHelp");
+    }
 
   async card (e) {
+    try {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -93,7 +94,7 @@ export class hkrpg extends plugin {
     let result = cardData.data
     if (!result) {
       logger.error(cardData)
-      await e.reply('未绑定ck或主人未设置公共ck')
+      await e.reply('未绑定ck,发送ck帮助查看说明')
       return false
     }
     if (hasPersonalCK) {
@@ -109,6 +110,9 @@ export class hkrpg extends plugin {
       result.nickname = '开拓者'
     }
     await e.runtime.render('StarRail-plugin', '/card/card.html', result)
+  } catch(err) {
+    e.reply('请检查ck是否正确')
+  }
   }
 
   async note (e) {
@@ -178,6 +182,7 @@ export class hkrpg extends plugin {
   }
 
   async avatar (e) {
+    try {
     let uid = e.msg.replace(/^#(星铁)?.*面板/, '')
     let avatar = e.msg.replace(/^#(星铁)?/, '').replace('面板', '')
     if (!uid) {
@@ -249,6 +254,9 @@ export class hkrpg extends plugin {
     } else {
       await e.reply('请确认该角色存在且在面板首页')
     }
+  } catch(err) {
+    e.reply('未绑定ck,发送ck帮助查看说明')
+  }
   }
 
   async gatcha (e) {
@@ -269,7 +277,7 @@ export class hkrpg extends plugin {
     }
     let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
     if (!authKey) {
-      await e.reply(`未绑定抽卡链接，请点击链接查看说明\n${this.appconfig.docs}`)
+      await e.reply('未绑定抽卡链接，请点击链接查看说明\nhttps://starrailstation.com/cn/warp#import\n发送#星铁抽卡链接绑定')
       return false
     }
     let result = {}
@@ -279,7 +287,7 @@ export class hkrpg extends plugin {
   }
   async gatchahelp (e) {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
-  }
+    }
   async help (e) {
     // let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板\n＃星铁抽卡分析角色/光椎/常驻: 抽卡分析'
     // await e.reply(helpData)
