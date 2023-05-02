@@ -63,7 +63,6 @@ export class hkrpg extends plugin {
     let uid = e.msg.replace(/^#星铁卡片/, '')
     if (!uid) {
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-      hasPersonalCK = true
     }
     if (!uid) {
       await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
