@@ -33,9 +33,9 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ### #星铁体力
 
-### #星铁体力
+### #星铁抽卡分析角色/光锥/常驻/新手(刷新)
 
-### #星铁抽卡分析角色/光锥/常驻/新手抽卡分析
+  抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin?_from=gitee_search)发送#扫码登录进行cookie的绑定，否则可能会报错
 获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)
