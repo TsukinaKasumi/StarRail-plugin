@@ -121,7 +121,7 @@
         /*height: 132px;*/
         padding-bottom: 10px;
 
-        background-color: #f4f2e5;
+        background-color: rgba(244,242,229,0.6);
         border-radius: 5px 25px 5px 5px;
         margin-bottom: 10px;
         border: #cecece 1px solid;
@@ -134,8 +134,12 @@
         width: 600px;
     }
     .container {
+        background-image: url('{{pluResPath}}/month/kll.jpg');
+        background-size: cover; /* 设置背景图片尺寸 */
+        background-position: center center; /* 设置背景图片位置 */
+        font-family: "hanyi", sans-serif;
         padding: 10px;
-        background: #faf9f7;
+        /*background: #faf9f7;*/
     }
     .logo {
         font-size: 12px;
@@ -143,5 +147,9 @@
         text-align: center;
         margin-top: 10px;
         padding-bottom: 10px;
+    }
+    @font-face {
+        font-family: hanyi;
+        src: url('{{pluResPath}}/fonts/汉仪润圆-75W.ttf') format('truetype');
     }
 </style>

@@ -83,6 +83,11 @@ export class hkrpg extends plugin {
     })
     let cardData = await res.json()
     let result = cardData.data
+    if (!result) {
+      logger.error(cardData)
+      await e.reply('未绑定ck或主人未设置公共ck')
+      return false
+    }
     if (hasPersonalCK) {
       let userUrl = api.getUrl('srUser')
       res = await fetch(userUrl.url, {
@@ -266,8 +271,9 @@ export class hkrpg extends plugin {
   }
 
   async help (e) {
-    let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板\n＃星铁抽卡分析角色/光椎/常驻: 抽卡分析'
-    await e.reply(helpData)
+    // let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板\n＃星铁抽卡分析角色/光椎/常驻: 抽卡分析'
+    // await e.reply(helpData)
+    await e.runtime.render('StarRail-plugin', '/help/help.html')
   }
 
   /** 复读 */
