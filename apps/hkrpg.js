@@ -47,42 +47,11 @@ export class hkrpg extends plugin {
         {
           reg: '^#星铁抽卡分析',
           fnc: 'gatcha'
-        },
-        {
-          reg: '^#查看数据库',
-          fnc: 'cksj'
-        }
+        },     
       ]
     })
     this.User = new User(e)
   }
-  async cksj (e) {
-    e.reply("全部数据"+e)
-    let user = this.e.sender.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0) {
-      user = ats[0].qq
-    }
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    if (!uid) {
-      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
-      return false
-    }
-    let ck = await this.User.getCk()
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('未绑定ck')
-      return false
-    }
-    let api = new MysSRApi(uid, ck)
-    const { url, headers } = api.getUrl('srMonth')
-    let res = await fetch(url, {
-      headers
-    })
-    let cardData = await res.json()
-    let data = cardData.data
-    e.reply("data数据" + data)
-  }
-
   async card (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
