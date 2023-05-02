@@ -3,7 +3,7 @@
 <div align=center> <h1>云崽QQ机器人的崩坏：星穹铁道插件</h1> </div>
 <div align=center>
  <img src ="https://img.shields.io/github/issues/hewang1an/StarRail-plugin?logo=github"/>
-<!-- <img src ="https://img.shields.io/github/license/hewang1an/StarRail-plugin"/> -->
+<img src ="https://img.shields.io/github/license/hewang1an/StarRail-plugin"/>
 <!-- <img src ="https://img.shields.io/github/v/tag/hewang1an/StarRail-plugin?label=latest%20version&logo=github"/> -->
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
