@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
-import GsCfg from '../../genshin/model/gsCfg.js'
+import GsCfg from '../../genshin/model/gsCfg
 import { gatchaType, statistics } from '../utils/gatcha.js';
 
 export class hkrpg extends plugin {
