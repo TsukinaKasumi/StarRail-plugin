@@ -2,9 +2,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
-import GsCfg from '../../genshin/model/gsCfg.js'
-import { gatchaType, statistics } from '../utils/gatcha.js'
-//import {getAuthKeyByStoken} from "../utils/authkey.js";
+import GsCfg from '../../genshin/model/gsCfg
+import { gatchaType, statistics } from '../utils/gatcha.js';
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -98,7 +97,7 @@ export class hkrpg extends plugin {
       result.game_uid = uid
       result.nickname = '开拓者'
     }
-    await e.runtime.render('hkrpg', '/card/card.html', result)
+    await e.runtime.render('StarRail-plugin', '/card/card.html', result)
   }
 
   async note (e) {
