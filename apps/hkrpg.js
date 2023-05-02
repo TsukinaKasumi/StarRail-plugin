@@ -22,7 +22,7 @@ export class hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: '^#星铁(卡片|探索)',
+          reg: '^#星铁(卡片|探索)$',
           fnc: 'card'
         },
         {
@@ -34,7 +34,7 @@ export class hkrpg extends plugin {
           fnc: 'month'
         },
         {
-          reg: '^#(星铁)?.*面板',
+          reg: '^#(星铁)?(.*)面板',
           fnc: 'avatar'
         },
         {
@@ -46,11 +46,11 @@ export class hkrpg extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#星铁抽卡分析',
+          reg: '^#星铁抽卡分析$',
           fnc: 'gatcha'
         },
         {
-          reg: '^#星铁抽卡帮助',
+          reg: '^#星铁抽卡帮助$',
           fnc: 'gatchahelp'
         }
       ]
