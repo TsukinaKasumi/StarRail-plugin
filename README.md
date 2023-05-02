@@ -26,6 +26,11 @@ QQ群：758447726
 
 2. 推荐使用git进行安装，方便后续升级，在Yunzai根目录内打开终端执行以下命令
 
+gitee
+```shell
+git clone --depth=1 https://gitee.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
+```
+github
 ```shell
 git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
