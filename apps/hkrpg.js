@@ -4,6 +4,7 @@ import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import { gatchaType, statistics } from '../utils/gatcha.js';
+import setting from '../utils/setting.js';
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -47,10 +48,17 @@ export class hkrpg extends plugin {
         {
           reg: '^#星铁抽卡分析',
           fnc: 'gatcha'
+        },
+        {
+          reg: '^#星铁抽卡帮助',
+          fnc: 'gatchahelp'
         }
       ]
     })
     this.User = new User(e)
+  }
+    get appconfig () {
+      return setting.getConfig("gachaHelp");
   }
 
   async card (e) {
@@ -261,7 +269,7 @@ export class hkrpg extends plugin {
     }
     let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
     if (!authKey) {
-      await e.reply('未绑定抽卡链接，请点击链接查看说明\nhttps://starrailstation.com/cn/warp#import')
+      await e.reply(`未绑定抽卡链接，请点击链接查看说明\n${this.appconfig.docs}`)
       return false
     }
     let result = {}
@@ -269,7 +277,9 @@ export class hkrpg extends plugin {
     result.typeName = gatchaType[type]
     await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result)
   }
-
+  async gatchahelp (e) {
+    await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
+  }
   async help (e) {
     // let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板\n＃星铁抽卡分析角色/光椎/常驻: 抽卡分析'
     // await e.reply(helpData)
