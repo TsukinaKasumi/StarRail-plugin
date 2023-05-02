@@ -60,17 +60,20 @@ export class hkrpg extends plugin {
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
-    let myself = false
+    let hasPersonalCK = false
     let uid = e.msg.replace(/^#星铁卡片/, '')
     if (!uid) {
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-      myself = true
+      hasPersonalCK = true
     }
     if (!uid) {
       await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
       return false
     }
     let ck = await this.User.getCk()
+    if (ck) {
+      hasPersonalCK = true
+    }
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
       ck = ckArr[0]
@@ -83,7 +86,7 @@ export class hkrpg extends plugin {
     })
     let cardData = await res.json()
     let result = cardData.data
-    if (myself) {
+    if (hasPersonalCK) {
       let userUrl = api.getUrl('srUser')
       res = await fetch(userUrl.url, {
         headers: userUrl.headers
@@ -139,8 +142,8 @@ export class hkrpg extends plugin {
   async month (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    
-    > 0) {
+
+    if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
