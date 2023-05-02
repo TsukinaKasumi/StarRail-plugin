@@ -78,7 +78,7 @@ export class hkrpg extends plugin {
       headers
     })
     let cardData = await res.json()
-    await e.runtime.render('hkrpg', '/card/card.html', cardData.data)
+    await e.runtime.render('StarRail-plugin', '/card/card.html', cardData.data)
   }
 
   async note (e) {
@@ -116,7 +116,7 @@ export class hkrpg extends plugin {
     }
     data.ktl_name = e.nickname
     data.ktl_user_id = `http://q2.qlogo.cn/headimg_dl?dst_uin=${e.user_id}&amp;spec=640`
-    await e.runtime.render('hkrpg', '/note/note.html', data)
+    await e.runtime.render('StarRail-plugin', '/note/note.html', data)
   }
 
   async month (e) {
@@ -143,7 +143,7 @@ export class hkrpg extends plugin {
     })
     let cardData = await res.json()
     let data = cardData.data
-    await e.runtime.render('hkrpg', '/month/month.html', data)
+    await e.runtime.render('StarRail-plugin', '/month/month.html', data)
   }
 
   async avatar (e) {
@@ -214,7 +214,7 @@ export class hkrpg extends plugin {
         rarity.push(1)
       }
       data.rarity = rarity
-      await e.runtime.render('hkrpg', '/avatar/avatar.html', data)
+      await e.runtime.render('StarRail-plugin', '/avatar/avatar.html', data)
     } else {
       await e.reply('请确认该角色存在且在面板首页')
     }
@@ -243,7 +243,7 @@ export class hkrpg extends plugin {
     let result = {}
     result = await statistics(type, authKey)
     result.typeName = gatchaType[type]
-    await e.runtime.render('hkrpg', '/gatcha/gatcha.html', result)
+    await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result)
   }
 
   async help (e) {
