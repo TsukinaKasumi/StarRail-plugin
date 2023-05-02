@@ -55,7 +55,7 @@ export class hkrpg extends plugin {
   async card (e) {
     let user = this.e.sender.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0) {
+    if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
     let uid = e.msg.replace(/^#星铁卡片/, '')
