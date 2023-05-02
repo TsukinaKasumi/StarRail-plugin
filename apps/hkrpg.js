@@ -70,12 +70,11 @@ export class hkrpg extends plugin {
       return false
     }
     let ck = await this.User.getCk()
-    if (ck) {
-      hasPersonalCK = true
-    }
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
       ck = ckArr[0]
+    } else {
+      hasPersonalCK = true
     }
 
     let api = new MysSRApi(uid, ck)
