@@ -4,7 +4,7 @@ import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import { gatchaType, statistics } from '../utils/gatcha.js'
-import {getAuthKeyByStoken} from "../utils/authkey.js";
+//import {getAuthKeyByStoken} from "../utils/authkey.js";
 
 export class hkrpg extends plugin {
   constructor (e) {
