@@ -1,6 +1,8 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { exec, execSync } from "child_process";
 import { checkPnpm } from '../utils/common.js'
+import User from "../../xiaoyao-cvs-plugin/model/user.js";
+import MysSRApi from "../runtime/MysSRApi.js";
 
 export class StarRailManagement extends plugin {
   constructor (e) {
@@ -17,9 +19,28 @@ export class StarRailManagement extends plugin {
         {
           reg: '^#?(星轨|星铁)(插件)?更新日志$',
           fnc: 'updateLog'
+        },
+        {
+          reg: '^#authkey',
+          fnc: 'authkey'
         }
       ]
     })
+  }
+
+  async authkey (e) {
+    e.uid = '106970817'
+    let user = new User(e)
+    let ck = await user.getStoken(e.user_id)
+    ck = `stuid=${ck.stuid};stoken=${ck.stoken};mid=${ck.mid};`
+    let api = new MysSRApi(100248929, ck)
+    const { url, headers, body } = api.getUrl('getAuthKey')
+    let res = await fetch(url, {
+      method: 'POST',
+      headers,
+      body
+    })
+    await e.reply(JSON.stringify(await res.json()))
   }
 
   async checkAuth (e) {

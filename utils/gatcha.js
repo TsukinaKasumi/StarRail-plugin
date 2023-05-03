@@ -7,6 +7,7 @@ export const gatchaType = {
 }
 
 export async function getRecords (type = 11, authKey) {
+  authKey = encodeURIComponent(authKey)
   let page = 1
   let url = getRecordUrl(type, page, 10, authKey)
   let response = await fetch(url)
@@ -74,7 +75,7 @@ export async function statistics (type = 11, authKey) {
 }
 
 function getRecordUrl (type, page, size = 10, authKey, end_id = 0) {
-  return `https://api-takumi.mihoyo.com/common/gacha_record/api/getGachaLog?authkey_ver=1&default_gacha_type=11&lang=zh-cn&authkey=${authKey}&game_biz=hkrpg_cn&page=${page}&size=${size}&gacha_type=${type}&end_id=${end_id}`
+  return `https://api-takumi.mihoyo.com/common/gacha_record/api/getGachaLog?auth_appid=webview_gacha&authkey_ver=1&default_gacha_type=11&lang=zh-cn&authkey=${authKey}&game_biz=hkrpg_cn&page=${page}&size=${size}&gacha_type=${type}&end_id=${end_id}`
 }
 
 export const imageUrls = {
