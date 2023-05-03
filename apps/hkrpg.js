@@ -148,8 +148,9 @@ export class hkrpg extends plugin {
     } else {
       data.ktl_full = `距开拓力恢复满${formatDuration(data.stamina_recover_time)}`
     }
-    data.ktl_name = e.nickname
-    data.ktl_user_id = `http://q2.qlogo.cn/headimg_dl?dst_uin=${e.user_id}&amp;spec=640`
+        data.uid = uid //uid显示
+        data.ktl_name = e.nickname //名字显示
+        data.ktl_qq= parseInt(e.user_id)//QQ头像
     await e.runtime.render('StarRail-plugin', '/note/note.html', data)
   }
 
