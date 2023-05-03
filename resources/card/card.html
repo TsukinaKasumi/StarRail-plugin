@@ -93,6 +93,9 @@
                         <div class="avatar-element">
                             <img src="{{pluResPath}}/card/{{avatar.element}}.png"/>
                         </div>
+                        <div class="avatar-命座">
+                            <span>{{avatar.rank}}{{rarity}}</span>
+                        </div>
                     </div>
                     <div class="avatar-name">
                         {{avatar.name}}
@@ -184,6 +187,7 @@
         border: #d0ba94 1px solid;
         width: 142px;
         height: 160px;
+        overflow: hidden;
     }
     .avatar-img {
         width: 160px;
@@ -217,6 +221,21 @@
         position: absolute;
         top: -3px;
         left: -3px;
+    }
+    .avatar-命座{
+        width: 30px;
+        height: 40px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        /* border: #f17565 1px solid; */
+        z-index: 101;
+        text-align: center;
+        line-height: 40px;
+        font-size: 25px;
+        color: #f1f1f1;
+        border-radius: 0 0 0 10px;
+        background: rgba(0, 0,0, 0.5);
     }
     .avatar-name {
         margin-top: 6px;
