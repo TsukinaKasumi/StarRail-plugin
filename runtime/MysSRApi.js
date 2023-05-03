@@ -1,6 +1,8 @@
 import MysApi from '../../genshin/model/mys/mysApi.js'
-import md5 from 'md5';
-
+import md5 from 'md5'
+import _ from 'lodash'
+const DEVICE_ID = randomString(32).toUpperCase()
+const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
   constructor (uid, cookie, option = {}) {
     super(uid, cookie, option)
@@ -41,6 +43,15 @@ export default class MysSRApi extends MysApi {
       srMonth: {
         url: `${host}event/srledger/month_info`,
         query: `uid=${this.uid}&region=${this.server}&month=`
+      },
+      srPayAuthKey: {
+        url: `${host}binding/api/genAuthKey`,
+        body: {
+          auth_appid: 'csc',
+          game_biz: 'hkrpg_cn',
+          game_uid: this.uid * 1,
+          region: 'prod_gf_cn'
+        }
       }
     }
     if (!urlMap[type]) return false
@@ -55,7 +66,27 @@ export default class MysSRApi extends MysApi {
       let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
       headers.cookie = cookie?.ck
     }
-    headers.DS = this.getDs(query, body)
+    if (type === 'srPayAuthKey') {
+      headers.DS = this.getDS2()
+      let extra = {
+        'x-rpc-app_version': '2.40.1',
+        'User-Agent': 'okhttp/4.8.0',
+        'x-rpc-client_type': '5',
+        Referer: 'https://app.mihoyo.com',
+        Origin: 'https://webstatic.mihoyo.com',
+        // Cookie: this.cookies,
+        DS: this.getDS2(),
+        'x-rpc-sys_version': '12',
+        'x-rpc-channel': 'mihoyo',
+        'x-rpc-device_id': DEVICE_ID,
+        'x-rpc-device_name': DEVICE_NAME,
+        'x-rpc-device_model': 'Mi 10',
+        Host: 'api-takumi.mihoyo.com'
+      }
+      headers = Object.assign(headers, extra)
+    } else {
+      headers.DS = this.getDs(query, body)
+    }
     return { url, headers, body }
   }
 
@@ -71,4 +102,19 @@ export default class MysSRApi extends MysApi {
     let DS = md5(`salt=${n}&t=${t}&r=${r}&b=${b}&q=${q}`)
     return `${t},${r},${DS}`
   }
+
+  getDS2 () {
+    let t = Math.round(new Date().getTime() / 1000)
+    let r = randomString(6)
+    let sign = md5(`salt=jEpJb9rRARU2rXDA9qYbZ3selxkuct9a&t=${t}&r=${r}`)
+    return `${t},${r},${sign}`
+  }
+}
+
+export function randomString (length) {
+  let randomStr = ''
+  for (let i = 0; i < length; i++) {
+    randomStr += _.sample('abcdefghijklmnopqrstuvwxyz0123456789')
+  }
+  return randomStr
 }
