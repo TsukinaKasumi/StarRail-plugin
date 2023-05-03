@@ -255,7 +255,7 @@ export class hkrpg extends plugin {
       await e.reply('请确认该角色存在且在面板首页')
     }
   } catch(err) {
-    e.reply('未绑定ck,发送ck帮助查看说明')
+    e.reply('未绑定ck,也有可能是角色未佩戴光锥\n请佩戴光锥后重新查看面板')
   }
   }
 
@@ -277,7 +277,7 @@ export class hkrpg extends plugin {
     }
     let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
     if (!authKey) {
-      await e.reply('未绑定抽卡链接，请点击链接查看说明\nhttps://starrailstation.com/cn/warp#import\n发送#星铁抽卡链接绑定')
+      await e.reply('未绑定抽卡链接，请点击链接查看说明\nhttps://starrailstation.com/cn/warp#import\n发送[#星铁抽卡链接]绑定')
       return false
     }
     let result = {}
@@ -289,8 +289,6 @@ export class hkrpg extends plugin {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
     }
   async help (e) {
-    // let helpData = '#绑定星铁uid：绑定星铁uid\n#星铁卡片：查看卡片\n#星铁体力：查看开拓力\n#星铁收入：查看星铁收入\n#星铁[角色名]面板：查看面板\n＃星铁抽卡分析角色/光椎/常驻: 抽卡分析'
-    // await e.reply(helpData)
     await e.runtime.render('StarRail-plugin', '/help/help.html')
   }
 
