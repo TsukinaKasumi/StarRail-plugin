@@ -5,6 +5,8 @@ import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import { gatchaType, statistics } from '../utils/gatcha.js';
 import setting from '../utils/setting.js';
+import {getPaylogUrl} from "../utils/payLog.js";
+import {getAuthKey} from "../utils/authkey.js";
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -52,6 +54,10 @@ export class hkrpg extends plugin {
         {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡帮助$',
           fnc: 'gatchahelp'
+        },
+        {
+          reg: '^#星铁充值记录$',
+          fnc: 'getPayLog'
         }
       ]
     })
@@ -328,6 +334,57 @@ export class hkrpg extends plugin {
     this.reply('绑定成功', false)
     /** 结束上下文 */
     this.finish('doBindAuthKey')
+  }
+
+  async getPayLog (e) {
+    let ck = await this.User.getCk()
+    let api = new MysSRApi('', ck)
+    const { url, headers } = api.getUrl('srUser')
+    let userRes = await fetch(url, { headers })
+    let uid
+    try {
+      uid = (await userRes.json())?.data?.list?.filter(i => i.game_biz.includes('hkrpg'))[0].game_uid
+    } catch (e) {
+      await e.reply('请安装逍遥插件并扫码绑定才能使用本功能哦')
+      return false
+    }
+    if (!uid) {
+      await e.reply('请安装逍遥插件并扫码绑定才能使用本功能哦')
+      return false
+    }
+    let authKey
+    try {
+      authKey = await getAuthKey(e, uid)
+    } catch (err) {
+      // 未安装逍遥
+      await e.reply('请安装逍遥插件并扫码绑定才能使用本功能哦')
+      return false
+    }
+    if (!authKey) {
+      await e.reply('请安装逍遥插件并扫码绑定才能使用本功能哦')
+      return false
+    }
+    authKey = encodeURIComponent(authKey)
+    let result = []
+    let page = 1
+    let size = 10
+    let payLogUrl = getPaylogUrl(authKey, page, size)
+    let res = await fetch(payLogUrl)
+    let payLogList = await res.json()
+    result.push(...payLogList.data.list)
+    page++
+    while (payLogList.data.list && payLogList.data.list.length > 0) {
+      payLogUrl = getPaylogUrl(authKey, page, size)
+      res = await fetch(payLogUrl)
+      payLogList = await res.json()
+      result.push(...payLogList.data.list)
+      page++
+    }
+    result = result.filter(r => r.add_num > 0)
+    let t = result.map(i => {
+      return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
+    }).join('\n')
+    await e.reply(t)
   }
 }
 
