@@ -48,7 +48,7 @@ export class hkrpg extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)跃迁(记录)?分析',
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(跃迁|抽卡)(记录)?分析',
           fnc: 'gatcha'
         },
         {
@@ -269,7 +269,7 @@ export class hkrpg extends plugin {
   async gatcha (e) {
     let user = this.e.sender.user_id
     let type = 11
-    let typeName = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)抽卡(记录)?分析/, '')
+    let typeName = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/, '')
     if (typeName.includes('常驻')) {
       type = 1
     } else if (typeName.includes('武器') || typeName.includes('光锥')) {
@@ -376,11 +376,11 @@ export class hkrpg extends plugin {
     while (payLogList.data.list && payLogList.data.list.length > 0) {
       payLogUrl = getPaylogUrl(authKey, page, size)
       res = await fetch(payLogUrl)
-      payLogList = await res.json()
       result.push(...payLogList.data.list)
       page++
     }
     result = result.filter(r => r.add_num > 0)
+      payLogList = await res.json()
     let t = result.map(i => {
       return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
     }).join('\n')
