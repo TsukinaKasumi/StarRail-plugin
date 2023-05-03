@@ -44,7 +44,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ## 功能说明
 
-### #星铁绑定UID＋uid
+### #星铁绑定＋（你的uid）
 
 ### #星铁希儿面板
 查看角色遗器，命座，光锥等信息，面板API后续会出来，所以不要着急
