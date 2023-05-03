@@ -255,7 +255,7 @@ export class hkrpg extends plugin {
       await e.reply('请确认该角色存在且在面板首页')
     }
   } catch(err) {
-    e.reply('未绑定ck,也有可能是角色未佩戴光锥\n请佩戴光锥后重新查看面板')
+    e.reply('未绑定ck,也有可能是角色未佩戴\n光锥请佩戴光锥后重新查看面板')
   }
   }
 
