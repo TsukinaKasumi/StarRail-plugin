@@ -13,7 +13,7 @@ export class hkrpg extends plugin {
       dsc: '星穹铁道基本信息',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
-      priority: 50,
+      priority: 500,
       rule: [
         {
           /** 命令正则匹配 */
@@ -46,7 +46,7 @@ export class hkrpg extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡(记录)?分析',
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)跃迁(记录)?分析',
           fnc: 'gatcha'
         },
         {
