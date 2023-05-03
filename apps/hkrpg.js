@@ -46,7 +46,7 @@ export class hkrpg extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#星铁抽卡分析$',
+          reg: '^#星铁抽卡分析',
           fnc: 'gatcha'
         },
         {
