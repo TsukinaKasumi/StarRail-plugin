@@ -69,8 +69,11 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ## 贡献者
 
-感谢以下贡献者
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 
-<a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
-</a>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
