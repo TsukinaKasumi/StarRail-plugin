@@ -46,7 +46,7 @@ export class hkrpg extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡分析',
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡(记录)?分析',
           fnc: 'gatcha'
         },
         {
@@ -69,7 +69,7 @@ export class hkrpg extends plugin {
       user = ats[0].qq
     }
     let hasPersonalCK = false
-    let uid = e.msg.replace(/^#星铁(卡片|探索)/, '')
+    let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
     if (!uid) {
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     }
@@ -183,8 +183,8 @@ export class hkrpg extends plugin {
 
   async avatar (e) {
     try {
-    let uid = e.msg.replace(/^#(星铁)?.*面板/, '')
-    let avatar = e.msg.replace(/^#(星铁)?/, '').replace('面板', '')
+    let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
+    let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
     if (!uid) {
       let user = this.e.sender.user_id
       let ats = e.message.filter(m => m.type === 'at')
@@ -262,7 +262,7 @@ export class hkrpg extends plugin {
   async gatcha (e) {
     let user = this.e.sender.user_id
     let type = 11
-    let typeName = e.msg.replace(/^#星铁抽卡分析/, '')
+    let typeName = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)抽卡(记录)?分析/, '')
     if (typeName.includes('常驻')) {
       type = 1
     } else if (typeName.includes('武器') || typeName.includes('光锥')) {
