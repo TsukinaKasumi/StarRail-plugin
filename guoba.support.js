@@ -10,7 +10,7 @@ export function supportGuoba() {
       name: 'StarRail-plugin',
       title: '星穹铁道插件',
       author: '@鹤望兰',
-      authorLink: 'hhttps://gitee.com/hewang1an',
+      authorLink: 'https://gitee.com/hewang1an',
       link: 'https://gitee.com/hewang1an/StarRail-plugin',
       isV3: true,
       isV2: false,
