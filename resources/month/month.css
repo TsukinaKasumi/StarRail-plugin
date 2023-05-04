@@ -1,0 +1,107 @@
+@font-face {
+    font-family: hanyi;
+    src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "tttgbnumber";
+    src: url("../fonts/tttgbnumber.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: PingFangSC-Medium, PingFang SC, sans-serif;
+    width: 605px;
+    transform: scale(1.4);
+    transform-origin: 0 0;
+}
+
+.container {
+    background-image: url('./kll.jpg');
+    background-size: cover;
+    /* 设置背景图片尺寸 */
+    background-position: center center;
+    /* 设置背景图片位置 */
+    font-family: "hanyi", sans-serif;
+    padding: 10px 13px 10px 7px;
+    /*background: #faf9f7;*/
+}
+
+.xq {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 10px;
+    font-weight: bold;
+    color: #565656;
+}
+
+.general-title {
+    font-size: 30px;
+    margin-left: 10px;
+    font-weight: bold;
+    padding-top: 10px;
+    color: #f38d38;
+}
+
+.xq-detail-line {
+    margin-left: 10px;
+    font-size: 24px;
+    margin-top: 5px;
+    width: 50%;
+    margin-bottom: 5px;
+}
+
+
+.xq-detail-line-value {
+    color: #424242;
+    font-weight: bold;
+}
+
+.hint {
+    font-size: 20px;
+    color: #2e353e;
+    margin-bottom: 10px;
+}
+
+.title {
+    padding-top: 10px;
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 36px;
+}
+
+.title div {
+    margin-left: 3px;
+    font-weight: bold;
+}
+
+.icon {
+    width: 20px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.general {
+    font-size: 40px;
+    width: 580px;
+    /*height: 132px;*/
+    padding-bottom: 10px;
+
+    background-color: rgba(244, 242, 229, 0.6);
+    border-radius: 5px 25px 5px 5px;
+    margin-bottom: 10px;
+    border: #cecece 1px solid;
+}
+
+.logo {
+    font-size: 24px;
+    font-family: "tttgbnumber";
+    color: #8f8f8f;
+    text-align: center;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
