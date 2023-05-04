@@ -104,7 +104,7 @@ export class hkrpg extends plugin {
         let userDataKey = `STAR_RAILWAY:userData:${uid}`
         let userData = JSON.parse(await redis.get(userDataKey))
         if (!userData) {
-          userData = await api.getData('srUser')?.data?.list?.[0]
+          userData = (await api.getData('srUser'))?.data?.list?.[0]
         }
         result = Object.assign(cardData.data, userData)
         result.level = result.level + '级'
