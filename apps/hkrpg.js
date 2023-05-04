@@ -3,10 +3,11 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
-import { gatchaType, statistics } from '../utils/gatcha.js';
-import setting from '../utils/setting.js';
-import {getPaylogUrl} from "../utils/payLog.js";
-import {getAuthKey} from "../utils/authkey.js";
+import { gatchaType, statistics } from '../utils/gatcha.js'
+import setting from '../utils/setting.js'
+import { getPaylogUrl } from '../utils/payLog.js'
+import { getAuthKey } from '../utils/authkey.js'
+import _ from 'lodash'
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -63,62 +64,72 @@ export class hkrpg extends plugin {
     })
     this.User = new User(e)
   }
-  	get appconfig () {
-    return setting.getConfig("gachaHelp");
-    }
+
+  get appconfig () {
+    return setting.getConfig('gachaHelp')
+  }
 
   async card (e) {
     try {
-    let user = this.e.sender.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-    }
-    let hasPersonalCK = false
-    let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
-    if (!uid) {
-      uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    }
-    if (!uid) {
-      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
-      return false
-    }
-    let ck = await this.User.getCk()
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    } else {
-      hasPersonalCK = true
-    }
+      let user = this.e.sender.user_id
+      let ats = e.message.filter(m => m.type === 'at')
+      if (ats.length > 0 && !e.atBot) {
+        user = ats[0].qq
+      }
+      let hasPersonalCK = false
+      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
+      await this.miYoSummerGetUid()
+      uid ||= await redis.get(`STAR_RAILWAY:UID:${user}`)
+      if (!uid) {
+        await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+        return false
+      }
+      let ck = this.User.getCk()
+      if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+        let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
+        ck = ckArr[0]
+      } else {
+        hasPersonalCK = true
+      }
 
-    let api = new MysSRApi(uid, ck)
-    const { url, headers } = api.getUrl('srCard')
-    let res = await fetch(url, {
-      headers
-    })
-    let cardData = await res.json()
-    let result = cardData.data
-    if (!result) {
-      logger.error(cardData)
-      await e.reply('未绑定ck,发送ck帮助查看说明')
-      return false
+      let api = new MysSRApi(uid, ck)
+      let cardData = await api.getData('srCard')
+      let result = cardData?.data
+      if (!result) {
+        logger.error(cardData)
+        await e.reply('未绑定ck,发送ck帮助查看说明')
+        return false
+      }
+      if (hasPersonalCK) {
+        let userDataKey = `STAR_RAILWAY:userData:${uid}`
+        let userData = JSON.parse(await redis.get(userDataKey))
+        if (!userData) {
+          userData = await api.getData('srUser')?.data?.list?.[0]
+        }
+        result = Object.assign(cardData.data, userData)
+        result.level = result.level + '级'
+      } else {
+        result.game_uid = uid
+        result.nickname = '开拓者'
+      }
+      await e.runtime.render('StarRail-plugin', '/card/card.html', result)
+    } catch (err) {
+      e.reply('请检查ck是否正确')
     }
-    if (hasPersonalCK) {
-      let userUrl = api.getUrl('srUser')
-      res = await fetch(userUrl.url, {
-        headers: userUrl.headers
-      })
-      let userData = await res.json()
-      result = Object.assign(cardData.data, userData.data.list[0])
-      result.level = result.level + '级'
-    } else {
-      result.game_uid = uid
-      result.nickname = '开拓者'
-    }
-    await e.runtime.render('StarRail-plugin', '/card/card.html', result)
-  } catch(err) {
-    e.reply('请检查ck是否正确')
   }
+
+  async miYoSummerGetUid () {
+    let key = `STAR_RAILWAY:UID:${this.e.user_id}`
+    let ck = this.User.getCk()
+    if (!ck) return false
+    if (await redis.get(key)) return false
+    let api = new MysSRApi('', ck)
+    let userData = await api.getData('srUser')
+    if (!userData?.data || _.isEmpty(userData.data.list)) return false
+    userData = userData.data.list[0]
+    let { game_uid: gameUid } = userData
+    await redis.set(key, gameUid)
+    await redis.setEx(`STAR_RAILWAY:userData:${gameUid}`, 60 * 60, JSON.stringify(userData))
   }
 
   async note (e) {
@@ -127,6 +138,7 @@ export class hkrpg extends plugin {
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
+    await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
       await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
@@ -154,9 +166,9 @@ export class hkrpg extends plugin {
     } else {
       data.ktl_full = `距开拓力恢复满${formatDuration(data.stamina_recover_time)}`
     }
-        data.uid = uid //uid显示
-        data.ktl_name = e.nickname //名字显示
-        data.ktl_qq= parseInt(e.user_id)//QQ头像
+    data.uid = uid // uid显示
+    data.ktl_name = e.nickname // 名字显示
+    data.ktl_qq = parseInt(e.user_id)// QQ头像
     await e.runtime.render('StarRail-plugin', '/note/note.html', data)
   }
 
@@ -168,6 +180,7 @@ export class hkrpg extends plugin {
       user = ats[0].qq
     }
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    await this.miYoSummerGetUid()
     if (!uid) {
       await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
       return false
@@ -190,80 +203,81 @@ export class hkrpg extends plugin {
 
   async avatar (e) {
     try {
-    let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
-    let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
-    if (!uid) {
-      let user = this.e.sender.user_id
-      let ats = e.message.filter(m => m.type === 'at')
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
-      }
-      uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    }
-    if (!uid) {
-      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
-      return false
-    }
-    let ck = await this.User.getCk()
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-
-    let api = new MysSRApi(uid, ck)
-    const { url, headers } = api.getUrl('srCharacterDetail')
-    let res = await fetch(url, {
-      headers
-    })
-    let cardData = await res.json()
-    let avatarItem = cardData.data.avatar_list.filter(i => i.name === avatar)
-    if (avatarItem.length > 0) {
-      let data = avatarItem[0]
-      let tops = [40, 153, 268, 383, 490, 605]
-      data.ranks.forEach((rank, index) => {
-        rank.width = rank.is_unlocked ? 0 : 60
-        rank.top = tops[index]
-      })
-      let bgColorMap = {
-        2: {
-          bg: '#73de7b',
-          border: '#3aa142'
-        },
-        3: {
-          bg: '#407ac4',
-          border: '#1959ab'
-        },
-        4: {
-          bg: '#9166da',
-          border: '#6234b0'
-        },
-        5: {
-          bg: '#cb9b6d',
-          border: '#b67333'
+      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
+      let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
+      if (!uid) {
+        let user = this.e.sender.user_id
+        let ats = e.message.filter(m => m.type === 'at')
+        if (ats.length > 0 && !e.atBot) {
+          user = ats[0].qq
         }
+        uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
       }
-      data.relics.forEach(r => {
-        r.bg = bgColorMap[r.rarity].bg
-        r.border = bgColorMap[r.rarity].border
-      })
-      data.ornaments.forEach(r => {
-        r.bg = bgColorMap[r.rarity].bg
-        r.border = bgColorMap[r.rarity].border
-      })
-      data.uid = uid
+      await this.miYoSummerGetUid()
+      if (!uid) {
+        await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+        return false
+      }
+      let ck = await this.User.getCk()
+      if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+        let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
+        ck = ckArr[0]
+      }
 
-      let rarity = []
-      for (let i = 0; i < data.rarity; i++) {
-        rarity.push(1)
+      let api = new MysSRApi(uid, ck)
+      const { url, headers } = api.getUrl('srCharacterDetail')
+      let res = await fetch(url, {
+        headers
+      })
+      let cardData = await res.json()
+      let avatarItem = cardData.data.avatar_list.filter(i => i.name === avatar)
+      if (avatarItem.length > 0) {
+        let data = avatarItem[0]
+        let tops = [40, 153, 268, 383, 490, 605]
+        data.ranks.forEach((rank, index) => {
+          rank.width = rank.is_unlocked ? 0 : 60
+          rank.top = tops[index]
+        })
+        let bgColorMap = {
+          2: {
+            bg: '#73de7b',
+            border: '#3aa142'
+          },
+          3: {
+            bg: '#407ac4',
+            border: '#1959ab'
+          },
+          4: {
+            bg: '#9166da',
+            border: '#6234b0'
+          },
+          5: {
+            bg: '#cb9b6d',
+            border: '#b67333'
+          }
+        }
+        data.relics.forEach(r => {
+          r.bg = bgColorMap[r.rarity].bg
+          r.border = bgColorMap[r.rarity].border
+        })
+        data.ornaments.forEach(r => {
+          r.bg = bgColorMap[r.rarity].bg
+          r.border = bgColorMap[r.rarity].border
+        })
+        data.uid = uid
+
+        let rarity = []
+        for (let i = 0; i < data.rarity; i++) {
+          rarity.push(1)
+        }
+        data.rarity = rarity
+        await e.runtime.render('StarRail-plugin', '/avatar/avatar.html', data)
+      } else {
+        await e.reply('请确认该角色存在且在面板首页')
       }
-      data.rarity = rarity
-      await e.runtime.render('StarRail-plugin', '/avatar/avatar.html', data)
-    } else {
-      await e.reply('请确认该角色存在且在面板首页')
+    } catch (err) {
+      e.reply('未绑定ck,也有可能是角色未佩戴\n光锥请佩戴光锥后重新查看面板')
     }
-  } catch(err) {
-    e.reply('未绑定ck,也有可能是角色未佩戴\n光锥请佩戴光锥后重新查看面板')
-  }
   }
 
   async gatcha (e) {
@@ -292,31 +306,22 @@ export class hkrpg extends plugin {
     result.typeName = gatchaType[type]
     await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result)
   }
+
   async gatchahelp (e) {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
-    }
+  }
+
   async help (e) {
     await e.runtime.render('StarRail-plugin', '/help/help.html')
   }
 
   /** 复读 */
   async bindSRUid () {
-  //   /** 设置上下文，后续接收到内容会执行doRep方法 */
-  //   this.setContext('doBindSRUid')
-  //   /** 回复 */
-  //   await this.reply('请发送uid', false, { at: true })
-  // }
-
-    // /** 接受内容 */
-    // async doBindSRUid () {
-
     let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ''))
     let user = this.e.sender.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
     /** 复读内容 */
     this.reply('绑定成功', false)
-    /** 结束上下文 */
-    // this.finish('doBindSRUid')
   }
 
   async bindAuthKey (e) {
@@ -380,7 +385,7 @@ export class hkrpg extends plugin {
       page++
     }
     result = result.filter(r => r.add_num > 0)
-      payLogList = await res.json()
+    payLogList = await res.json()
     let t = result.map(i => {
       return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
     }).join('\n')
