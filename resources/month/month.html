@@ -1,162 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>card</title>
+    <link rel="stylesheet" href="{{pluResPath}}/month/month.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js">
 </head>
+
 <body>
-<div>
-    <div class="container">
-        <div class="title">
-            {{month}} | 开拓日历
-        </div>
-        <div class="hint">继续努力，星辰大海在等着你呢！</div>
-        <div class="general">
-           <div class="general-title">当月共获取</div>
-            <div class="xq">
-                <img src="{{pluResPath}}/month/星琼.png" class="icon">
-                星琼：{{month_data.current_hcoin}}
-                <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
-                星轨通票&星轨专票：{{month_data.current_rails_pass}}
+    <div>
+        <div class="container" id="container">
+            <div class="title">
+                {{month}} | 开拓日历
             </div>
-        </div>
-
-
-        <div class="general" >
-            <div class="general-title">
-                本月星琼收入组成
-            </div>
-            <div style="display: flex;flex-wrap: wrap">
-                {{each month_data.group_by item}}
-                <div class="xq-detail-line">
-                    <span class="xq-detail-line-key">{{item.action_name}}</span>
-                    <span class="xq-detail-line-value">{{item.num}} ({{item.percent}}%)</span>
+            <div class="hint">继续努力，星辰大海在等着你呢！</div>
+            <div class="general">
+                <div class="general-title">当月共获取</div>
+                <div class="xq">
+                    <img src="{{pluResPath}}/month/星琼.png" class="icon">
+                    星琼：{{month_data.current_hcoin}}
+                    <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
+                    星轨通票&星轨专票：{{month_data.current_rails_pass}}
                 </div>
-                {{/each}}
             </div>
 
-        </div>
-        <div class="general">
-            <div class="general-title">今日共获取</div>
-            <div class="xq">
-                <img src="{{pluResPath}}/month/星琼.png" class="icon">
-                星琼：{{day_data.current_hcoin}}
-                <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
-                星轨通票&星轨专票：{{day_data.current_rails_pass}}
+            <div class="general">
+                <div class="general-title">今日共获取</div>
+                <div class="xq">
+                    <img src="{{pluResPath}}/month/星琼.png" class="icon">
+                    星琼：{{day_data.current_hcoin}}
+                    <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
+                    星轨通票&星轨专票：{{day_data.current_rails_pass}}
+                </div>
+            </div>
+            <div class="general">
+                <div class="general-title">昨日共获取</div>
+                <div class="xq">
+                    <img src="{{pluResPath}}/month/星琼.png" class="icon">
+                    星琼：{{day_data.last_hcoin}}
+                    <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
+                    星轨通票&星轨专票：{{day_data.last_rails_pass}}
+                </div>
+            </div>
+            <div class="general">
+                <div class="general-title">
+                    本月星琼收入
+                </div>
+                <div id="Chart" style="height: 300px;"></div>
+            </div>
+            <div class="logo">
+                Created By Yunzai-Bot & StarRail-plugin
             </div>
         </div>
-        <div class="general">
-            <div class="general-title">昨日共获取</div>
-            <div class="xq">
-                <img src="{{pluResPath}}/month/星琼.png" class="icon">
-                星琼：{{day_data.last_hcoin}}
-                <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
-                星轨通票&星轨专票：{{day_data.last_rails_pass}}
-            </div>
-        </div>
-        <div class="logo">
-            Created By Yunzai-Bot & StarRail-plugin
-        </div>
+
     </div>
 
-</div>
-
-
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+<script>
+    const data = JSON.parse('{{@ pieData}}')
+    const chart = echarts.init(document.getElementById('Chart'), undefined, {
+        renderer: 'svg'
+    })
+    option = {
+        animation: false,
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            top: 'center',
+            left: '5%',
+            orient: 'vertical'
+        },
+        labelLine: {
+            show: true
+        },
+        textStyle: {
+            fontFamily: 'hanyi',
+            fontSize: 17
+        },
+        series: [
+            {
+                name: 'Access From',
+                type: 'pie',
+                radius: ['70%', '100%'],
+                center: ['65%', '50%'],
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                },
+                label: {
+                    show: true,
+                    position: 'inner',
+                    formatter: '{d}%'// 显示数据
+                },
+                percentPrecision: 0,
+                data: data
+            }
+        ]
+    };
+    chart.setOption(option)
+</script>
+
 </html>
-<style>
-    .xq {
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin-left: 10px;
-        font-weight: bold;
-        color: #565656;
-    }
-    .general-title {
-        font-size: 30px;
-        margin-left: 10px;
-        font-weight: bold;
-        padding-top: 10px;
-        color: #f38d38;
-    }
-    .xq-detail-line {
-        margin-left: 10px;
-        font-size: 24px;
-        margin-top: 5px;
-        width: 50%;
-        margin-bottom: 5px;
-    }
-    .xq-detail-line-key {
-
-    }
-    .xq-detail-line-value {
-        color: #424242;
-        font-weight: bold;
-    }
-    .hint {
-        font-size: 20px;
-        color: #2e353e;
-        margin-bottom: 10px;
-    }
-    .title {
-        padding-top: 10px;
-        display: flex;
-        font-weight: bold;
-        margin-bottom: 10px;
-        font-size: 36px;
-    }
-    .title div {
-        margin-left: 3px;
-        font-weight: bold;
-    }
-    .icon {
-        width: 20px;
-        margin-top: 5px;
-        margin-right: 5px;
-    }
-    .general {
-        width: 580px;
-        /*height: 132px;*/
-        padding-bottom: 10px;
-
-        background-color: rgba(244,242,229,0.6);
-        border-radius: 5px 25px 5px 5px;
-        margin-bottom: 10px;
-        border: #cecece 1px solid;
-    }
-
-
-
-    body {
-        font-family: PingFangSC-Medium, PingFang SC, sans-serif;
-        width: 600px;
-    }
-    .container {
-        background-image: url('{{pluResPath}}/month/kll.jpg');
-        background-size: cover; /* 设置背景图片尺寸 */
-        background-position: center center; /* 设置背景图片位置 */
-        font-family: "hanyi", sans-serif;
-        padding: 10px;
-        /*background: #faf9f7;*/
-    }
-    @font-face {
-        font-family: "tttgbnumber";
-        src: url("{{pluResPath}}/fonts/tttgbnumber.ttf");
-        font-weight: normal;
-        font-style: normal;
-  }
-    .logo {
-        font-size: 24px;
-        font-family: "tttgbnumber";
-        color: #8f8f8f;
-        text-align: center;
-        margin-top: 10px;
-        padding-bottom: 10px;
-    }
-    @font-face {
-        font-family: hanyi;
-        src: url('{{pluResPath}}/fonts/汉仪润圆-75W.ttf') format('truetype');
-    }
-</style>
