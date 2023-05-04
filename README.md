@@ -10,7 +10,7 @@
 
 ### 使用说明
 
-`StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板，体力以及米游社所拥有的的一切有关星轨的功能
+`StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板(目前暂不支持查看详细数据）体力以及米游社所拥有的的一切有关星轨的功能
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
 
@@ -18,7 +18,8 @@ QQ群：758447726
 ---
 星穹铁道插件
 
-一个还未完全完善的星轨插件，目前还在进一步完善和修改，其余功能和修改在慢慢完善了
+该插件的前身为个人团体临时写出来过度使用的东西(后来被人到处传了）很多功能并未完善，所以很多地方都需要优化一下，后续会慢慢完善，遇到报错是很正常的。
+我们目前在不断优化，以方便大家使用，如果有更多的建议可以提issues，会尽量实现，并且铁道开服到现在还没有多长时间，很多玩法还没有被开发出来，所以不要着急，给插件和游戏一点时间
 
 ### 安装方法
 
@@ -46,8 +47,8 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ### #星铁绑定＋（你的uid）
 
-### #星铁希儿面板
-查看角色遗器，命座，光锥等信息，面板API后续会出来，所以不要着急
+### #星铁希儿面板(暂不支持查看详细数据)
+查看角色遗器，命座，光锥等信息
 
 ### #星铁收入
 查看本月星琼收入
@@ -68,6 +69,10 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 
 ## 贡献者
+
+<a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
+</a>
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
