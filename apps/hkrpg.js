@@ -160,7 +160,9 @@ export class hkrpg extends plugin {
     let data = cardData.data
     data.expeditions.forEach(ex => {
       ex.remaining_time = formatDuration(ex.remaining_time)
+	  if (ex.remaining_time == '00时00分') ex.remaining_time = '已完成'
     })
+	logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力已全部恢复'
     } else {
