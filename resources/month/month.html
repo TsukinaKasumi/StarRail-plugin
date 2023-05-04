@@ -64,6 +64,17 @@
         renderer: 'svg'
     })
     option = {
+        title: {
+            text: '总计\n{{month_data.current_rails_pass}}',
+            top: 'center',
+            right: 145 - ('{{month_data.current_rails_pass}}'.length > 3 ? ('{{month_data.current_rails_pass}}'.length - 3) * 10 : 0),
+            textAlign: 'center',
+            textStyle: {
+                color: '##000000',
+                fontSize: '24px',
+                lineHeight: 30
+            }
+        },
         animation: false,
         tooltip: {
             trigger: 'item'
