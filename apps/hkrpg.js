@@ -327,24 +327,28 @@ export class hkrpg extends plugin {
     this.reply('绑定成功', false)
   }
 
-  async bindAuthKey (e) {
-    this.setContext('doBindAuthKey')
-    /** 回复 */
-    await this.reply('请发送抽卡链接', false, { at: true })
-  }
+ async bindAuthKey(e) {
+   if (this.getContext() !== null) {
+     await this.reply('请发送抽卡链接', false, { at: true });
+     await this.setContext('doBindAuthKey', false, 60);
+     return;
+   }
+ }
 
-  async doBindAuthKey () {
-    let key = this.e.msg.trim()
-    key = key.split('authkey=')[1].split('&')[0]
-    let user = this.e.sender.user_id
-    await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
-    /** 复读内容 */
-    this.reply('绑定成功', false)
-    /** 结束上下文 */
-    this.finish('doBindAuthKey')
-  }
-
-  async getPayLog (e) {
+  async doBindAuthKey() {
+   try {
+     const key = this.e.msg.trim().split('=')[1].split('&')[0];
+     const user = this.e.sender.user_id;
+     await redis.set(`STAR_RAIL_AUTH_KEY:${user}`, key);
+     await this.reply('绑定成功', false);
+   } catch (err) {
+     console.error(err);
+     await this.reply('链接格式错误，请发送正确的链接', false);
+   }
+   this.finish('doBindAuthKey');
+ }
+  
+async getPayLog (e) {
     let ck = await this.User.getCk()
     let api = new MysSRApi('', ck)
     const { url, headers } = api.getUrl('srUser')
