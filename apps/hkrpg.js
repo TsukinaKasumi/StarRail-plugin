@@ -114,7 +114,7 @@ export class hkrpg extends plugin {
       }
       await e.runtime.render('StarRail-plugin', '/card/card.html', result)
     } catch (err) {
-      e.reply('请检查ck是否正确')
+      e.reply('cookie错误或未绑定ck')
     }
   }
 
@@ -146,7 +146,7 @@ export class hkrpg extends plugin {
     }
     let ck = await this.User.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('未绑定ck')
+      await e.reply('尚未绑定cookie')
       return false
     }
 
@@ -182,12 +182,12 @@ export class hkrpg extends plugin {
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     await this.miYoSummerGetUid()
     if (!uid) {
-      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+      await e.reply('尚未绑定cookie')
       return false
     }
     let ck = await this.User.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('未绑定ck')
+      await e.reply('尚未绑定cookie')
       return false
     }
 
@@ -218,7 +218,7 @@ export class hkrpg extends plugin {
       }
       await this.miYoSummerGetUid()
       if (!uid) {
-        await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+        await e.reply('尚未绑定cookie')
         return false
       }
       let ck = await this.User.getCk()
