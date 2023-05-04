@@ -33,7 +33,7 @@ export class hkrpg extends plugin {
           fnc: 'note'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入)$',
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
           fnc: 'month'
         },
         {
@@ -141,7 +141,7 @@ export class hkrpg extends plugin {
     await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
-      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+      await e.reply('尚未绑定cookie')
       return false
     }
     let ck = await this.User.getCk()
@@ -192,12 +192,15 @@ export class hkrpg extends plugin {
     }
 
     let api = new MysSRApi(uid, ck)
-    const { url, headers } = api.getUrl('srMonth')
-    let res = await fetch(url, {
-      headers
-    })
-    let cardData = await res.json()
+    const cardData = await api.getData('srMonth')
+    if (!cardData || cardData.retcode != 0) return e.reply(cardData.message || '请求数据失败')
     let data = cardData.data
+    data.pieData = JSON.stringify(data.month_data.group_by.map((v) => {
+      return {
+        name: `${v.action_name} ${v.num}`,
+        value: v.num
+      }
+    }))
     await e.runtime.render('StarRail-plugin', '/month/month.html', data)
   }
 
