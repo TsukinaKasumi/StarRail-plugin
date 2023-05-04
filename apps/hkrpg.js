@@ -8,7 +8,7 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl } from '../utils/payLog.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-const Regular = '星?(铁|轨|崩铁|穹)(铁道)?'
+
 export class hkrpg extends plugin {
   constructor (e) {
     super({
@@ -25,39 +25,39 @@ export class hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: `^#${Regular}(卡片|探索)$`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
           fnc: 'card'
         },
         {
-          reg: `^#${Regular}体力$`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)体力$',
           fnc: 'note'
         },
         {
-          reg: `^#${Regular}(星琼获取|月历|月收入|收入|原石)$`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
           fnc: 'month'
         },
         {
-          reg: `^#${Regular}?(.*)面板`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
           fnc: 'avatar'
         },
         {
-          reg: `^#${Regular}帮助$`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)帮助$',
           fnc: 'help'
         },
         {
-          reg: `^#${Regular}抽卡链接(绑定)?$`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡链接(绑定)?$',
           fnc: 'bindAuthKey'
         },
         {
-          reg: `^#${Regular}(跃迁|抽卡)(记录)?分析`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(跃迁|抽卡)(记录)?分析',
           fnc: 'gatcha'
         },
         {
-          reg: `^#${Regular}抽卡帮助$`,
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡帮助$',
           fnc: 'gatchahelp'
         },
         {
-          reg: `^#${Regular}充值记录$`,
+          reg: '^#星铁充值记录$',
           fnc: 'getPayLog'
         }
       ]
@@ -77,7 +77,7 @@ export class hkrpg extends plugin {
         user = ats[0].qq
       }
       let hasPersonalCK = false
-      let uid = e.msg.replace(/^#${Regular}(卡片|探索)/, '')
+      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
       await this.miYoSummerGetUid()
       uid ||= await redis.get(`STAR_RAILWAY:UID:${user}`)
       if (!uid) {
@@ -160,7 +160,7 @@ export class hkrpg extends plugin {
     let data = cardData.data
     data.expeditions.forEach(ex => {
       ex.remaining_time = formatDuration(ex.remaining_time)
-	  if (ex.remaining_time == '00时00分') ex.remaining_time = '已完成'
+	  if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
     })
 	logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
@@ -208,8 +208,8 @@ export class hkrpg extends plugin {
 
   async avatar (e) {
     try {
-      let uid = e.msg.replace(/^#${Regular}?.*面板/, '')
-      let avatar = e.msg.replace(/^#${Regular}?/, '').replace('面板', '')
+      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
+      let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
       if (!uid) {
         let user = this.e.sender.user_id
         let ats = e.message.filter(m => m.type === 'at')
@@ -288,7 +288,7 @@ export class hkrpg extends plugin {
   async gatcha (e) {
     let user = this.e.sender.user_id
     let type = 11
-    let typeName = e.msg.replace(/^#${Regular}(抽卡|跃迁)(记录)?分析/, '')
+    let typeName = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/, '')
     if (typeName.includes('常驻')) {
       type = 1
     } else if (typeName.includes('武器') || typeName.includes('光锥')) {
@@ -329,28 +329,24 @@ export class hkrpg extends plugin {
     this.reply('绑定成功', false)
   }
 
- async bindAuthKey(e) {
-   if (this.getContext() !== null) {
-     await this.reply('请发送抽卡链接', false, { at: true });
-     await this.setContext('doBindAuthKey', false, 60);
-     return;
-   }
- }
+  async bindAuthKey (e) {
+    this.setContext('doBindAuthKey')
+    /** 回复 */
+    await this.reply('请发送抽卡链接', false, { at: true })
+  }
 
-  async doBindAuthKey() {
-   try {
-     const key = this.e.msg.trim().split('=')[1].split('&')[0];
-     const user = this.e.sender.user_id;
-     await redis.set(`STAR_RAIL_AUTH_KEY:${user}`, key);
-     await this.reply('绑定成功', false);
-   } catch (err) {
-     console.error(err);
-     await this.reply('链接格式错误，请发送正确的链接', false);
-   }
-   this.finish('doBindAuthKey');
- }
-  
-async getPayLog (e) {
+  async doBindAuthKey () {
+    let key = this.e.msg.trim()
+    key = key.split('authkey=')[1].split('&')[0]
+    let user = this.e.sender.user_id
+    await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
+    /** 复读内容 */
+    this.reply('绑定成功', false)
+    /** 结束上下文 */
+    this.finish('doBindAuthKey')
+  }
+
+  async getPayLog (e) {
     let ck = await this.User.getCk()
     let api = new MysSRApi('', ck)
     const { url, headers } = api.getUrl('srUser')
