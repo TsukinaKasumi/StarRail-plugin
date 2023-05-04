@@ -37,7 +37,10 @@
                     <div class="weituo-name">{{ex.name}}</div>
                     <div class="weituo-line-last">
                         <div style="color: #757575">
+                            {{if ex.remaining_time== '委托已完成'}}
+                            {{else}}
                             剩余时间
+                            {{/if}}
                         </div>
                         <div>
                             {{ex.remaining_time}}
