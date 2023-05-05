@@ -123,7 +123,7 @@ export class StarRailManagement extends plugin {
 
       let end = ''
       if (!plugin) {
-          end = '更多详细信息，请前往gihub查看\nhttps://gitee.com/hewang1an/StarRail-plugin'
+          end = '更多详细信息，请前往gihee查看\nhttps://gitee.com/hewang1an/StarRail-plugin'
       }
 
       log = await this.makeForwardMsg(`${plugin || '星铁插件'}更新日志，共${line}条`, log, end)
