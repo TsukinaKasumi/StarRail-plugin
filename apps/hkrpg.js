@@ -157,6 +157,7 @@ export class hkrpg extends plugin {
     })
 
     let cardData = await res.json()
+    if (!cardData || cardData.retcode != 0) return e.reply(cardData.message || '请求数据失败')
     let data = cardData.data
     data.expeditions.forEach(ex => {
       ex.remaining_time = formatDuration(ex.remaining_time)
