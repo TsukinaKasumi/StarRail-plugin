@@ -83,7 +83,7 @@ export const imageUrls = {
   "白露": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/159305577/c684357d96e8098e898e4ee6665fd01c_7826766061944986617.png?x-oss-process=image/quality,q_75/resize,s_280",
   "姬子": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/288909604/4d5ac247ca1460b34b3f73244afbb0f6_8390343856757982675.png?x-oss-process=image/quality,q_75/resize,s_280",
   "瓦尔特": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/288909604/d5a01ddc0494595417fee74fa3285b56_8110023215605946848.png?x-oss-process=image/quality,q_75/resize,s_280",
-  "布洛妮娅": "https://act-upload.mihoyo.com/sr-wiki/2023/04/21/288909604/92895f30ad42ad8f9d322ac28d2a82e2_2992559335668018177.png?x-oss-process=image/quality,q_75/resize,s_280",
+  "布洛妮娅": "https://c2cpicdw.qpic.cn/download?appid=1406&fileid=Chh1X19KUWhFaTYwQzR4M2oyemlPWnVFT3cSFNWYTzODmtxl1MTBHMHLbdox1e-PGMjdFSD-CijY1ceipd3-AjD9tegDOPWyxbUJWMCEPQ&rkey=CAQSSKfEWBuMO5hvhgzIXQEFEfX7Tj3c6UDs0vKo_QtjoyzDQZXGGuKyeVms0LDhGtaHLcUXwqD8fj4i6zQKq0pBdr5V37kEaJWPyQ&spec=0&rf=naio",
   "克拉拉": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/288909604/827cb6eecdd28086ce68a1f39a9a0e09_6530506214724480230.png?x-oss-process=image/quality,q_75/resize,s_280",
   "杰帕德": "https://act-upload.mihoyo.com/sr-wiki/2023/04/21/288909604/b2e6481377ac48abdca73a65e2d15052_1464378270277851447.png?x-oss-process=image/quality,q_75/resize,s_280",
   "开拓者·毁灭": "https://act-upload.mihoyo.com/sr-wiki/2023/04/26/288909604/bb5959b4a67a0637f6862b2c8ba163ed_3921856926987798793.png?x-oss-process=image/quality,q_75/resize,s_280",
