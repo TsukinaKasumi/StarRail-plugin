@@ -126,7 +126,7 @@ export class StarRailManagement extends plugin {
           end = '更多详细信息，请前往gihee查看\nhttps://gitee.com/hewang1an/StarRail-plugin'
       }
 
-      log = await this.makeForwardMsg(`${plugin || '星铁插件'}更新日志，共${line}条`, log, end)
+      log = await this.makeForwardMsg(`${plugin}更新日志，共${line}条`, log, end)
 
       return log
   }
