@@ -79,7 +79,7 @@ export class hkrpg extends plugin {
       let hasPersonalCK = false
       let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
       await this.miYoSummerGetUid()
-      uid ||= await redis.get(`STAR_RAILWAY:UID:${user}`)
+      uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
       if (!uid) {
         await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
         return false
