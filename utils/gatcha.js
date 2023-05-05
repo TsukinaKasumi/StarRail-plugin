@@ -14,7 +14,7 @@ export async function getRecords (type = 11, authKey) {
   let result = []
   result.push(...data.data.list)
   page++
-  let endId = result[result.length - 1].id
+  let endId = result[result.length - 1]?.id
   while (data.data.list && data.data.list.length > 0) {
     await new Promise(resolve => setTimeout(resolve, 1000))
     logger.info('休息一秒，继续拉取抽卡记录')
