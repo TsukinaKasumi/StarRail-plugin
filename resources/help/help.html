@@ -1,123 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>card</title>
-</head>
-<body>
-<div>
-    <div class="container">
-        <div class="user">
-            <div class="user-inner">
-                <div class="srlogo">
-<!--                                        <img src="logo.png"/>-->
-                    <img src="{{pluResPath}}/card/logo.png"/>
+    <head>
+        <meta charset="UTF-8">
+        <title>card</title>
+    </head>
+    <body>
+        <div>
+            <div class="container">
+                <div class="user">
+                    <div class="user-inner">
+                        <div class="srlogo"><img src="{{pluResPath}}/card/logo.png">
+                        </div>
+                        <div class="role-name">
+                            StarRail-Plugin 帮助 <span class="uid"></span>
+                        </div>
+                        <div class="region">
+                            v0.1.9
+                        </div>
+                        <div class="pamu"><img class="pamu-img" src="{{pluResPath}}/card/pamu.png">
+                        </div>
+                    </div>
                 </div>
-                <div class="role-name">
-                    StarRail-Plugin 帮助 <span class="uid"></span>
+                <div class="general">
+                    <div class="title"><img src="{{pluResPath}}/card/star.png" style="width: 36px">
+                        <div>
+                            游戏角色
+                        </div>
+                    </div>
+                    <div class="general-inner">
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁卡片
+                            </div>
+                            <div class="general-inner-block-title">
+                              查看角色卡片（目前仅支持绑定ck查询）
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁收入
+                            </div>
+                            <div class="general-inner-block-title">
+                              月度星琼统计
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁跃迁分析
+                            </div>
+                            <div class="general-inner-block-title">
+                              抽卡分析，默认为限定，可接常驻/光锥
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁体力
+                            </div>
+                            <div class="general-inner-block-title">
+                              查看体力和委托
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁希儿面板
+                            </div>
+                            <div class="general-inner-block-title">
+                              角色面板(暂不支持别名)
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁抽卡帮助
+                            </div>
+                            <div class="general-inner-block-title">
+                              查看抽卡帮助
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="region">
-                    v0.1.8
-                </div>
-                <div class="pamu">
-<!--                                        <img class="pamu-img" src="pamu.png"/>-->
-                    <img class="pamu-img" src="{{pluResPath}}/card/pamu.png"/>
+                <div class="general">
+                    <div class="title" style="margin-top: 20px"><img src="{{pluResPath}}/card/star.png" alt="SVG image" style="width: 36px">
+                        <div>
+                            插件管理
+                        </div>
+                    </div>
+                    <div class="general-inner">
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁绑定UID
+                            </div>
+                            <div class="general-inner-block-title">
+                              已支持从ck获取星铁uid
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁(强制)更新
+                            </div>
+                            <div class="general-inner-block-title">
+                              更新本插件
+                            </div>
+                        </div>
+                        <div class="general-inner-block">
+                            <div class="general-inner-block-value">
+                              #星铁抽卡链接
+                            </div>
+                            <div class="general-inner-block-title">
+                              绑定抽卡链接
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logo">
+                        Created By Yunzai-Bot &amp; StarRail-plugin
+                    </div>
                 </div>
             </div>
-
         </div>
-
-        <div class="general">
-            <div class="title">
-                <img src="{{pluResPath}}/card/star.png"  style="width: 36px">
-                <div>游戏角色</div>
-            </div>
-            <div class="general-inner">
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁卡片
-                    </div>
-                    <div class="general-inner-block-title">
-                        查看角色卡片（目前仅支持绑定ck查询）
-                    </div>
-                </div>
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁收入
-                    </div>
-                    <div class="general-inner-block-title">
-                        月度星琼统计
-                    </div>
-                </div>
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁跃迁分析
-                    </div>
-                    <div class="general-inner-block-title">
-                        抽卡分析，默认为限定，可接常驻/光锥
-                    </div>
-                </div>
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁体力
-                    </div>
-                    <div class="general-inner-block-title">
-                        查看体力和委托
-                    </div>
-                </div>
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁希儿面板
-                    </div>
-                    <div class="general-inner-block-title">
-                        角色面板(暂不支持别名)                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="general">
-            <div class="title" style="margin-top: 20px">
-                <img src="{{pluResPath}}/card/star.png" alt="SVG image" style="width: 36px">
-                <div>插件管理</div>
-            </div>
-            <div class="general-inner">
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁绑定UID
-                    </div>
-                    <div class="general-inner-block-title">
-                        已支持从ck获取星铁uid
-                    </div>
-                </div>
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁(强制)更新
-                    </div>
-                    <div class="general-inner-block-title">
-                        更新本插件
-                    </div>
-                </div>
-                <div class="general-inner-block">
-                    <div class="general-inner-block-value">
-                        #星铁抽卡链接
-                    </div>
-                    <div class="general-inner-block-title">
-                        绑定抽卡链接
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="logo">
-            Created By Yunzai-Bot & StarRail-plugin
-        </div>
-    </div>
-
-</div>
-
-
-</body>
-</html>
-<style>
+        <style>
     .general-inner-block {
         width: 220px;
         text-align: center;
@@ -148,7 +147,6 @@
         margin-top: 20px;
         margin-left: 10px;
         width: 744px;
-        /*height: 132px;*/
         padding-bottom: 20px;
 
         background-color: rgba(255,255,255, 0.7);
@@ -160,9 +158,6 @@
         top: 10px;
         width: 720px;
         left: 10px;
-        /*padding-bottom: -10px;*/
-        /*height: calc(100% - 20px);*/
-        /*background-color: rgba(244,242,229, 0.7);*/
         border-radius: 5px 20px 5px 5px;
         border: #d0ba94 2px solid;
         display: flex;
@@ -217,7 +212,6 @@
         border-radius: 15px;
     }
     .srlogo {
-        /*position: absolute;*/
         width: 200px;
         margin-top: 10px;
     }
@@ -255,3 +249,5 @@
         src: url('{{pluResPath}}/fonts/汉仪润圆-75W.ttf') format('truetype');
     }
 </style>
+    </body>
+</html>
