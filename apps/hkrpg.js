@@ -345,12 +345,16 @@ export class hkrpg extends plugin {
   }
 
   async doBindAuthKey () {
-    let key = this.e.msg.trim()
-    key = key.split('authkey=')[1].split('&')[0]
-    let user = this.e.sender.user_id
-    await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
-    /** 复读内容 */
-    this.reply('绑定成功', false)
+    try {
+      let key = this.e.msg.trim()
+      key = key.split('authkey=')[1].split('&')[0]
+      let user = this.e.sender.user_id
+      await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
+      /** 复读内容 */
+      this.reply('绑定成功', false)
+    } catch (error) {
+      this.reply('抽卡链接错误，请检查链接重新绑定', false)
+    }
     /** 结束上下文 */
     this.finish('doBindAuthKey')
   }
