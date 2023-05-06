@@ -91,10 +91,10 @@ export class StarRailManagement extends plugin {
      * @param {string} plugin 插件名称
      * @returns
      */
-    async getLog(plugin = '') {
+    async getLog(plugin = 'StarRail-plugin') {
       let cm = 'git log  -20 --oneline --pretty=format:"%h||[%cd]  %s" --date=format:"%m-%d %H:%M"'
       if (plugin) {
-          cm = `cd ./plugins/StarRail-plugin/ && ${cm}`
+          cm = `cd ./plugins/${plugin}/ && ${cm}`
       }
 
       let logAll
@@ -123,10 +123,10 @@ export class StarRailManagement extends plugin {
 
       let end = ''
       if (!plugin) {
-          end = '更多详细信息，请前往github查看\nhttps://gitee.com/hewang1an/StarRail-plugin'
+          end = '更多详细信息，请前往gihee查看\nhttps://gitee.com/hewang1an/StarRail-plugin'
       }
 
-      log = await this.makeForwardMsg(`${plugin || '星铁插件'}更新日志，共${line}条`, log, end)
+      log = await this.makeForwardMsg(`${plugin}更新日志，共${line}条`, log, end)
 
       return log
   }
