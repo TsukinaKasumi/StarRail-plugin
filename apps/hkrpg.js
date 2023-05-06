@@ -25,35 +25,35 @@ export class hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
           fnc: 'card'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)体力$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)体力$',
           fnc: 'note'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
           fnc: 'month'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)(.*)面板$',
           fnc: 'avatar'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)帮助$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)帮助$',
           fnc: 'help'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡链接(绑定)?$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)抽卡链接(绑定)?$',
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(跃迁|抽卡)?(记录|分析)',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)(跃迁|抽卡)?(记录|分析)',
           fnc: 'gatcha'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡帮助$',
+          reg: '^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)抽卡帮助$',
           fnc: 'gatchahelp'
         },
         {
@@ -77,7 +77,7 @@ export class hkrpg extends plugin {
         user = ats[0].qq
       }
       let hasPersonalCK = false
-      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
+      let uid = e.msg.replace(/^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
       await this.miYoSummerGetUid()
       uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
       if (!uid) {
@@ -208,8 +208,8 @@ export class hkrpg extends plugin {
 
   async avatar (e) {
     try {
-      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
-      let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
+      let uid = e.msg.replace(/^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
+      let avatar = e.msg.replace(/^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
       if (!uid) {
         let user = this.e.sender.user_id
         let ats = e.message.filter(m => m.type === 'at')
@@ -290,7 +290,7 @@ export class hkrpg extends plugin {
         let user = this.e.sender.user_id;
         let type = 11;
         let typeName = e.msg.replace(
-          /^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
+          /^#(星穹|穹轨|穹铁|星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
           ''
         );
         if (typeName.includes('常驻')) {
