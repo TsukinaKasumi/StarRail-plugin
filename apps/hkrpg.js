@@ -49,7 +49,7 @@ export class hkrpg extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(跃迁|抽卡)(记录)?分析',
+          reg: '^#(星铁|星轨|崩铁|星穹铁道)(跃迁|抽卡)?(记录|分析)',
           fnc: 'gatcha'
         },
         {
