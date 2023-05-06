@@ -157,7 +157,6 @@ export class hkrpg extends plugin {
     })
 
     let cardData = await res.json()
-    if (!cardData || cardData.retcode != 0) return e.reply(cardData.message || '请求数据失败')
     let data = cardData.data
     data.expeditions.forEach(ex => {
       ex.remaining_time = formatDuration(ex.remaining_time)
@@ -286,32 +285,41 @@ export class hkrpg extends plugin {
     }
   }
 
-  async gatcha (e) {
-    let user = this.e.sender.user_id
-    let type = 11
-    let typeName = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/, '')
-    if (typeName.includes('常驻')) {
-      type = 1
-    } else if (typeName.includes('武器') || typeName.includes('光锥')) {
-      type = 12
-    } else if (typeName.includes('新手')) {
-      type = 2
+ async gatcha (e) {
+    try {
+        let user = this.e.sender.user_id;
+        let type = 11;
+        let typeName = e.msg.replace(
+          /^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
+          ''
+        );
+        if (typeName.includes('常驻')) {
+          type = 1;
+        } else if (typeName.includes('武器') || typeName.includes('光锥')) {
+          type = 12;
+        } else if (typeName.includes('新手')) {
+          type = 2;
+        }
+        // let user = this.e.sender.user_id
+        let ats = e.message.filter((m) => m.type === 'at');
+        if (ats.length > 0 && !e.atBot) {
+          user = ats[0].qq;
+        }
+    let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`);
+        if (!authKey) {
+          await e.reply(
+            '未绑定抽卡链接，请点击链接查看说明\nhttps://docs.qq.com/doc/DTVF1REhRTm9mbGZ4?u=be8555d8e8dd4897a8017e43140ef651\n发送[#星铁抽卡链接]绑定'
+          );
+          return false;
+        }
+        let result = {};
+        result = await statistics(type, authKey);
+        result.typeName = gatchaType[type];
+        await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result);
+      } catch (err) {
+        await e.reply('抽卡链接已过期，请重新获取并绑定');
+      }
     }
-    // let user = this.e.sender.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-    }
-    let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
-    if (!authKey) {
-      await e.reply('未绑定抽卡链接，请点击链接查看说明\nhttps://docs.qq.com/doc/DTVF1REhRTm9mbGZ4?u=be8555d8e8dd4897a8017e43140ef651\n发送[#星铁抽卡链接]绑定')
-      return false
-    }
-    let result = {}
-    result = await statistics(type, authKey)
-    result.typeName = gatchaType[type]
-    await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result)
-  }
 
   async gatchahelp (e) {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
