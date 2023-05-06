@@ -308,7 +308,7 @@ export class hkrpg extends plugin {
     let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`);
         if (!authKey) {
           await e.reply(
-            '未绑定抽卡链接，请点击链接查看说明\nhttps://docs.qq.com/doc/DTVF1REhRTm9mbGZ4?u=be8555d8e8dd4897a8017e43140ef651\n发送[#星铁抽卡链接]绑定'
+            '未绑定抽卡链接，请点击链接查看说明\nhttps://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ\n发送[#星铁抽卡链接]绑定'
           );
           return false;
         }
