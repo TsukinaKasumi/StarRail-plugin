@@ -15,6 +15,8 @@
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
 
 QQ群：758447726
+
+### 如果觉得插件对你有帮助的话请点一个star给作者提供动力吧！
 ---
 星穹铁道插件
 
@@ -68,7 +70,17 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)
 
 
+## 赞助
+
+如果觉得本项目对你有帮助的话，愿意的话可以请我们喝一口快乐水：
+
+https://afdian.net/a/ikechan8370
+
+https://afdian.net/a/hewang1an
+
 ## 贡献者
+
+感谢以下贡献者
 
 <a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
