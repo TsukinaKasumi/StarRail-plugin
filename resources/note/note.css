@@ -1,0 +1,174 @@
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.5s;
+}
+    body {
+        /* font-family: PingFangSC-Medium, PingFang SC, sans-serif; */
+        width: 720px;
+    }
+    @font-face {
+        font-family: hanyi;
+        src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+    }
+    .container {
+        width: 720px;
+        /* height: 1720px; */
+        background: #faf9f7;
+        padding-bottom: 5px;
+        /* 背景 */
+        background-image: url('37.webp');
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .ktl {
+        position: relative;
+        margin: 0 auto;
+        width: 700px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(2px);
+        /* filter: blur(6px); */
+        border-radius: 30px 30px;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .ktl img {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 10%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+    }
+
+    .ktl_name {
+        display: inline;
+        padding: 0 30px;
+        font-size: 30px;
+        color: #eee;
+        backdrop-filter: blur(2px);
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 30px 30px;
+    }
+
+    .ktl_uid {
+        display: inline;
+        padding: 0 10px;
+        font-size: 16px;
+        color: #eee;
+        backdrop-filter: blur(2px);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 0;
+    }
+
+    .ktl-title {
+        font-size: 20px;
+        color: #2e353e;
+    }
+
+    .ktl-value {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .ktl-full {
+        margin-top: 5px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .ktl-time {
+        /* margin: 0 auto; */
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .divider {
+        width: 680px;
+        margin: 10px 20px;
+        border: #2e353e 1px solid;
+        height: 6px;
+        background: #d7bb6e;
+    }
+
+    .weituo {
+        margin: 0 auto;
+        margin-left: 20px;
+        margin-top: 10px;
+        padding: 5px;
+        width: 690px;
+        border-radius: 10px;
+        /* border-left: #d89d51 solid 10px; */
+        backdrop-filter: blur(2px);
+        background-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .weituo-title {
+        /* margin-left: 20px; */
+        margin-top: 0px;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 30px;
+        border-bottom: 3px solid rgba(253, 119, 246, 0.5);
+        /* border-left: #2e353e 8px solid; */
+    }
+
+    .weituo-line {
+        display: flex;
+        font-size: 30px;
+        /* border: #d2aa78 solid 2px; */
+        border-left: #d89d51 solid 10px;
+        backdrop-filter: blur(2px);
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 0 20px 20px 0;
+        height: 60px;
+        margin: 20px;
+    }
+
+    .weituo-name {
+        color: #d7bb6e;
+        font-size: 25px;
+        font-weight: bold;
+        margin-top: 12px;
+        margin-left: 20px;
+        width: 50%;
+    }
+
+    .avatar {
+        margin-top: 10px;
+        margin-right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .weituo-line-last {
+        border-left: #d89d51 solid;
+        width: 140px;
+        text-align: center;
+        font-size: 18px;
+        margin-top: 5px;
+        font-weight: bold;
+    }
+
+    .logo {
+        /* display: inline-block; */
+        /* margin-top: 100px; */
+        margin: 0 30px;
+        font-size: 15px;
+        font-weight: 900;
+        text-align: center;
+        margin-top: 10px;
+        /* backdrop-filter: blur(2px); */
+        /* background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 10px 10px; */
+
+    }
