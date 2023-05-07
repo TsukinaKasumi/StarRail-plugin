@@ -5,9 +5,10 @@ import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import { gatchaType, statistics } from '../utils/gatcha.js'
 import setting from '../utils/setting.js'
-import { getPaylogUrl } from '../utils/payLog.js'
+import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
+import { statisticOnlinePeriods, statisticsOnlineDateGeneral } from '../utils/common.js'
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -59,6 +60,10 @@ export class hkrpg extends plugin {
         {
           reg: '^#星铁充值记录$',
           fnc: 'getPayLog'
+        },
+        {
+          reg: '^#星铁在线(时长)?(统计|分析)?',
+          fnc: 'statisticsOnline'
         }
       ]
     })
@@ -130,6 +135,7 @@ export class hkrpg extends plugin {
     let { game_uid: gameUid } = userData
     await redis.set(key, gameUid)
     await redis.setEx(`STAR_RAILWAY:userData:${gameUid}`, 60 * 60, JSON.stringify(userData))
+    return userData
   }
 
   async note (e) {
@@ -162,7 +168,7 @@ export class hkrpg extends plugin {
       ex.remaining_time = formatDuration(ex.remaining_time)
 	  if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
     })
-	logger.warn(data.expeditions)
+    logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力已全部恢复'
     } else {
@@ -285,41 +291,41 @@ export class hkrpg extends plugin {
     }
   }
 
- async gatcha (e) {
+  async gatcha (e) {
     try {
-        let user = this.e.sender.user_id;
-        let type = 11;
-        let typeName = e.msg.replace(
-          /^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
-          ''
-        );
-        if (typeName.includes('常驻')) {
-          type = 1;
-        } else if (typeName.includes('武器') || typeName.includes('光锥')) {
-          type = 12;
-        } else if (typeName.includes('新手')) {
-          type = 2;
-        }
-        // let user = this.e.sender.user_id
-        let ats = e.message.filter((m) => m.type === 'at');
-        if (ats.length > 0 && !e.atBot) {
-          user = ats[0].qq;
-        }
-    let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`);
-        if (!authKey) {
-          await e.reply(
-            '未绑定抽卡链接，请点击链接查看说明\nhttps://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ\n发送[#星铁抽卡链接]绑定'
-          );
-          return false;
-        }
-        let result = {};
-        result = await statistics(type, authKey);
-        result.typeName = gatchaType[type];
-        await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result);
-      } catch (err) {
-        await e.reply('抽卡链接已过期，请重新获取并绑定');
+      let user = this.e.sender.user_id
+      let type = 11
+      let typeName = e.msg.replace(
+        /^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
+        ''
+      )
+      if (typeName.includes('常驻')) {
+        type = 1
+      } else if (typeName.includes('武器') || typeName.includes('光锥')) {
+        type = 12
+      } else if (typeName.includes('新手')) {
+        type = 2
       }
+      // let user = this.e.sender.user_id
+      let ats = e.message.filter((m) => m.type === 'at')
+      if (ats.length > 0 && !e.atBot) {
+        user = ats[0].qq
+      }
+      let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
+      if (!authKey) {
+        await e.reply(
+          '未绑定抽卡链接，请点击链接查看说明\nhttps://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ\n发送[#星铁抽卡链接]绑定'
+        )
+        return false
+      }
+      let result = {}
+      result = await statistics(type, authKey)
+      result.typeName = gatchaType[type]
+      await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result)
+    } catch (err) {
+      await e.reply('抽卡链接已过期，请重新获取并绑定')
     }
+  }
 
   async gatchahelp (e) {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
@@ -408,6 +414,84 @@ export class hkrpg extends plugin {
       return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
     }).join('\n')
     await e.reply(t)
+  }
+
+  async statisticsOnline (e) {
+    let lock = await redis.get(`STAR_RAILWAY:CD:ONLINE:${e.sender.user_id}`)
+    if (lock) {
+      await e.reply('冷却时间没到，请稍后再试')
+      return true
+    }
+    await this.miYoSummerGetUid()
+    let uid = await redis.get(`STAR_RAILWAY:UID:${e.sender.user_id}`)
+    if (!uid) {
+      await e.reply('未绑定uid，请发送#绑定星铁uid进行绑定')
+      return false
+    }
+    // let result = await redis.get(`STAR_RAILWAY:POWER:${uid}`)
+    // if (result) {
+    //   result = JSON.parse(result)
+    //   const { data } = statisticsOnlineDateGeneral(result)
+    //   let details = statisticOnlinePeriods(result)
+    //   let userDataKey = `STAR_RAILWAY:userData:${uid}`
+    //   let userData = JSON.parse(await redis.get(userDataKey))
+    //   if (!userData) {
+    //     let ck = this.User.getCk()
+    //     let api = new MysSRApi(uid, ck)
+    //     userData = (await api.getData('srUser'))?.data?.list?.[0]
+    //   }
+    //   await e.runtime.render('StarRail-plugin', 'online/index.html', Object.assign(userData || {}, {
+    //     general: JSON.stringify(data),
+    //     details
+    //   }))
+    //   return
+    // } else {
+    //   result = []
+    // }
+    let authKey
+    try {
+      authKey = await getAuthKey(e, uid)
+    } catch (err) {
+      // 未安装逍遥
+      await e.reply('请安装逍遥插件并扫码绑定才能使用本功能哦')
+      return false
+    }
+    if (!authKey) {
+      await e.reply('请安装逍遥插件并扫码绑定才能使用本功能哦')
+      return false
+    }
+    await e.reply('在统计了，时间可能比较久请多等一会~')
+    authKey = encodeURIComponent(authKey)
+    let result = []
+    let page = 1
+    let size = 10
+    let powerUrl = getPowerUrl(authKey, page, size)
+    let res = await fetch(powerUrl)
+    let powerChangeRecordList = await res.json()
+    result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
+    page++
+    while (powerChangeRecordList.data.list && powerChangeRecordList.data.list.length > 0) {
+      powerUrl = getPowerUrl(authKey, page, size)
+      res = await fetch(powerUrl)
+      powerChangeRecordList = await res.json()
+      result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
+      page++
+    }
+    // await redis.set(`STAR_RAILWAY:POWER:${uid}`, JSON.stringify(result))
+    const { data } = statisticsOnlineDateGeneral(result)
+    let details = statisticOnlinePeriods(result)
+    let userDataKey = `STAR_RAILWAY:userData:${uid}`
+    let userData = JSON.parse(await redis.get(userDataKey))
+    if (!userData) {
+      let ck = this.User.getCk()
+      let api = new MysSRApi(uid, ck)
+      userData = (await api.getData('srUser'))?.data?.list?.[0]
+    }
+    let renderData = Object.assign(userData || {}, {
+      general: JSON.stringify(data),
+      details
+    })
+    await e.runtime.render('StarRail-plugin', 'online/index.html', renderData)
   }
 }
 
