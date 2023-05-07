@@ -1,0 +1,250 @@
+@font-face {
+    font-family: hanyi;
+    src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: YS;
+    src: url('../fonts/YS.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "tttgbnumber";
+    src: url("../fonts/tttgbnumber.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "YS", sans-serif;
+    width: 784px;
+    transform: scale(1.4);
+    transform-origin: 0 0;
+}
+
+.container {
+    padding: 30px 30px 20px 20px;
+}
+
+
+.general-inner-block {
+    width: 33%;
+    text-align: center;
+}
+
+.general-inner-block-value {
+    margin-top: 30px;
+    font-size: 32px;
+}
+
+.general-inner-block-title {
+    margin-top: 3px;
+    font-size: 24px;
+    color: #9a9a9a;
+}
+
+.title {
+    display: flex;
+    margin-bottom: 15px;
+    /* margin-top: 20px; */
+}
+
+.title div {
+    margin-left: 10px;
+    /* font-weight: bold; */
+    font-size: 32px;
+}
+
+.title img {
+    width: 36px;
+    object-fit: contain
+}
+
+.general {
+    width: 744px;
+    /*height: 132px;*/
+    padding-bottom: 20px;
+    background-color: #f4f2e5;
+    border-radius: 5px 70px 5px 5px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.general-inner {
+    position: relative;
+    top: 10px;
+    width: 720px;
+    left: 10px;
+    /*padding-bottom: -10px;*/
+    /*height: calc(100% - 20px);*/
+    background-color: #f4f2e5;
+    border-radius: 5px 60px 5px 5px;
+    border: #d0ba94 2px solid;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.avatar-box {
+    margin: 3px 6px 6px 1px;
+}
+
+.avatar {
+    margin-top: 5px;
+    margin-left: 15px;
+    background: #cb9a6d;
+    width: 156px;
+    border-radius: 0 30px 0 0;
+    /*height: 90px;*/
+    position: relative;
+    overflow: hidden;
+}
+
+.rarity5 {
+    background: #cb9a6d;
+}
+
+.rarity4 {
+    background: #9166da;
+}
+
+.avatar-inner {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    border-radius: 0 30px 0 0;
+    border: #bcbcbc98 3px solid;
+    width: 142px;
+    height: 160px;
+}
+
+.avatar-img {
+    width: 160px;
+    position: relative;
+    z-index: 100;
+}
+
+.avatar-banner {
+    position: absolute;
+    top: 149px;
+    background: black;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    z-index: 101;
+}
+
+.avatar-element {
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    border: #f17565 1px solid;
+    z-index: 101;
+    background: black;
+    transform: rotate(45deg);
+}
+
+.avatar-element img {
+    transform: rotate(-45deg);
+    width: 32px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+}
+
+.avatar-命座 {
+    width: 32px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    /* border: #f17565 1px solid; */
+    z-index: 101;
+    text-align: center;
+    line-height: 40px;
+    font-size: 25px;
+    color: #f1f1f1;
+    border-radius: 0 0 0 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.avatar-name {
+    margin-top: 6px;
+    /* font-weight: bold; */
+    font-size: 28px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 26px;
+    font-family: "tttgbnumber";
+    color: #8f8f8f;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.user {
+    margin: 13px 5px 30px 5px;
+    height: 140px;
+    background: #fcf3cc;
+    border: #f5daa9 1px solid;
+    border-radius: 20px;
+    position: relative;
+}
+
+.user-inner {
+    margin: 5px;
+    height: 126px;
+    background: #fcf3cc;
+    border: #f5daa9 2px solid;
+    border-radius: 15px;
+}
+
+.srlogo {
+    position: absolute;
+    width: 200px;
+    margin-top: 2px;
+}
+
+.srlogo img {
+    width: 220px;
+}
+
+.role-name {
+    position: absolute;
+    top: 29px;
+    left: 260px;
+    font-size: 30px;
+}
+
+.uid {
+    font-size: 24px;
+    color: #2e353e;
+}
+
+.region {
+    font-size: 24px;
+    color: #aaac9c;
+    position: absolute;
+    top: 75px;
+    left: 260px;
+}
+
+.pamu {
+    position: absolute;
+    left: 526px;
+    top: -22px;
+}
+
+.pamu img {
+    width: 180px;
+}
