@@ -78,7 +78,9 @@ export function statisticOnlinePeriods (powerRecoverList) {
         dateMap[today].push([0, endMinutes])
         cur.setDate(cur.getDay() - 1)
         let yesterday = formatDate(cur)
-        dateMap[yesterday].push([1440 - (6 - endMinutes), 1440])
+        if (dateMap[yesterday]) {
+          dateMap[yesterday].push([1440 - (6 - endMinutes), 1440])
+        }
       }
     }
   }
