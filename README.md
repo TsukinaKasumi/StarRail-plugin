@@ -61,6 +61,9 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### #星铁抽卡链接（绑定）
 在群内发送抽卡链接进行绑定，私聊发送可能会导致出错
 
+### #白露攻略
+查看对应角色的攻略，数据来源米游社 感谢[@真心](https://github.com/RealHeart)提供的攻略帮助
+
 ### #星铁抽卡分析角色/光锥/常驻/新手(刷新)
 查看卡池抽卡记录信息
 
