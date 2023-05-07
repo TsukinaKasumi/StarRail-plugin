@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>online</title>
+    <script src="../js/echarts.js"></script>
+    <link rel="stylesheet" href="./online.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="user">
+        <div class="user-inner">
+            <div class="srlogo">
+                <img src="../card/logo.png"/>
+                <!--                <img src="{{pluResPath}}/card/logo.png"/>-->
+            </div>
+            <div class="role-name">
+                {{nickname}} <span class="uid">{{game_uid}}</span>
+            </div>
+            <div class="region">
+                {{region_name}} {{level}}
+            </div>
+            <div class="pamu">
+                <img class="pamu-img" src="../card/pamu.png"/>
+                <!--                <img class="pamu-img" src="{{pluResPath}}/card/pamu.png"/>-->
+            </div>
+        </div>
+
+    </div>
+    <div id="bar" style="width: 800px;height:400px;"></div>
+    <div id="heatmap" style="width: 700px;height:300px;margin-left: 50px"></div>
+    <div id="detail" style="width: 700px;height:700px;margin-left: 50px">
+        <div class="detail-title">
+            近期在线可视化
+        </div>
+        <div class="detail-daily">
+            <div class="detail-daily-label">
+                05-03
+            </div>
+            <div class="detail-daily-blocks">
+                <div class="detail-daily-block-online" style="width: 5%">
+<!--                    ONLINE-->
+                </div>
+                <div class="detail-daily-block-offline" style="width: 30%">
+<!--                    OFFLINE-->
+                </div>
+                <div class="detail-daily-block-online" style="width: 40%">
+<!--                    ONLINE-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hint">
+        数据由米游社开拓力回复推算估计，不保证准确性，仅供参考
+    </div>
+    <div class="logo">
+        Created By Yunzai-Bot &amp; StarRail-plugin
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('heatmap'));
+  var myChartBar = echarts.init(document.getElementById('bar'));
+  let data = {
+    "2023-04-27": 186,
+    "2023-04-28": 12,
+    "2023-04-29": 294,
+    "2023-04-30": 288,
+    "2023-05-01": 216,
+    "2023-05-02": 150,
+    "2023-05-03": 414,
+    "2023-05-04": 84,
+    "2023-05-05": 204,
+    "2023-05-06": 36,
+    "2023-05-07": 138
+  }
+
+  heatMapData = Object.keys(data).map(k => {
+    return [k, data[k]]
+  })
+  // 指定图表的配置项和数据
+  var option = {
+    title: {
+      text: '每日在线时长热力图',
+      top: 20,
+      left: 'center',
+      textStyle: {
+        fontFamily: 'hanyi',
+        fontSize: 24
+      }
+    },
+    // tooltip: {},
+    visualMap: {
+      min: 0,
+      max: 1440,
+      type: 'piecewise',
+      orient: 'horizontal',
+      left: 'center',
+      top: 65,
+      textStyle: {
+        fontFamily: 'hanyi',
+        fontSize: 12
+      }
+    },
+    calendar: {
+      top: 120,
+      left: 30,
+      right: 30,
+      cellSize: ['auto', 16],
+      range: '2023',
+      itemStyle: {
+        borderWidth: 0.5,
+      },
+      monthLabel: {
+        textStyle: {
+          fontFamily: 'hanyi',
+          fontSize: 12
+        },
+        nameMap: 'ZH'
+      },
+      dayLabel: {
+        textStyle: {
+          fontFamily: 'hanyi',
+          fontSize: 12
+        },
+        nameMap: 'ZH'
+      },
+      yearLabel: {show: true}
+    },
+    series: {
+      type: 'heatmap',
+      coordinateSystem: 'calendar',
+      data: heatMapData
+    }
+  };
+  const optionBar = {
+    title: {
+      text: '近期每日在线时长',
+      top: 20,
+      left: 'center',
+      textStyle: {
+        fontFamily: 'hanyi',
+        fontSize: 24
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: Object.keys(data),
+      axisLabel: {
+        fontFamily: 'hanyi'
+      }
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+        fontFamily: 'hanyi'
+      }
+    },
+    series: [
+      {
+        data: Object.values(data),
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(152,151,151,0.2)'
+        },
+        colorBy: 'data',
+        label: {
+          show: true,
+          fontFamily: 'hanyi'
+        }
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+  myChartBar.setOption(optionBar)
+  let detail = {
+    "2023-05-07": [[702, 756], [864, 948]],
+    "2023-05-06": [[0, 30]],
+    "2023-05-05": [[18, 48], [732, 768], [1140, 1146], [1302, 1440]],
+    "2023-05-04": [[48, 126], [756, 762]],
+    "2023-05-03": [[624, 738], [816, 1116]],
+    "2023-05-02": [[96, 120], [540, 558], [618, 642], [924, 1002], [1014, 1020]],
+    "2023-05-01": [[576, 588], [696, 750], [751, 757], [756, 768], [852, 912], [996, 1014], [1038, 1068], [1350, 1374]],
+    "2023-04-30": [[30, 54], [546, 648], [702, 816], [1038, 1086]],
+    "2023-04-29": [[66, 132], [552, 624], [852, 930], [960, 1038]],
+    "2023-04-28": [[438, 444], [1308, 1314]],
+    "2023-04-27": [[720, 828], [1188, 1206], [1320, 1380]],
+    "2023-04-26": [],
+    "2023-04-25": [],
+    "2023-04-24": []
+  }
+</script>
+</body>
+</html>
+<style>
+    @font-face {
+        font-family: hanyi;
+        src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+    }
+</style>
