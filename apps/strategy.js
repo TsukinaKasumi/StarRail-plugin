@@ -1,7 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { pluginResources } from '../utils/path.js'
 import fs from 'fs'
-import { segment } from 'icqq'
 
 const rolePath = `${pluginResources}/strategy/角色`
 
