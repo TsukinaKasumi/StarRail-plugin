@@ -116,7 +116,7 @@ class Setting {
           fs.copyFileSync(`${this.defPath}${app}.yaml`, `${this.configPath}${app}.yaml`)
         }
       } catch (error) {
-        logger.error(`拓展插件缺失默认文件[${app}]${error}`)
+        logger.error(`星铁插件缺失默认文件[${app}]${error}`)
       }
       return `${this.configPath}${app}.yaml`
     }
