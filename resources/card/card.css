@@ -107,11 +107,11 @@ body {
 }
 
 .rarity5 {
-    background: #cb9a6d;
+    background: linear-gradient(45deg, #c59a65, #894f4a);
 }
 
 .rarity4 {
-    background: #9166da;
+    background: linear-gradient(45deg, #7f54c0, #3d3d63);
 }
 
 .avatar-inner {
@@ -119,7 +119,7 @@ body {
     left: 6px;
     top: 6px;
     border-radius: 0 30px 0 0;
-    border: #bcbcbc98 3px solid;
+    border: #fffdfd48 3px solid;
     width: 142px;
     height: 160px;
 }
@@ -142,12 +142,19 @@ body {
 }
 
 .avatar-element {
-    width: 26px;
-    height: 26px;
+    --borderColor-fire: #fa4d35;
+    --borderColor-ice: #3ac8eb;
+    --borderColor-imaginary: #f6eb85;
+    --borderColor-lightning: #bf21dc;
+    --borderColor-physical: #cdcdcd;
+    --borderColor-quantum: #bfbffe;
+    --borderColor-wind: #44d79a;
+    width: 25px;
+    height: 25px;
     position: absolute;
     top: 14px;
     left: 14px;
-    border: #f17565 1px solid;
+    border: 1px solid;
     z-index: 101;
     background: black;
     transform: rotate(45deg);
@@ -157,8 +164,8 @@ body {
     transform: rotate(-45deg);
     width: 32px;
     position: absolute;
-    top: -3px;
-    left: -3px;
+    top: -5px;
+    left: -5px;
 }
 
 .avatar-命座 {
@@ -219,10 +226,15 @@ body {
     width: 220px;
 }
 
-.role-name {
+.role-name,
+.region {
+    left: 50%;
+    transform: translateX(-50%);
     position: absolute;
+}
+
+.role-name {
     top: 29px;
-    left: 260px;
     font-size: 30px;
 }
 
@@ -234,9 +246,7 @@ body {
 .region {
     font-size: 24px;
     color: #aaac9c;
-    position: absolute;
     top: 75px;
-    left: 260px;
 }
 
 .pamu {
