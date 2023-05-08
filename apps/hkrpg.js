@@ -102,7 +102,7 @@ export class hkrpg extends plugin {
       let result = cardData?.data
       if (!result) {
         logger.error(cardData)
-        await e.reply('未绑定ck,发送ck帮助查看说明')
+        await e.reply('未绑定ck,请#扫码登录')
         return false
       }
       if (hasPersonalCK) {
@@ -147,12 +147,12 @@ export class hkrpg extends plugin {
     await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
-      await e.reply('尚未绑定cookie')
+      await e.reply('未绑定ck,请#扫码登录')
       return false
     }
     let ck = await this.User.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie')
+      await e.reply('未绑定ck,请#扫码登录')
       return false
     }
 
@@ -190,12 +190,12 @@ export class hkrpg extends plugin {
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     await this.miYoSummerGetUid()
     if (!uid) {
-      await e.reply('尚未绑定cookie')
+      await e.reply('未绑定ck,请#扫码登录')
       return false
     }
     let ck = await this.User.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie')
+      await e.reply('未绑定ck,请#扫码登录')
       return false
     }
 
@@ -226,7 +226,7 @@ export class hkrpg extends plugin {
       }
       await this.miYoSummerGetUid()
       if (!uid) {
-        await e.reply('尚未绑定cookie')
+        await e.reply('未绑定ck,请#扫码登录')
         return false
       }
       let ck = await this.User.getCk()
