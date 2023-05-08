@@ -16,12 +16,11 @@
 
 QQ群：758447726
 
-### 如果觉得插件对你有帮助的话请点一个star给作者提供动力吧！
+### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
 星穹铁道插件
 
-该插件的前身为个人团体临时写出来过度使用的东西(后来被人到处传了）很多功能并未完善，所以很多地方都需要优化一下，后续会慢慢完善，遇到报错是很正常的。
-我们目前在不断优化，以方便大家使用，如果有更多的建议可以提issues，会尽量实现，并且铁道开服到现在还没有多长时间，很多玩法还没有被开发出来，所以不要着急，给插件和游戏一点时间
+支持米游社相关的基本功能，后续会加其他功能，比如查看忘却之庭数据和查看角色详细属性之类（咕咕咕）由于目前还没有铁道相关的面板API可以使用，所以暂时看不了详细数据，不用再问了，有相关的建议和需要的功能可以在issues中提出，会尽量完善，目前正在逐步优化中（进度缓慢）
 
 ### 安装方法
 
@@ -70,12 +69,11 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
   抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin?_from=gitee_search)发送#扫码登录进行cookie的绑定，否则可能会报错
-获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)
-
+获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)（仅pc，ios）
 
 ## 赞助
 
-如果觉得本项目对你有帮助的话，愿意的话可以请我们喝一口快乐水：
+如果觉得本项目对你有帮助的话，愿意的话不妨赞助我们让我们有更多动力更新！
 
 https://afdian.net/a/ikechan8370
 
@@ -83,11 +81,17 @@ https://afdian.net/a/hewang1an
 
 ## 贡献者
 
-感谢以下贡献者
+感谢以下贡献者对本项目做出的贡献
 
 <a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
 </a>
+
+![Alt](https://repobeats.axiom.co/api/embed/1c5c4f4bafef4a5d2c743f72703abad36a01762d.svg "Repobeats analytics image")
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hewang1an/StarRail-plugin&type=Date)](https://star-history.com/#hewang1an/StarRail-plugin&Date)
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
