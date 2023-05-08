@@ -1,4 +1,5 @@
 // import User from "../../xiaoyao-cvs-plugin/model/user.js";
+import fetch from 'node-fetch'
 import MysSRApi from '../runtime/MysSRApi.js'
 let User
 try {
