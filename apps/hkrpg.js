@@ -164,6 +164,7 @@ export class hkrpg extends plugin {
 
     let cardData = await res.json()
     let data = cardData.data
+    console.log(data);
     data.expeditions.forEach(ex => {
       ex.remaining_time = formatDuration(ex.remaining_time)
 	  if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
