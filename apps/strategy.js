@@ -40,7 +40,7 @@ export class strategy extends plugin {
       priority: 400,
       rule: [
         {
-          reg: '^#(.*)(攻略([1-2])?)$',
+          reg: '^#?(.*)(攻略([1-2])?)$',
           fnc: 'strategy'
         }
       ]
