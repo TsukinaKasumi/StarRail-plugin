@@ -48,7 +48,7 @@ export class strategy extends plugin {
   }
 
   async strategy (e) {
-    const reg = /^#(.*)(攻略([1-2])?)$/
+    const reg = /^#?(.*)(攻略([1-2])?)$/
     const match = reg.exec(e.msg)
     let roleName = match[1].trim()
     let group = match[3] ? match[3] : "1"
