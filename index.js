@@ -14,11 +14,12 @@ const files = fs.readdirSync('./plugins/StarRail-plugin/apps').filter(file => fi
 
 let ret = []
 
-logger.info('------------------')
+logger.info('------(ˊ·ω·ˋ)------')
 logger.info('StarRail-plugin载入成功!')
 logger.info('仓库地址 https://gitee.com/hewang1an/StarRail-plugin')
 logger.info('插件群号: 758447726')
-logger.info('------------------')
+logger.info('Created By 鹤望兰')
+logger.info('-------------------')
 
 files.forEach((file) => {
   ret.push(import(`./apps/${file}`))
