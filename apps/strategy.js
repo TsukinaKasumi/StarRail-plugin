@@ -1,8 +1,10 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { pluginResources } from '../utils/path.js'
 import fs from 'fs'
+import { exec } from 'child_process'
 
 const rolePath = `${pluginResources}/strategy/角色/`
+const tempPath = `${pluginResources}/strategy/角色/temp/`
 
 const roleAlias = {
   阿兰: ['Alan', '阿郎', '阿蓝', 'Arlan'],
@@ -40,7 +42,7 @@ export class strategy extends plugin {
       priority: 400,
       rule: [
         {
-          reg: '^#(.*)(攻略([1-2])?)$',
+          reg: '^#?(.*)(攻略([1-2])?)$',
           fnc: 'strategy'
         }
       ]
@@ -48,7 +50,7 @@ export class strategy extends plugin {
   }
 
   async strategy (e) {
-    const reg = /^#(.*)(攻略([1-2])?)$/
+    const reg = /^#?(.*)(攻略([1-2])?)$/
     const match = reg.exec(e.msg)
     let roleName = match[1].trim()
     let group = match[3] ? match[3] : "1"
@@ -70,8 +72,24 @@ export class strategy extends plugin {
 
     if (isSend) {
       let folderPath = group === "1" ? "1" : "2";
-      const image = segment.image(`${rolePath}${folderPath}/${roleName}.webp`)
-      this.reply(image)
+      const webpPath = `${rolePath}${folderPath}/${roleName}.webp`;
+      const jpgPath = `${tempPath}/${folderPath}/${roleName}.jpg`;
+      const tempFolderPath = `${tempPath}/${folderPath}`;
+
+      // 判断临时文件夹是否存在，不存在则创建
+      if (!fs.existsSync(tempFolderPath)) {
+        fs.mkdirSync(tempFolderPath, { recursive: true });
+      }
+
+      // 使用 FFmpeg 将 WebP 格式的图片转换为 JPEG 格式的图片
+      exec(`ffmpeg -i ${webpPath} ${jpgPath}`, (error) => {
+        if (error) {
+          logger.error(`[星穹铁道-攻略][strategy]转换图片格式失败，错误信息：${error}`)
+        } else {
+          const image = segment.image(jpgPath);
+          this.reply(image);
+        }
+      });
       return true
     }
 
