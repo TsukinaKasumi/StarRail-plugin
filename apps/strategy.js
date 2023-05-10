@@ -2,7 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import { pluginResources } from '../utils/path.js'
 import fs from 'fs'
 
-const rolePath = `${pluginResources}/strategy/角色`
+const rolePath = `${pluginResources}/strategy/角色/`
 
 const roleAlias = {
   阿兰: ['Alan', '阿郎', '阿蓝'],
@@ -40,7 +40,7 @@ export class strategy extends plugin {
       priority: 400,
       rule: [
         {
-          reg: '^#?(.*)(攻略)$',
+          reg: '^#?(.*)(攻略([1-2])?)$',
           fnc: 'strategy'
         }
       ]
@@ -48,13 +48,14 @@ export class strategy extends plugin {
   }
 
   async strategy (e) {
-    const reg = /^#？(.*)(攻略)$/
+    const reg = /^#?(.*)(攻略([1-2])?)$/
     const match = reg.exec(e.msg)
     let roleName = match[1].trim()
+    let group = match[3] ? match[3] : "1"
 
     let isSend = false
 
-    const roleFiles = this.getRoleList()
+    const roleFiles = this.getRoleList(group)
     if (roleFiles.includes(roleName)) {
       isSend = true
     } else {
@@ -67,8 +68,9 @@ export class strategy extends plugin {
       })
     }
 
-    if (isSend) {
-      const image = segment.image(`${rolePath}/${roleName}.png`)
+     if (isSend) {
+      let folderPath = group === "1" ? "1" : "2";
+      const image = segment.image(`${rolePath}${folderPath}/${roleName}.webp`)
       this.reply(image)
       return true
     }
@@ -77,10 +79,11 @@ export class strategy extends plugin {
     return false
   }
 
-  getRoleList () {
-    const roleFiles = fs.readdirSync(rolePath)
+  getRoleList (group) {
+    const Path = rolePath + group;
+    const roleFiles = fs.readdirSync(Path)
     return roleFiles
-      .filter((file) => file.endsWith('.png'))
-      .map((file) => file.replace(/.png/g, ''))
-  }
+      .filter((file) => file.endsWith('.webp'))
+      .map((file) => file.replace(/.webp/g, ''))
+ }
 }
