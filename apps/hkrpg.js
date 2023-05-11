@@ -163,11 +163,16 @@ export class hkrpg extends plugin {
     })
 
     let cardData = await res.json()
+
+    if (cardData.retcode !== 0) {
+      await e.reply('查询失败, 可能是ck失效或者别的原因, 可以尝试重新扫码登录后再进行查询')
+      return false
+    }
+
     let data = cardData.data
-    console.log(data);
     data.expeditions.forEach(ex => {
       ex.remaining_time = formatDuration(ex.remaining_time)
-	  if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
+      if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
     })
     logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
