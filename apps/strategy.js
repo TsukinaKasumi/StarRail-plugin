@@ -69,8 +69,11 @@ export class strategy extends plugin {
     }
 
     if (isSend) {
-      const image = segment.image(`${rolePath}${group}/${roleName}.jpg`)
-      this.reply(image)
+      // const image = segment.image(`${rolePath}${group}/${roleName}.jpg`)
+      // this.reply(image)
+      let result = []
+      result.imagePath = `${rolePath}${group}/${roleName}.webp`
+      await e.runtime.render('StarRail-plugin', '/strategy/strategy.html', result)
       return true
     }
 
@@ -82,7 +85,7 @@ export class strategy extends plugin {
     const Path = rolePath + group;
     const roleFiles = fs.readdirSync(Path)
     return roleFiles
-      .filter((file) => file.endsWith('.jpg'))
-      .map((file) => file.replace(/.jpg/g, ''))
+      .filter((file) => file.endsWith('.webp'))
+      .map((file) => file.replace(/.webp/g, ''))
   }
 }
