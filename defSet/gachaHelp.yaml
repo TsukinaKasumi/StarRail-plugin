@@ -1,2 +1,4 @@
 # 抽卡记录获取帮助链接
 docs: https://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ
+# 是否使用本插件的体力模板（ps：如果为false则使用genshin的默认体力模板）
+noteFlag: true
