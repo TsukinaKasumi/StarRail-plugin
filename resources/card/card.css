@@ -142,13 +142,13 @@ body {
 }
 
 .avatar-element {
-    --borderColor-fire: #fa4d35;
-    --borderColor-ice: #3ac8eb;
-    --borderColor-imaginary: #f6eb85;
-    --borderColor-lightning: #bf21dc;
-    --borderColor-physical: #cdcdcd;
-    --borderColor-quantum: #bfbffe;
-    --borderColor-wind: #44d79a;
+    --borderColor-fire: #c5523a;
+    --borderColor-ice: #4089bb;
+    --borderColor-imaginary: #f1d85e;
+    --borderColor-lightning: #a042be;
+    --borderColor-physical: #857f87;
+    --borderColor-quantum: #4b52a1;
+    --borderColor-wind: #349972;
     width: 25px;
     height: 25px;
     position: absolute;
@@ -158,6 +158,7 @@ body {
     z-index: 101;
     background: black;
     transform: rotate(45deg);
+    overflow: hidden;
 }
 
 .avatar-element img {
