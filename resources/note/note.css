@@ -1,183 +1,365 @@
-   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: all 0.5s;
+@font-face {
+    font-family: hanyi;
+    src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
 }
-    body {
-        /* font-family: PingFangSC-Medium, PingFang SC, sans-serif; */
-        width: 720px;
-    }
-    @font-face {
-        font-family: hanyi;
-        src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
-    }
-    .container {
-        width: 720px;
-        /* height: 1720px; */
-        background: #faf9f7;
-        padding-bottom: 5px;
-        /* 背景 */
-        background-image: url('37.webp');
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-
-    .ktl {
-        position: relative;
-        margin: 0 auto;
-        width: 700px;
-        padding-top: 20px;
-        padding-bottom: 20px;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(2px);
-        /* filter: blur(6px); */
-        border-radius: 30px 30px;
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    .ktl img {
-        width: 100px;
-        height: 100px;
-        position: absolute;
-        left: 10%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-    }
-
-    .ktl_name {
-        display: inline;
-        padding: 0 30px;
-        font-size: 30px;
-        color: #eee;
-        backdrop-filter: blur(2px);
-        background-color: rgba(0, 0, 0, 0.1);
-        border-radius: 30px 30px;
-    }
-
-    .ktl_uid {
-        display: inline;
-        padding: 0 10px;
-        font-size: 16px;
-        color: #eee;
-        backdrop-filter: blur(2px);
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 0;
-    }
-
-    .ktl-title {
-        font-size: 20px;
-        color: #2e353e;
-    }
-
-    .ktl-value {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .ktl-full {
-        margin-top: 5px;
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .ktl-full p span {
-        padding: 0 10px;
-        background-color: #1890ff;
-        border-radius: 10px;
-        color: #fff;
-        font-weight: 400;
-        opacity: .8;
-    }
-
-    .ktl-time {
-        /* margin: 0 auto; */
-        margin-top: 10px;
-        text-align: center;
-    }
-
-    .divider {
-        width: 680px;
-        margin: 10px 20px;
-        border: #2e353e 1px solid;
-        height: 6px;
-        background: #d7bb6e;
-    }
-
-    .weituo {
-        margin: 0 auto;
-        margin-left: 20px;
-        margin-top: 10px;
-        padding: 5px;
-        width: 690px;
-        border-radius: 10px;
-        /* border-left: #d89d51 solid 10px; */
-        backdrop-filter: blur(2px);
-        background-color: rgba(255, 255, 255, 0.3);
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    .weituo-title {
-        /* margin-left: 20px; */
-        margin-top: 0px;
-        padding: 10px;
-        font-weight: bold;
-        text-align: center;
-        font-size: 30px;
-        border-bottom: 3px solid rgba(253, 119, 246, 0.5);
-        /* border-left: #2e353e 8px solid; */
-    }
-
-    .weituo-line {
-        display: flex;
-        font-size: 30px;
-        /* border: #d2aa78 solid 2px; */
-        border-left: #d89d51 solid 10px;
-        backdrop-filter: blur(2px);
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 0 20px 20px 0;
-        height: 60px;
-        margin: 20px;
-    }
-
-    .weituo-name {
-        color: #d7bb6e;
-        font-size: 25px;
-        font-weight: bold;
-        margin-top: 12px;
-        margin-left: 20px;
-        width: 50%;
-    }
-
-    .avatar {
-        margin-top: 10px;
-        margin-right: 10px;
-        width: 40px;
-        height: 40px;
-    }
-
-    .weituo-line-last {
-        border-left: #d89d51 solid;
-        width: 140px;
-        text-align: center;
-        font-size: 18px;
-        margin-top: 5px;
-        font-weight: bold;
-    }
-
-    .logo {
-        /* display: inline-block; */
-        /* margin-top: 100px; */
-        margin: 0 30px;
-        font-size: 15px;
-        font-weight: 900;
-        text-align: center;
-        margin-top: 10px;
-        /* backdrop-filter: blur(2px); */
-        /* background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 10px 10px; */
-
-    }
+html, body {
+  width: 720px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: hanyi;
+}
+/* 卡片容器 */
+.card-container {
+  margin: auto;
+  width: 720px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+/* 主要内容 */
+.main-content {
+  width: 100%;
+  height: 100%;
+  background-image: url('./resources/bkg.webp');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+/*************/
+/* 顶部的信息 */
+.info {
+  display: flex;
+  flex-direction: row;
+  padding: 15px;
+  box-sizing: border-box;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+/* 用户信息 */
+.user-info {
+  width: 350px;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background: #302f36;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  border-radius: 60px;
+  border: 4px solid rgba(171, 149, 101, 0.3);
+}
+/* 用户信息的背景图案 */
+.user-info::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  background-image: url('./resources/ActiveIcon.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.1;
+}
+/* 用户信息的头像 */
+.user-info .avatar {
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  flex-shrink: 0;
+  z-index: 1;
+}
+/* 用户信息的头像的框 */
+.user-info .avatar::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: -15px;
+  right: -15px;
+  bottom: -15px;
+  background-image: url('./resources/avtar-container.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+/* 用户信息的头像的图片 */
+.user-info .avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+/* 用户信息的文字 */
+.user-info .user-info-text {
+  color: #e4e3e3;
+  margin-left: 20px;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  z-index: 1;
+}
+/* 用户的昵称 */
+.user-info .user-info-text .user-name {
+  max-width: 90%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+/* 用户的UID */
+.user-info .user-info-text .user-uid {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 5px;
+  font-size: 1rem;
+  color: #dac290;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+}
+/* 体力信息 */
+.info .power-info {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* 体力值 */
+.info .power-info .info-box {
+  margin-right: 20px;
+  color: rgb(255,255,255);
+  background-color: rgba(0,0,0,0.4);
+  padding: 4px 25px;
+  box-sizing: border-box;
+  border-radius: 0 25px 25px 0;
+  position: relative;
+  border: 3px solid #BABABA;
+}
+/* 体力值的图标 */
+.info .power-info .info-box::before {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  left: -50px;
+  top: 50%;
+  transform: translate(0, -50%);
+  background-image: url('./resources/power-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+/* 体力值的文字 */
+.info .power-info .info-box .count {
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-right: 2px solid rgb(192, 192, 192);
+  padding-right: 10px;
+}
+/* 体力剩余恢复时间 */
+.info .power-info .info-box .time {
+  /* margin-right: 20px; */
+  font-size: 1rem;
+  font-weight: 500;
+  color: #efefef;
+  margin-left: 3px;
+}
+/* 预计完全恢复时间 */
+.info .power-info .time-now {
+  margin-right: 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #dbdbd8;
+  background-color: #343433;
+  margin-top: 15px;
+  padding: 8px 20px;
+  border-radius: 30px;
+  border: 2px solid #dadad8;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.25);
+}
+/*************/
+/* 委托 */
+.dispatch-list {
+  flex-grow: 1;
+  flex-shrink: 1;
+  background-color: rgba(255,255,255,0.6);
+  backdrop-filter: blur(16px);
+  border: 3px solid #BABABA;
+  margin: 10px 8px;
+  border-radius: 10px;
+  display: flex;
+}
+/* 列表 */
+.dispatch-list .list {
+  width: 76%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+/* 每一项 */
+.dispatch-list .list .item {
+  margin: 10px 0;
+  overflow: hidden;
+  background-color: #282827;
+  border: 3px solid #B29D7F;
+  display: flex;
+  color: #D4D4D4;
+  align-items: center;
+  font-size: 1.2rem;
+  position: relative;
+}
+/* 每一项的背景图案*/
+.dispatch-list .list .item::after {
+  content: '';
+  width: 160px;
+  height: 160px;
+  right: -35px;
+  opacity: 0.1;
+  top: 0;
+  position: absolute;
+  background-image: url('./resources/IconCompassDeco.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+/* 图标 */
+.dispatch-list .list .item .icon {
+  width: 75px;
+  height: 75px;
+  display: flex;
+  background-color: rgb(255,255,255);
+  border-radius: 50%;
+  margin: 4px 30px;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  z-index: 1;
+}
+/* 图标边框 */
+.dispatch-list .list .item .icon::before {
+  content: '';
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  position: absolute;
+  background-image: url('./resources/thing-icon-container.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+/* 图标图片 */
+.dispatch-list .list .item .icon img {
+  width: 80%;
+  height: 80%;
+  display: block;
+  margin: auto;
+}
+/* 委托信息 */
+.dispatch-list .list .item .item-info {
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  margin-right: 5px;
+  box-sizing: border-box;
+}
+/* 委托名称 */
+.dispatch-list .list .item .item-info .name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* 委托剩余时间 */
+.dispatch-list .list .item .item-info .time {
+  margin-top: 5px;
+  color: #7D7979;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+/* 委托剩余时间图标 */
+.dispatch-list .list .item .item-info .time::before {
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  position: relative;
+  background-image: url('./resources/IconTimerDeco.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 5px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+/* 剩余时间文字 */
+.dispatch-list .list .item .item-info .time .time-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* 派遣角色 */
+.dispatch-list .list .item .use-char {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  margin-right: 10px;
+  position: relative;
+  z-index: 1;
+}
+.dispatch-list .list .item .use-char .char-logo {
+  width: 50px;
+  height: 50px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: 2px solid #a08b5e;
+}
+.dispatch-list .list .item .use-char .char-logo img {
+  width: 100%;
+  height: 100%;
+}
+/* 其他内容 */
+.other {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+/* 游戏LOGO */
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* LOGO内的图片 */
+.logo img {
+  width: auto !important;
+  margin: auto;
+  height: 8rem;
+  display: block;
+}
+/* 卡片信息 */
+.card-info {
+  text-align: center;
+  font-style: italic;
+  font-weight: 900;
+  color: #282827;
+  margin-top: 7px;
+}
+/* 右下角帕姆 */
+.char {
+  position: absolute;
+  bottom: -52px;
+  right: -65px;
+}
