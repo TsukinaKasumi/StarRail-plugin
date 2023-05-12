@@ -1,0 +1,148 @@
+.container {
+    width: 610px;
+    font-family: 'hanyi', sans-serif;
+}
+
+body {
+    font-family: PingFangSC-Medium, PingFang SC, sans-serif;
+    width: 610px;
+}
+
+@font-face {
+    font-family: hanyi;
+    src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'tttgbnumber';
+    src: url('../fonts/tttgbnumber.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.rarity5 {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.item-bg {
+    width: 160px;
+}
+
+.header {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.item-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    /*position: absolute;*/
+    /*bottom: -20px;*/
+    margin-top: -5px;
+    color: #a86e1d;
+    background: black;
+    height: 30px;
+    z-index: 1000;
+}
+
+.item-banner-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    font-size: 12px;
+    margin-top: -5px;
+    color: #ffffff;
+    background: black;
+    height: 20px;
+    z-index: 1000;
+}
+
+.header span {
+    /*-webkit-text-stroke: 1px white;*/
+    /*text-stroke: 1px white;*/
+    /*text-stroke: 2px #000000;*/
+    font-weight: bold;
+    /*color: #ffffff;*/
+    font-size: 50px;
+    background: linear-gradient(45deg, #3c90c9, #ecd096);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.uid {
+    background: linear-gradient(45deg, #3c90c9, #ecd096);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.title {
+    padding-top: 10px;
+    display: flex;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.title div {
+    margin-left: 3px;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.general {
+    width: 600px;
+    /*height: 132px;*/
+    padding-bottom: 10px;
+
+    background-color: #f4f2e5;
+    border-radius: 5px 25px 5px 5px;
+}
+
+.general-inner {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    width: 578px;
+    padding-bottom: -10px;
+    /*height: 120px;*/
+    background-color: #f4f2e5;
+    border-radius: 5px 25px 5px 5px;
+    border: #d0ba94 2px solid;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.general-inner-block {
+    width: 190px;
+    text-align: center;
+    height: 100px;
+}
+
+.general-inner-block-value {
+    margin-top: 10px;
+    font-size: 32px;
+}
+
+.general-inner-block-title {
+    margin-top: 3px;
+    font-size: 24px;
+    color: #9a9a9a;
+}
+
+.logo {
+    font-size: 24px;
+    font-family: 'tttgbnumber';
+    color: #8f8f8f;
+    text-align: center;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
