@@ -2,6 +2,7 @@ import User from '../../genshin/model/user.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import setting from '../utils/setting.js'
 import fetch from 'node-fetch'
+import _ from 'lodash'
 
 export class hkrpg extends plugin {
   constructor (e) {
