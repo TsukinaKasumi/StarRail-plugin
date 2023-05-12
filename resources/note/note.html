@@ -1,71 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>note</title>
-	 <link rel="stylesheet" type="text/css" href= "{{pluResPath}}/note/note.css" />
-</head>
-
-<body>
-    <div class="container">
-        <div>
-            <br>
-            <div class="ktl">
-
-                <div class="ktl_name">{{ktl_name}}</div>
-                <img src="http://q2.qlogo.cn/headimg_dl?dst_uin={{ktl_qq}}&amp;spec=640">
-                <br>
-                <br>
-                <div class="ktl_uid">UID:{{uid}}</div>
-            </div>
-
-            <div class="ktl-time">
-                <span class="ktl-title">开拓力</span>
-                <span class="ktl-value"> {{current_stamina}}/{{max_stamina}}</span>
-            </div>
-
-            <div class="ktl-full">
-                {{ktl_full}}
-            </div>
-
-            <div class="weituo">
-                <div class="weituo-title">
-                    委托执行⭐
-                </div>
-                {{each expeditions ex}}
-                <div class="weituo-line">
-                    <div class="weituo-name">{{ex.name}}</div>
-                    <div class="weituo-line-last">
-                        <div style="color: #757575">
-                           {{if ex.remaining_time == '委托已完成'}} 
-                           {{else}}
-                           剩余时间
-                           {{/if}}
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>note</title>
+        <link rel="stylesheet" href="{{pluResPath}}/note/note.css">
+    </head>
+    <body>
+        <div class="card-container">
+            <div class="main-content">
+                <div class="info">
+                    <div class="user-info">
+                        <div class="avatar">
+                            <!--这里是头像图片-->
+                            <img src="http://q2.qlogo.cn/headimg_dl?dst_uin={{ktl_qq}}&amp;spec=640" alt="">
                         </div>
-                         {{if ex.remaining_time == '委托已完成'}} 
-                         <div style="margin-top:12px">{{ex.remaining_time}}</div>
-                         {{else}}
-                            <div>{{ex.remaining_time}}</div>
-                            {{/if}}
+                        <div class="user-info-text">
+                            <!--昵称-->
+                            <div class="user-name">{{ktl_name}}</div>
+                            <!--UID-->
+                            <div class="user-uid">UID:{{uid}}</div>
+                        </div>
                     </div>
-                    {{each ex.avatars avatar}}
-                    <!-- <img class="avatar" src="{{avatar}}" /> -->
-                    <img class="avatar" src="{{avatar}}">
-                    {{/each}}
+                    <div class="power-info">
+                        <div class="info-box">
+                            <!--体力值-->
+                            <span class="count">{{current_stamina}}/{{max_stamina}}</span>
+                            <!--回复剩余时间-->
+                            <span class="time">{{ktl_full}}</span>
+                        </div>
+                        <!--预计完全恢复时间-->
+                        <div class="time-now">{{ktl_full_time_str}}</div>
+                    </div>
                 </div>
-                {{/each}}
+                <div class="dispatch-list">
+                    <div class="list">
+                        {{each expeditions ex}}
+                        <div class="item">
+                            <div class="icon">
+                                <img src="{{pluResPath}}/note/resources/{{ex.icon}}" alt="">
+                            </div>
+                            <div class="item-info">
+                                <div class="name">{{ex.name}}</div>
+                                <div class="time"><span class="time-text">{{ex.remaining_time}}</span></div>
+                            </div>
+                            <div class="use-char">
+                                {{each ex.avatars avatar}}
+                                <div class="char-logo"><img src="{{avatar}}" alt=""></div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{/each}}
+                        <div class="card-info">
+                            Create By Yunzai-Bot & StarRail-plugin
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- <div class="divider">
-            </div> -->
-            <br>
-            <div class="logo">
-                Yunzai-Bot & StarRail-plugin
+            <div class="char">
+                <img src="{{pluResPath}}/note/resources/char.png" alt="">
             </div>
-            <br>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>
