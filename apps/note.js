@@ -98,10 +98,11 @@ function formatDuration (seconds) {
  * @param {number} seconds 秒数
  */
 function getRecoverTimeStr (seconds) {
-  const dateTimes = new Date().getTime() + seconds * 1000
+  const now = new Date()
+  const dateTimes = now.getTime() + seconds * 1000
   const date = new Date(dateTimes)
-  const hours = date.getHours()
-  const str = hours < 24 ? '今日' : '明日'
+  const dayDiff = date.getDate() - now.getDate()
+  const str = dayDiff === 0 ? '今日' : '明日'
   const timeStr = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
   return `预计[${str}]${timeStr}完全恢复`
 }
