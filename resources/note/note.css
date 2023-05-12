@@ -84,6 +84,15 @@
         text-align: center;
     }
 
+    .ktl-full p span {
+        padding: 0 10px;
+        background-color: #1890ff;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 400;
+        opacity: .8;
+    }
+
     .ktl-time {
         /* margin: 0 auto; */
         margin-top: 10px;

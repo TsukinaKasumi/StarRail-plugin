@@ -179,6 +179,7 @@ export class hkrpg extends plugin {
       data.ktl_full = '开拓力已全部恢复'
     } else {
       data.ktl_full = `距开拓力恢复满${formatDuration(data.stamina_recover_time)}`
+      data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
     }
     data.uid = uid // uid显示
     data.ktl_name = e.nickname // 名字显示
@@ -505,4 +506,17 @@ function formatDuration (seconds) {
   const hours = Math.floor(seconds / 3600)
   const minutes = Math.floor((seconds % 3600) / 60)
   return `${hours.toString().padStart(2, '0')}时${minutes.toString().padStart(2, '0')}分`
+}
+
+/**
+ * 获取开拓力完全恢复的具体时间文本
+ * @param {number} seconds 秒数
+ */
+function getRecoverTimeStr (seconds) {
+  const dateTimes = new Date().getTime() + seconds * 1000
+  const date = new Date(dateTimes)
+  const hours = date.getHours()
+  const str = hours < 24 ? '今日' : '明日'
+  const timeStr = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  return `预计[${str}]${timeStr}完全恢复`
 }
