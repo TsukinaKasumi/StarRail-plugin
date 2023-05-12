@@ -29,10 +29,6 @@ export class hkrpg extends plugin {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
           fnc: 'card'
         },
-        // {
-        //   reg: '^#(星铁|星轨|崩铁|星穹铁道)体力$',
-        //   fnc: 'note'
-        // },
         {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
           fnc: 'month'
