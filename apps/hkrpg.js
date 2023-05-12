@@ -29,10 +29,10 @@ export class hkrpg extends plugin {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
           fnc: 'card'
         },
-        {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)体力$',
-          fnc: 'note'
-        },
+        // {
+        //   reg: '^#(星铁|星轨|崩铁|星穹铁道)体力$',
+        //   fnc: 'note'
+        // },
         {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
           fnc: 'month'
@@ -136,55 +136,6 @@ export class hkrpg extends plugin {
     await redis.set(key, gameUid)
     await redis.setEx(`STAR_RAILWAY:userData:${gameUid}`, 60 * 60, JSON.stringify(userData))
     return userData
-  }
-
-  async note (e) {
-    let user = this.e.sender.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-    }
-    await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    if (!uid) {
-      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
-      return false
-    }
-    let ck = await this.User.getCk()
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie, 请发送#扫码登录进行绑定')
-      return false
-    }
-
-    let api = new MysSRApi(uid, ck)
-    const { url, headers } = api.getUrl('srNote')
-    let res = await fetch(url, {
-      headers
-    })
-
-    let cardData = await res.json()
-
-    if (cardData.retcode !== 0) {
-      await e.reply('查询失败, 可能是ck失效或者别的原因, 可以尝试重新扫码登录后再进行查询')
-      return false
-    }
-
-    let data = cardData.data
-    data.expeditions.forEach(ex => {
-      ex.remaining_time = formatDuration(ex.remaining_time)
-      if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
-    })
-    logger.warn(data.expeditions)
-    if (data.max_stamina === data.current_stamina) {
-      data.ktl_full = '开拓力已全部恢复'
-    } else {
-      data.ktl_full = `距开拓力恢复满${formatDuration(data.stamina_recover_time)}`
-      data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
-    }
-    data.uid = uid // uid显示
-    data.ktl_name = e.nickname // 名字显示
-    data.ktl_qq = parseInt(e.user_id)// QQ头像
-    await e.runtime.render('StarRail-plugin', '/note/note.html', data)
   }
 
   async month (e) {
@@ -501,25 +452,3 @@ export class hkrpg extends plugin {
     await e.runtime.render('StarRail-plugin', 'online/index.html', renderData)
   }
 }
-
-function formatDuration (seconds) {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  return `${hours.toString().padStart(2, '0')}时${minutes.toString().padStart(2, '0')}分`
-}
-
-/**
- * 获取开拓力完全恢复的具体时间文本
- * @param {number} seconds 秒数
- */
-function getRecoverTimeStr (seconds) {
-  const dateTimes = new Date().getTime() + seconds * 1000
-  const date = new Date(dateTimes)
-  const hours = date.getHours()
-  const now = new Date()
-  const dayDiff = date.getDate() - now.getDate()
-  const str = dayDiff === 0 ? '今日' : '明日'
-  const timeStr = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
-  return `预计[${str}]${timeStr}完全恢复`
-}
-
