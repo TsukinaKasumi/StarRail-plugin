@@ -4,7 +4,7 @@ import setting from '../utils/setting.js'
 import fetch from 'node-fetch'
 import _ from 'lodash'
 
-export class hkrpg extends plugin {
+export class note extends plugin {
   constructor (e) {
     super({
       name: '星穹铁道',
