@@ -1,14 +1,8 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
-import fetch from 'node-fetch'
-import GsCfg from '../../genshin/model/gsCfg.js'
-import { gatchaType, statistics } from '../utils/gatcha.js'
 import setting from '../utils/setting.js'
-import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
-import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import { statisticOnlinePeriods, statisticsOnlineDateGeneral } from '../utils/common.js'
 
 export class hkrpg extends plugin {
   constructor (e) {
