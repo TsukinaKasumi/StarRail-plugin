@@ -30,10 +30,6 @@ export class hkrpg extends plugin {
           fnc: 'card'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
-          fnc: 'month'
-        },
-        {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
           fnc: 'avatar'
         },
@@ -63,6 +59,7 @@ export class hkrpg extends plugin {
         }
       ]
     })
+  
     this.User = new User(e)
   }
 
@@ -132,38 +129,6 @@ export class hkrpg extends plugin {
     await redis.set(key, gameUid)
     await redis.setEx(`STAR_RAILWAY:userData:${gameUid}`, 60 * 60, JSON.stringify(userData))
     return userData
-  }
-
-  async month (e) {
-    let user = this.e.sender.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-    }
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    await this.miYoSummerGetUid()
-    if (!uid) {
-      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
-      return false
-    }
-    let ck = await this.User.getCk()
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie, 请发送#扫码登录进行绑定')
-      return false
-    }
-
-    let api = new MysSRApi(uid, ck)
-    const cardData = await api.getData('srMonth')
-    if (!cardData || cardData.retcode != 0) return e.reply(cardData.message || '请求数据失败')
-    let data = cardData.data
-    data.pieData = JSON.stringify(data.month_data.group_by.map((v) => {
-      return {
-        name: `${v.action_name} ${v.num}`,
-        value: v.num
-      }
-    }))
-    await e.runtime.render('StarRail-plugin', '/month/month.html', data)
   }
 
   async avatar (e) {
@@ -260,7 +225,6 @@ export class hkrpg extends plugin {
       } else if (typeName.includes('新手')) {
         type = 2
       }
-      // let user = this.e.sender.user_id
       let ats = e.message.filter((m) => m.type === 'at')
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
@@ -382,26 +346,6 @@ export class hkrpg extends plugin {
       await e.reply('未绑定uid，请发送#绑定星铁uid＋uid进行绑定')
       return false
     }
-    // let result = await redis.get(`STAR_RAILWAY:POWER:${uid}`)
-    // if (result) {
-    //   result = JSON.parse(result)
-    //   const { data } = statisticsOnlineDateGeneral(result)
-    //   let details = statisticOnlinePeriods(result)
-    //   let userDataKey = `STAR_RAILWAY:userData:${uid}`
-    //   let userData = JSON.parse(await redis.get(userDataKey))
-    //   if (!userData) {
-    //     let ck = this.User.getCk()
-    //     let api = new MysSRApi(uid, ck)
-    //     userData = (await api.getData('srUser'))?.data?.list?.[0]
-    //   }
-    //   await e.runtime.render('StarRail-plugin', 'online/index.html', Object.assign(userData || {}, {
-    //     general: JSON.stringify(data),
-    //     details
-    //   }))
-    //   return
-    // } else {
-    //   result = []
-    // }
     let authKey
     try {
       authKey = await getAuthKey(e, uid)
@@ -431,7 +375,6 @@ export class hkrpg extends plugin {
       result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
       page++
     }
-    // await redis.set(`STAR_RAILWAY:POWER:${uid}`, JSON.stringify(result))
     const { data } = statisticsOnlineDateGeneral(result)
     let details = statisticOnlinePeriods(result)
     let userDataKey = `STAR_RAILWAY:userData:${uid}`
