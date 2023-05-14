@@ -1,0 +1,600 @@
+/* 让我看看是谁在摸鱼
+ *
+ * 我看看
+ * 
+ * 好熟悉的身影
+ *
+ * emmmmm
+ *
+ * 到底是谁在摸鱼呢
+ *
+ * 算了，不管了，直接拉到下面的CSS吧
+ *
+ * 真的
+ *
+ * 别看注释了
+ *
+ * 你忘了你是来干啥的吗
+ *
+ * 你执意要找出摸鱼的人吗
+ *
+ * 那好吧
+ *
+ * 希望你快点找到
+ *
+ * 嘿，我是说
+ *
+ * 咱直接进入重点吧
+ *
+ * 其实我已经知道是谁在摸鱼了
+ *
+ * 你确定你想知道吗
+ *
+ * 可能会吓到你哦
+ *
+ * 确定要看吗
+ *
+ * 那我说咯
+ *
+ * 3
+ *
+ * 2
+ *
+ * 1
+ *
+ *
+ *
+ *
+ * 你看到这里了，那么你就是在摸鱼的人
+ *
+ * 你可以继续摸鱼，但是请不要摸鱼太久
+ *
+ * @Author: 你是作者
+ * @Date: 2023-05-13
+ * @LastEditTime: 2023-05-13
+ */
+@font-face {
+    font-family: "SR";
+    src: url('../fonts/zh-cn.ttf') format('truetype');
+}
+html, body {
+  width: 720px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'SR';
+}
+/* 卡片容器 */
+.card-container {
+  margin: auto;
+  width: 720px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  background-image: url('./resources/bkg.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #f0eaca;
+  padding: 20px 40px;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+/*******************/
+/* 头部 */
+/* .header {
+  
+} */
+/* 标题 */
+.header .title {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* 标题的提示 */
+.header .title .tip {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  text-align: left;
+}
+/* 标题的文字 */
+.header .title .text {
+  margin: 0;
+  padding: 0;
+  font-size: 2.8rem;
+}
+/* 标题的 LOGO */
+.header .title .logo {
+  margin-left: auto;
+  height: 5rem;
+}
+.header .title .logo img {
+  height: 100%;
+}
+/* 顶部的信息 */
+.header .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  padding: 0 25px 0 10px;
+}
+/* UID */
+.header .info .uid {
+  margin-top: 14px;
+  font-weight: 500;
+}
+/* 种类 */
+.header .info .type {
+  display: flex;
+  align-items: center;
+}
+/* 种类的图标 */
+.header .info .type .icon {
+  width: 3rem;
+  height: 3rem;
+}
+.header .info .type .icon img {
+  width: 100%;
+  height: 100%;
+}
+/*******************/
+/* 主要内容 */
+.main-content {
+  margin-top: 7px;
+  border: 2px solid #f0eaca;
+  border-radius: 10px;
+  padding: 20px;
+}
+/*******************/
+/* 角色信息 */
+.main-content .char-info {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+/* 角色信息卡片 */
+.main-content .char-info .char-card {
+  width: 270px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #f0eaca;
+  border-radius: 14px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+/* 角色星级 */
+.main-content .char-info .char-star {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 1.8rem;
+  overflow: hidden;
+  z-index: 2;
+}
+.main-content .char-info .char-star img {
+  height: 120%;
+  display: block;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+/* 封面图 */
+.main-content .char-info .char-card .char-img {
+  width: 170%;
+  height: 170%;
+  overflow: hidden;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.main-content .char-info .char-card .char-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 技能 */
+.main-content .char-info .char-card .skills {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgb(31, 37, 51);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  box-sizing: border-box;
+}
+.main-content .char-info .char-card .skills .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 0 3px;
+}
+/* 技能图标 */
+.main-content .char-info .char-card .skills .item .icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 2.5px solid #f0eaca;
+}
+.main-content .char-info .char-card .skills .item .icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* 技能等级文字 */
+.main-content .char-info .char-card .skills .item .level {
+  font-size: 60%;
+}
+/*******************/
+/* 详细信息 */
+.main-content .char-info .info-detail {
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-left: 30px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+/* 角色昵称、等级等 */
+.main-content .char-info .info-detail .title {
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 1px solid #f0eaca;
+}
+/* 角色昵称 */
+.main-content .char-info .info-detail .title .name {
+  font-size: 2.2rem;
+}
+/*角色种类*/
+.main-content .char-info .info-detail .title .type {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+.main-content .char-info .info-detail .title .type img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* 角色等级 */
+.main-content .char-info .info-detail .title .level {
+  margin-left: 10px;
+  font-size: 1rem;
+  margin-bottom: 3px;
+}
+/* 角色命座 */
+.main-content .char-info .info-detail .title .const {
+  margin-left: 10px;
+  font-size: 1rem;
+  border: 1.5px solid #f0eaca;
+  padding: 0 3px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+}
+/* 属性列表 */
+.main-content .char-info .info-detail .detail-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-top: 10px;
+  font-size: 1rem;
+  overflow: hidden;
+  /* flex-wrap: wrap; */
+}
+.main-content .char-info .info-detail .detail-list .item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #f0eaca;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  flex: 1;
+}
+/* 属性图标 */
+.main-content .char-info .info-detail .detail-list .item .icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  overflow: hidden;
+  position: relative;
+  margin-left: 4px;
+}
+.main-content .char-info .info-detail .detail-list .item .icon img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  height: 120%;
+  display: block;
+}
+/* 属性名称 */
+.main-content .char-info .info-detail .detail-list .item .text {
+  margin-left: 8px;
+}
+/* 属性值 */
+.main-content .char-info .info-detail .detail-list .item .value {
+  margin-left: auto;
+  margin-right: 17px;
+}
+/*******************/
+/* 面板服务提示 */
+.api-info {
+  margin: 10px auto;
+  font-size: 1rem;
+  color: #f0eaca;
+  text-align: right;
+  padding: 0 5px;
+}
+/*******************/
+/* 光锥、遗器总览 */
+.main-content .artoverview  {
+  display: flex;
+  justify-content: space-between;
+}
+/* 光锥 */
+.main-content .artoverview .weapon {
+  width: 58%;
+  border: 1px solid #f0eaca;
+  border-radius: 10px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+  display: flex;
+  margin-right: 17px;
+  align-items: center;
+}
+/* 遗器 */
+.main-content .artoverview .relic {
+  border: 1px solid #f0eaca;
+  border-radius: 10px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+}
+/* 信息 */
+.main-content .artoverview .item .info {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.main-content .artoverview .item .info .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* 名称 */
+.main-content .artoverview .item .info .title .name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+/* 等级信息 */
+.main-content .artoverview .item .info .level-info {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+/* 光锥图标 */
+.main-content .artoverview .weapon .icon {
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+.main-content .artoverview .weapon .icon::after {
+  content: '';
+  display: block;
+  top: 10px;
+  bottom: 10px;
+  width: 1.5px;
+  background-color: #f0eaca;
+  position: absolute;
+  right: 0;
+}
+.main-content .artoverview .weapon .icon img {
+  height: 100%;
+  display: block;
+}
+/* 光锥星级 */
+.main-content .artoverview .weapon .info .title .star {
+  width: 80px;
+  height: 1.5rem;
+  /* margin-left: 5px; */
+  position: relative;
+  overflow: hidden;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.main-content .artoverview .weapon .info .title .star img {
+  height: 120%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+/* 光锥等级 */
+.main-content .artoverview .weapon .info .level-info .level {
+  border: 1px solid #f0eaca;
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-right: 15px;
+}
+/* 光锥叠影 */
+.main-content .artoverview .weapon .info .level-info .dy {
+  border: 1px solid #f0eaca;
+  padding: 5px 25px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+/* 遗器评分 */
+.main-content .artoverview .relic .info .level-info .score {
+  border: 1px solid #f0eaca;
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: 1.4rem;
+  margin-right: 10px;
+}
+/* 遗器总分 */
+.main-content .artoverview .relic .info .level-info .total-score {
+  border: 1px solid #f0eaca;
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*******************/
+/* 遗器列表 */
+.main-content .relic-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+/* 遗器列表每项 */
+.main-content .relic-list .item {
+  width: 188px;
+  border: 1px solid #f0eaca;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  margin-right: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.main-content .relic-list .item:nth-child(3n) {
+  margin-right: 0;
+}
+/* 遗器信息 */
+.main-content .relic-list .item .relic-info {
+  padding: 15px 10px 15px 0;
+  display: flex;
+  align-items: center;
+}
+/* 遗器图标 */
+.main-content .relic-list .item .relic-info .icon {
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 5px;
+}
+.main-content .relic-list .item .relic-info .icon img {
+  height: 100%;
+  display: block;
+}
+/* 遗器名称 */
+.main-content .relic-list .item .relic-info .relic-info-detail {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.main-content .relic-list .item .relic-info .relic-info-detail .name {
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+/* 遗器星级 */
+.main-content .relic-list .item .relic-info .relic-info-detail .level-info {
+  width: 100%;
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-content .relic-list .item .relic-info .relic-info-detail .level-info .star {
+  width: 50px;
+  height: 1rem;
+  position: relative;
+  overflow: hidden;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.main-content .relic-list .item .relic-info .relic-info-detail .level-info .star img {
+  height: 120%;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.main-content .relic-list .item .relic-info .relic-info-detail .level-info .level {
+  border: 1px solid #f0eaca;
+  padding: 0px 5px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+/* 遗器属性值 */
+.main-content .relic-list .item .relic-info .relic-info-detail .value {
+  margin-top: 2px;
+  font-size: 0.9rem;
+}
+/* 遗器属性值列表 */
+.main-content .relic-list .item .relic-value-list {
+  flex-grow: 1;
+  flex-shrink: 1;
+  background: #f0eaca;
+}
+
+/* 遗器属性值列表每项 */
+.main-content .relic-list .item .relic-value-list .relic-value {
+  padding: 3px 15px;
+  display: flex;
+  align-items: center;
+  color: rgb(0,0,0);
+  font-size: 0.9rem;
+}
+.main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {
+  background-color: #f0eaca;
+}
+.main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n) {
+  background-color: #cdc8af;
+}
+/* 遗器属性值列表每项值 */
+.main-content .relic-list .item .relic-value-list .relic-value .value {
+  font-weight: 600;
+  margin-left: auto;
+}
+
+
+
+/* 卡片信息 */
+.card-info {
+  margin-top: 20px;
+  text-align: center;
+  font-style: italic;
+}
