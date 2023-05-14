@@ -73,13 +73,13 @@ export class hkrpg extends plugin {
             pathName = 'skill';
             break;
           case 2:
-            pathName = 'talent';
+            pathName = 'ultimate';
             break;
           case 3:
-            pathName = 'technique';
+            pathName = 'talent';
             break;
           case 4:
-            pathName = 'ultimate';
+            pathName = 'technique';
             break;
         }
         const filePath = nameId + '_' + pathName + '.png';
@@ -88,7 +88,9 @@ export class hkrpg extends plugin {
       await e.runtime.render('StarRail-plugin', '/panel/panel.html', data);
     } catch (error) {
       logger.mark('SR-panelApi', error);
-      return await e.reply('获取角色面板失败，可能是连接面板服务超时，请稍后重试');
+      return await e.reply(
+        '获取角色面板失败，可能是连接面板服务超时，请稍后重试'
+      );
     }
   }
   async update(e) {
@@ -117,7 +119,7 @@ export class hkrpg extends plugin {
       // await e.reply( '更新面板数据成功' );
     } catch (error) {
       logger.mark('SR-panelApi', error);
-      return await e.reply('更新面板数据失败，可能是连接当前面板服务超时，请稍后重试');
+      return await e.reply(error);
     }
   }
   /**
@@ -169,7 +171,13 @@ export class hkrpg extends plugin {
         }
         previousData = JSON.parse(previousData) || [];
         const api = await panelApi();
-        const res = await fetch(api + uid);
+        let res = null;
+        try {
+          res = await fetch(api + uid);
+        } catch (error) {
+          return Promise.reject('面板服务连接超时，请稍后重试');
+        }
+        if (!res) return;
         const cardData = await res.json();
         // 设置查询时间
         await redis.setEx(timeKey, 360 * 60, Date.now().toString());
