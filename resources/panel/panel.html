@@ -51,13 +51,46 @@
             <div class="const">{{rank}}命</div>
           </div>
           <div class="detail-list">
-            {{each behaviorList as behavior i}}
-            <!-- <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/effect/IconMaxHP.png" alt=""></div>
-              <div class="text">{{生命值}}</div>
-              <div class="value">10240</div>
-            </div> -->
-            {{/each}}
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconMaxHP.png" alt=""></div>
+              <div class="text">生命值</div>
+              <div class="value">{{(properties.hpBase+properties.hpDelta).toFixed(0)}}</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconAttack.png" alt=""></div>
+              <div class="text">攻击力</div>
+              <div class="value">{{(properties.attackBase+properties.attackDelta).toFixed(0)}}</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconDefence.png" alt=""></div>
+              <div class="text">防御力</div>
+              <div class="value">{{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconSpeed.png" alt=""></div>
+              <div class="text">速度</div>
+              <div class="value">{{(properties.speedBase+properties.speedAdd).toFixed(0)}}</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalChance.png" alt=""></div>
+              <div class="text">暴击率</div>
+              <div class="value">{{(properties.criticalChance*100).toFixed(1)}}%</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalDamage.png" alt=""></div>
+              <div class="text">爆伤</div>
+              <div class="value">{{(properties.criticalDamage*100).toFixed(1)}}%</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusResistance.png" alt=""></div>
+              <div class="text">效果抵抗</div>
+              <div class="value">{{(properties.statusResistance*100).toFixed(1)}}%</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt=""></div>
+              <div class="text">效果命中</div>
+              <div class="value">{{(properties.statusProbability*100).toFixed(1)}}%</div>
+            </div>
           </div>
         </div>
       </div>

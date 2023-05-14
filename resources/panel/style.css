@@ -161,12 +161,14 @@ html, body {
 }
 /* 角色信息卡片 */
 .main-content .char-info .char-card {
-  width: 250px;
+  width: 270px;
   height: 350px;
   position: relative;
   overflow: hidden;
   border: 1px solid #f0eaca;
   border-radius: 14px;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 /* 角色星级 */
 .main-content .char-info .char-star {
@@ -246,6 +248,8 @@ html, body {
   flex-shrink: 1;
   margin-left: 30px;
   height: 350px;
+  display: flex;
+  flex-direction: column;
 }
 /* 角色昵称、等级等 */
 .main-content .char-info .info-detail .title {
@@ -287,19 +291,27 @@ html, body {
 }
 /* 属性列表 */
 .main-content .char-info .info-detail .detail-list {
-  margin-top: 13px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-top: 10px;
+  font-size: 1rem;
+  overflow: hidden;
+  /* flex-wrap: wrap; */
 }
 .main-content .char-info .info-detail .detail-list .item {
   display: flex;
   align-items: center;
   border: 1px solid #f0eaca;
   border-radius: 5px;
-  margin-bottom: 9px;
+  margin-bottom: 6px;
+  flex: 1;
 }
 /* 属性图标 */
 .main-content .char-info .info-detail .detail-list .item .icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   overflow: hidden;
   position: relative;
   margin-left: 4px;
