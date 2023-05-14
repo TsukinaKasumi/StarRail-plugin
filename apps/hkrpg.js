@@ -30,9 +30,10 @@ export class hkrpg extends plugin {
           fnc: 'card'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
-          fnc: 'avatar'
-        },
+          // {
+        //   reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
+        //   fnc: 'avatar'
+        // },
         {
           reg: '^#(星铁|星轨|崩铁|星穹铁道)帮助$',
           fnc: 'help'
