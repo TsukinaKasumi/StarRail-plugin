@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>角色面板gx</title>
+    <title>角色面板lb</title>
     <link rel="stylesheet" href="{{pluResPath}}panel/card.css">
   </head>
 
@@ -16,12 +16,12 @@
       </div>
       <div class="header">
         <div class="title">
-          <div class="text">#更新面板</div>
+          <div class="text">#角色面板</div>
           <div class="uid">UID:{{uid}}</div>
         </div>
         <div class="tips">
           <ul>
-            <li>面板数据请求成功</li>
+            <li>角色面板查询成功</li>
             <li>你可以发送 #星铁+角色名+面板 例如 #星铁希儿面板 命令来查看相关数据</li>
           </ul>
         </div>
@@ -32,12 +32,12 @@
           <div class="avatar">
             <img src="{{pluResPath}}panel/resources/avatar/{{char.avatarId}}.png" alt="">
           </div>
-          <div class="name"><span class="{{char.is_new?'update_dot':''}}"></span>{{char.name}}</div>
+          <div class="name">{{char.name}}</div>
         </div>
         {{/each}}
       </div>
       <div class="footer">
-        <div class="left"><span class="update_dot"></span>为本次更新角色</div>
+        <div class="left">以上为本地缓存角色</div>
         <div class="right">当前面板更新服务：{{api}}</div>
       </div>
     </div>
