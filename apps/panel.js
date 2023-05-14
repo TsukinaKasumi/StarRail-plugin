@@ -214,6 +214,23 @@ export class hkrpg extends plugin {
       }
     }
   }
+  async ikun(e) {
+    let user = this.e.sender.user_id;
+    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`);
+    if (!uid) {
+      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定');
+      return false;
+    }
+    const api = await panelApi();
+      const data = await this.getPanelData(uid, false);
+      let renderData = {
+        api: api.split('/')[2],
+        uid: uid,
+        data: data,
+      };
+      // 渲染数据
+      await e.runtime.render('StarRail-plugin', '/panel/card.html', renderData);
+  }
   /** 通过米游社获取UID */
   async miYoSummerGetUid() {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`;
