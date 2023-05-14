@@ -89,7 +89,7 @@ export class hkrpg extends plugin {
     } catch (error) {
       logger.mark('SR-panelApi', error);
       return await e.reply(
-        'error'
+        error
       );
     }
   }
