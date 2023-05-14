@@ -66,6 +66,9 @@ export class hkrpg extends plugin {
   get appconfig () {
     return setting.getConfig('gachaHelp')
   }
+  get app2config () {
+    return setting.getConfig('cookieHelp')
+  }
 
   async card (e) {
     try {
@@ -95,7 +98,7 @@ export class hkrpg extends plugin {
       let result = cardData?.data
       if (!result) {
         logger.error(cardData)
-        await e.reply('未绑定ck,请发送#扫码登录进行ck绑定')
+        await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
         return false
       }
       if (hasPersonalCK) {
