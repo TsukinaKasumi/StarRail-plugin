@@ -20,10 +20,6 @@ export class hkrpg extends plugin {
           fnc: 'panel',
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)面板列表$',
-          fnc: 'ikun',
-        },
-        {
           reg: '^#更新(星铁|星轨|崩铁|星穹铁道)面板$',
           fnc: 'update',
         },
@@ -38,7 +34,7 @@ export class hkrpg extends plugin {
     const messageText = e.msg;
     const charName =
       messageText.match(/#(星铁|星轨|崩铁|星穹铁道)(.*)面板$/)[2] || null;
-    if (!charName) return await this.ikun(e);
+    if (!charName) return await e.reply('请携带角色名称');
     if (charName === '更新') return await this.update(e);
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq;
@@ -218,7 +214,6 @@ export class hkrpg extends plugin {
       }
     }
   }
-
   async ikun(e) {
     let user = this.e.sender.user_id;
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`);
@@ -227,14 +222,14 @@ export class hkrpg extends plugin {
       return false;
     }
     const api = await panelApi();
-    const data = await this.getPanelData(uid, false);
-    let renderData = {
-      api: api.split('/')[2],
-      uid: uid,
-      data: data,
-    };
-    // 渲染数据
-    await e.runtime.render('StarRail-plugin', '/panel/list.html', renderData);
+      const data = await this.getPanelData(uid, false);
+      let renderData = {
+        api: api.split('/')[2],
+        uid: uid,
+        data: data,
+      };
+      // 渲染数据
+      await e.runtime.render('StarRail-plugin', '/panel/card.html', renderData);
   }
   /** 通过米游社获取UID */
   async miYoSummerGetUid() {
