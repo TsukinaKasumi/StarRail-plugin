@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <title>角色面板</title>
+  <link rel="stylesheet" href="{{pluResPath}}/panel/style.css">
+</head>
+<body>
+  <div class="card-container">
+    <div class="header">
+      <div class="title">
+        <!-- <div class="text">#角色面板</div> -->
+        <div class="tip">面板图设计完善中 不代表最终品质<br>Ver1.0</div>
+        <div class="logo"><img src="{{pluResPath}}panel/resources/logo.png" alt=""></div>
+      </div>
+      <div class="info">
+        <div class="uid">UID:{{uid}}</div>
+        <div class="type">
+          <div class="icon">
+            <!-- <img src="{{pluResPath}}panel/resources/icon/IconWhiteThunder.png" alt=""> -->
+          </div>
+          <div class="text">{{charpath}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="char-info">
+        <div class="char-card">
+          <div class="char-star">
+            <img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{rarity.slice(-1)}}.png" alt="">
+          </div>
+          <div class="char-img">
+            <img src="{{pluResPath}}panel/resources/char_image/{{avatarId}}.png" alt="">
+          </div>
+          <div class="skills">
+            {{each behaviorList as behavior i}}
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt=""></div>
+              <div class="level">{{behavior.level}}</div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="info-detail">
+          <div class="title">
+            <div class="name">{{name}}</div>
+            <div class="type"><img src="{{pluResPath}}panel/resources/icon/IconAttribute{{damage_type}}.png" alt=""></div>
+            <div class="level">Lv.{{level}}</div>
+            <div class="const">{{rank}}命</div>
+          </div>
+          <div class="detail-list">
+            {{each behaviorList as behavior i}}
+            <!-- <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/effect/IconMaxHP.png" alt=""></div>
+              <div class="text">{{生命值}}</div>
+              <div class="value">10240</div>
+            </div> -->
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      <div class="api-info">当前面板更新服务：{{api}}</div>
+      <div class="artoverview">
+        <div class="item weapon">
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/weapon/{{equipment.id}}.png" alt="">
+          </div>
+          <div class="info">
+            <div class="title">
+              <div class="name">{{equipment.name}}</div>
+              <div class="star"><img src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png" alt=""></div>
+            </div>
+            <div class="level-info">
+              <div class="level">Lv.{{equipment.level}}</div>
+              <div class="dy">叠影：{{equipment.rank}}阶</div>
+            </div>
+          </div>
+        </div>
+        <div class="item relic">
+          <div class="info">
+            <div class="title">
+              <div class="name">遗器</div>
+            </div>
+            <div class="level-info">
+              <!-- <div class="score"><b>S</b> 级</div>
+              <div class="total-score">总分：96.3</div> -->
+              <div class="tip-none">暂无评分系统</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="relic-list">
+        {{each relics as relic i}}
+        <div class="item">
+          <div class="relic-info">
+            <div class="icon">
+              <img src="{{pluResPath}}panel/resources/relic/{{relic.path}}" alt="">
+            </div>
+            <!-- {{relic.id.toString().slice(-4,-1)}}_{{relic.id.toString().slice(-1)}} -->
+            <div class="relic-info-detail">
+              <div class="name">{{relic.name}}</div><div class="level-info">
+                <div class="star"><img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{relic.max_level/3}}.png" alt="">
+                </div>
+                <div class="level">+{{relic.level}}</div>
+              </div>
+              <div class="value">{{relic.main_affix_name}}+{{relic.main_affix_value>=1?relic.main_affix_value.toFixed(1):(relic.main_affix_value*100).toFixed(1)+'%'}}</div>
+            </div>
+          </div>
+          <div class="relic-value-list">
+            {{each relic.sub_affix_id as affix i}}
+            <div class="relic-value">
+              <div class="name">{{affix.name}}</div>
+              <div class="value">+{{affix.value>=1?affix.value.toFixed(1):(affix.value*100).toFixed(1)+'%'}}</div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="card-info">
+      Created By Yunzai-Bot & StarRail-Plugin
+    </div>
+  </div>
+</body>
+</html>

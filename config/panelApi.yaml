@@ -1,0 +1,3 @@
+default: 1
+api:
+  - https://sr.roki.best/v1/info/
