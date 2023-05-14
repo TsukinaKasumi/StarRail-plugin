@@ -44,7 +44,7 @@ export class hkrpg extends plugin {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定');
       return false;
     }
-    await e.reply('正在获取面板数据，请稍等');
+    await e.reply('正在获取面板数据中');
     try {
       const api = await panelApi();
       let data = await this.getCharData(charName, uid);
@@ -88,7 +88,7 @@ export class hkrpg extends plugin {
       await e.runtime.render('StarRail-plugin', '/panel/panel.html', data);
     } catch (error) {
       logger.mark('SR-panelApi', error);
-      return await e.reply('获取面板失败：' + error);
+      return await e.reply('获取角色面板失败，可能是连接面板服务超时，请稍后重试');
     }
   }
   async update(e) {
@@ -103,7 +103,7 @@ export class hkrpg extends plugin {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定');
       return false;
     }
-    await e.reply('正在更新面板数据，请稍等');
+    await e.reply('正在更新面板数据中~可能需要一段时间，请耐心等待');
     try {
       const api = await panelApi();
       const data = await this.getPanelData(uid, true);
@@ -117,7 +117,7 @@ export class hkrpg extends plugin {
       // await e.reply( '更新面板数据成功' );
     } catch (error) {
       logger.mark('SR-panelApi', error);
-      return await e.reply('更新面板数据失败：' + error);
+      return await e.reply('更新面板数据失败，可能是连接当前面板服务超时，请稍后重试');
     }
   }
   /**
@@ -135,7 +135,7 @@ export class hkrpg extends plugin {
         const charInfo = data.filter(item => item.name === name)[0];
         if (!charInfo)
           return Promise.reject(
-            '未查询到角色数据，请检查角色是否放在了助战或者展柜或者角色名是否拼错，已设置的会有延迟，请等待一段时间更新重试。'
+            '未查询到角色数据，请检查角色是否放在了助战或者展柜，检查角色名是否正确，已设置的会有延迟，请等待一段时间重试。'
           );
       }
       return charInfo;
