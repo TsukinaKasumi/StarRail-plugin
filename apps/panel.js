@@ -89,7 +89,7 @@ export class hkrpg extends plugin {
     } catch (error) {
       logger.mark('SR-panelApi', error);
       return await e.reply(
-        '获取角色面板失败，可能是连接面板服务超时，请稍后重试'
+        'error'
       );
     }
   }
