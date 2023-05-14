@@ -17,7 +17,7 @@ export function supportGuoba () {
       description: '提供崩坏星穹铁道相关查询功能',
       icon: 'bi:box-seam',
       iconColor: '#7ed99e',
-      iconPath: path.join(pluginResources, 'card/pamu.png')
+      iconPath: path.join(pluginResources, 'common/cont/pamu.png')
     },
     // 配置项信息
     configInfo: {
