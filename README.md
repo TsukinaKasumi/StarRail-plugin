@@ -44,13 +44,15 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 手工下载的 zip 压缩包，先将解压后的 StarRail-plugin-master 文件夹更名为 StarRail-plugin 放置在 Yunzai-Bot 目录下的 plugins 文件夹内
 因为压缩包不支持用`#星铁更新` 进行更新，不方便后续更新升级，所以不推荐下载压缩包
 
-## 功能说明
+## 功能介绍
 
-### #星铁绑定＋（你的uid）
+### #星铁绑定＋你的uid
 
-### #星铁希儿面板(暂不支持查看详细数据)
+### #星铁希儿面板
 查看角色遗器，命座，光锥等信息
 
+### #星铁更新面板
+使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me
 ### #星铁收入
 查看本月星琼收入
 
@@ -74,13 +76,17 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin?_from=gitee_search)发送#扫码登录进行cookie的绑定，否则可能会报错
 获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)（仅pc，ios）
 
+
 ## 赞助
 
 如果觉得本项目对你有帮助的话，愿意的话不妨赞助我们让我们有更多动力更新！
+- [墨西哥鳄梨酱](https://afdian.net/a/ikechan8370) 提供插件本体和主要功能
+- [鹤望兰](https://afdian.net/a/hewang1an) 提供部分功能以及后续维护
 
-https://afdian.net/a/ikechan8370
-
-https://afdian.net/a/hewang1an
+## 特别鸣谢♥
+- mihomo.me：提供面板API来源
+- 狐狸：插件美工设计
+- [bietiaop](https://github.com/bietiaop)：编写插件部分渲染以及部分功能
 
 ## 贡献者
 
