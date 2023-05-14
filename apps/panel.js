@@ -157,16 +157,16 @@ export class hkrpg extends plugin {
     if (!previousData || isForce) {
       logger.mark('SR-panelApi强制查询');
       try {
-        // logger.mark('SR-panelApi开始查询', uid);
-        // let time = await redis.get(timeKey);
-        // if (time) {
-        //   time = parseInt(time);
-        //   const leftTime = Date.now() - time;
-        //   if (leftTime < 5 * 60 * 1000) {
-        //     const seconds = Math.ceil((5 * 60 * 1000 - leftTime) / 1000);
-        //     return Promise.reject(`查询过于频繁，请${seconds}秒后重试`);
-        //   }
-        // }
+        logger.mark('SR-panelApi开始查询', uid);
+        let time = await redis.get(timeKey);
+        if (time) {
+          time = parseInt(time);
+          const leftTime = Date.now() - time;
+          if (leftTime < 5 * 60 * 1000) {
+            const seconds = Math.ceil((5 * 60 * 1000 - leftTime) / 1000);
+            return Promise.reject(`查询过于频繁，请${seconds}秒后重试`);
+          }
+        }
         previousData = JSON.parse(previousData) || [];
         const api = await panelApi();
         const res = await fetch(api + uid);
