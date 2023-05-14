@@ -5,6 +5,7 @@ import MysSRApi from '../runtime/MysSRApi.js';
 import _ from 'lodash';
 import fs from 'fs';
 import { pluginRoot } from '../utils/path.js';
+import { findName } from '../utils/alias.js';
 export class hkrpg extends plugin {
   constructor(e) {
     super({
@@ -88,9 +89,7 @@ export class hkrpg extends plugin {
       await e.runtime.render('StarRail-plugin', '/panel/panel.html', data);
     } catch (error) {
       logger.mark('SR-panelApi', error);
-      return await e.reply(
-        error
-      );
+      return await e.reply(error);
     }
   }
   async update(e) {
@@ -131,10 +130,11 @@ export class hkrpg extends plugin {
   async getCharData(name, uid) {
     try {
       const data = await this.getPanelData(uid);
-      const charInfo = data.filter(item => item.name === name)[0];
+      const charName = await findName(name);
+      const charInfo = data.filter(item => item.name === charName)[0];
       if (!charInfo) {
         const data = await this.getPanelData(uid, true);
-        const charInfo = data.filter(item => item.name === name)[0];
+        const charInfo = data.filter(item => item.name === charName)[0];
         if (!charInfo)
           return Promise.reject(
             '未查询到角色数据，请检查角色是否放在了助战或者展柜，检查角色名是否正确，已设置的会有延迟，请等待一段时间重试。'
