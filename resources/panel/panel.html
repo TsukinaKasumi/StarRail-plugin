@@ -42,30 +42,62 @@
               <img src="{{pluResPath}}common/path/{{charpath}}.png">
             </div>
             <div class="level">Lv.{{level}}</div>
-            <div class="const">{{rank}}命</div>
+            <div class="const">星魂{{rank}}</div>
           </div>
           <div class="detail-list">
             <div class="item">
               <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconMaxHP.png" alt=""></div>
               <div class="text">生命值</div>
-              <div class="value">{{(properties.hpBase+properties.hpDelta).toFixed(0)}}</div>
+              <div class="multi-line-sum">
+                {{(properties.hpBase+properties.hpDelta).toFixed(0)}}
+              </div>
+              <div class="multi-line">
+                <div>{{properties.hpBase.toFixed(0)}}</div>
+                <div class="delta">+{{properties.hpDelta.toFixed(0)}}</div>
+              </div>
             </div>
             <div class="item">
               <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconAttack.png" alt=""></div>
               <div class="text">攻击力</div>
-              <div class="value">{{(properties.attackBase+properties.attackDelta).toFixed(0)}}</div>
+              <div class="multi-line-sum">
+                {{(properties.attackBase+properties.attackDelta).toFixed(0)}}
+              </div>
+              <div class="multi-line">
+                <div>{{properties.attackBase.toFixed(0)}}</div>
+                <div>
+                  <span class="delta">+{{properties.attackDelta.toFixed(0)}}</span>
+                </div>
+              </div>
             </div>
             <div class="item">
               <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconDefence.png" alt=""></div>
               <div class="text">防御力</div>
-              <div class="value">{{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}</div>
+              <div class="multi-line-sum">
+                {{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}
+              </div>
+              <div class="multi-line">
+                <div>{{properties.defenseBase.toFixed(0)}}</div>
+                <div>
+                  <span class="delta">+{{properties.defenseDelta.toFixed(0)}}</span>
+                </div>
+              </div>
             </div>
             <div class="item">
               <div class="icon">
                 <img src="{{pluResPath}}panel/resources/icon/value/IconSpeed.png">
               </div>
               <div class="text">速度</div>
-              <div class="value">{{(properties.speedBase+properties.speedAdd).toFixed(0)}}</div>
+              <div class="multi-line-sum">
+                {{(properties.speedBase+properties.speedAdd).toFixed(0)}}
+              </div>
+              <div class="multi-line">
+                <div>
+                  {{properties.speedBase.toFixed(0)}}
+                </div>
+                <div>
+                  <span class="delta">+{{properties.speedAdd.toFixed(0)}}</span>
+                </div>
+              </div>
             </div>
             <div class="item">
               <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalChance.png" alt=""></div>
