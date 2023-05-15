@@ -26,7 +26,7 @@ export class hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
+          reg: '^#?(星铁|星轨|崩铁|星穹铁道)(卡片|探索)$',
           fnc: 'card'
         },
         {
@@ -34,7 +34,7 @@ export class hkrpg extends plugin {
         //   reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
         //   fnc: 'avatar'
         // },
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)帮助$',
+          reg: '^#?(星铁|星轨|崩铁|星穹铁道)帮助$',
           fnc: 'help'
         },
         {
@@ -46,26 +46,27 @@ export class hkrpg extends plugin {
           fnc: 'gatcha'
         },
         {
-          reg: '^#(星铁|星轨|崩铁|星穹铁道)抽卡帮助$',
+          reg: '^#?(星铁|星轨|崩铁|星穹铁道)抽卡帮助$',
           fnc: 'gatchahelp'
         },
         {
-          reg: '^#星铁充值记录$',
+          reg: '^#?星铁充值记录$',
           fnc: 'getPayLog'
         },
         {
-          reg: '^#星铁在线(时长)?(统计|分析)?',
+          reg: '^#?星铁在线(时长)?(统计|分析)?',
           fnc: 'statisticsOnline'
         }
       ]
     })
-  
+
     this.User = new User(e)
   }
 
   get appconfig () {
     return setting.getConfig('gachaHelp')
   }
+
   get app2config () {
     return setting.getConfig('cookieHelp')
   }
