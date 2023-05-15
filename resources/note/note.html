@@ -29,7 +29,9 @@
                             <span class="time">{{ktl_full}}</span>
                         </div>
                         <!--预计完全恢复时间-->
-                        <div class="time-now">{{ktl_full_time_str}}</div>
+                        {{ if ktl_full_time_str }}
+                            <div class="time-now">{{ktl_full_time_str}}</div>
+                        {{ /if }}
                     </div>
                 </div>
                 <div class="dispatch-list">
