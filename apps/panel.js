@@ -143,7 +143,7 @@ export class hkrpg extends plugin {
       const charName = await findName(name);
       const charInfo = data.filter(item => item.name === charName)[0];
       if (!charInfo) {
-        await e.reply('正在获取面板数据中');
+        await e.reply('本地缓存数据中未找到该角色，正在更新数据');
         const data = await this.getPanelData(uid, true);
         const charInfo = data.filter(item => item.name === charName)[0];
         if (!charInfo) {
@@ -173,23 +173,24 @@ export class hkrpg extends plugin {
       try {
         logger.mark('SR-panelApi开始查询', uid);
         let time = await redis.get(timeKey);
-        if (time) {
-          time = parseInt(time);
-          const leftTime = Date.now() - time;
-          if (leftTime < 5 * 60 * 1000) {
-            const seconds = Math.ceil((5 * 60 * 1000 - leftTime) / 1000);
-            return Promise.reject(`查询过于频繁，请${seconds}秒后重试`);
-          }
-        }
+        // if (time) {
+        //   time = parseInt(time);
+        //   const leftTime = Date.now() - time;
+        //   if (leftTime < 5 * 60 * 1000) {
+        //     const seconds = Math.ceil((5 * 60 * 1000 - leftTime) / 1000);
+        //     return Promise.reject(`查询过于频繁，请${seconds}秒后重试`);
+        //   }
+        // }
         const api = await panelApi();
         let res = null;
+        let carData = null;
         try {
           res = await fetch(api + uid);
+          cardData = await res.json();
         } catch (error) {
           return Promise.reject('面板服务连接超时，请稍后重试');
         }
-        if (!res) return;
-        const cardData = await res.json();
+        if (!res) return Promise.reject('面板服务连接超时，请稍后重试');
         // 设置查询时间
         await redis.setEx(timeKey, 360 * 60, Date.now().toString());
         if ('detail' in cardData) return Promise.reject(cardData.detail);
