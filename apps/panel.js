@@ -16,7 +16,7 @@ export class hkrpg extends plugin {
       priority: 500,
       rule: [
         {
-          reg: '^#?(星铁|星轨|崩铁|星穹铁道)(.+)面板$',
+          reg: '^#?(星铁|星轨|崩铁|星穹铁道)(.+)面板',
           fnc: 'panel'
         },
         {
@@ -37,14 +37,17 @@ export class hkrpg extends plugin {
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
     const charName =
-      messageText.match(/#(星铁|星轨|崩铁|星穹铁道)(.+)面板$/)[2] || null
+      messageText.match(/#?(星铁|星轨|崩铁|星穹铁道)(.+)面板/)[2] || null
     if (!charName) return await this.ikun(e)
     if (charName === '更新') return await this.update(e)
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
+    let uid = messageText.replace(/^#?(星铁|星轨|崩铁|星穹铁道)(.+)面板/, '')
+    if (!uid) {
+      if (ats.length > 0 && !e.atBot) {
+        user = ats[0].qq
+      }
+      await this.miYoSummerGetUid()
+      uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     }
-    await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
       return false
