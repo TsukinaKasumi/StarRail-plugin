@@ -38,11 +38,12 @@
             <div class="type">
               <img src="{{pluResPath}}common/element/{{damage_type.toLowerCase()}}.png">
             </div>
-            <div class="type">
-              <img src="{{pluResPath}}common/path/{{charpath}}.png">
-            </div>
             <div class="level">Lv.{{level}}</div>
-            <div class="const">星魂{{rank}}</div>
+            <div class="const">
+              <img src="{{pluResPath}}common/path/{{charpath}}.png">
+              {{charpath}}
+            </div>
+            <div class="const">星魂 {{rank}}</div>
           </div>
           <div class="detail-list">
             <div class="item">
@@ -126,6 +127,13 @@
               </div>
               <div class="text">击破特攻</div>
               <div class="value">{{(properties.breakDamageAdded*100).toFixed(1)}}%</div>
+            </div>
+            <div class="item">
+              <div class="icon">
+                <img src="{{pluResPath}}panel/resources/icon/value/Icon{{damage_type}}AddedRatio.png">
+              </div>
+              <div class="text">元素加成</div>
+              <div class="value">{{(properties[damage_type.toLowerCase() + 'Added']*100).toFixed(1)}}%</div>
             </div>
           </div>
         </div>
