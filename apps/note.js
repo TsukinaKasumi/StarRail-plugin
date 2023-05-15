@@ -51,7 +51,7 @@ export class hkrpg extends plugin {
 
     if (cardData.retcode !== 0) {
       await e.reply(
-        '查询失败, 可能是ck失效或者别的原因, 可以尝试重新扫码登录后再进行查询'
+        '查询失败, 可能是ck失效或遇到验证码\n您可以尝试重新扫码登录后再进行查询'
       )
       return false
     }
