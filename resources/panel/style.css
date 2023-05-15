@@ -181,7 +181,7 @@ body {
 
 /* 角色信息卡片 */
 .main-content .char-info .char-card {
-  width: 270px;
+  width: 300px;
   height: 400px;
   position: relative;
   overflow: hidden;
@@ -379,22 +379,26 @@ body {
   margin-left: auto;
   margin-right: 17px;
 }
+
 .main-content .char-info .info-detail .detail-list .item .multi-line-sum {
   /*background: #00ff8c;*/
   margin-left: auto;
   text-align: right;
 }
+
 .main-content .char-info .info-detail .detail-list .item .multi-line {
-  margin-left: 3px;
-  padding-right: 17px;
+  margin-left: 10px;
+  padding: 0px 7px;
   font-size: 12px;
-  text-align: right;
+  text-align: center;
   width: 45px;
-  background: red;
+  background: #4a4a4a87;
 }
+
 .main-content .char-info .info-detail .detail-list .item .multi-line .delta {
   color: #7dd2ab;
 }
+
 /*******************/
 
 .info-uid-api {
