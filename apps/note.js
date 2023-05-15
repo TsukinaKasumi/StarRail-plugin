@@ -24,7 +24,7 @@ export class hkrpg extends plugin {
   }
 
   async note (e) {
-    let user = this.e.sender.user_id
+    let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
