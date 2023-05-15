@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import MysSRApi from '../runtime/MysSRApi.js';
 import _ from 'lodash';
 import fs from 'fs';
+import path from 'path';
 import { pluginRoot } from '../utils/path.js';
 import { findName } from '../utils/alias.js';
 export class hkrpg extends plugin {
@@ -305,27 +306,17 @@ async function updateData(oldData, newData) {
 async function saveData(uid, data) {
   // 文件路径
   const filePath = pluginRoot + '/data/panel/' + uid + '.json';
-  // 判断文件是否存在并，不存在则创建并写入数据，存在则直接写入数据
-  return new Promise((resolve, reject) => {
-    fs.access(filePath, err => {
-      if (err) {
-        fs.appendFileSync(filePath, JSON.stringify(data), 'utf-8', err => {
-          if (err) {
-            reject('文件写入失败');
-          }
-          resolve(true);
-        });
-        reject(false);
-      } else {
-        fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8', err => {
-          if (err) {
-            reject('文件写入失败');
-          }
-          resolve(true);
-        });
-      }
-    });
-  });
+  // 确保目录存在，如果不存在则创建
+  await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+  // 判断文件是否存在，并写入数据
+  try {
+    await fs.promises.access(filePath, fs.constants.F_OK);
+    await fs.promises.writeFile(filePath, JSON.stringify(data), 'utf-8');
+    return true;
+  } catch (err) {
+    await fs.promises.appendFile(filePath, JSON.stringify(data), 'utf-8');
+    return false;
+  }
 }
 async function readData(uid) {
   // 文件路径
