@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,23 +8,11 @@
   <title>角色面板</title>
   <link rel="stylesheet" href="{{pluResPath}}/panel/style.css">
 </head>
+
 <body>
-  <div class="card-container">
-    <div class="header">
-      <div class="title">
-        <!-- <div class="text">#角色面板</div> -->
-        <div class="tip">我整理完今天的照片就休息啦，你也别熬夜打游戏哦<br>-三月七</div>
-        <div class="logo"><img src="{{pluResPath}}panel/resources/logo.png" alt=""></div>
-      </div>
-      <div class="info">
-        <div class="uid">UID:{{uid}}</div>
-        <div class="type">
-          <div class="icon">
-            <!-- <img src="{{pluResPath}}panel/resources/icon/IconWhiteThunder.png" alt=""> -->
-          </div>
-          <div class="text">{{charpath}}</div>
-        </div>
-      </div>
+  <div class="container" id="container">
+    <div class="logo">
+      <img src="{{pluResPath}}panel/resources/logo.png">
     </div>
     <div class="main-content">
       <div class="char-info">
@@ -46,7 +35,11 @@
         <div class="info-detail">
           <div class="title">
             <div class="name">{{name}}</div>
-            <div class="type"><img src="{{pluResPath}}panel/resources/icon/IconAttribute{{damage_type}}.png" alt=""></div>
+            <div class="type"><img src="{{pluResPath}}panel/resources/icon/IconAttribute{{damage_type}}.png" alt="">
+            </div>
+            <div class="type">
+              <img src="{{pluResPath}}common/path/{{charpath}}.png">
+            </div>
             <div class="level">Lv.{{level}}</div>
             <div class="const">{{rank}}命</div>
           </div>
@@ -82,19 +75,30 @@
               <div class="value">{{(properties.criticalDamage*100).toFixed(1)}}%</div>
             </div>
             <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusResistance.png" alt=""></div>
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusResistance.png" alt="">
+              </div>
               <div class="text">效果抵抗</div>
               <div class="value">{{(properties.statusResistance*100).toFixed(1)}}%</div>
             </div>
             <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt=""></div>
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt="">
+              </div>
               <div class="text">效果命中</div>
               <div class="value">{{(properties.statusProbability*100).toFixed(1)}}%</div>
+            </div>
+            <div class="item">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt="">
+              </div>
+              <div class="text">击破特攻</div>
+              <div class="value">{{(properties.breakDamageAdded*100).toFixed(1)}}%</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="api-info">当前面板更新服务：{{api}}</div>
+      <div class="info-uid-api">
+        <div class="uid">UID:{{uid}}</div>
+        <div class="api-info">当前面板更新服务：{{api}}</div>
+      </div>
       <div class="artoverview">
         <div class="item weapon">
           <div class="icon">
@@ -103,7 +107,9 @@
           <div class="info">
             <div class="title">
               <div class="name">{{equipment.name}}</div>
-              <div class="star"><img src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png" alt=""></div>
+              <div class="star"><img
+                  src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png"
+                  alt=""></div>
             </div>
             <div class="level-info">
               <div class="level">Lv.{{equipment.level}}</div>
@@ -133,12 +139,16 @@
             </div>
             <!-- {{relic.id.toString().slice(-4,-1)}}_{{relic.id.toString().slice(-1)}} -->
             <div class="relic-info-detail">
-              <div class="name">{{relic.name}}</div><div class="level-info">
-                <div class="star"><img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{relic.max_level/3}}.png" alt="">
+              <div class="name">{{relic.name}}</div>
+              <div class="level-info">
+                <div class="star"><img
+                    src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{relic.max_level/3}}.png" alt="">
                 </div>
                 <div class="level">+{{relic.level}}</div>
               </div>
-              <div class="value">{{relic.main_affix_name}}+{{relic.main_affix_value>=1?relic.main_affix_value.toFixed(1):(relic.main_affix_value*100).toFixed(1)+'%'}}</div>
+              <div class="value">
+                {{relic.main_affix_name}}+{{relic.main_affix_value>=1?relic.main_affix_value.toFixed(1):(relic.main_affix_value*100).toFixed(1)+'%'}}
+              </div>
             </div>
           </div>
           <div class="relic-value-list">
@@ -158,4 +168,5 @@
     </div>
   </div>
 </body>
+
 </html>

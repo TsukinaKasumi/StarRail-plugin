@@ -54,18 +54,21 @@
  * @LastEditTime: 2023-05-13
  */
 @font-face {
-    font-family: "SR";
-    src: url('../fonts/zh-cn.ttf') format('truetype');
+  font-family: "SR";
+  src: url('../fonts/zh-cn.ttf') format('truetype');
 }
-html, body {
+
+html,
+body {
   width: 720px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'SR';
 }
+
 /* 卡片容器 */
-.card-container {
+.container {
   margin: auto;
   width: 720px;
   box-sizing: border-box;
@@ -79,7 +82,10 @@ html, body {
   padding: 20px 40px;
   font-weight: 500;
   font-size: 1.2rem;
+  transform: scale(1.4);
+  transform-origin: 0 0;
 }
+
 /*******************/
 /* 头部 */
 /* .header {
@@ -95,6 +101,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
 }
+
 /* 标题的提示 */
 .header .title .tip {
   margin: 0;
@@ -102,20 +109,26 @@ html, body {
   font-size: 1.2rem;
   text-align: left;
 }
+
 /* 标题的文字 */
 .header .title .text {
   margin: 0;
   padding: 0;
   font-size: 2.8rem;
 }
+
 /* 标题的 LOGO */
-.header .title .logo {
-  margin-left: auto;
-  height: 5rem;
+.logo {
+  height: 4rem;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
 }
-.header .title .logo img {
+
+.logo img {
   height: 100%;
 }
+
 /* 顶部的信息 */
 .header .info {
   display: flex;
@@ -125,33 +138,39 @@ html, body {
   font-size: 1.4rem;
   padding: 0 25px 0 10px;
 }
+
 /* UID */
 .header .info .uid {
   margin-top: 14px;
   font-weight: 500;
 }
+
 /* 种类 */
 .header .info .type {
   display: flex;
   align-items: center;
 }
+
 /* 种类的图标 */
 .header .info .type .icon {
   width: 3rem;
   height: 3rem;
 }
+
 .header .info .type .icon img {
   width: 100%;
   height: 100%;
 }
+
 /*******************/
 /* 主要内容 */
 .main-content {
   margin-top: 7px;
-  border: 2px solid #f0eaca;
+  /* border: 2px solid #f0eaca; */
   border-radius: 10px;
-  padding: 20px;
+  /* padding: 20px; */
 }
+
 /*******************/
 /* 角色信息 */
 .main-content .char-info {
@@ -159,17 +178,21 @@ html, body {
   justify-content: left;
   align-items: center;
 }
+
 /* 角色信息卡片 */
 .main-content .char-info .char-card {
   width: 270px;
-  height: 350px;
+  height: 400px;
   position: relative;
   overflow: hidden;
   border: 1px solid #f0eaca;
   border-radius: 14px;
   flex-shrink: 0;
   flex-grow: 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
+
 /* 角色星级 */
 .main-content .char-info .char-star {
   position: absolute;
@@ -180,42 +203,49 @@ html, body {
   overflow: hidden;
   z-index: 2;
 }
+
 .main-content .char-info .char-star img {
   height: 120%;
   display: block;
   position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-}
-/* 封面图 */
-.main-content .char-info .char-card .char-img {
-  width: 170%;
-  height: 170%;
-  overflow: hidden;
-  position: absolute;
-  top: 60%;
-  left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* 封面图 */
+.main-content .char-info .char-card .char-img {
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
+  position: absolute;
+  top: 0px;
+  /* transform: scale(1.2);
+  transform-origin: center center; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+}
+
 .main-content .char-info .char-card .char-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 /* 技能 */
 .main-content .char-info .char-card .skills {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: rgb(31, 37, 51);
+  /* background-color: rgb(31, 37, 51); */
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 7px;
   box-sizing: border-box;
 }
+
 .main-content .char-info .char-card .skills .item {
   display: flex;
   justify-content: center;
@@ -224,6 +254,7 @@ html, body {
   box-sizing: border-box;
   margin: 0 3px;
 }
+
 /* 技能图标 */
 .main-content .char-info .char-card .skills .item .icon {
   width: 36px;
@@ -231,36 +262,44 @@ html, body {
   border-radius: 50%;
   box-sizing: border-box;
   border: 2.5px solid #f0eaca;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
+
 .main-content .char-info .char-card .skills .item .icon img {
   width: 100%;
   height: 100%;
   display: block;
 }
+
 /* 技能等级文字 */
 .main-content .char-info .char-card .skills .item .level {
   font-size: 60%;
 }
+
 /*******************/
 /* 详细信息 */
 .main-content .char-info .info-detail {
   flex-grow: 1;
   flex-shrink: 1;
   margin-left: 30px;
-  height: 350px;
+  height: 400px;
   display: flex;
   flex-direction: column;
 }
+
 /* 角色昵称、等级等 */
 .main-content .char-info .info-detail .title {
   display: flex;
   align-items: flex-end;
   border-bottom: 1px solid #f0eaca;
 }
+
 /* 角色昵称 */
 .main-content .char-info .info-detail .title .name {
   font-size: 2.2rem;
 }
+
 /*角色种类*/
 .main-content .char-info .info-detail .title .type {
   width: 1.8rem;
@@ -268,17 +307,20 @@ html, body {
   margin-left: 5px;
   margin-bottom: 5px;
 }
+
 .main-content .char-info .info-detail .title .type img {
   width: 100%;
   height: 100%;
   display: block;
 }
+
 /* 角色等级 */
 .main-content .char-info .info-detail .title .level {
   margin-left: 10px;
   font-size: 1rem;
   margin-bottom: 3px;
 }
+
 /* 角色命座 */
 .main-content .char-info .info-detail .title .const {
   margin-left: 10px;
@@ -289,6 +331,7 @@ html, body {
   margin-bottom: 5px;
   margin-left: auto;
 }
+
 /* 属性列表 */
 .main-content .char-info .info-detail .detail-list {
   display: flex;
@@ -300,6 +343,7 @@ html, body {
   overflow: hidden;
   /* flex-wrap: wrap; */
 }
+
 .main-content .char-info .info-detail .detail-list .item {
   display: flex;
   align-items: center;
@@ -308,6 +352,7 @@ html, body {
   margin-bottom: 6px;
   flex: 1;
 }
+
 /* 属性图标 */
 .main-content .char-info .info-detail .detail-list .item .icon {
   width: 1.8rem;
@@ -316,38 +361,49 @@ html, body {
   position: relative;
   margin-left: 4px;
 }
+
 .main-content .char-info .info-detail .detail-list .item .icon img {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   height: 120%;
   display: block;
 }
+
 /* 属性名称 */
 .main-content .char-info .info-detail .detail-list .item .text {
   margin-left: 8px;
 }
+
 /* 属性值 */
 .main-content .char-info .info-detail .detail-list .item .value {
   margin-left: auto;
   margin-right: 17px;
 }
+
 /*******************/
-/* 面板服务提示 */
-.api-info {
-  margin: 10px auto;
+
+.info-uid-api {
+  display: flex;
   font-size: 1rem;
   color: #f0eaca;
-  text-align: right;
   padding: 0 5px;
+  justify-content: space-between;
+  margin: 10px 0px;
 }
+
+.info-uid-api .uid {
+  font-weight: 700;
+}
+
 /*******************/
 /* 光锥、遗器总览 */
-.main-content .artoverview  {
+.main-content .artoverview {
   display: flex;
   justify-content: space-between;
 }
+
 /* 光锥 */
 .main-content .artoverview .weapon {
   width: 58%;
@@ -359,6 +415,7 @@ html, body {
   margin-right: 17px;
   align-items: center;
 }
+
 /* 遗器 */
 .main-content .artoverview .relic {
   border: 1px solid #f0eaca;
@@ -370,6 +427,7 @@ html, body {
   display: flex;
   align-items: center;
 }
+
 /* 信息 */
 .main-content .artoverview .item .info {
   flex-grow: 1;
@@ -378,12 +436,14 @@ html, body {
   flex-direction: column;
   overflow: hidden;
 }
+
 .main-content .artoverview .item .info .title {
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
+
 /* 名称 */
 .main-content .artoverview .item .info .title .name {
   text-overflow: ellipsis;
@@ -391,12 +451,14 @@ html, body {
   white-space: nowrap;
   font-size: 1.5rem;
 }
+
 /* 等级信息 */
 .main-content .artoverview .item .info .level-info {
   display: flex;
   justify-content: center;
   margin-top: 10px;
 }
+
 /* 光锥图标 */
 .main-content .artoverview .weapon .icon {
   height: 100px;
@@ -406,6 +468,7 @@ html, body {
   flex-shrink: 0;
   margin-right: 5px;
 }
+
 .main-content .artoverview .weapon .icon::after {
   content: '';
   display: block;
@@ -416,10 +479,12 @@ html, body {
   position: absolute;
   right: 0;
 }
+
 .main-content .artoverview .weapon .icon img {
   height: 100%;
   display: block;
 }
+
 /* 光锥星级 */
 .main-content .artoverview .weapon .info .title .star {
   width: 80px;
@@ -430,14 +495,16 @@ html, body {
   flex-grow: 0;
   flex-shrink: 0;
 }
+
 .main-content .artoverview .weapon .info .title .star img {
   height: 120%;
   display: block;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
+
 /* 光锥等级 */
 .main-content .artoverview .weapon .info .level-info .level {
   border: 1px solid #f0eaca;
@@ -446,6 +513,7 @@ html, body {
   font-size: 0.9rem;
   margin-right: 15px;
 }
+
 /* 光锥叠影 */
 .main-content .artoverview .weapon .info .level-info .dy {
   border: 1px solid #f0eaca;
@@ -453,6 +521,7 @@ html, body {
   border-radius: 6px;
   font-size: 0.9rem;
 }
+
 /* 遗器评分 */
 .main-content .artoverview .relic .info .level-info .score {
   border: 1px solid #f0eaca;
@@ -461,6 +530,7 @@ html, body {
   font-size: 1.4rem;
   margin-right: 10px;
 }
+
 /* 遗器总分 */
 .main-content .artoverview .relic .info .level-info .total-score {
   border: 1px solid #f0eaca;
@@ -471,13 +541,16 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+
 /*******************/
 /* 遗器列表 */
 .main-content .relic-list {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
+
 /* 遗器列表每项 */
 .main-content .relic-list .item {
   width: 188px;
@@ -489,16 +562,22 @@ html, body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(4.5px);
+  /* background: #080f1f00; */
+  -webkit-backdrop-filter: blur(4.5px);
 }
+
 .main-content .relic-list .item:nth-child(3n) {
   margin-right: 0;
 }
+
 /* 遗器信息 */
 .main-content .relic-list .item .relic-info {
   padding: 15px 10px 15px 0;
   display: flex;
   align-items: center;
 }
+
 /* 遗器图标 */
 .main-content .relic-list .item .relic-info .icon {
   width: 70px;
@@ -509,10 +588,12 @@ html, body {
   flex-shrink: 0;
   margin-right: 5px;
 }
+
 .main-content .relic-list .item .relic-info .icon img {
   height: 100%;
   display: block;
 }
+
 /* 遗器名称 */
 .main-content .relic-list .item .relic-info .relic-info-detail {
   display: flex;
@@ -521,6 +602,7 @@ html, body {
   justify-content: center;
   align-items: center;
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .name {
   width: 100%;
   text-overflow: ellipsis;
@@ -528,6 +610,7 @@ html, body {
   overflow: hidden;
   font-size: 0.9rem;
 }
+
 /* 遗器星级 */
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info {
   width: 100%;
@@ -536,6 +619,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info .star {
   width: 50px;
   height: 1rem;
@@ -544,30 +628,34 @@ html, body {
   flex-grow: 0;
   flex-shrink: 0;
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info .star img {
   height: 120%;
   display: block;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info .level {
   border: 1px solid #f0eaca;
   padding: 0px 5px;
   border-radius: 6px;
   font-size: 0.8rem;
 }
+
 /* 遗器属性值 */
 .main-content .relic-list .item .relic-info .relic-info-detail .value {
   margin-top: 2px;
   font-size: 0.9rem;
 }
+
 /* 遗器属性值列表 */
 .main-content .relic-list .item .relic-value-list {
   flex-grow: 1;
   flex-shrink: 1;
-  background: #f0eaca;
+  /* background: #f0eaca; */
 }
 
 /* 遗器属性值列表每项 */
@@ -575,15 +663,18 @@ html, body {
   padding: 3px 15px;
   display: flex;
   align-items: center;
-  color: rgb(0,0,0);
+  /* color: #f0eaca; */
   font-size: 0.9rem;
 }
+
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {
-  background-color: #f0eaca;
+  background-color: #5452528f;
 }
+
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n) {
-  background-color: #cdc8af;
+  background-color: #080f1f5c;
 }
+
 /* 遗器属性值列表每项值 */
 .main-content .relic-list .item .relic-value-list .relic-value .value {
   font-weight: 600;
