@@ -181,7 +181,7 @@ body {
 
 /* 角色信息卡片 */
 .main-content .char-info .char-card {
-  width: 300px;
+  width: 280px;
   height: 400px;
   position: relative;
   overflow: hidden;
@@ -396,7 +396,7 @@ body {
 }
 
 .main-content .char-info .info-detail .detail-list .item .multi-line .delta {
-  color: #7dd2ab;
+  color: #9be802;
 }
 
 /*******************/
