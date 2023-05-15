@@ -24,7 +24,7 @@
             <img src="{{pluResPath}}panel/resources/char_image/{{avatarId}}.png" alt="">
           </div>
           <div class="skills">
-            {{each behaviorList as behavior i}}
+            {{each behaviorList behavior i}}
             <div class="item">
               <div class="icon"><img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt=""></div>
               <div class="level">{{behavior.level}}</div>
@@ -35,7 +35,8 @@
         <div class="info-detail">
           <div class="title">
             <div class="name">{{name}}</div>
-            <div class="type"><img src="{{pluResPath}}panel/resources/icon/IconAttribute{{damage_type}}.png" alt="">
+            <div class="type">
+              <img src="{{pluResPath}}common/element/{{damage_type}}.png">
             </div>
             <div class="type">
               <img src="{{pluResPath}}common/path/{{charpath}}.png">
@@ -60,7 +61,9 @@
               <div class="value">{{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}</div>
             </div>
             <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconSpeed.png" alt=""></div>
+              <div class="icon">
+                <img src="{{pluResPath}}panel/resources/icon/value/IconSpeed.png">
+              </div>
               <div class="text">速度</div>
               <div class="value">{{(properties.speedBase+properties.speedAdd).toFixed(0)}}</div>
             </div>
@@ -87,7 +90,7 @@
               <div class="value">{{(properties.statusProbability*100).toFixed(1)}}%</div>
             </div>
             <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt="">
+              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconBreakUp.png" alt="">
               </div>
               <div class="text">击破特攻</div>
               <div class="value">{{(properties.breakDamageAdded*100).toFixed(1)}}%</div>
@@ -96,7 +99,7 @@
         </div>
       </div>
       <div class="info-uid-api">
-        <div class="uid">UID:{{uid}}</div>
+        <div class="uid">UID: {{uid}}</div>
         <div class="api-info">当前面板更新服务：{{api}}</div>
       </div>
       <div class="artoverview">
@@ -131,7 +134,7 @@
         </div>
       </div>
       <div class="relic-list">
-        {{each relics as relic i}}
+        {{each relics relic i}}
         <div class="item">
           <div class="relic-info">
             <div class="icon">
@@ -152,7 +155,7 @@
             </div>
           </div>
           <div class="relic-value-list">
-            {{each relic.sub_affix_id as affix i}}
+            {{each relic.sub_affix_id affix i}}
             <div class="relic-value">
               <div class="name">{{affix.name}}</div>
               <div class="value">+{{affix.value>=1?affix.value.toFixed(1):(affix.value*100).toFixed(1)+'%'}}</div>

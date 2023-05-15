@@ -243,6 +243,7 @@ body {
   align-items: center;
   padding: 7px;
   box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .main-content .char-info .char-card .skills .item {
