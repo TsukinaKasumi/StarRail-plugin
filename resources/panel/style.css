@@ -79,7 +79,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   color: #f0eaca;
-  padding: 20px 40px;
+  padding: 20px 30px;
   font-weight: 500;
   font-size: 1.2rem;
   transform: scale(1.4);
@@ -189,8 +189,6 @@ body {
   border-radius: 14px;
   flex-shrink: 0;
   flex-grow: 0;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
 }
 
 /* 角色星级 */
@@ -238,7 +236,8 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  /* background-color: rgb(31, 37, 51); */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -262,8 +261,6 @@ body {
   border-radius: 50%;
   box-sizing: border-box;
   border: 2.5px solid #f0eaca;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 .main-content .char-info .char-card .skills .item .icon img {
@@ -672,7 +669,7 @@ body {
 }
 
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n) {
-  background-color: #080f1f5c;
+  background-color: #08080957;
 }
 
 /* 遗器属性值列表每项值 */
