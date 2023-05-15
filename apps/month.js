@@ -23,7 +23,7 @@ export class hkrpg extends plugin {
   }
 
   async month (e) {
-    let user = this.e.sender.user_id
+    let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
 
     if (ats.length > 0 && !e.atBot) {
