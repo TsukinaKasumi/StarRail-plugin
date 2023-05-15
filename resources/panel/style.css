@@ -177,7 +177,7 @@ body {
   display: flex;
   justify-content: left;
   align-items: center;
-  height: 425px;
+  height: 465px;
 }
 
 /* 角色信息卡片 */
@@ -402,7 +402,7 @@ body {
   margin-left: 10px;
   padding: 0px 7px;
   font-size: 12px;
-  text-align: center;
+  text-align: right;
   width: 45px;
   background: #4a4a4a87;
 }
