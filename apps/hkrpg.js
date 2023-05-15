@@ -73,7 +73,7 @@ export class hkrpg extends plugin {
 
   async card (e) {
     try {
-      let user = this.e.sender.user_id
+      let user = this.e.user_id
       let ats = e.message.filter(m => m.type === 'at')
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
@@ -140,7 +140,7 @@ export class hkrpg extends plugin {
       let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
       let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
       if (!uid) {
-        let user = this.e.sender.user_id
+        let user = this.e.user_id
         let ats = e.message.filter(m => m.type === 'at')
         if (ats.length > 0 && !e.atBot) {
           user = ats[0].qq
@@ -216,7 +216,7 @@ export class hkrpg extends plugin {
 
   async gatcha (e) {
     try {
-      let user = this.e.sender.user_id
+      let user = this.e.user_id
       let type = 11
       let typeName = e.msg.replace(
         /^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
@@ -260,7 +260,7 @@ export class hkrpg extends plugin {
   /** 复读 */
   async bindSRUid () {
     let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ''))
-    let user = this.e.sender.user_id
+    let user = this.e.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
     /** 复读内容 */
     this.reply('绑定成功', false)
@@ -276,7 +276,7 @@ export class hkrpg extends plugin {
     try {
       let key = this.e.msg.trim()
       key = key.split('authkey=')[1].split('&')[0]
-      let user = this.e.sender.user_id
+      let user = this.e.user_id
       await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
       /** 复读内容 */
       this.reply('绑定成功', false)
@@ -339,13 +339,13 @@ export class hkrpg extends plugin {
   }
 
   async statisticsOnline (e) {
-    let lock = await redis.get(`STAR_RAILWAY:CD:ONLINE:${e.sender.user_id}`)
+    let lock = await redis.get(`STAR_RAILWAY:CD:ONLINE:${e.user_id}`)
     if (lock) {
       await e.reply('冷却时间没到，请稍后再试')
       return true
     }
     await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${e.sender.user_id}`)
+    let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
     if (!uid) {
       await e.reply('未绑定uid，请发送#绑定星铁uid＋uid进行绑定')
       return false
