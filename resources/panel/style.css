@@ -177,12 +177,13 @@ body {
   display: flex;
   justify-content: left;
   align-items: center;
+  height: 425px;
 }
 
 /* 角色信息卡片 */
 .main-content .char-info .char-card {
   width: 280px;
-  height: 400px;
+  height: 100%;
   position: relative;
   overflow: hidden;
   border: 1px solid #f0eaca;
@@ -281,9 +282,9 @@ body {
   flex-grow: 1;
   flex-shrink: 1;
   margin-left: 30px;
-  height: 400px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 /* 角色昵称、等级等 */
@@ -321,13 +322,24 @@ body {
 
 /* 角色命座 */
 .main-content .char-info .info-detail .title .const {
-  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  /* margin-left: 10px; */
   font-size: 1rem;
   border: 1.5px solid #f0eaca;
   padding: 0 3px;
   border-radius: 5px;
   margin-bottom: 5px;
   margin-left: auto;
+}
+
+.title .const img {
+  height: 20px;
+  margin-right: 2px;
+}
+
+.title .const:nth-child(5) {
+  margin-left: 5px !important;
 }
 
 /* 属性列表 */
