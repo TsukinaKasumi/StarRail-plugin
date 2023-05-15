@@ -550,7 +550,7 @@ body {
 
 /* 遗器列表每项 */
 .main-content .relic-list .item {
-  width: 188px;
+  width: 210px;
   border: 1px solid #f0eaca;
   border-radius: 10px;
   box-sizing: border-box;
@@ -559,9 +559,6 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(4.5px);
-  /* background: #080f1f00; */
-  -webkit-backdrop-filter: blur(4.5px);
 }
 
 .main-content .relic-list .item:nth-child(3n) {
@@ -573,6 +570,9 @@ body {
   padding: 15px 10px 15px 0;
   display: flex;
   align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
 }
 
 /* 遗器图标 */
@@ -597,7 +597,7 @@ body {
   overflow: hidden;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .main-content .relic-list .item .relic-info .relic-info-detail .name {
@@ -613,7 +613,7 @@ body {
   width: 100%;
   margin-top: 2px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
 }
 
@@ -640,6 +640,7 @@ body {
   padding: 0px 5px;
   border-radius: 6px;
   font-size: 0.8rem;
+  margin-left: 3px;
 }
 
 /* 遗器属性值 */
@@ -662,6 +663,7 @@ body {
   align-items: center;
   /* color: #f0eaca; */
   font-size: 0.9rem;
+  line-height: 22px;
 }
 
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {
