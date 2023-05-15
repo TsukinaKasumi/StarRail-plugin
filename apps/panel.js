@@ -65,6 +65,15 @@ export class hkrpg extends plugin {
       // 引入角色数据
       let charData = pluginRoot + '/resources/panel/data/character.json';
       charData = JSON.parse(fs.readFileSync(charData, 'utf-8'));
+      // 查询角色图片有哪些
+      const charImagePath =
+        pluginRoot + `/resources/panel/resources/char_image/${data.avatarId}`;
+      const charImageList = fs.readdirSync(charImagePath);
+      // 随机选图
+      let charImage =
+        charImageList[Math.floor(Math.random() * charImageList.length)];
+      if (charImage === '.gitignore') charImage = 'default.png';
+      data.charImage = charImage;
       data.charpath = charData[data.avatarId].path;
       data.relics.forEach((item, i) => {
         const filePath = relicsPathData[item.id].icon;
