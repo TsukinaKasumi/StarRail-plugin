@@ -34,7 +34,7 @@ export class hkrpg extends plugin {
   }
 
   async panel(e) {
-    let user = this.e.sender.user_id;
+    let user = this.e.user_id;
     let ats = e.message.filter(m => m.type === 'at');
     const messageText = e.msg;
     const charName =
@@ -102,7 +102,7 @@ export class hkrpg extends plugin {
   }
 
   async update(e) {
-    let user = this.e.sender.user_id;
+    let user = this.e.user_id;
     let ats = e.message.filter(m => m.type === 'at');
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq;
@@ -229,7 +229,7 @@ export class hkrpg extends plugin {
   }
 
   async ikun(e) {
-    let user = this.e.sender.user_id;
+    let user = this.e.user_id;
     let ats = e.message.filter(m => m.type === 'at');
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq;
