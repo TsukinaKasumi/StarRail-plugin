@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import MysSRApi from '../runtime/MysSRApi.js';
 import _ from 'lodash';
 import fs from 'fs';
+import path from 'path';
 import { pluginRoot } from '../utils/path.js';
 import { findName } from '../utils/alias.js';
 export class hkrpg extends plugin {
@@ -112,7 +113,6 @@ export class hkrpg extends plugin {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定');
       return false;
     }
-    await e.reply('正在更新面板数据中~可能需要一段时间，请耐心等待');
     try {
       const api = await panelApi();
       const data = await this.getPanelData(uid, true);
@@ -139,11 +139,10 @@ export class hkrpg extends plugin {
    */
   async getCharData(name, uid, e) {
     try {
-      const data = await this.getPanelData(uid);
+      const data = await this.getPanelData(uid, false, true);
       const charName = await findName(name);
       const charInfo = data.filter(item => item.name === charName)[0];
       if (!charInfo) {
-        await e.reply('本地缓存数据中未找到该角色，正在更新数据');
         const data = await this.getPanelData(uid, true);
         const charInfo = data.filter(item => item.name === charName)[0];
         if (!charInfo) {
@@ -151,6 +150,7 @@ export class hkrpg extends plugin {
             '未查询到角色数据，请检查角色是否放在了助战或者展柜，检查角色名是否正确，已设置的会有延迟，请等待一段时间重试。'
           );
         }
+        return charInfo;
       }
       return charInfo;
     } catch (error) {
@@ -164,12 +164,12 @@ export class hkrpg extends plugin {
    * @param {boolean} isForce 是否强制更新数据
    * @returns {Promise} 使用 try catch 捕获错误
    */
-  async getPanelData(uid, isForce = false) {
-    // logger.mark('SR-panelApi', uid, isForce);
+  async getPanelData(uid, isForce = false, forceCache = false) {
     const timeKey = `STAR_RAILWAY:userPanelDataTime:${uid}`;
     let previousData = await readData(uid);
-    if (previousData.length < 1 || isForce) {
+    if ((previousData.length < 1 || isForce) && !forceCache) {
       logger.mark('SR-panelApi强制查询');
+      await this.e.reply('正在更新面板数据中~可能需要一段时间，请耐心等待');
       try {
         logger.mark('SR-panelApi开始查询', uid);
         let time = await redis.get(timeKey);
@@ -212,7 +212,6 @@ export class hkrpg extends plugin {
           characters = [assistRole, ...displayRoles];
         }
         const chars = await updateData(previousData, characters);
-        // logger.mark('SR-panelApi-SetRedis', JSON.stringify(chars));
         saveData(uid, chars);
         return chars;
       } catch (error) {
@@ -305,27 +304,17 @@ async function updateData(oldData, newData) {
 async function saveData(uid, data) {
   // 文件路径
   const filePath = pluginRoot + '/data/panel/' + uid + '.json';
-  // 判断文件是否存在并，不存在则创建并写入数据，存在则直接写入数据
-  return new Promise((resolve, reject) => {
-    fs.access(filePath, err => {
-      if (err) {
-        fs.appendFileSync(filePath, JSON.stringify(data), 'utf-8', err => {
-          if (err) {
-            reject('文件写入失败');
-          }
-          resolve(true);
-        });
-        reject(false);
-      } else {
-        fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8', err => {
-          if (err) {
-            reject('文件写入失败');
-          }
-          resolve(true);
-        });
-      }
-    });
-  });
+  // 确保目录存在，如果不存在则创建
+  await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+  // 判断文件是否存在，并写入数据
+  try {
+    await fs.promises.access(filePath, fs.constants.F_OK);
+    await fs.promises.writeFile(filePath, JSON.stringify(data), 'utf-8');
+    return true;
+  } catch (err) {
+    await fs.promises.appendFile(filePath, JSON.stringify(data), 'utf-8');
+    return false;
+  }
 }
 async function readData(uid) {
   // 文件路径
