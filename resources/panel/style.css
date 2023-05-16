@@ -60,7 +60,7 @@
 
 html,
 body {
-  width: 720px;
+  width: 730px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -70,14 +70,11 @@ body {
 /* 卡片容器 */
 .container {
   margin: auto;
-  width: 720px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  background-image: url('./resources/bkg.png');
-  background-position: center;
+  background: url('./resources/bkg.png') center no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;
   color: #f0eaca;
   padding: 20px 30px;
   font-weight: 500;
@@ -297,6 +294,7 @@ body {
 /* 角色昵称 */
 .main-content .char-info .info-detail .title .name {
   font-size: 2.2rem;
+  white-space: nowrap;
 }
 
 /*角色种类*/
@@ -424,6 +422,7 @@ body {
 
 .info-uid-api .uid {
   font-weight: 700;
+  font-size: 20px;
 }
 
 /*******************/
@@ -436,6 +435,7 @@ body {
 /* 光锥 */
 .main-content .artoverview .weapon {
   width: 58%;
+  height: 100px;
   border: 1px solid #f0eaca;
   border-radius: 10px;
   padding: 0px 5px;
@@ -490,12 +490,13 @@ body {
 
 /* 光锥图标 */
 .main-content .artoverview .weapon .icon {
-  height: 100px;
+  height: 100%;
   overflow: hidden;
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: 5px;
+  padding: 0 10px;
 }
 
 .main-content .artoverview .weapon .icon::after {
@@ -506,7 +507,7 @@ body {
   width: 1.5px;
   background-color: #f0eaca;
   position: absolute;
-  right: 0;
+  right: 0px;
 }
 
 .main-content .artoverview .weapon .icon img {
@@ -582,7 +583,7 @@ body {
 
 /* 遗器列表每项 */
 .main-content .relic-list .item {
-  width: 210px;
+  width: calc(33% - 10px);
   border: 1px solid #f0eaca;
   border-radius: 10px;
   box-sizing: border-box;
