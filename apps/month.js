@@ -27,8 +27,8 @@ export class hkrpg extends plugin {
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
-      e.user_id = user
-      this.User = new User(e)
+      this.e.user_id = user
+      this.User = new User(this.e)
     }
     let userData = await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
