@@ -99,8 +99,8 @@ export class hkrpg extends plugin {
       })
       await e.runtime.render('StarRail-plugin', '/panel/panel.html', data)
     } catch (error) {
-      logger.mark('SR-panelApi', error)
-      return await e.reply(error)
+      logger.error('SR-panelApi', error)
+      return await e.reply(error.message)
     }
   }
 
@@ -151,8 +151,8 @@ export class hkrpg extends plugin {
       await e.runtime.render('StarRail-plugin', '/panel/card.html', renderData)
       // await e.reply( '更新面板数据成功' );
     } catch (error) {
-      logger.mark('SR-panelApi', error)
-      return await e.reply(error)
+      logger.error('SR-panelApi', error)
+      return await e.reply(error.message)
     }
   }
 
@@ -164,24 +164,21 @@ export class hkrpg extends plugin {
    * @returns {Promise} 使用 try catch 捕获错误
    */
   async getCharData (name, uid, e) {
-    try {
-      const data = await this.getPanelData(uid, false, true)
-      const charName = await findName(name)
+    const data = await this.getPanelData(uid, false, true)
+    const charName = await findName(name)
+    const charInfo = data.filter(item => item.name === charName)[0]
+    if (!charInfo) {
+      const data = await this.getPanelData(uid, true)
+      console.log(data)
       const charInfo = data.filter(item => item.name === charName)[0]
       if (!charInfo) {
-        const data = await this.getPanelData(uid, true)
-        const charInfo = data.filter(item => item.name === charName)[0]
-        if (!charInfo) {
-          throw Error(
-            '未查询到角色数据，请检查角色是否放在了助战或者展柜，检查角色名是否正确，已设置的会有延迟，请等待一段时间重试。'
-          )
-        }
-        return charInfo
+        throw Error(
+          '未查询到角色数据，请检查角色是否放在了助战或者展柜，检查角色名是否正确，已设置的会有延迟，请等待一段时间重试。'
+        )
       }
       return charInfo
-    } catch (error) {
-      throw Error(error)
     }
+    return charInfo
   }
 
   /**
@@ -244,13 +241,9 @@ export class hkrpg extends plugin {
         throw Error(error)
       }
     } else {
-      try {
-        logger.mark('SR-panelApi使用缓存')
-        const cardData = previousData
-        return cardData
-      } catch (error) {
-        throw Error(error)
-      }
+      logger.mark('SR-panelApi使用缓存')
+      const cardData = previousData
+      return cardData
     }
   }
 
