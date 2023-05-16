@@ -63,7 +63,8 @@ export class hkrpg extends plugin {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
     let ck = this.User.getCk()
     if (!ck) return false
-    if (await redis.get(key)) return false
+    // if (await redis.get(key)) return false
+    // todo check ck
     let api = new MysSRApi('', ck)
     let userData = await api.getData('srUser')
     if (!userData?.data || _.isEmpty(userData.data.list)) return false
@@ -71,9 +72,9 @@ export class hkrpg extends plugin {
     let { game_uid: gameUid } = userData
     await redis.set(key, gameUid)
     await redis.setEx(
-          `STAR_RAILWAY:userData:${gameUid}`,
-          60 * 60,
-          JSON.stringify(userData)
+        `STAR_RAILWAY:userData:${gameUid}`,
+        60 * 60,
+        JSON.stringify(userData)
     )
     return userData
   }

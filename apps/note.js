@@ -26,11 +26,10 @@ export class hkrpg extends plugin {
   async note (e) {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    let _user = this.User
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
       e.user_id = user
-      _user = new User(e)
+      this.User = new User(e)
     }
     let userData = await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -41,7 +40,7 @@ export class hkrpg extends plugin {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
       return false
     }
-    let ck = await _user.getCk()
+    let ck = await this.User.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#扫码登录进行绑定')
       return false
@@ -90,7 +89,8 @@ export class hkrpg extends plugin {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
     let ck = this.User.getCk()
     if (!ck) return false
-    if (await redis.get(key)) return false
+    // if (await redis.get(key)) return false
+    // todo check ck
     let api = new MysSRApi('', ck)
     let userData = await api.getData('srUser')
     if (!userData?.data || _.isEmpty(userData.data.list)) return false
