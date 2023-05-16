@@ -60,7 +60,7 @@
 
 html,
 body {
-  width: 720px;
+  width: 730px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -70,14 +70,11 @@ body {
 /* 卡片容器 */
 .container {
   margin: auto;
-  width: 720px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  background-image: url('./resources/bkg.png');
-  background-position: center;
+  background: url('./resources/bkg.png') center no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;
   color: #f0eaca;
   padding: 20px 30px;
   font-weight: 500;
@@ -297,6 +294,7 @@ body {
 /* 角色昵称 */
 .main-content .char-info .info-detail .title .name {
   font-size: 2.2rem;
+  white-space: nowrap;
 }
 
 /*角色种类*/
@@ -585,7 +583,7 @@ body {
 
 /* 遗器列表每项 */
 .main-content .relic-list .item {
-  width: 210px;
+  width: calc(33% - 10px);
   border: 1px solid #f0eaca;
   border-radius: 10px;
   box-sizing: border-box;
