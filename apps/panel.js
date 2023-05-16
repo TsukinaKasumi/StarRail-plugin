@@ -107,6 +107,16 @@ export class hkrpg extends plugin {
   /** 获取面板图 */
   getCharImage (name, avatarId) {
     const root = pluginRoot + '/resources/profile/normal-character/'
+
+    const leadId = {
+      星: [8002, 8004],
+      穹: [8001, 8003]
+    }
+    for (let i in leadId) {
+      if (leadId[i].includes(avatarId)) {
+        name = i
+      }
+    }
     if (fs.existsSync(root + `${name}.webp`)) {
       return path.join(root, `${name}.webp`)
     } else if (fs.existsSync(root + name)) {
@@ -169,7 +179,6 @@ export class hkrpg extends plugin {
     const charInfo = data.filter(item => item.name === charName)[0]
     if (!charInfo) {
       const data = await this.getPanelData(uid, true)
-      console.log(data)
       const charInfo = data.filter(item => item.name === charName)[0]
       if (!charInfo) {
         throw Error(
