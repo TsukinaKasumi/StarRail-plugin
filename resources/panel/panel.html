@@ -151,20 +151,27 @@
       </div>
       <div class="artoverview">
         <div class="item weapon">
+          {{if equipment.id}}
           <div class="icon">
-            <img src="{{pluResPath}}panel/resources/weapon/{{equipment.id}}.png" alt="">
+            <img src="{{pluResPath}}panel/resources/weapon/{{equipment.id}}.png">
           </div>
+          {{/if}}
           <div class="info">
             <div class="title">
-              <div class="name">{{equipment.name}}</div>
-              <div class="star"><img
-                  src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png"
-                  alt=""></div>
+              <div class="name">{{equipment.name ?? '未装备'}}</div>
+              {{if equipment.rarity}}
+              <div class="star">
+                <img
+                  src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png">
+              </div>
+              {{/if}}
             </div>
+            {{if equipment.id}}
             <div class="level-info">
               <div class="level">Lv.{{equipment.level}}</div>
               <div class="dy">叠影：{{equipment.rank}}阶</div>
             </div>
+            {{/if}}
           </div>
         </div>
         <div class="item relic">

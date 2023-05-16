@@ -424,6 +424,7 @@ body {
 
 .info-uid-api .uid {
   font-weight: 700;
+  font-size: 20px;
 }
 
 /*******************/
@@ -436,6 +437,7 @@ body {
 /* 光锥 */
 .main-content .artoverview .weapon {
   width: 58%;
+  height: 100px;
   border: 1px solid #f0eaca;
   border-radius: 10px;
   padding: 0px 5px;
@@ -490,12 +492,13 @@ body {
 
 /* 光锥图标 */
 .main-content .artoverview .weapon .icon {
-  height: 100px;
+  height: 100%;
   overflow: hidden;
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;
   margin-right: 5px;
+  padding: 0 10px;
 }
 
 .main-content .artoverview .weapon .icon::after {
@@ -506,7 +509,7 @@ body {
   width: 1.5px;
   background-color: #f0eaca;
   position: absolute;
-  right: 0;
+  right: 0px;
 }
 
 .main-content .artoverview .weapon .icon img {
