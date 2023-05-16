@@ -9,6 +9,7 @@ import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
 import { statisticOnlinePeriods, statisticsOnlineDateGeneral } from '../utils/common.js'
+import {promisify} from "util";
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -378,6 +379,8 @@ export class hkrpg extends plugin {
       powerChangeRecordList = await res.json()
       result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
       page++
+      await new Promise(resolve => setTimeout(resolve, 500))
+      logger.info('休息0.5秒，继续拉取开拓力记录')
     }
     const { data } = statisticsOnlineDateGeneral(result)
     let details = statisticOnlinePeriods(result)

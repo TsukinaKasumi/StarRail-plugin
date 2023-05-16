@@ -34,6 +34,9 @@ export class hkrpg extends plugin {
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (userData.game_uid) {
       uid = userData.game_uid
+    } else {
+      await e.reply('当前使用的ck无星穹铁道角色，如绑定多个ck请尝试切换ck')
+      return false
     }
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
