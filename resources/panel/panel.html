@@ -26,8 +26,11 @@
           <div class="skills">
             {{each behaviorList behavior i}}
             <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt=""></div>
-              <div class="level">{{behavior.level}}</div>
+              <div class="icon">
+                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
+                <div class="level">{{behavior.level}}</div>
+              </div>
+              <div class="type">{{behavior.type}}</div>
             </div>
             {{/each}}
           </div>

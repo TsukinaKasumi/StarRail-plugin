@@ -79,7 +79,7 @@ body {
   padding: 20px 30px;
   font-weight: 500;
   font-size: 1.2rem;
-  transform: scale(1.4);
+  transform: scale(1.6);
   transform-origin: 0 0;
 }
 
@@ -234,14 +234,14 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 7px;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgb(25 25 25 / 30%);
 }
 
 .main-content .char-info .char-card .skills .item {
@@ -260,6 +260,22 @@ body {
   border-radius: 50%;
   box-sizing: border-box;
   border: 2.5px solid #f0eaca;
+  position: relative;
+}
+
+.char-card .skills .item .icon .level {
+  position: absolute;
+  font-size: 10px;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #000000;
+  background: #ffff;
+  width: 18px;
+  text-align: center;
+  box-shadow: 0 0 5px 0 #000;
+  border-radius: 4px;
 }
 
 .main-content .char-info .char-card .skills .item .icon img {
@@ -269,8 +285,9 @@ body {
 }
 
 /* 技能等级文字 */
-.main-content .char-info .char-card .skills .item .level {
+.main-content .char-info .char-card .skills .item .type {
   font-size: 60%;
+  margin-top: 5px;
 }
 
 /*******************/
@@ -293,8 +310,11 @@ body {
 
 /* 角色昵称 */
 .main-content .char-info .info-detail .title .name {
-  font-size: 2.2rem;
+  --font-size: 2.2rem;
+  font-size: var(--font-size);
   white-space: nowrap;
+  max-width: calc(var(--font-size) * 4);
+  overflow: hidden;
 }
 
 /*角色种类*/
@@ -329,6 +349,7 @@ body {
   border-radius: 5px;
   margin-bottom: 5px;
   margin-left: auto;
+  white-space: nowrap;
 }
 
 .title .const img {
@@ -359,6 +380,8 @@ body {
   border-radius: 5px;
   margin-bottom: 6px;
   flex: 1;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 /* 属性图标 */
@@ -592,6 +615,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .main-content .relic-list .item:nth-child(3n) {
@@ -600,7 +624,8 @@ body {
 
 /* 遗器信息 */
 .main-content .relic-list .item .relic-info {
-  padding: 15px 10px 15px 0;
+  padding: 15px 10px;
+  height: 65px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -685,7 +710,7 @@ body {
 /* 遗器属性值列表 */
 .main-content .relic-list .item .relic-value-list {
   flex-grow: 1;
-  flex-shrink: 1;
+  /* flex-shrink: 1; */
   /* background: #f0eaca; */
 }
 
