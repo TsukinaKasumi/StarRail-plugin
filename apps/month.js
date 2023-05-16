@@ -25,17 +25,22 @@ export class hkrpg extends plugin {
   async month (e) {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
-
+    let _user = this.User
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
+      e.user_id = user
+      _user = new User(e)
     }
+    let userData = await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    await this.miYoSummerGetUid()
+    if (userData.game_uid) {
+      uid = userData.game_uid
+    }
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
       return false
     }
-    let ck = await this.User.getCk()
+    let ck = await _user.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#扫码登录进行绑定')
       return false
