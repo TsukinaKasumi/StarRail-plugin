@@ -50,7 +50,17 @@ export class hkrpg extends plugin {
     }
 
     let api = new MysSRApi(uid, ck)
-    const { url, headers } = api.getUrl('srNote')
+    let deviceFp = await redis.get(`STARRAIL:DEVICE_FP:${uid}`)
+    if (!deviceFp) {
+      let sdk = api.getUrl('getFp')
+      let res = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
+      let fpRes = await res.json()
+      deviceFp = fpRes?.data?.device_fp
+      if (deviceFp) {
+        await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
+      }
+    }
+    const { url, headers } = api.getUrl('srNote', { deviceFp })
     logger.mark({ url, headers })
     let res = await fetch(url, {
       headers

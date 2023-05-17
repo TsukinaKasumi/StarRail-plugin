@@ -12,10 +12,11 @@ export default class MysSRApi extends MysApi {
   }
 
   getUrl (type, data = {}) {
-    let host, hostRecord
+    let host, hostRecord, hostPublicData
     if (['prod_gf_cn'].includes(this.server)) {
       host = 'https://api-takumi.mihoyo.com/'
       hostRecord = 'https://api-takumi-record.mihoyo.com/'
+      hostPublicData = 'https://public-data-api.mihoyo.com/'
     } else {
       host = 'https://api-os-takumi.mihoyo.com/'
       hostRecord = 'https://bbs-api-os.mihoyo.com/'
@@ -53,19 +54,39 @@ export default class MysSRApi extends MysApi {
           game_uid: this.uid * 1,
           region: 'prod_gf_cn'
         }
+      },
+      getFp: {
+        url: `${hostPublicData}device-fp/api/getFp`,
+        body: {
+          seed_id: `${generateSeed(16)}`,
+          device_id: this.deviceId,
+          platform: '5',
+          seed_time: new Date().getTime() + '',
+          ext_fields: '{"userAgent":"Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.50.1","browserScreenSize":281520,"maxTouchPoints":5,"isTouchSupported":true,"browserLanguage":"zh-CN","browserPlat":"iPhone","browserTimeZone":"Asia/Shanghai","webGlRender":"Apple GPU","webGlVendor":"Apple Inc.","numOfPlugins":0,"listOfPlugins":"unknown","screenRatio":3,"deviceMemory":"unknown","hardwareConcurrency":"4","cpuClass":"unknown","ifNotTrack":"unknown","ifAdBlock":0,"hasLiedResolution":1,"hasLiedOs":0,"hasLiedBrowser":0}',
+          app_name: 'account_cn',
+          device_fp: '38d7ee834d1e9'
+        },
+        noDs: true
       }
     }
     if (!urlMap[type]) return false
-    let { url, query = '', body = '', sign = '' } = urlMap[type]
+    let { url, query = '', body = '', noDs = '' } = urlMap[type]
     if (query) url += `?${query}`
     if (body) body = JSON.stringify(body)
 
     let headers = this.getHeaders(query, body)
+    if (data.deviceFp) {
+      headers['x-rpc-device_fp'] = data.deviceFp
+    }
     if (typeof this.cookie == 'string') {
       headers.cookie = this.cookie
     } else {
       let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
       headers.cookie = cookie?.ck
+      this.deviceId = cookie?.device_id
+    }
+    if (this.deviceId) {
+      headers['x-rpc-device_id'] = this.deviceId
     }
     if (type === 'srPayAuthKey') {
       headers.DS = this.getDS2()
@@ -88,6 +109,14 @@ export default class MysSRApi extends MysApi {
     } else {
       headers.DS = this.getDs(query, body)
     }
+    if (noDs) {
+      delete headers.DS
+      if (this.deviceId) {
+        body = JSON.parse(body)
+        body.device_id = this.deviceId
+        body = JSON.stringify(body)
+      }
+    }
     return { url, headers, body }
   }
 
@@ -109,6 +138,39 @@ export default class MysSRApi extends MysApi {
     let r = randomString(6)
     let sign = md5(`salt=jEpJb9rRARU2rXDA9qYbZ3selxkuct9a&t=${t}&r=${r}`)
     return `${t},${r},${sign}`
+  }
+
+  getHeaders (query = '', body = '') {
+    const cn = {
+      app_version: '2.50.1',
+      User_Agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.50.1',
+      client_type: 5,
+      Origin: 'https://webstatic.mihoyo.com',
+      X_Requested_With: 'com.mihoyo.hyperion',
+      Referer: 'https://webstatic.mihoyo.com'
+    }
+    const os = {
+      app_version: '2.9.0',
+      User_Agent: `Mozilla/5.0 (Linux; Android 12; ${this.device}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
+      client_type: '2',
+      Origin: 'https://webstatic-sea.hoyolab.com',
+      X_Requested_With: 'com.mihoyo.hoyolab',
+      Referer: 'https://webstatic-sea.hoyolab.com'
+    }
+    let client
+    if (this.server.startsWith('os')) {
+      client = os
+    } else {
+      client = cn
+    }
+    return {
+      'x-rpc-app_version': client.app_version,
+      'x-rpc-client_type': client.client_type,
+      'x-rpc-page': '3.1.3_#/rpg',
+      'User-Agent': client.User_Agent,
+      Referer: client.Referer,
+      DS: this.getDs(query, body)
+    }
   }
 
   /**
@@ -154,4 +216,13 @@ export function randomString (length) {
     randomStr += _.sample('abcdefghijklmnopqrstuvwxyz0123456789')
   }
   return randomStr
+}
+
+export function generateSeed (length = 16) {
+  const characters = '0123456789abcdef'
+  let result = ''
+  for (let i = 0; i < length; i++) {
+    result += characters[Math.floor(Math.random() * characters.length)]
+  }
+  return result
 }

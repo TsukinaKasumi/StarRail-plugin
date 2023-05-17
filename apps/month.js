@@ -3,6 +3,7 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
 import setting from '../utils/setting.js'
 import _ from 'lodash'
+import fetch from "node-fetch";
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -49,7 +50,17 @@ export class hkrpg extends plugin {
     }
 
     let api = new MysSRApi(uid, ck)
-    const cardData = await api.getData('srMonth')
+    let deviceFp = await redis.get(`STARRAIL:DEVICE_FP:${uid}`)
+    if (!deviceFp) {
+      let sdk = api.getUrl('getFp')
+      let res = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
+      let fpRes = await res.json()
+      deviceFp = fpRes?.data?.device_fp
+      if (deviceFp) {
+        await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
+      }
+    }
+    const cardData = await api.getData('srMonth', { deviceFp })
     if (!cardData || cardData.retcode != 0) return e.reply(cardData.message || '请求数据失败')
     let data = cardData.data
     data.pieData = JSON.stringify(data.month_data.group_by.map((v) => {
