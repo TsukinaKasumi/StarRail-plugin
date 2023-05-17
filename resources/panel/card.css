@@ -25,10 +25,10 @@ html, body {
 
 /* 更新的那个小点 */
 span.update_dot {
-  width: 0.3em;
-  height: 0.3em;
+  width: 0.5em;
+  height: 0.5em;
   border-radius: 50%;
-  background-color: #f0eaca;
+  background-color: #90E900;
   display: inline-block;
   margin-right: 5px;
   position: relative;
