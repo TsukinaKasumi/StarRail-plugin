@@ -7,6 +7,7 @@ import fs from 'fs'
 import path from 'path'
 import { pluginRoot } from '../utils/path.js'
 import { findName } from '../utils/alias.js'
+import {getSign} from "../utils/auth.js";
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -217,9 +218,15 @@ export class hkrpg extends plugin {
         let res = null
         let cardData = null
         try {
-          res = await fetch(api + uid)
+          res = await fetch(api + uid, {
+            headers: {
+              'x-request-sr': getSign(uid),
+              library: 'hewang1an'
+            }
+          })
           cardData = await res.json()
         } catch (error) {
+          logger.error(error)
           throw Error('面板服务连接超时，请稍后重试')
         }
         if (!res) throw Error('面板服务连接超时，请稍后重试')
