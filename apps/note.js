@@ -57,12 +57,8 @@ export class hkrpg extends plugin {
     })
 
     let cardData = await res.json()
-
+    await api.checkCode(this.e, cardData, 'srNote')
     if (cardData.retcode !== 0) {
-      logger.error(JSON.stringify(cardData))
-      await e.reply(
-        '查询失败, 可能是ck失效或遇到验证码\n您可以尝试重新扫码登录后再进行查询'
-      )
       return false
     }
 

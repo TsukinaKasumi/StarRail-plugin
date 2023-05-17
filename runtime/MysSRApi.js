@@ -6,6 +6,7 @@ const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
   constructor (uid, cookie, option = {}) {
     super(uid, cookie, option)
+    this.uid = uid
     this.server = 'prod_gf_cn'
     // this.server = 'hkrpg_cn'
   }
@@ -108,6 +109,42 @@ export default class MysSRApi extends MysApi {
     let r = randomString(6)
     let sign = md5(`salt=jEpJb9rRARU2rXDA9qYbZ3selxkuct9a&t=${t}&r=${r}`)
     return `${t},${r},${sign}`
+  }
+
+  /**
+   * 校验状态码
+   * @param e 消息e
+   * @param res 请求返回
+   * @param callbackUrl url
+   * @returns {Promise<*|boolean>}
+   */
+  async checkCode (e, res, callbackUrl) {
+    if (!res || !e) {
+      this.e.reply('米游社接口请求失败，暂时无法查询')
+      return false
+    }
+    this.e = e
+    res.retcode = Number(res.retcode)
+    switch (res.retcode) {
+      case 0:
+        break
+      case 1034:
+        logger.mark(`[米游社sr查询失败][uid:${this.uid}]遇到验证码`)
+        this.e.reply('米游社查询遇到验证码，请稍后再试')
+        break
+      default:
+        if (/(登录|login)/i.test(res.message)) {
+          logger.mark(`[ck失效][uid:${this.uid}]`)
+          this.e.reply(`UID:${this.uid}，米游社cookie已失效`)
+        } else {
+          this.e.reply(`米游社接口报错，暂时无法查询：${res.message || 'error'}`)
+        }
+        break
+    }
+    if (res.retcode !== 0) {
+      logger.mark(`[米游社sr接口报错]${JSON.stringify(res)}，uid：${this.uid}`)
+    }
+    return res
   }
 }
 
