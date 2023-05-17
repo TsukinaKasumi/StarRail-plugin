@@ -8,7 +8,7 @@ import fetch from "node-fetch";
 export class hkrpg extends plugin {
   constructor (e) {
     super({
-      name: '星穹铁道-收入',
+      name: '星铁plugin-收入',
       dsc: '星穹铁道收入信息',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
@@ -45,7 +45,7 @@ export class hkrpg extends plugin {
     }
     let ck = await this.User.getCk()
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie, 请发送#扫码登录进行绑定')
+      await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助定')
       return false
     }
 

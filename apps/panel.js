@@ -12,7 +12,7 @@ import {getSign} from "../utils/auth.js";
 export class hkrpg extends plugin {
   constructor (e) {
     super({
-      name: '星穹铁道-面板',
+      name: '星铁plugin-面板',
       dsc: '星穹铁道面板信息',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',

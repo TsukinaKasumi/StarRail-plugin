@@ -14,7 +14,7 @@ import {promisify} from "util";
 export class hkrpg extends plugin {
   constructor (e) {
     super({
-      name: '星穹铁道',
+      name: '星铁plugin基本信息',
       dsc: '星穹铁道基本信息',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
@@ -297,7 +297,7 @@ export class hkrpg extends plugin {
     try {
       uid = (await userRes.json())?.data?.list?.filter(i => i.game_biz.includes('hkrpg'))[0].game_uid
     } catch (e) {
-      await e.reply('请使用#扫码登录进行cookie绑定后再查看')
+      await e.reply('请使用#cookie帮助进行cookie绑定后再查看')
       return false
     }
     if (!uid) {
@@ -309,11 +309,11 @@ export class hkrpg extends plugin {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
       // 未安装逍遥
-      await e.reply('请使用#扫码登录绑定cookie后再进行查看~')
+      await e.reply('请使用#cookie帮助绑定cookie后再进行查看~')
       return false
     }
     if (!authKey) {
-      await e.reply('请使用#扫码登录绑定cookie后再进行查看~')
+      await e.reply('请使用#cookie帮助绑定cookie后再进行查看~')
       return false
     }
     authKey = encodeURIComponent(authKey)
@@ -356,11 +356,11 @@ export class hkrpg extends plugin {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
       // 未安装逍遥
-      await e.reply('请先使用#扫码登录绑定cookie和绑定星铁uid后再进行查看噢')
+      await e.reply('请先使用#cookie帮助绑定cookie和绑定星铁uid后再进行查看噢')
       return false
     }
     if (!authKey) {
-      await e.reply('请先使用#扫码登录绑定cookie和绑定星铁uid后再进行查看噢')
+      await e.reply('请先使用#cookie帮助绑定cookie和绑定星铁uid后再进行查看噢')
       return false
     }
     await e.reply('正在统计中，时间可能比较久请多等一会~')

@@ -34,7 +34,7 @@ const roleAlias = {
 export class strategy extends plugin {
   constructor () {
     super({
-      name: '星穹铁道-攻略',
+      name: '星铁plugin-攻略',
       dsc: '查询崩坏：星穹铁道的角色攻略 数据来源于米游社',
       event: 'message',
       priority: 400,
