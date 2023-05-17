@@ -78,6 +78,7 @@ function getRecordUrl (type, page, size = 10, authKey, end_id = 0) {
 }
 
 export const imageUrls = {
+  "景元": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/288909604/95a06162f7df44a2b068e66939268b10_2067278512630665501.png?x-oss-process=image/quality,q_75/resize,s_280",
   "希儿": "https://act-upload.mihoyo.com/sr-wiki/2023/04/23/288909604/90322bba0235561a0da0c5b22d6edb3d_5700836084211407678.png?x-oss-process=image/quality,q_75/resize,s_280",
   "彦卿": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/288909604/cc600801af1f864cfb32bbfb01d9d867_5952117643253221767.png?x-oss-process=image/quality,q_75/resize,s_280",
   "白露": "https://act-upload.mihoyo.com/sr-wiki/2023/04/24/159305577/c684357d96e8098e898e4ee6665fd01c_7826766061944986617.png?x-oss-process=image/quality,q_75/resize,s_280",
