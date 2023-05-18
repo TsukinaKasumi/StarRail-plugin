@@ -15,7 +15,7 @@ export class hkrpg extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: '^#?(星铁|星轨|崩铁|星穹铁道)(星琼获取|月历|月收入|收入|原石)$',
+          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*](星琼获取|月历|月收入|收入|原石)$',
           fnc: 'month'
         }
       ]

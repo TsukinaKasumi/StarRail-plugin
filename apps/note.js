@@ -15,7 +15,7 @@ export class hkrpg extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: '^#?(星铁|星轨|崩铁|星穹铁道)体力$',
+          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]体力$',
           fnc: 'note'
         }
       ]
