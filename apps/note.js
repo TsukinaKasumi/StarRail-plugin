@@ -41,7 +41,7 @@ export class hkrpg extends plugin {
       return false
     }
     if (!uid) {
-      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
+      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
     let ck = await this.User.getCk()
