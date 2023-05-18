@@ -17,7 +17,7 @@ export class hkrpg extends plugin {
       dsc: '星穹铁道面板信息',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
-      priority: 500,
+      priority: 1,
       rule: [
         {
           reg: `^${rulePrefix}(.+)面板(更新)?`,
@@ -30,6 +30,10 @@ export class hkrpg extends plugin {
         {
           reg: `^${rulePrefix}(更新面板|面板更新)$`,
           fnc: 'update'
+        },
+        {
+          reg: '^#?原图$',
+          fnc: 'origImg'
         }
       ]
     })
@@ -100,7 +104,10 @@ export class hkrpg extends plugin {
         const filePath = nameId + '_' + pathName + '.png'
         data.behaviorList[i].path = filePath
       })
-      await e.runtime.render('StarRail-plugin', '/panel/panel.html', data)
+      let msgId = await e.runtime.render('StarRail-plugin', '/panel/panel.html', data, {
+        retType: 'msgId'
+      })
+      msgId && redis.setEx(`STAR_RAILWAY:panelOrigImg:${msgId.message_id}`, 60 * 60, data.charImage)
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
@@ -285,6 +292,19 @@ export class hkrpg extends plugin {
     }
     // 渲染数据
     await e.runtime.render('StarRail-plugin', '/panel/list.html', renderData)
+  }
+
+  async origImg (e) {
+    if (!e.source) return false
+    let source
+    if (e.isGroup) {
+      source = (await e.group.getChatHistory(e.source.seq, 1)).pop()
+    } else {
+      source = (await e.friend.getChatHistory(e.source.time, 1)).pop()
+    }
+    let ImgPath = await redis.get(`STAR_RAILWAY:panelOrigImg:${source.message_id}`)
+    if (!ImgPath) return false
+    e.reply(segment.image(ImgPath))
   }
 
   /** 通过米游社获取UID */
