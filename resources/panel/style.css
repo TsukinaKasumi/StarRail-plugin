@@ -1,6 +1,11 @@
 @font-face {
   font-family: "SR";
-  src: url('../fonts/zh-cn.ttf') format('truetype');
+  src: url(../fonts/zh-cn.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: "PingFang+google";
+  src: url(../fonts/pingfang_google.ttf) format('truetype');
 }
 
 html,
@@ -9,7 +14,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'SR';
+  font-family: "PingFang+google", 'SR', sans-serif;
 }
 
 /* 卡片容器 */
@@ -680,7 +685,7 @@ body {
 
 /* 遗器属性值列表每项值 */
 .main-content .relic-list .item .relic-value-list .relic-value .value {
-  font-weight: 600;
+  /* font-weight: 600; */
   margin-left: auto;
 }
 
