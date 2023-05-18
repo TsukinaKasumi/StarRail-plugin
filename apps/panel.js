@@ -20,7 +20,7 @@ export class hkrpg extends plugin {
       priority: 500,
       rule: [
         {
-          reg: `^${rulePrefix}(.+)面板`,
+          reg: `^${rulePrefix}(.+)面板(更新)?`,
           fnc: 'panel'
         },
         {
@@ -28,7 +28,7 @@ export class hkrpg extends plugin {
           fnc: 'ikun'
         },
         {
-          reg: `^${rulePrefix}更新面板$`,
+          reg: `^${rulePrefix}(更新面板|面板更新)$`,
           fnc: 'update'
         }
       ]
@@ -40,11 +40,11 @@ export class hkrpg extends plugin {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
-    let messageReg = new RegExp(`^${rulePrefix}(.+)面板`)
+    let messageReg = new RegExp(`^${rulePrefix}(.+)面板(更新)?`)
     const matchResult = messageText.match(messageReg)
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.ikun(e)
-    if (charName === '更新') return await this.update(e)
+    if (charName === '更新' || matchResult[5]) return await this.update(e)
     let uid = messageText.replace(messageReg, '')
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
