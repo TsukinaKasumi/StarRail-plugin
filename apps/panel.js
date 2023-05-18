@@ -54,7 +54,7 @@ export class hkrpg extends plugin {
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     }
     if (!uid) {
-      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
+      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
     // await e.reply('正在获取面板数据中')
@@ -273,7 +273,7 @@ export class hkrpg extends plugin {
     }
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
-      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
+      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
     const api = await panelApi()
