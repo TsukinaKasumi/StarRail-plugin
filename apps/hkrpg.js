@@ -83,7 +83,7 @@ export class hkrpg extends plugin {
       let uid = e.msg.match(/\d+/)?.[0]
       await this.miYoSummerGetUid()
       uid ||= await redis.get(`STAR_RAILWAY:UID:${user}`)
-      if (!uid) return e.reply('未绑定uid，请发送#绑定星铁uid＋uid进行绑定')
+      if (!uid) return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
 
       let ck = this.User.getCk()
       if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
@@ -148,7 +148,7 @@ export class hkrpg extends plugin {
       }
       await this.miYoSummerGetUid()
       if (!uid) {
-        await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
+        await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
         return false
       }
       let ck = await this.User.getCk()
@@ -297,7 +297,7 @@ export class hkrpg extends plugin {
       return false
     }
     if (!uid) {
-      await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定')
+      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
     let authKey
@@ -344,7 +344,7 @@ export class hkrpg extends plugin {
     await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
     if (!uid) {
-      await e.reply('未绑定uid，请发送#绑定星铁uid＋uid进行绑定')
+      await e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
       return false
     }
     let authKey
@@ -352,11 +352,11 @@ export class hkrpg extends plugin {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
       // 未安装逍遥
-      await e.reply('请先使用#cookie帮助绑定cookie和绑定星铁uid后再进行查看噢')
+      await e.reply('请先使用#cookie帮助绑定cookie和星铁绑定uid后再进行查看噢')
       return false
     }
     if (!authKey) {
-      await e.reply('请先使用#cookie帮助绑定cookie和绑定星铁uid后再进行查看噢')
+      await e.reply('请先使用#cookie帮助绑定cookie和星铁绑定uid后再进行查看噢')
       return false
     }
     await e.reply('正在统计中，时间可能比较久请多等一会~')
