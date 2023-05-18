@@ -655,7 +655,7 @@ body {
 /* 遗器属性值 */
 .main-content .relic-list .item .relic-info .relic-info-detail .value {
   margin-top: 2px;
-  font-size: 1rem;
+  font-size: 15px;
 }
 
 /* 遗器属性值列表 */
