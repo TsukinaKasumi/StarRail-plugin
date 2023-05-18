@@ -1,6 +1,6 @@
 import { exec } from 'child_process'
 
-export const rulePrefix = '(#?(星铁|星轨|崩铁|星穹铁道|穹批)|\\*)'
+export const rulePrefix = '((#|\\*)?(星铁|星轨|崩铁|星穹铁道|穹批)|\\*)'
 
 export async function checkPnpm () {
   let npm = 'npm'

@@ -22,7 +22,7 @@ export class hkrpg extends plugin {
       rule: [
         {
           /** 命令正则匹配 */
-          reg: '^#(绑定星铁|星铁绑定)(uid|UID)?(\\s)*[1-9][0-9]{8}$',
+          reg: `^${rulePrefix}绑定(uid|UID)?(\\s)?[1-9][0-9]{8}$`,
           /** 执行方法 */
           fnc: 'bindSRUid'
         },
