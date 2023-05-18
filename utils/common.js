@@ -1,4 +1,6 @@
-import {exec} from 'child_process'
+import { exec } from 'child_process'
+
+export const rulePrefix = '(#?(星铁|星轨|崩铁|星穹铁道|穹批)|\\*)'
 
 export async function checkPnpm () {
   let npm = 'npm'
@@ -183,8 +185,8 @@ export function statisticOnlinePeriods (powerRecoverList) {
  * @returns {number} 相对今天0点过去的分钟数
  */
 function todayPastMinutes (date) {
-  let midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0); // 获取当天 0 点的时间
-   // 计算相对当天 0 点过去了多少分钟
+  let midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0) // 获取当天 0 点的时间
+  // 计算相对当天 0 点过去了多少分钟
   return Math.floor((date.getTime() - midnight.getTime()) / (1000 * 60))
 }
 

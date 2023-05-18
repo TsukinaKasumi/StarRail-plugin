@@ -3,8 +3,8 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
 import setting from '../utils/setting.js'
 import _ from 'lodash'
-import fetch from "node-fetch";
-
+import fetch from 'node-fetch'
+import { rulePrefix } from '../utils/common.js'
 export class hkrpg extends plugin {
   constructor (e) {
     super({
@@ -15,7 +15,7 @@ export class hkrpg extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*](星琼获取|月历|月收入|收入|原石)$',
+          reg: `^${rulePrefix}(星琼获取|月历|月收入|收入|原石)$`,
           fnc: 'month'
         }
       ]

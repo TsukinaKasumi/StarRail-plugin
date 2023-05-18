@@ -7,7 +7,8 @@ import fs from 'fs'
 import path from 'path'
 import { pluginRoot } from '../utils/path.js'
 import { findName } from '../utils/alias.js'
-import {getSign} from "../utils/auth.js";
+import { getSign } from '../utils/auth.js'
+import { rulePrefix } from '../utils/common.js'
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -19,15 +20,15 @@ export class hkrpg extends plugin {
       priority: 500,
       rule: [
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*](.+)面板',
+          reg: `^${rulePrefix}(.+)面板`,
           fnc: 'panel'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]面板(列表)?$',
+          reg: `^${rulePrefix}面板(列表)?$`,
           fnc: 'ikun'
         },
         {
-          reg: '^#?更新(星铁|星轨|崩铁|星穹铁道)面板$',
+          reg: `^${rulePrefix}更新面板$`,
           fnc: 'update'
         }
       ]
@@ -39,11 +40,13 @@ export class hkrpg extends plugin {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
-    const charName =
-      messageText.match(/#?(星铁|星轨|崩铁|星穹铁道)(.+)面板/)[2] || null
+    let messageReg = new RegExp(`^${rulePrefix}(.+)面板`)
+    const matchResult = messageText.match(messageReg)
+    console.log(matchResult)
+    const charName = matchResult ? matchResult[3] : null
     if (!charName) return await this.ikun(e)
     if (charName === '更新') return await this.update(e)
-    let uid = messageText.replace(/^#?(星铁|星轨|崩铁|星穹铁道)(.+)面板/, '')
+    let uid = messageText.replace(messageReg, '')
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq

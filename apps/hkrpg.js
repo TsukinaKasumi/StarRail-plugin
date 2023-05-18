@@ -8,8 +8,8 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import { statisticOnlinePeriods, statisticsOnlineDateGeneral } from '../utils/common.js'
-import {promisify} from "util";
+import { statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix } from '../utils/common.js'
+// import { promisify } from 'util'
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -27,7 +27,7 @@ export class hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*](卡片|探索)$',
+          reg: `^${rulePrefix}(卡片|探索)$`,
           fnc: 'card'
         },
         {
@@ -35,27 +35,27 @@ export class hkrpg extends plugin {
         //   reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
         //   fnc: 'avatar'
         // },
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]帮助$',
+          reg: `^${rulePrefix}帮助$`,
           fnc: 'help'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]抽卡链接(绑定)?$',
+          reg: `^${rulePrefix}抽卡链接(绑定)?$`,
           fnc: 'bindAuthKey'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*](跃迁|抽卡)?(记录|分析)',
+          reg: `^${rulePrefix}(跃迁|抽卡)?(记录|分析)`,
           fnc: 'gatcha'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]抽卡帮助$',
+          reg: `^${rulePrefix}抽卡帮助$`,
           fnc: 'gatchahelp'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]充值记录$',
+          reg: `^${rulePrefix}充值记录$`,
           fnc: 'getPayLog'
         },
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]在线(时长)?(统计|分析)?',
+          reg: `^${rulePrefix}在线(时长)?(统计|分析)?`,
           fnc: 'statisticsOnline'
         }
       ]
@@ -80,13 +80,11 @@ export class hkrpg extends plugin {
         user = ats[0].qq
       }
       let hasPersonalCK = false
-      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)(卡片|探索)/, '')
+      let uid = e.msg.match(/\d+/)?.[0]
       await this.miYoSummerGetUid()
-      uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
-      if (!uid) {
-        await e.reply('未绑定uid，请发送#绑定星铁uid＋uid进行绑定')
-        return false
-      }
+      uid ||= await redis.get(`STAR_RAILWAY:UID:${user}`)
+      if (!uid) return e.reply('未绑定uid，请发送#绑定星铁uid＋uid进行绑定')
+
       let ck = this.User.getCk()
       if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
         let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
@@ -219,10 +217,8 @@ export class hkrpg extends plugin {
     try {
       let user = this.e.user_id
       let type = 11
-      let typeName = e.msg.replace(
-        /^#(星铁|星轨|崩铁|星穹铁道)(抽卡|跃迁)(记录)?分析/,
-        ''
-      )
+      let reg = new RegExp(`^${rulePrefix}(跃迁|抽卡)?(记录|分析)`)
+      let typeName = e.msg.replace(reg, '')
       if (typeName.includes('常驻')) {
         type = 1
       } else if (typeName.includes('武器') || typeName.includes('光锥')) {
@@ -309,7 +305,7 @@ export class hkrpg extends plugin {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
       // 未安装逍遥
-      await e.reply('请使用#cookie帮助绑定cookie后再进行查看~')
+      await e.reply('请使用#扫码登录绑定cookie后再进行查看~')
       return false
     }
     if (!authKey) {

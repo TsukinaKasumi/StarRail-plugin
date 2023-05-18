@@ -5,6 +5,7 @@ import fetch from 'node-fetch'
 import _ from 'lodash'
 import YAML from 'yaml'
 import fs from 'fs'
+import { rulePrefix } from '../utils/common.js'
 export class hkrpg extends plugin {
   constructor (e) {
     super({
@@ -15,7 +16,7 @@ export class hkrpg extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: '^[#?(星铁|星轨|崩铁|星穹铁道)|\*]体力$',
+          reg: `^${rulePrefix}体力$`,
           fnc: 'note'
         }
       ]
