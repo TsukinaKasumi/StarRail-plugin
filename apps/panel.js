@@ -42,8 +42,7 @@ export class hkrpg extends plugin {
     const messageText = e.msg
     let messageReg = new RegExp(`^${rulePrefix}(.+)面板`)
     const matchResult = messageText.match(messageReg)
-    console.log(matchResult)
-    const charName = matchResult ? matchResult[3] : null
+    const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.ikun(e)
     if (charName === '更新') return await this.update(e)
     let uid = messageText.replace(messageReg, '')
