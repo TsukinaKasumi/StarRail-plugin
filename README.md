@@ -86,7 +86,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ## 特别鸣谢♥
 - mihomo.me：提供面板API来源
-- 狐狸：插件美工设计
+- 狐狸(依托答辩)：插件美工设计
 - [bietiaop](https://github.com/bietiaop)：编写插件部分渲染以及部分功能
 
 ## 贡献者
