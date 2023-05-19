@@ -9,6 +9,7 @@ import { pluginRoot } from '../utils/path.js'
 import { findName } from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
 import { rulePrefix } from '../utils/common.js'
+import setting from "../utils/setting.js";
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -137,7 +138,7 @@ export class hkrpg extends plugin {
       // 适配原文件位置
       ImgPath = this.getRandomImage(relativeRoot + `/panel/resources/char_image/${avatarId}/`)
     }
-    return path.join('../../../../../', ImgPath)
+    return path.join(`${process.cwd()}`, ImgPath)
   }
 
   /** 随机取文件夹图片 */
@@ -269,7 +270,7 @@ export class hkrpg extends plugin {
         throw Error(error)
       }
     } else {
-      logger.mark('SR-panelApi使用缓存')
+      // logger.mark('SR-panelApi使用缓存')
       const cardData = previousData
       return cardData
     }
@@ -307,7 +308,16 @@ export class hkrpg extends plugin {
     }
     let ImgPath = await redis.get(`STAR_RAILWAY:panelOrigImg:${source.message_id}`)
     if (!ImgPath) return false
-    e.reply(segment.image(ImgPath))
+    let OP_setting = setting.getConfig('PanelSetting');
+    if(OP_setting.originalPic) {
+      if(!OP_setting.backCalloriginalPic) {
+        return e.reply(segment.image(ImgPath))
+      }
+      else {
+        return e.reply(segment.image(ImgPath), false, { recallMsg: OP_setting.backCalloriginalPicTime })
+      }
+    }
+    return e.reply("星铁原图功能已关闭");
   }
 
   /** 通过米游社获取UID */
