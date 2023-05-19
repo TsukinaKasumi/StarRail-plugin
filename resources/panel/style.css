@@ -673,7 +673,6 @@ body {
   /* color: #f0eaca; */
   font-size: 0.9rem;
   line-height: 22px;
-  backdrop-filter: blur(2px);
 }
 
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {
