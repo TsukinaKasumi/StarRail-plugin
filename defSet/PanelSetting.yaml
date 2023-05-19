@@ -1,0 +1,8 @@
+# 面板原图开关
+originalPic: true
+
+#  原图撤回开关
+backCalloriginalPic: true
+
+#  原图撤回时间
+backCalloriginalPicTime: 30
