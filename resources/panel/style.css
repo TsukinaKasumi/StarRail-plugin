@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: "PingFang+google";
-  src: url(../fonts/pingfang_google.ttf) format('truetype');
+  src: url(../fonts/PingFangUItra.ttf) format('truetype');
 }
 
 html,
@@ -673,6 +673,7 @@ body {
   /* color: #f0eaca; */
   font-size: 0.9rem;
   line-height: 22px;
+  backdrop-filter: blur(2px);
 }
 
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {

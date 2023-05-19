@@ -116,7 +116,8 @@ export class hkrpg extends plugin {
 
   /** 获取面板图 */
   getCharImage (name, avatarId) {
-    const root = pluginRoot + '/resources/profile/normal-character/'
+    const relativeRoot = './plugins/StarRail-plugin/resources'
+    const root = relativeRoot + '/profile/normal-character/'
 
     const leadId = {
       星: [8002, 8004],
@@ -127,14 +128,16 @@ export class hkrpg extends plugin {
         name = i
       }
     }
+    let ImgPath = ''
     if (fs.existsSync(root + `${name}.webp`)) {
-      return path.join(root, `${name}.webp`)
+      ImgPath = path.join(root, `${name}.webp`)
     } else if (fs.existsSync(root + name)) {
-      return this.getRandomImage(root + name)
+      ImgPath = this.getRandomImage(root + name)
     } else {
       // 适配原文件位置
-      return this.getRandomImage(pluginRoot + `/resources/panel/resources/char_image/${avatarId}/`)
+      ImgPath = this.getRandomImage(relativeRoot + `/panel/resources/char_image/${avatarId}/`)
     }
+    return path.join('../../../../../', ImgPath)
   }
 
   /** 随机取文件夹图片 */
