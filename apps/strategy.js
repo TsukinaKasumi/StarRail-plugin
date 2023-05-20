@@ -40,7 +40,7 @@ export class strategy extends plugin {
       priority: 400,
       rule: [
         {
-          reg: '^#?(.*)(攻略([1-4])?)$',
+          reg: '^#?(.*)(攻略([1-3])?)$',
           fnc: 'strategy'
         }
       ]
@@ -48,7 +48,7 @@ export class strategy extends plugin {
   }
 
   async strategy (e) {
-    const reg = /^#?(.*)(攻略([1-4])?)$/
+    const reg = /^#?(.*)(攻略([1-3])?)$/
     const match = reg.exec(e.msg)
     let roleName = match[1].trim()
     let group = match[3] ? match[3] : "1"
