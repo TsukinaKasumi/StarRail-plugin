@@ -313,14 +313,14 @@ export class hkrpg extends plugin {
     let ImgPath = await redis.get(`STAR_RAILWAY:panelOrigImg:${source.message_id}`)
     if (!ImgPath) return false
     let OP_setting = setting.getConfig('PanelSetting')
-    if (OP_setting.originalPic) {
+    if (OP_setting.originalPic || e.isMaster) {
       if (!OP_setting.backCalloriginalPic) {
         return e.reply(segment.image(ImgPath))
       } else {
         return e.reply(segment.image(ImgPath), false, { recallMsg: OP_setting.backCalloriginalPicTime })
       }
     }
-    return e.reply('星铁原图功能已关闭')
+    return e.reply('星铁原图功能已关闭，如需开启请联系机器人主人')
   }
 
   /** 通过米游社获取UID */
