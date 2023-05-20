@@ -3,18 +3,13 @@
   src: url(../fonts/zh-cn.ttf) format('truetype');
 }
 
-@font-face {
-  font-family: "PingFang+google";
-  src: url(../fonts/PingFangUItra.ttf) format('truetype');
-}
-
 html,
 body {
   width: 730px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "PingFang+google", 'SR', sans-serif;
+  font-family: 'SR', sans-serif;
 }
 
 /* 卡片容器 */

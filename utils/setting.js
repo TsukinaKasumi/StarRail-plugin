@@ -1,7 +1,7 @@
 import YAML from 'yaml'
 import chokidar from 'chokidar'
 import fs from 'node:fs'
-import { _path, pluginResources, pluginRoot } from "./path.js";
+import { _path, pluginResources, pluginRoot } from './path.js'
 
 class Setting {
   constructor () {
@@ -18,12 +18,25 @@ class Setting {
 
     /** 监听文件 */
     this.watcher = { config: {}, defSet: {} }
+
+    this.initCfg()
+  }
+
+  /** 初始化配置 */
+  initCfg () {
+    const files = fs.readdirSync(this.defPath).filter(file => file.endsWith('.yaml'))
+    for (let file of files) {
+      if (!fs.existsSync(`${this.configPath}${file}`)) {
+        fs.copyFileSync(`${this.defPath}${file}`, `${this.configPath}${file}`)
+      }
+      this.watch(`${this.configPath}${file}`, file.replace('.yaml', ''), 'config')
+    }
   }
 
   // 配置对象化 用于锅巴插件界面填充
   merge () {
     let sets = {}
-    let appsConfig = fs.readdirSync(this.defPath).filter(file => file.endsWith(".yaml"));
+    let appsConfig = fs.readdirSync(this.defPath).filter(file => file.endsWith('.yaml'))
     for (let appConfig of appsConfig) {
       // 依次将每个文本填入键
       let filename = appConfig.replace(/.yaml/g, '').trim()
@@ -33,8 +46,8 @@ class Setting {
   }
 
   // 配置对象分析 用于锅巴插件界面设置
-  analysis(config) {
-    for (let key of Object.keys(config)){
+  analysis (config) {
+    for (let key of Object.keys(config)) {
       this.setConfig(key, config[key])
     }
   }
@@ -43,7 +56,7 @@ class Setting {
   getData (path, filename) {
     path = `${this.dataPath}${path}/`
     try {
-      if (!fs.existsSync(`${path}${filename}.yaml`)){ return false}
+      if (!fs.existsSync(`${path}${filename}.yaml`)) { return false }
       return YAML.parse(fs.readFileSync(`${path}${filename}.yaml`, 'utf8'))
     } catch (error) {
       logger.error(`[${filename}] 读取失败 ${error}`)
@@ -55,11 +68,11 @@ class Setting {
   setData (path, filename, data) {
     path = `${this.dataPath}${path}/`
     try {
-      if (!fs.existsSync(path)){
+      if (!fs.existsSync(path)) {
         // 递归创建目录
-        fs.mkdirSync(path, { recursive: true });
+        fs.mkdirSync(path, { recursive: true })
       }
-      fs.writeFileSync(`${path}${filename}.yaml`, YAML.stringify(data),'utf8')
+      fs.writeFileSync(`${path}${filename}.yaml`, YAML.stringify(data), 'utf8')
     } catch (error) {
       logger.error(`[${filename}] 写入失败 ${error}`)
       return false
@@ -78,14 +91,14 @@ class Setting {
 
   // 设置对应模块用户配置
   setConfig (app, Object) {
-    return this.setYaml(app, 'config', { ...this.getdefSet(app), ...Object})
+    return this.setYaml(app, 'config', { ...this.getdefSet(app), ...Object })
   }
 
   // 将对象写入YAML文件
-  setYaml (app, type, Object){
+  setYaml (app, type, Object) {
     let file = this.getFilePath(app, type)
     try {
-      fs.writeFileSync(file, YAML.stringify(Object),'utf8')
+      fs.writeFileSync(file, YAML.stringify(Object), 'utf8')
     } catch (error) {
       logger.error(`[${app}] 写入失败 ${error}`)
       return false
@@ -121,7 +134,6 @@ class Setting {
       return `${this.configPath}${app}.yaml`
     }
   }
-
 
   // 监听配置文件
   watch (file, app, type = 'defSet') {
