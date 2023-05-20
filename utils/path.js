@@ -13,5 +13,5 @@ export {
   _path,
   pluginName,
   pluginRoot,
-  pluginResources,
+  pluginResources
 }

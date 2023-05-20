@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import User from '../../genshin/model/user.js'
 import panelApi from '../runtime/PanelApi.js'
 import fetch from 'node-fetch'
@@ -5,7 +6,7 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import _ from 'lodash'
 import fs from 'fs'
 import path from 'path'
-import { pluginRoot } from '../utils/path.js'
+import { pluginRoot, pluginResources } from '../utils/path.js'
 import { findName } from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
 import { rulePrefix } from '../utils/common.js'
@@ -104,12 +105,12 @@ export class hkrpg extends plugin {
         data.behaviorList[i].path = filePath
       })
       // 面板图
-      let { renderPath, origPath } = this.getCharImage(data.name, data.avatarId)
-      data.charImage = renderPath
+      data.charImage = this.getCharImage(data.name, data.avatarId)
+      logger.debug('面板图:', data.charImage)
       let msgId = await e.runtime.render('StarRail-plugin', '/panel/panel.html', data, {
         retType: 'msgId'
       })
-      msgId && redis.setEx(`STAR_RAILWAY:panelOrigImg:${msgId.message_id}`, 60 * 60, origPath)
+      msgId && redis.setEx(`STAR_RAILWAY:panelOrigImg:${msgId.message_id}`, 60 * 60, data.charImage)
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
@@ -118,41 +119,34 @@ export class hkrpg extends plugin {
 
   /** 获取面板图 */
   getCharImage (name, avatarId) {
-    const relativeRoot = './plugins/StarRail-plugin/resources'
-    const root = relativeRoot + '/profile/normal-character/'
-
+    const folderPath = 'profile/normal-character/'
+    const fullFolderPath = pluginResources + '/' + folderPath
     const leadId = {
       星: [8002, 8004],
       穹: [8001, 8003]
     }
-    for (let i in leadId) {
-      if (leadId[i].includes(avatarId)) {
-        name = i
-      }
-    }
-    let ImgPath = ''
-    if (fs.existsSync(root + `${name}.webp`)) {
-      ImgPath = path.join(root, `${name}.webp`)
-    } else if (fs.existsSync(root + name)) {
-      ImgPath = this.getRandomImage(root + name)
+    _.forIn(leadId, (v, k) => {
+      if (v.includes(avatarId))name = k
+    })
+    if (fs.existsSync(fullFolderPath + `${name}.webp`)) {
+      return folderPath + `${name}.webp`
+    } else if (fs.existsSync(fullFolderPath + name)) {
+      return this.getRandomImage(folderPath + name)
     } else {
       // 适配原文件位置
-      ImgPath = this.getRandomImage(relativeRoot + `/panel/resources/char_image/${avatarId}/`)
-    }
-    return {
-      origPath: ImgPath,
-      renderPath: path.join('../../../../../', ImgPath)
+      return this.getRandomImage(`panel/resources/char_image/${avatarId}`)
     }
   }
 
   /** 随机取文件夹图片 */
   getRandomImage (dirPath) {
-    const files = fs.readdirSync(dirPath)
+    let _path = pluginResources + '/' + dirPath
+    const files = fs.readdirSync(_path)
     const images = files.filter((file) => {
       return /\.(jpg|png|webp)$/i.test(file)
     })
     const randomNum = Math.floor(Math.random() * images.length)
-    return path.join(dirPath, images[randomNum])
+    return dirPath + '/' + images[randomNum]
   }
 
   async update (e) {
@@ -314,6 +308,7 @@ export class hkrpg extends plugin {
     if (!ImgPath) return false
     let OP_setting = setting.getConfig('PanelSetting')
     if (OP_setting.originalPic || e.isMaster) {
+      ImgPath = pluginResources + '/' + ImgPath
       if (!OP_setting.backCalloriginalPic) {
         return e.reply(segment.image(ImgPath))
       } else {
