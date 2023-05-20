@@ -9,7 +9,7 @@ import { pluginRoot } from '../utils/path.js'
 import { findName } from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
 import { rulePrefix } from '../utils/common.js'
-import setting from "../utils/setting.js";
+import setting from '../utils/setting.js'
 
 export class hkrpg extends plugin {
   constructor (e) {
@@ -74,8 +74,6 @@ export class hkrpg extends plugin {
       // 引入角色数据
       let charData = pluginRoot + '/resources/panel/data/character.json'
       charData = JSON.parse(fs.readFileSync(charData, 'utf-8'))
-      // 面板图
-      data.charImage = this.getCharImage(data.name, data.avatarId)
       data.charpath = charData[data.avatarId].path
       data.relics.forEach((item, i) => {
         const filePath = relicsPathData[item.id].icon
@@ -105,10 +103,13 @@ export class hkrpg extends plugin {
         const filePath = nameId + '_' + pathName + '.png'
         data.behaviorList[i].path = filePath
       })
+      // 面板图
+      let { renderPath, origPath } = this.getCharImage(data.name, data.avatarId)
+      data.charImage = renderPath
       let msgId = await e.runtime.render('StarRail-plugin', '/panel/panel.html', data, {
         retType: 'msgId'
       })
-      msgId && redis.setEx(`STAR_RAILWAY:panelOrigImg:${msgId.message_id}`, 60 * 60, data.charImage)
+      msgId && redis.setEx(`STAR_RAILWAY:panelOrigImg:${msgId.message_id}`, 60 * 60, origPath)
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
@@ -138,7 +139,10 @@ export class hkrpg extends plugin {
       // 适配原文件位置
       ImgPath = this.getRandomImage(relativeRoot + `/panel/resources/char_image/${avatarId}/`)
     }
-    return path.join(`${process.cwd()}`, ImgPath)
+    return {
+      origPath: ImgPath,
+      renderPath: path.join('../../../../../', ImgPath)
+    }
   }
 
   /** 随机取文件夹图片 */
@@ -308,16 +312,15 @@ export class hkrpg extends plugin {
     }
     let ImgPath = await redis.get(`STAR_RAILWAY:panelOrigImg:${source.message_id}`)
     if (!ImgPath) return false
-    let OP_setting = setting.getConfig('PanelSetting');
-    if(OP_setting.originalPic) {
-      if(!OP_setting.backCalloriginalPic) {
+    let OP_setting = setting.getConfig('PanelSetting')
+    if (OP_setting.originalPic) {
+      if (!OP_setting.backCalloriginalPic) {
         return e.reply(segment.image(ImgPath))
-      }
-      else {
+      } else {
         return e.reply(segment.image(ImgPath), false, { recallMsg: OP_setting.backCalloriginalPicTime })
       }
     }
-    return e.reply("星铁原图功能已关闭");
+    return e.reply('星铁原图功能已关闭')
   }
 
   /** 通过米游社获取UID */
