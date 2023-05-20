@@ -38,28 +38,28 @@ export default class Gacha extends plugin {
       this.weaponJson = JSON.parse(
         fs.readFileSync(
           pluginRoot +
-            '/resources/gachasimulation/resources/data/equipment.json',
+            '/resources/gachasimulation/resources/appdata/equipment.json',
           'utf8'
         )
       );
       this.weaponLife = JSON.parse(
         fs.readFileSync(
           pluginRoot +
-            '/resources/gachasimulation/resources/data/equipment2life.json',
+            '/resources/gachasimulation/resources/appdata/equipment2life.json',
           'utf8'
         )
       );
       this.charDamageTypeJson = JSON.parse(
         fs.readFileSync(
           pluginRoot +
-            '/resources/gachasimulation/resources/data/chardamagetype.json',
+            '/resources/gachasimulation/resources/appdata/chardamagetype.json',
           'utf8'
         )
       );
       this.charToCharID = JSON.parse(
         fs.readFileSync(
           pluginRoot +
-            '/resources/gachasimulation/resources/data/char2charid.json',
+            '/resources/gachasimulation/resources/appdata/char2charid.json',
           'utf8'
         )
       );
