@@ -180,7 +180,13 @@
             {{if equipment.id}}
             <div class="level-info">
               <div class="level">Lv.{{equipment.level}}</div>
-              <div class="dy">叠影：{{equipment.rank}}阶</div>
+              <div class="dy">
+                {{set romanNumerals = ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"]}}
+                <div class="dy-icon level{{equipment.rank}}">
+                  {{romanNumerals[equipment.rank-1]}}
+                </div>
+                叠影{{equipment.rank}}阶
+              </div>
             </div>
             {{/if}}
           </div>

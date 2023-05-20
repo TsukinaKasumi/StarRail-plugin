@@ -519,6 +519,20 @@ body {
   padding: 5px 25px;
   border-radius: 6px;
   font-size: 0.9rem;
+  display: flex;
+}
+
+.main-content .artoverview .weapon .info .level-info .dy-icon {
+  border-radius: 50%;
+  background: #282828;
+  width: 18px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.main-content .artoverview .weapon .info .level-info .level5 {
+  background: #ffd070 !important;
+  color: #332c1f;
 }
 
 /* 遗器评分 */
