@@ -1,0 +1,326 @@
+:root {
+  --page-width: 2200px;
+  --page-height: 1040px;
+  --color-three: #7ba5d7;
+  --color-three-shadow: #7ba4d768;
+  --color-four: #b892ff;
+  --color-four-shadow: #b892ffaf;
+  --color-five: #fefe8b;
+  --color-five-shadow: #fefe8bf4;
+  --color-five-shadow2: #f0af40f3;
+  --color-bkg: #0b0c11;
+}
+@font-face {
+  font-family: "SR";
+  src: url('../fonts/zh-cn.ttf') format('truetype');
+}
+html {
+  width: var(--page-width);
+  height: var(--page-height);
+  overflow: hidden;
+  background-color: white;
+  font-family: "SR";
+}
+body {
+  width: var(--page-width);
+  height: var(--page-height);
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bkg);
+  overflow: hidden;
+  position: relative;
+}
+* {
+  box-sizing: border-box;
+}
+.title {
+  position: fixed;
+  top: calc(var(--page-width) * 0.02);
+  left: calc(var(--page-width) * 0.05);
+  color: rgb(255,255,255);
+  display: flex;
+  align-items: center;
+  font-size: calc(var(--page-width) * 0.013);
+  width: 100%;
+}
+.title img {
+  height: calc(var(--page-width) * 0.025);
+  margin-right: 0.2%;
+}
+.user-name {
+  padding: calc(var(--page-width) * 0.003) calc(var(--page-width) * 0.007);
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  margin-left: 0.8%;
+  color: var(--color-bkg);
+}
+.page-bkg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: linear-gradient(to top, var(--color-three-shadow),rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+}
+.page-bkg img {
+  height: 100%;
+  opacity: 0.8;
+}
+.page-bkg .bkgLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: right;
+}
+.page-bkg .bkgLine img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 90%;
+  opacity: 0.4;
+}
+.line1 {
+  display: flex;
+  padding: calc(var(--page-width) * 0.04) 0 0 0;
+  justify-content: center;
+  transform: rotate(-10deg);
+  margin-right: calc(var(--page-width) * 0.15);
+}
+.line2 {
+  display: flex;
+  justify-content: center;
+  transform: rotate(-10deg);
+}
+.line3 {
+  display: flex;
+  justify-content: center;
+  transform: rotate(-10deg);
+  margin-right: calc(var(--page-width) * -0.15);
+}
+.line1 .card:nth-child(2) {
+  margin-top: calc(var(--page-width) * -0.003);
+}
+.line3 .card:nth-child(2) {
+  margin-top: calc(var(--page-width) * 0.02);
+}
+.card {
+  margin: 10px;
+  width: calc(var(--page-width) * 0.22);
+  height: calc(var(--page-width) * 0.112);
+  border-bottom: calc(var(--page-width) * 0.003) solid var(--color-three);
+  box-shadow: 0 0 10px var(--color-three-shadow);
+  position: relative;
+  background-color: var(--color-bkg);
+  z-index: 2;
+}
+.card .five-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: calc(var(--page-width) * 0.001) calc(var(--page-width) * 0.005) calc(var(--page-width) * 0.001) calc(var(--page-width) * 0.007);
+  background-color: var(--color-five);
+  border-radius: 0 0 0 10px;
+  color: var(--color-bkg);
+  font-weight: 900;
+  font-size: calc(var(--page-width) * 0.013);
+  box-shadow: 0 0 3px var(--color-five-shadow), 0 0 5px var(--color-five-shadow), 0 0 10px var(--color-five-shadow2), 0 0 30px var(--color-five-shadow2);
+  z-index: 11;
+}
+.card.card-four {
+  border-bottom: calc(var(--page-width) * 0.003) solid var(--color-four);
+  box-shadow: 0 0 3px var(--color-four-shadow), 0 0 5px var(--color-four-shadow), 0 0 10px var(--color-four-shadow), 0 0 30px var(--color-four-shadow);
+}
+.card.card-four.withchar {
+  border: calc(var(--page-width) * 0.003) solid var(--color-four);
+}
+.card.card-five {
+  border-bottom: calc(var(--page-width) * 0.003) solid var(--color-five);
+  box-shadow: 0 0 3px var(--color-five-shadow), 0 0 5px var(--color-five-shadow), 0 0 10px var(--color-five-shadow2), 0 0 30px var(--color-five-shadow2);
+}
+.card.card-five.withchar {
+  border: calc(var(--page-width) * 0.003) solid var(--color-five);
+}
+.card .bkg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.card .bkg .bkgLinearColor {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(to top, var(--color-three), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  opacity: 0.5;
+}
+.card.card-four .bkg .bkgLinearColor {
+  background: linear-gradient(to top, var(--color-four), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+}
+.card.card-five .bkg .bkgLinearColor {
+  background: linear-gradient(to top, var(--color-five), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+}
+.card .bkg .stars {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.6;
+  overflow: hidden;
+}
+.card .bkg .stars img {
+  position: absolute;
+  top: -320%;
+  left: 0%;
+  width: 200%;
+}
+.card .weapon {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.card .weapon .type {
+  width: calc(var(--page-width) * 0.10);
+  height: calc(var(--page-width) * 0.08);
+  position: absolute;
+  top: calc(var(--page-width) * 0.025);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card .weapon .type .icon {
+  width: calc(var(--page-width) * 0.04);
+}
+.card .weapon .type .icon img {
+  width: 100%;
+}
+.card .weapon .type .star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5%;
+}
+.card .weapon .type .star img {
+  width: calc(var(--page-width) * 0.013);
+  display: block;
+  margin: 0 -4%;
+}
+.card .weapon .image {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+}
+.card .weapon .image img {
+  height: 150%;
+  display: block;
+}
+.card .char {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.card.card-four .char .bkg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-four);
+  overflow: hidden;
+}
+.card.card-five .char .bkg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-five);
+  overflow: hidden;
+}
+.card .char .char-info {
+  top: 0;
+  left: 10%;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px 0;
+  overflow: hidden;
+  position: absolute;
+}
+.card .char .char-info .char-bg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.card .char .char-info .char-bg img {
+  position: absolute;
+  top: -300%;
+  left: -250%;
+  width: 600%;
+}
+.card .char .char-info .char-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.card .char .char-info .char-img::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to top right, rgba(0,0,0,0.6), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0),rgba(255, 255, 255, 0));
+  z-index: 2;
+}
+.card .char .char-info .char-img::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to top right, rgba(0,0,0,0), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6),rgba(255, 255, 255, 1));
+  z-index: 0;
+}
+.card .char .char-info .char-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card .char .char-info .char-detail {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+.card .char .char-info .char-detail .icon {
+  width: calc(var(--page-width) * 0.028);
+  margin-bottom: calc(var(--page-width) * 0.001);
+}
+.card .char .char-info .char-detail .icon img {
+  width: 100%;
+}
+.card .char .char-info .char-detail .star {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  height: calc(var(--page-width) * 0.013);
+  padding-left: 3%;
+  margin-bottom: 1%;
+}
+.card .char .char-info .char-detail .star img {
+  height: 100%;
+  display: block;
+  margin: 0 -1%;
+}

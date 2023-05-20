@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>祈愿</title>
+  <link rel="stylesheet" href="{{pluResPath}}gachasimulation/style.css">
+</head>
+<body>
+  <div class="title">
+    <img src="{{pluResPath}}gachasimulation/resources/images/DrawcardIcon.png" alt="">结果展示<span class="user-name">{{user_name}}</span>
+  </div>
+  <div class="page-bkg">
+    <img src="{{pluResPath}}gachasimulation/resources/images/GachaImg_Common_Star.png" alt="">
+    <div class="bkgLine">
+      <img src="{{pluResPath}}gachasimulation/resources/images/bkg-line.png" alt="">
+    </div>
+  </div>
+  {{each result as line i}}
+    <div class="line{{i+1}}">
+      {{each line as char i}}
+        <div class="card card-{{char.star==5?'five':(char.star==4?'four':'three')}} {{char.type==1?'withchar':''}}">
+          <div class="bkg">
+            <div class="bkgLinearColor"></div>
+            <div class="stars">
+              <img src="{{pluResPath}}gachasimulation/resources/images/CS_Gacha_BG_Stars3.png" alt="">
+            </div>
+          </div>
+          {{if char.count}}
+          <div class="five-count">{{char.count}}抽</div>
+          {{/if}}
+          <div class="char">
+            {{if char.type == 1}}
+              <div class="bkg">
+              </div>
+              <div class="char-info">
+                <div class="char-img">
+                  <img src="{{pluResPath}}gachasimulation/resources/images/{{char.charImageName}}" alt="">
+                </div>
+                <div class="char-detail">
+                  <div class="icon">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/damage/IconAttribute{{char.charDamageType}}.png" alt="">
+                  </div>
+                  <div class="star">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    {{if char.star >= 4}}
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    {{/if}}
+                    {{if char.star == 5}}
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    {{/if}}
+                  </div>
+                </div>
+              </div>
+            {{else if char.type == 2}}
+              <div class="weapon">
+                <div class="type">
+                  <div class="icon">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/{{char.weaponLifeName}}" alt="">
+                  </div>
+                  <div class="star">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    {{if char.star >= 4}}
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    {{/if}}
+                    {{if char.star == 5}}
+                    <img src="{{pluResPath}}gachasimulation/resources/images/StarBig.png" alt="">
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="image">
+                  <img src="{{pluResPath}}gachasimulation/resources/images/{{char.fileName}}" alt="">
+                </div>
+              </div>
+              {{/if}}
+          </div>
+          
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+</body>
+</html>
