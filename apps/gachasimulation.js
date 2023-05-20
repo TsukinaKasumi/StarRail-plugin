@@ -23,7 +23,7 @@ export default class Gacha extends plugin {
       rule: [
         {
           /** 命令正则匹配 */
-          reg: `^${rulePrefix}抽卡`,
+          reg: `^${rulePrefix}(抽卡|十连)(角色|光锥|常驻)?$`,
           /** 执行方法 */
           fnc: 'main',
         },
