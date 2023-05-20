@@ -7,7 +7,7 @@
 <!-- <img src ="https://img.shields.io/github/v/tag/hewang1an/StarRail-plugin?label=latest%20version&logo=github"/> -->
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
-
+### 当前插件版本：Version1.0.0 Alpha
 ### 5.17更新：由于做了部分调整，请将插件更新到最新版本后再进行面板数据查询！！
 ### 使用说明
 
@@ -15,7 +15,10 @@
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
 
+### 关于申请参加测试，BUG反馈
+
 QQ群：758447726
+<br>注：只有加入QQ群聊才可申请参与内部测试！
 
 ### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
@@ -54,6 +57,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ### #星铁更新面板
 使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me
+<br>当前面板图UI版本：Version1.05 Alpha
 ### #星铁收入
 查看本月星琼收入
 
@@ -86,7 +90,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ## 特别鸣谢♥
 - mihomo.me：提供面板API来源
-- 狐狸(依托答辩)：插件美工设计
+- [狐狸](https://github.com/Tighnari520)(依托答辩)：插件美工
 - [bietiaop](https://github.com/bietiaop)：编写插件部分渲染以及部分功能
 
 ## 贡献者
