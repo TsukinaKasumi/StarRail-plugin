@@ -7,8 +7,12 @@
 <!-- <img src ="https://img.shields.io/github/v/tag/hewang1an/StarRail-plugin?label=latest%20version&logo=github"/> -->
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
+
 ### 当前插件版本：Version1.0.0 Alpha
+当前插件处于开发中阶段，部分功能尚未完善（例如面板评分系统），敬请期待后续功能！
 ### 5.17更新：由于做了部分调整，请将插件更新到最新版本后再进行面板数据查询！！
+更新报错一律执行
+<br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
 ### 使用说明
 
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板(目前暂不支持查看详细数据）体力以及米游社所拥有的的一切有关星轨的功能
