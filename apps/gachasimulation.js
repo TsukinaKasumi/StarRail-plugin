@@ -244,7 +244,7 @@ export default class Gacha extends plugin {
       /** 概率拉爆 */
       upProba = 101;
     }
-    if (this.type == 'normal') tmpUp = 0;
+    if (this.type == 'normal') upProba = 0;
 
     let tmpName = '';
     if (lodash.random(1, 100) <= upProba) {
