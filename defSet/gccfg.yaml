@@ -1,0 +1,8 @@
+# 配置模拟抽卡
+limit:
+  group: true # 允许群聊抽卡
+  private: true # 允许私聊抽卡
+  count: 1 # 限制抽卡次数，0为无限制
+recall:
+  enable: true # 是否自动撤回无五星的消息（110秒）
+  time: 110 # 撤回时间

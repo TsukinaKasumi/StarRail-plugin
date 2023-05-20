@@ -220,8 +220,8 @@ export class hkrpg extends plugin {
         if (time) {
           time = parseInt(time)
           const leftTime = Date.now() - time
-          if (leftTime < 5 * 60 * 1000) {
-            const seconds = Math.ceil((5 * 60 * 1000 - leftTime) / 1000)
+          if (leftTime < 1 * 60 * 1000) {
+            const seconds = Math.ceil((1 * 60 * 1000 - leftTime) / 1000)
             throw Error(`查询过于频繁，请${seconds}秒后重试`)
           }
         }
