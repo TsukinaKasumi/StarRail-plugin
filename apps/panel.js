@@ -34,7 +34,7 @@ export class hkrpg extends plugin {
           fnc: 'update',
         },
         {
-          reg: `^${rulePrefix}切换面板(API|api)?`,
+          reg: `^${rulePrefix}(设置|切换)面板(API|api)?`,
           fnc: 'changeApi',
         },
         {
