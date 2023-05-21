@@ -152,7 +152,11 @@ export default class Gacha extends plugin {
     let data = await this.getGachaData();
     let currentData = data[this.type];
     let count = currentData.today.stars.length || 0;
-    if (this.config.limit.count != 0 && count >= this.config.limit.count) {
+    if (
+      this.config.limit.count != 0 &&
+      count * 10 >= this.config.limit.count &&
+      !this.e.isMaster
+    ) {
       let fiveCount = 0;
       currentData.today.stars.forEach(element => {
         if (element.star === 5) {
