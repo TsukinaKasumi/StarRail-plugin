@@ -175,7 +175,7 @@ export class hkrpg extends plugin {
     await this.miYoSummerGetUid();
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`);
     if (!uid) {
-      return await e.reply('尚未绑定uid,请发送#绑定星铁uid＋uid进行绑定');
+      return await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定');
     }
     try {
       const api = await panelApi();
