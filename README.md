@@ -1,6 +1,6 @@
 ![logo](https://user-images.githubusercontent.com/21212372/235622221-7c5a5721-784b-4a31-9b24-60c88663548f.png)
 
-<div align=center> <h1>云崽QQ机器人的崩坏：星穹铁道插件</h1> </div>
+<div align=center> <h1>云崽QQ机器人的《崩坏：星穹铁道》插件</h1> </div>
 <div align=center>
  <img src ="https://img.shields.io/github/issues/hewang1an/StarRail-plugin?logo=github"/>
 <img src ="https://img.shields.io/github/license/hewang1an/StarRail-plugin"/>
@@ -9,7 +9,7 @@
 </div>
 
 ### 当前插件版本：Version1.0.0 Alpha
-当前插件处于开发中阶段，部分功能尚未完善（例如面板评分系统），敬请期待后续功能！
+当前插件处于开发中阶段，部分功能尚未完善（例如伤害计算和面板评分系统），敬请期待后续功能！
 ### 5.17更新：由于做了部分调整，请将插件更新到最新版本后再进行面板数据查询！！
 更新报错一律执行
 <br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
@@ -28,7 +28,9 @@ QQ群：758447726
 ---
 星穹铁道插件
 
-支持米游社相关的基本功能，后续会加其他功能，比如查看忘却之庭数据和查看角色详细属性之类（咕咕咕）由于目前还没有铁道相关的面板API可以使用，所以暂时看不了详细数据，不用再问了，有相关的建议和需要的功能可以在issues中提出，会尽量完善，目前正在逐步优化中（进度缓慢）
+支持米游社相关的基本功能，后续会加其他功能，比如查看忘却之庭数据和查看角色详细属性之类（咕咕咕）
+
+有相关的建议和需要的功能可以在issues中提出，会尽量完善，目前正在逐步优化中（进度缓慢）
 
 ### 安装方法
 
@@ -57,11 +59,12 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### #星铁绑定＋你的uid
 
 ### #星铁希儿面板
-查看角色遗器，命座，光锥等信息
+查看角色属性，遗器，命座，光锥等信息
 
 ### #星铁更新面板
-使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me
+使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me & ikechan8370.com
 <br>当前面板图UI版本：Version1.05 Alpha
+
 ### #星铁收入
 查看本月星琼收入
 
@@ -82,14 +85,14 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
   抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
-绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin?_from=gitee_search)发送#扫码登录进行cookie的绑定，否则可能会报错
+绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin)发送#扫码登录进行cookie的绑定，否则可能会报错
 获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)（仅pc，ios）
 
 
 ## 赞助
 
 如果觉得本项目对你有帮助的话，愿意的话不妨赞助我们让我们有更多动力更新！
-- [墨西哥鳄梨酱](https://afdian.net/a/ikechan8370) 提供插件本体和主要功能
+- [墨西哥鳄梨酱](https://afdian.net/a/ikechan8370) 提供插件本体和主要功能和面板API
 - [鹤望兰](https://afdian.net/a/hewang1an) 提供部分功能以及后续维护
 
 ## 特别鸣谢♥
