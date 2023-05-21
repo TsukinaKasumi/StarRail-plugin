@@ -2,6 +2,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import _ from 'lodash'
 import { Restart } from '../../other/restart.js'
+import fs from 'fs'
 import {rulePrefix} from "../utils/common.js";
 
 const _path = process.cwd()
