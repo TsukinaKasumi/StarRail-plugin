@@ -5,6 +5,8 @@ import path from 'path'
 
 // 支持锅巴
 export function supportGuoba () {
+  let allGroup = [];
+  Bot.gl.forEach((v, k) => { allGroup.push({label: `${v.group_name}(${k})`, value: k}); });
   return {
     pluginInfo: {
       name: 'StarRail-plugin',
@@ -44,7 +46,7 @@ export function supportGuoba () {
       },
       {
         field: 'cookieHelp.docs',
-        label: 'Cookie帮助所发送内容',
+        label: 'Cookie帮助',
         bottomHelpMessage: '发送出来的Cookie帮助',
         component: 'Input',
         required: true,
@@ -77,7 +79,8 @@ export function supportGuoba () {
         componentProps: {
           min: 0,
           max: 10000,
-          placeholder: '请输入数字'
+          placeholder: '请输入数字',
+          addonAfter: "秒"
         }
       },
       {
@@ -105,7 +108,8 @@ export function supportGuoba () {
         componentProps: {
           min: 0,
           max: 10000,
-          placeholder: '请输入数量'
+          placeholder: '请输入数量',
+          addonAfter: "次"
         }
       },
       {
@@ -123,9 +127,22 @@ export function supportGuoba () {
         componentProps: {
           min: 0,
           max: 10000,
-          placeholder: '请输入数字'
+          placeholder: '请输入数字',
+          addonAfter: "秒"
         }
       },
+      {
+        field: 'gccfg.recall.disable_group',
+        label: '禁用群号',
+        bottomHelpMessage: '禁用抽卡功能的群',
+        component: 'Select',
+        componentProps: {
+          allowAdd: true,
+          allowDel: true,
+          mode: 'multiple',
+          options: allGroup
+        }
+      }
     ],
 
       getConfigData () {
