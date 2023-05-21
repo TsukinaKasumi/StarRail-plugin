@@ -227,7 +227,7 @@ body {
     width: 220px;
 }
 
-.role-name,
+
 .region {
     left: 50%;
     transform: translateX(-50%);
@@ -235,13 +235,31 @@ body {
 }
 
 .role-name {
+    left: 54%;
+    transform: translateX(-50%);
+    position: absolute;
     top: 29px;
     font-size: 30px;
+    max-width: 45%; /* 限制宽度 45% */
+    display: flex; /* 弹性布局 */
+    align-items: center;
 }
-
+.nickname {
+    flex-grow: 1;
+    flex-shrink: 1;
+    /* 文字超出显示省略号 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .uid {
+    flex-grow: 0;
+    flex-shrink: 0;
     font-size: 24px;
     color: #2e353e;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .region {
