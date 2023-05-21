@@ -2,9 +2,20 @@ import plugin from '../../../lib/plugins/plugin.js'
 import { createRequire } from 'module'
 import _ from 'lodash'
 import { Restart } from '../../other/restart.js'
+import {rulePrefix} from "../utils/common.js";
 
+const _path = process.cwd()
 const require = createRequire(import.meta.url)
 const { exec, execSync } = require('child_process')
+const resPath = `${_path}/plugins/StarRail-plugin/resources/`
+
+const checkAuth = async function (e) {
+  if (!e.isMaster) {
+    e.reply(`只有主人才能使用该命令哦~`)
+    return false
+  }
+  return true
+}
 
 // 是否在更新中
 let uping = false
@@ -22,10 +33,59 @@ export class Update extends plugin {
         {
           reg: '^#?(星轨|星铁)(插件)?(强制)?更新$',
           fnc: 'update'
+        },
+        {
+          reg: `^${rulePrefix}(强制)?(更新面板图|面板图更新)$`,
+          fnc: 'updateRes',
+          desc: '【#管理】更新素材'
         }
       ]
     })
   }
+
+  async updateRes(e) {
+    if (!await checkAuth(e)) {
+      return true
+    }
+    let isForce = e.msg.includes('强制')
+    let command = ''
+    if (fs.existsSync(`${resPath}/profile/normal-character/`)) {
+      e.reply('开始尝试更新，请耐心等待~')
+      command = 'git pull'
+      if (isForce) {
+        command = 'git  checkout . && git  pull'
+      }
+      exec(command, {cwd: `${resPath}/profile/normal-character/`}, function (error, stdout, stderr) {
+        console.log(stdout)
+        if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
+          e.reply('目前所有图片都已经是最新了~')
+          return true
+        }
+        let numRet = /(\d*) files changed,/.exec(stdout)
+        if (numRet && numRet[1]) {
+          e.reply(`报告主人，更新成功，此次更新了${numRet[1]}个图片~`)
+          return true
+        }
+        if (error) {
+          e.reply('更新失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。')
+        } else {
+          e.reply('图片加量包更新成功~')
+        }
+      })
+    } else {
+      command = `git clone https://github.com/yhs21241/StarRail-plugin-PanelPic.git "${resPath}/profile/normal-character/" --depth=1`
+      e.reply('开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~')
+      exec(command, function (error, stdout, stderr) {
+        if (error) {
+          e.reply('角色图片加量包安装失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。')
+        } else {
+          e.reply('角色图片加量包安装成功！您后续也可以通过 #星铁面板图更新 命令来更新图像')
+        }
+      })
+    }
+    return true
+  }
+
 
   /**
    * rule - 更新星铁插件
