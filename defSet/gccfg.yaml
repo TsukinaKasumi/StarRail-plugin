@@ -6,3 +6,5 @@ limit:
 recall:
   enable: true # 是否自动撤回无五星的消息（110秒）
   time: 110 # 撤回时间
+disable_group: # 禁用群号
+  - 123456789

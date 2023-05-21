@@ -143,6 +143,16 @@ export default class Gacha extends plugin {
   // 判断是否可以抽卡
   async canGacha() {
     logger.mark(this.config);
+    // 判断是否为群聊，并且群聊是否在限制名单中
+    if (
+      this.e.isGroup &&
+      'disable_group' in this.config &&
+      this.config.disable_group &&
+      this.config.disable_group.includes(this.e.group_id)
+    ) {
+      await this.e.reply('本群已被禁用星铁抽卡功能');
+      return false;
+    }
     if (!this.config.limit.group && this.e.isGroup) {
       return false;
     }
@@ -410,6 +420,7 @@ export default class Gacha extends plugin {
   }
   // 抽卡函数
   async lottery() {
+    this.config = setting.getConfig('gccfg');
     this.gachaThisTime = [];
     this.hasFive = false;
     /** 十连抽 */
