@@ -50,13 +50,13 @@ export class Update extends plugin {
     }
     let isForce = e.msg.includes('强制')
     let command = ''
-    if (fs.existsSync(`${resPath}/profile/normal-character/`)) {
+    if (fs.existsSync(`${resPath}/profile/`)) {
       e.reply('开始尝试更新，请耐心等待~')
       command = 'git pull'
       if (isForce) {
         command = 'git  checkout . && git  pull'
       }
-      exec(command, {cwd: `${resPath}/profile/normal-character/`}, function (error, stdout, stderr) {
+      exec(command, {cwd: `${resPath}/profile/`}, function (error, stdout, stderr) {
         console.log(stdout)
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
           e.reply('目前所有图片都已经是最新了~')
@@ -74,7 +74,7 @@ export class Update extends plugin {
         }
       })
     } else {
-      command = `git clone https://github.com/yhs21241/StarRail-plugin-PanelPic.git "${resPath}/profile/normal-character/" --depth=1`
+      command = `git clone https://github.com/yhs21241/StarRail-plugin-PanelPic.git "${resPath}/profile/" --depth=1`
       e.reply('开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~')
       exec(command, function (error, stdout, stderr) {
         if (error) {
