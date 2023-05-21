@@ -11,6 +11,7 @@
 ### 当前插件版本：Version1.0.0 Alpha
 当前插件处于开发中阶段，部分功能尚未完善（例如伤害计算和面板评分系统），敬请期待后续功能！
 ### 5.17更新：由于做了部分调整，请将插件更新到最新版本后再进行面板数据查询！！
+### 5.21更新：支持切换面板api详情请往下滑
 更新报错一律执行
 <br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
 ### 使用说明
@@ -82,6 +83,13 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ### *抽卡分析角色/光锥/常驻/新手(刷新)
 查看卡池抽卡记录信息
+
+### *切换面板1/*api列表
+可在config/panelApi中配置
+  - https://sr.ikechan8370.com/v1/info/
+  - https://lulu.roki.best/v1/info/
+  - https://sr.roki.best/v1/info/
+填入可选api
 
   抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
