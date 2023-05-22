@@ -164,7 +164,7 @@ export default class Gacha extends plugin {
     let count = currentData.today.stars.length || 0;
     if (
       this.config.limit.count != 0 &&
-      count * 10 >= this.config.limit.count &&
+      count >= this.config.limit.count * 10 &&
       !this.e.isMaster
     ) {
       let fiveCount = 0;
