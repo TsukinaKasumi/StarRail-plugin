@@ -115,11 +115,11 @@ body {
 }
 .card .five-count {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   padding: calc(var(--page-width) * 0.001) calc(var(--page-width) * 0.005) calc(var(--page-width) * 0.001) calc(var(--page-width) * 0.007);
   background-color: var(--color-five);
-  border-radius: 0 0 0 10px;
+  border-radius: 10px 0 0 0;
   color: var(--color-bkg);
   font-weight: 900;
   font-size: calc(var(--page-width) * 0.013);
