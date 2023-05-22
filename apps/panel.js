@@ -22,7 +22,7 @@ export class hkrpg extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}(.+)面板(更新)?$`,
+          reg: `^${rulePrefix}(.+)面板(更新)?`,
           fnc: 'panel',
         },
         {
