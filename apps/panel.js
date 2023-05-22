@@ -11,6 +11,7 @@ import { findName } from '../utils/alias.js';
 import { getSign } from '../utils/auth.js';
 import { rulePrefix } from '../utils/common.js';
 import setting from '../utils/setting.js';
+import runtimeRender from '../common/runtimeRender.js';
 
 export class hkrpg extends plugin {
   constructor(e) {
@@ -114,7 +115,8 @@ export class hkrpg extends plugin {
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId);
       logger.debug('面板图:', data.charImage);
-      let msgId = await e.runtime.render(
+      let msgId = await runtimeRender(
+        e,
         'StarRail-plugin',
         '/panel/panel.html',
         data,
@@ -186,7 +188,7 @@ export class hkrpg extends plugin {
         data,
       };
       // 渲染数据
-      await e.runtime.render('StarRail-plugin', '/panel/card.html', renderData);
+      await runtimeRender(e, 'StarRail-plugin', '/panel/card.html', renderData);
       // await e.reply( '更新面板数据成功' );
     } catch (error) {
       logger.error('SR-panelApi', error);
@@ -340,7 +342,7 @@ export class hkrpg extends plugin {
       data,
     };
     // 渲染数据
-    await e.runtime.render('StarRail-plugin', '/panel/list.html', renderData);
+    await runtimeRender(e, 'StarRail-plugin', '/panel/list.html', renderData);
   }
 
   async origImg(e) {

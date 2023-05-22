@@ -8,6 +8,7 @@ export default function runtimeRender (e, path, data = {}, cfg = {}) {
   scale = Math.min(2, Math.max(0.5, scale / 100))
   const pct = `style=transform:scale(${scale})`
   return e.runtime.render('StarRail-plugin', path, data, {
+    ...cfg,
     beforeRender ({ data }) {
       return {
         sys: {
