@@ -11,6 +11,7 @@ export default function runtimeRender (e, path, data = {}, cfg = {}) {
     ...cfg,
     beforeRender ({ data }) {
       return {
+        ...data,
         sys: {
           scale: pct
         }
