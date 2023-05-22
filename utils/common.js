@@ -24,6 +24,7 @@ export function statisticsOnlineDateGeneral (powerRecoverList) {
   const today = new Date()
   const allDates = {}
   let date = firstLoginDate
+  // eslint-disable-next-line no-unmodified-loop-condition
   while (date <= today) {
     const formattedDate = date.toISOString().slice(0, 10) // 将日期对象转换为字符串
     allDates[formattedDate] = 0

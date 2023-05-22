@@ -8,7 +8,7 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import { statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix } from '../utils/common.js'
+import {statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, formatDateTime} from '../utils/common.js'
 // import { promisify } from 'util'
 
 export class hkrpg extends plugin {
@@ -328,7 +328,6 @@ export class hkrpg extends plugin {
       page++
     }
     result = result.filter(r => r.add_num > 0)
-    payLogList = await res.json()
     let t = result.map(i => {
       return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
     }).join('\n')
@@ -363,18 +362,29 @@ export class hkrpg extends plugin {
     authKey = encodeURIComponent(authKey)
     let result = []
     let page = 1
-    let size = 10
+    let size = 50
     let powerUrl = getPowerUrl(authKey, page, size)
     let res = await fetch(powerUrl)
     let powerChangeRecordList = await res.json()
     result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
     page++
+    let earliest = new Date()
+    earliest.setDate(earliest.getDate() - 8)
     while (powerChangeRecordList.data.list && powerChangeRecordList.data.list.length > 0) {
       powerUrl = getPowerUrl(authKey, page, size)
       res = await fetch(powerUrl)
-      powerChangeRecordList = await res.json()
-      result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
-      page++
+      try {
+        powerChangeRecordList = await res.json()
+        result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
+        page++
+      } catch (err) {
+        // 拉完或者一直拉到报错
+        break
+      }
+      // 只拉七天的中间图不好看。
+      // if (new Date(result[result.length - 1]?.time) < earliest) {
+      //   break
+      // }
       await new Promise(resolve => setTimeout(resolve, 500))
       logger.info('休息0.5秒，继续拉取开拓力记录')
     }
