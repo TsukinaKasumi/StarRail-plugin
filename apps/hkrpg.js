@@ -285,17 +285,8 @@ export class hkrpg extends plugin {
   }
 
   async getPayLog (e) {
-    let ck = await this.User.getCk()
-    let api = new MysSRApi('', ck)
-    const { url, headers } = api.getUrl('srUser')
-    let userRes = await fetch(url, { headers })
-    let uid
-    try {
-      uid = (await userRes.json())?.data?.list?.filter(i => i.game_biz.includes('hkrpg'))[0].game_uid
-    } catch (e) {
-      await e.reply('请使用#cookie帮助进行cookie绑定后再查看')
-      return false
-    }
+    await this.miYoSummerGetUid()
+    let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
@@ -305,11 +296,11 @@ export class hkrpg extends plugin {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
       // 未安装逍遥
-      await e.reply('请使用#扫码登录绑定cookie后再进行查看~')
+      await e.reply('authkey获取失败，请使用#扫码登录绑定stoken后再进行查看~')
       return false
     }
     if (!authKey) {
-      await e.reply('请使用#cookie帮助绑定cookie后再进行查看~')
+      await e.reply('authkey获取失败，请使用#扫码登录重新绑定stoken后再进行查看~')
       return false
     }
     authKey = encodeURIComponent(authKey)
@@ -321,9 +312,11 @@ export class hkrpg extends plugin {
     let payLogList = await res.json()
     result.push(...payLogList.data.list)
     page++
-    while (payLogList.data.list && payLogList.data.list.length > 0) {
+    while (payLogList.data.list && payLogList.data.list.length === 10) {
+      await new Promise(resolve => setTimeout(resolve, 500))
       payLogUrl = getPaylogUrl(authKey, page, size)
       res = await fetch(payLogUrl)
+      payLogList = await res.json()
       result.push(...payLogList.data.list)
       page++
     }
