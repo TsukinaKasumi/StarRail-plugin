@@ -8,7 +8,7 @@
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
 
-### 5.21更新：支持切换面板api详情请往下滑
+### 5.21更新：支持查询全平台数据(包括欧服以及美服），在config/panelAPI内将API修改为sr.ikechan8370
 更新报错一律执行
 <br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
 ### 使用说明
@@ -27,7 +27,7 @@ QQ群：758447726
 星穹铁道插件
 
 支持米游社相关的基本功能，后续会加其他功能，比如查看忘却之庭数据之类
-有相关的建议和需要的功能可以在issues中提出，会尽量完善,核心功能完善后将优化部分代码和功能，以及UI部分，
+有相关的建议和需要的功能可以在issues中提出，会尽量完善,核心功能完善后将优化部分代码和功能，以及UI部分。
 
 ### 安装方法
 
