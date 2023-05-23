@@ -5,7 +5,7 @@ import setting from '../utils/setting.js'
 import _ from 'lodash'
 import fetch from 'node-fetch'
 import { rulePrefix } from '../utils/common.js'
-export class hkrpg extends plugin {
+export class Month extends plugin {
   constructor (e) {
     super({
       name: '星铁plugin-收入',

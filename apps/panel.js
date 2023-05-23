@@ -13,7 +13,7 @@ import { rulePrefix } from '../utils/common.js';
 import setting from '../utils/setting.js';
 import runtimeRender from '../common/runtimeRender.js';
 
-export class hkrpg extends plugin {
+export class Panel extends plugin {
   constructor(e) {
     super({
       name: '星铁plugin-面板',

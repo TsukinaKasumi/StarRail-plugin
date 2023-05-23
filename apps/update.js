@@ -57,7 +57,7 @@ export class Update extends plugin {
         command = 'git  checkout . && git  pull'
       }
       exec(command, {cwd: `${resPath}/profile/`}, function (error, stdout, stderr) {
-        console.log(stdout)
+        // console.log(stdout)
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
           e.reply('目前所有图片都已经是最新了~')
           return true

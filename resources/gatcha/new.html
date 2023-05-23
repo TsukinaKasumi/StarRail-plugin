@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gatcha</title>
+  <link rel="stylesheet" href="{{pluResPath}}/gatcha/new.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="title">
+      <span class="title-text">跃迁记录</span>
+      <span class="title-sub">UID:{{ uid }}</span>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        跃迁详情
+      </div>
+      <div class="card-content">
+        <div class="card-item">
+          <div class="card-item-head">
+            数据总览
+          </div>
+          <div class="card-item-content">
+            <div style="padding: 30px;">
+              <div>总抽卡数: {{ totalGatchaNum }}</div>
+              <span style="margin-right: 20px;">5星: {{ rarity5Num }}</span>
+              <span style="margin-right: 20px;">4星: {{ rarity4Num }}</span>
+              <span style="margin-right: 20px;">角色: {{ roleRarity5Num }}</span>
+              <span style="margin-right: 20px;">光锥: {{ weaponRarity5Num }}</span>
+            </div>
+          </div>
+        </div>
+        {{ each mapData item }}
+          <div class="card-item">
+            <div class="card-item-head">
+              {{ item.typeName }}
+            </div>
+            <div class="card-item-content">
+              <ul>
+                {{ each item.records record }}
+                  {{ if record.rank_type >= 5 }}
+                    <li>
+                      <img src="{{ record.url }}" alt="{{ record.name }}">
+                      <div class="number">{{ record.until }}</div>
+                    </li>
+                  {{ /if }}
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    
+    <div class="logo">
+      Created By Yunzai-Bot & StarRail-plugin
+    </div>
+  </div>
+</body>
+
+</html>

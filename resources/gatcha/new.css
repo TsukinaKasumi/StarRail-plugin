@@ -1,0 +1,119 @@
+
+
+@font-face {
+  font-family: hanyi;
+  src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'tttgbnumber';
+  src: url('../fonts/tttgbnumber.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: PingFangSC-Medium, PingFang SC, sans-serif;
+  width: 730px;
+}
+
+ul,ol {
+  list-style: none;
+}
+
+.container {
+  padding: 20px 20px 0 20px;
+  width: 730px;
+  font-family: 'hanyi', sans-serif;
+}
+
+.title {
+  border-bottom: 2px solid yellow;
+  padding-bottom: 8px;
+}
+
+.title-text {
+  font-size: 24px;
+}
+
+.title-sub {
+  margin-left: 8px;
+}
+
+.card {
+  margin-top: 10px;
+  /* border-top-right-radius: 30px; */
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-header {
+  padding: 6px 14px;
+  border-top-right-radius: 15px;
+  border-bottom: 2px solid rgb(224, 224, 44);
+  background-color: black;
+  color: #fff;
+  font-size: 18px;
+}
+
+.card-item-head {
+  padding: 2px 0;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+}
+
+.card-item-content {
+  padding: 20px 0 10px 0;
+}
+
+.card-item-content ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-item-content ul > li {
+  position: relative;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  width: 100px;
+  height: 120px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.card-item-content ul > li:not(:nth-child(6n)) {
+  margin-right: 10px;
+}
+
+.card-item-content ul > li > .number {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background-color: bisque;
+  color: #000;
+}
+
+.logo {
+  font-size: 24px;
+  font-family: 'tttgbnumber';
+  color: #8f8f8f;
+  text-align: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
