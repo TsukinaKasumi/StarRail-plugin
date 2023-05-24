@@ -1,6 +1,20 @@
 import fetch from 'node-fetch'
 import _ from 'lodash'
 
+// const demo = {
+//   uid: '105099680',
+//   gacha_id: '1001',
+//   gacha_type: '1',
+//   item_id: '20006',
+//   count: '1',
+//   time: '2023-04-30 17:11:17',
+//   name: '智库',
+//   lang: 'zh-cn',
+//   item_type: '光锥',
+//   rank_type: '3',
+//   id: '1682845800002458280'
+// }
+
 export const gatchaType = {
   11: '限定跃迁',
   12: '光锥跃迁',
@@ -8,6 +22,24 @@ export const gatchaType = {
   2: '新手跃迁',
   0: '数据总览'
 }
+
+// const gatchaIds = {
+//   1001: '群星跃迁',
+//   2003: '蝶立锋锷',
+//   3003: '流光定影(希儿)',
+//   2004: '天戈麾斥',
+//   3004: '流光定影(景元)'
+// }
+
+const gatchaRole = new Map([
+  [2003, '蝶立锋锷'],
+  [2004, '天戈麾斥']
+])
+
+const gatchaWeapon = new Map([
+  [3003, '流光定影(希儿)'],
+  [3004, '流光定影(景元)']
+])
 
 export async function getRecords (type = 11, authKey) {
   let page = 1
@@ -35,15 +67,15 @@ export async function getRecords (type = 11, authKey) {
 export async function statistics (authKey) {
   const data = {
     mapData: new Map(),
-    totalGatchaNum: 0,
-    rarity5Num: 0,
-    rarity4Num: 0,
-    roleRarity5Num: 0,
-    roleRarity4Num: 0,
-    weaponRarity5Num: 0,
-    weaponRarity4Num: 0
+    totalGatchaNum: 0, // 总抽卡数
+    rarity5Num: 0, // 5星总数
+    rarity4Num: 0, // 4星总数
+    roleRarity5Num: 0, // 5星角色总数
+    roleRarity4Num: 0, // 4星角色总数
+    weaponRarity5Num: 0, // 5星光锥总数
+    weaponRarity4Num: 0 // 4星光锥总数
   }
-  // const data = new Map()
+
   // 获取全部抽卡记录
   const arr = _.keys(_.omit(gatchaType, [0, 2]))
   const getData = async (i) => {

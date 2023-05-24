@@ -5,7 +5,7 @@ import { gatchaType, statistics } from '../utils/gatcha.js'
 import runtimeRender from '../common/runtimeRender.js'
 
 export class Gatcha extends plugin {
-  constructor(e) {
+  constructor (e) {
     super({
       name: '星铁plug抽卡分析',
       dsc: '星铁plug抽卡分析',
@@ -145,6 +145,7 @@ export class Gatcha extends plugin {
       }
       const redisData = await redis.get(`STAR_RAILWAY:GATCHA:${user}`)
       const data = JSON.parse(redisData)
+      // console.log(data)
       await runtimeRender(e, '/gatcha/new.html', {
         ...data,
         uid
