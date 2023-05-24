@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import _ from 'lodash'
+import moment from 'moment'
 
 // const demo = {
 //   uid: '105099680',
@@ -23,23 +24,37 @@ export const gatchaType = {
   0: '数据总览'
 }
 
-// const gatchaIds = {
-//   1001: '群星跃迁',
-//   2003: '蝶立锋锷',
-//   3003: '流光定影(希儿)',
-//   2004: '天戈麾斥',
-//   3004: '流光定影(景元)'
-// }
-
 const gatchaRole = new Map([
-  [2003, '蝶立锋锷'],
-  [2004, '天戈麾斥']
+  [2003, {
+    gacha_id: '2003',
+    gacha_name: '蝶立锋锷',
+    gacha_type: '1',
+    time: ['2023-04-25 09:00', '2023-05-17 17:59']
+  }],
+  [2004, {
+    gacha_id: '2004',
+    gacha_name: '天戈麾斥',
+    gacha_type: '1',
+    time: ['2023-05-17 18:00', '2023-06-06 14:59']
+  }]
 ])
 
 const gatchaWeapon = new Map([
-  [3003, '流光定影(希儿)'],
-  [3004, '流光定影(景元)']
+  [3003, {
+    gacha_id: '3003',
+    gacha_name: '流光定影(拂晓之前)',
+    gacha_type: '1',
+    time: ['2023-04-25 09:00', '2023-05-17 17:59']
+  }],
+  [3004, {
+    gacha_id: '3004',
+    gacha_name: '流光定影(于夜色中)',
+    gacha_type: '1',
+    time: ['2023-05-17 18:00', '2023-06-06 14:59']
+  }]
 ])
+
+const lastTime = [moment('2023-05-17 18:00'), moment('2023-06-06 14:59')]
 
 export async function getRecords (type = 11, authKey) {
   let page = 1
@@ -60,7 +75,7 @@ export async function getRecords (type = 11, authKey) {
     page++
   } while (data.data.list && data.data.list.length > 0)
 
-  logger.info('=== 抽卡记录拉取完成 ===')
+  logger.info(`=== ${gatchaType[type]}记录拉取完成 ===`)
   return result
 }
 
@@ -68,54 +83,41 @@ export async function statistics (authKey) {
   const data = {
     mapData: new Map(),
     totalGatchaNum: 0, // 总抽卡数
-    rarity5Num: 0, // 5星总数
-    rarity4Num: 0, // 4星总数
-    roleRarity5Num: 0, // 5星角色总数
-    roleRarity4Num: 0, // 4星角色总数
-    weaponRarity5Num: 0, // 5星光锥总数
-    weaponRarity4Num: 0 // 4星光锥总数
+    rarityNum: { 5: 0, 4: 0 }, // 总计
+    roleRarityNum: { 5: 0, 4: 0 }, // 角色总计
+    weaponRarityNum: { 5: 0, 4: 0 }, // 光锥总计
+    currGatchaNum: 0 // 本期抽卡总数
   }
 
   // 获取全部抽卡记录
   const arr = _.keys(_.omit(gatchaType, [0, 2]))
   const getData = async (i) => {
     if (i) {
-      const item = { typeName: gatchaType[i], rarity5Num: 0, rarity4Num: 0 }
+      const item = { typeName: gatchaType[i], rarityNum: { 5: 0, 4: 0 } }
       const recordsSrc = await getRecords(i, authKey)
-      let until5Num = 0
-      let until4Num = 0
+      const until = { 5: 0, 4: 0 }
       item.records = _.reduce(recordsSrc.reverse(), (prev, curr, index) => {
+        const currTime = moment(curr.time)
         data.totalGatchaNum++
-        until5Num++
-        until4Num++
-        if (curr.rank_type == 5) {
-          item.rarity5Num++
-          data.rarity5Num++
-          prev.push({
-            ...curr,
-            until: until5Num,
-            url: imageUrls[curr.name]
-          })
-          until5Num = 0
-          if (curr.item_type === '光锥') {
-            data.weaponRarity5Num++
-          } else {
-            data.roleRarity5Num++
-          }
+        until[curr.rank_type]++
+
+        if (currTime.diff(lastTime[0]) > 0 && currTime.diff(lastTime[1]) < 0) {
+          data.currGatchaNum++
         }
-        if (curr.rank_type == 4) {
-          item.rarity4Num++
-          data.rarity4Num++
-          prev.push({
-            ...curr,
-            until: until4Num,
-            url: imageUrls[curr.name]
-          })
-          until4Num = 0
+
+        if (curr.rank_type == 4 || curr.rank_type == 5) {
+          const newCurr = { ...curr, url: imageUrls[curr.name] }
+
+          item.rarityNum[curr.rank_type]++
+          data.rarityNum[curr.rank_type]++
+
+          prev.push(newCurr)
+          until[curr.rank_type] = 0
+
           if (curr.item_type === '光锥') {
-            data.weaponRarity4Num++
+            data.weaponRarityNum[curr.rank_type]++
           } else {
-            data.roleRarity4Num++
+            data.roleRarityNum[curr.rank_type]++
           }
         }
         return prev

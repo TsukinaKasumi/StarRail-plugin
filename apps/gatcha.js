@@ -103,6 +103,7 @@ export class Gatcha extends plugin {
         // multi.exec()
       }
     } catch (error) {
+      console.log(error)
       await e.reply('抽卡链接已过期，请重新获取并绑定')
     }
   }

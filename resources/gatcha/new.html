@@ -30,7 +30,7 @@
                 <div>{{ totalGatchaNum }}<span>抽</span><p>累计已抽</p></div>
               </div>
               <div class="col">
-                <div>19<span>抽</span><p>本期已抽</p></div>
+                <div>{{ currGatchaNum }}<span>抽</span><p>本期已抽</p></div>
               </div>
               <div class="col">
                 <div>19<span>抽</span><p>角色未出五星</p></div>
@@ -41,13 +41,13 @@
             </div>
             <div class="row">
               <div class="col">
-                <div>{{ roleRarity5Num + weaponRarity5Num }}<span>　</span><p>五星总计</p></div>
+                <div>{{ rarityNum['5'] }}<span>　</span><p>五星总计</p></div>
               </div>
               <div class="col">
                 <div>19<span>%</span><p>五星持有率</p></div>
               </div>
               <div class="col">
-                <div>{{ roleRarity4Num + weaponRarity4Num }}<span>　</span><p>四星总计</p></div>
+                <div>{{ rarityNum['4'] }}<span>　</span><p>四星总计</p></div>
               </div>
               <div class="col">
                 <div>19<span>%</span><p>四星持有率</p></div>
@@ -74,7 +74,7 @@
                   {{ if record.rank_type >= 5 }}
                     <li>
                       <img src="{{ record.url }}" alt="{{ record.name }}">
-                      <div class="number">{{ record.gacha_id }}</div>
+                      <div class="number">{{ record.until }}</div>
                     </li>
                   {{ /if }}
                 {{/each}}
