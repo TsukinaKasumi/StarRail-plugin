@@ -70,7 +70,7 @@ export async function getRecords (type = 11, authKey) {
     data = await response.json()
     result.push(...data.data.list)
     endId = result[result.length - 1]?.id
-    // 延迟1s，防止请求过快
+    // 延迟500ms，防止请求过快
     await new Promise(resolve => setTimeout(resolve, 500))
     page++
   } while (data.data.list && data.data.list.length > 0)
@@ -128,7 +128,9 @@ export async function statistics (authKey) {
       await getData(arr[0])
     }
   }
+
   await getData(arr[0])
+
   return data
   // logger.info(data)
 

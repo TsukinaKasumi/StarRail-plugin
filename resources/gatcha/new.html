@@ -27,30 +27,30 @@
           <div class="card-item-content data-sum">
             <div class="row">
               <div class="col">
-                <div>{{ totalGatchaNum }}<span>抽</span><p>累计已抽</p></div>
+                <div>{{ totalNum }}<span>抽</span><p>累计已抽</p></div>
               </div>
               <div class="col">
-                <div>{{ currGatchaNum }}<span>抽</span><p>本期已抽</p></div>
+                <div>{{ currInfo.totalNum }}<span>抽</span><p>本期已抽</p></div>
               </div>
               <div class="col">
-                <div>19<span>抽</span><p>角色未出五星</p></div>
+                <div>{{ currInfo.last['11']['5'] }}<span>抽</span><p>角色未出五星</p></div>
               </div>
               <div class="col">
-                <div>19<span>抽</span><p>光锥未出五星</p></div>
+                <div>{{ currInfo.last['12']['5'] }}<span>抽</span><p>光锥未出五星</p></div>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <div>{{ rarityNum['5'] }}<span>　</span><p>五星总计</p></div>
+                <div>{{ holdNum.num[1] }}<span>　</span><p>五星总计</p></div>
               </div>
               <div class="col">
-                <div>19<span>%</span><p>五星持有率</p></div>
+                <div>{{ holdNum.holdingRate[1] }}<span>%</span><p>五星持有率</p></div>
               </div>
               <div class="col">
-                <div>{{ rarityNum['4'] }}<span>　</span><p>四星总计</p></div>
+                <div>{{ holdNum.num[0] }}<span>　</span><p>四星总计</p></div>
               </div>
               <div class="col">
-                <div>19<span>%</span><p>四星持有率</p></div>
+                <div>{{ holdNum.holdingRate[0] }}<span>%</span><p>四星持有率</p></div>
               </div>
             </div>
             <div class="mark">抽卡记录时间段: 2023/05/24 18:05 - 2023/05/24 18:05</div>
@@ -63,7 +63,7 @@
             </div> -->
           </div>
         </div>
-        {{ each mapData item }}
+        {{ each data item }}
           <div class="card-item">
             <div class="card-item-head">
               {{ item.typeName }}

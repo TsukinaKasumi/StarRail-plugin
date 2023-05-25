@@ -1,8 +1,10 @@
 import _ from 'lodash'
+import moment from 'moment'
 import plugin from '../../../lib/plugins/plugin.js'
 import { rulePrefix } from '../utils/common.js'
 import { gatchaType, statistics } from '../utils/gatcha.js'
 import runtimeRender from '../common/runtimeRender.js'
+import GatchaData from '../utils/gatcha/index.js'
 
 export class Gatcha extends plugin {
   constructor (e) {
@@ -81,27 +83,28 @@ export class Gatcha extends plugin {
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
       }
+
       const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-      console.log('e.user_id', this.e.user_id)
-      console.log('uid', uid)
       if (!uid) {
         return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
       }
-      await e.reply(`正在获取[${uid}]的跃迁数据...`)
+
       const authKey = await this.getAuthKey()
-      if (authKey) {
-        const result = await statistics(authKey)
-        const { mapData } = result
-        result.mapData = Object.fromEntries(mapData.entries(result.mapData))
-        redis.set(`STAR_RAILWAY:GATCHA:${user}`, JSON.stringify(result))
-        const msg = this.makeForwardMsg('跃迁数据获取成功，你可以使用：', '#星铁跃迁分析\n#星铁角色分析\n#星铁光锥分析\n#星铁常驻分析', '查看具体的跃迁数据')
-        await e.reply(msg)
-        // const multi = redis.multi()
-        // _.forEach(mapData.get(11)?.records, (record) => {
-        //   multi.rpush('STAR_RAILWAY:GATCHA:11', record)
-        // })
-        // multi.exec()
+      const date = moment()
+      const lastTime = await redis.get(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`)
+
+      if (lastTime && date.diff(moment(lastTime), 'h') < 1) {
+        await e.reply(`[${uid}]近期已经更新过数据了，上次更新时间：${lastTime}，两次更新间隔请大于1小时`)
+        return false
       }
+
+      redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, date.format('YYYY-MM-DD HH:mm:ss'))
+
+      await e.reply(`正在获取[${uid}]的跃迁数据...`)
+      const gatcha = new GatchaData(uid, authKey)
+      await gatcha.updateData()
+      const msg = this.makeForwardMsg('跃迁数据获取成功，你可以使用：', '#星铁跃迁分析\n#星铁角色分析\n#星铁光锥分析\n#星铁常驻分析', '查看具体的跃迁数据')
+      await e.reply(msg)
     } catch (error) {
       console.log(error)
       await e.reply('抽卡链接已过期，请重新获取并绑定')
@@ -117,8 +120,6 @@ export class Gatcha extends plugin {
     const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     try {
       const typeName = e.msg.replace(/#|\*|＊|星铁|星轨|崩铁|星穹铁道|穹批|跃迁|抽卡|记录|分析/g, '')
-      console.log('msg ==> ', e.msg)
-      console.log('typeName ==> ', typeName)
       let type = 0
       switch (typeName) {
         case '角色': {
@@ -144,16 +145,20 @@ export class Gatcha extends plugin {
           break
         }
       }
-      const redisData = await redis.get(`STAR_RAILWAY:GATCHA:${user}`)
-      const data = JSON.parse(redisData)
-      // console.log(data)
+
+      const gatcha = new GatchaData(uid, type === 2 ? await this.getAuthKey() : '')
+      const stat = await gatcha.stat(type)
+      console.log({
+        ...stat,
+        uid
+      })
       await runtimeRender(e, '/gatcha/new.html', {
-        ...data,
+        ...stat,
         uid
       })
     } catch (err) {
       logger.error(err)
-      await e.reply('抽卡链接已过期，请重新获取并绑定')
+      await e.reply('本地暂无抽卡记录，请发送#星铁更新跃迁，更新抽卡记录')
     }
   }
 
