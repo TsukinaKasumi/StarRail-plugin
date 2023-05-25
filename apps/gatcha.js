@@ -1,8 +1,6 @@
-import _ from 'lodash'
 import moment from 'moment'
 import plugin from '../../../lib/plugins/plugin.js'
 import { rulePrefix } from '../utils/common.js'
-import { gatchaType, statistics } from '../utils/gatcha.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GatchaData from '../utils/gatcha/index.js'
 
@@ -154,7 +152,9 @@ export class Gatcha extends plugin {
       })
       await runtimeRender(e, '/gatcha/new.html', {
         ...stat,
-        uid
+        uid,
+        type,
+        filterRank: type === 0 ? 5 : 4
       })
     } catch (err) {
       logger.error(err)

@@ -46,6 +46,8 @@ export default class GatchaData {
     const obj = {
       /** 本地记录起始时间 */
       localFirstTime: '',
+      /** 本地记录结束时间 */
+      localLastTime: '',
       /** 总抽卡数 */
       totalNum: 0,
       /** 常驻池总抽卡数 */
@@ -77,19 +79,16 @@ export default class GatchaData {
           11: { 4: 0, 5: 0 },
           12: { 4: 0, 5: 0 }
         },
-        // /** 当期已抽角色未出 */
-        // character: { 4: 0, 5: 0 },
-        // /** 当期已抽光锥未出 */
-        // lightCones: { 4: 0, 5: 0 },
         currPool
       }
     }
     currTotal.total = currTotal.characterTotal[0] + currTotal.characterTotal[1] + currTotal.lightConesTotal[0] + currTotal.lightConesTotal[1]
     obj.localFirstTime = currPool.to
+    obj.localLastTime = currPool.from
     const map = new Map()
 
     function withList (list) {
-      const limit = { 4: 0, 5: 0 }
+      const limits = { 4: 0, 5: 0 }
       return _.map(_.reverse(list), (item) => {
         const newItem = { ...item }
         const rank = Number(item.rank_type)
@@ -100,16 +99,24 @@ export default class GatchaData {
           obj.localFirstTime = item.time
         }
 
+        if (moment(item.time).diff(moment(obj.localLastTime)) > 0) {
+          obj.localLastTime = item.time
+        }
+
         // 统计总卡数
         setNumPlus(obj, 'holdNum', rank, currTotal.total)
+        // 出货计数
+        newItem.until = withUntilPlus(limits, rank)
         // 计算当前卡池出货总间隔
-        newItem.until = withUntilPlus(limit, rank)
-        obj.currInfo.last[type][rank] = newItem.until
+        obj.currInfo.last[type][4] = limits[4]
+        obj.currInfo.last[type][5] = limits[5]
+
         if (flag) {
           // 统计当期总卡数
           setNumPlus(obj.currInfo, 'holdNum', rank)
           obj.currInfo.totalNum++
         }
+
         if (item.item_type === '光锥') {
           // 统计总光锥数
           setNumPlus(obj, 'lightConesHoldNum', rank, currTotal.lightConesTotal)
@@ -117,6 +124,11 @@ export default class GatchaData {
             // 统计当期总光锥数
             setNumPlus(obj.currInfo, 'lightConesHoldNum', rank)
           }
+
+          // 光锥图片本地路径
+          newItem.imgPath = `panel/resources/weapon/${item.item_id}.png`
+          // 光锥class
+          newItem.className = `cones rank${rank}`
         } else {
           // 统计总角色数
           setNumPlus(obj, 'characterHoldNum', rank, currTotal.characterTotal)
@@ -124,8 +136,17 @@ export default class GatchaData {
             // 统计当期总角色数
             setNumPlus(obj.currInfo, 'characterHoldNum', rank)
           }
+
+          // 角色图片本地路径
+          newItem.imgPath = `gatcha/images/char/${item.item_id}.png`
+          // 角色class
+          newItem.className = `char rank${rank}`
         }
 
+        // 卡池数据
+        const poolInfo = getPool(item.time)
+        newItem.poolInfo = poolInfo
+        newItem.pool = poolInfo.id
         return newItem
       })
     }
@@ -151,26 +172,28 @@ export default class GatchaData {
       {
         type: 1,
         typeName: '群星跃迁',
-        records: map.get(1)
+        records: _.reverse(map.get(1)),
+        groups: groupByPool(map.get(1))
       },
       {
         type: 2,
         typeName: '新手跃迁',
-        records: map.get(2)
+        records: _.reverse(map.get(2))
       },
       {
         type: 11,
         typeName: '限定跃迁',
-        records: map.get(11)
+        records: _.reverse(map.get(11)),
+        groups: groupByPool(map.get(11))
       },
       {
         type: 12,
         typeName: '光锥跃迁',
-        records: map.get(12)
+        records: _.reverse(map.get(12)),
+        groups: groupByPool(map.get(12))
       }
     ], (v) => !_.isEmpty(v.records))
 
-    console.log(obj.currInfo.last)
     return obj
   }
 
@@ -285,4 +308,27 @@ function withUntilPlus (obj, rank) {
     obj[rank] = 0
   }
   return temp
+}
+
+function getPool (time) {
+  let pool = false
+  for (let i = 0; i < poolData.length; i++) {
+    const x = poolData[i]
+    if (isDateOnRange(x.from, x.to, moment(time))) {
+      pool = poolData[i]
+      break
+    }
+  }
+  return pool
+}
+
+function groupByPool (collection) {
+  return _.mapValues(_.groupBy(collection, (value) => value.pool), (x) => {
+    const poolInfo = x[0].poolInfo || {}
+    return {
+      id: poolInfo.id,
+      name: `${poolInfo.version} ${poolInfo.half} [${poolInfo.to} ~ ${poolInfo.to}]`,
+      records: x
+    }
+  })
 }

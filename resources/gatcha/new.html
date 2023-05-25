@@ -39,49 +39,67 @@
                 <div>{{ currInfo.last['12']['5'] }}<span>抽</span><p>光锥未出五星</p></div>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <div>{{ holdNum.num[1] }}<span>　</span><p>五星总计</p></div>
+            {{ if type == 0 }}
+              <div class="row">
+                <div class="col">
+                  <div>{{ holdNum.num[1] }}<span>　</span><p>五星总计</p></div>
+                </div>
+                <div class="col">
+                  <div>{{ holdNum.holdingRate[1] }}<span>%</span><p>五星持有率</p></div>
+                </div>
+                <div class="col">
+                  <div>{{ holdNum.num[0] }}<span>　</span><p>四星总计</p></div>
+                </div>
+                <div class="col">
+                  <div>{{ holdNum.holdingRate[0] }}<span>%</span><p>四星持有率</p></div>
+                </div>
               </div>
-              <div class="col">
-                <div>{{ holdNum.holdingRate[1] }}<span>%</span><p>五星持有率</p></div>
-              </div>
-              <div class="col">
-                <div>{{ holdNum.num[0] }}<span>　</span><p>四星总计</p></div>
-              </div>
-              <div class="col">
-                <div>{{ holdNum.holdingRate[0] }}<span>%</span><p>四星持有率</p></div>
-              </div>
-            </div>
-            <div class="mark">抽卡记录时间段: 2023/05/24 18:05 - 2023/05/24 18:05</div>
-            <!-- <div style="padding: 30px;">
-              <div>总抽卡数: {{ totalGatchaNum }}</div>
-              <span style="margin-right: 20px;">5星: {{ rarity5Num }}</span>
-              <span style="margin-right: 20px;">4星: {{ rarity4Num }}</span>
-              <span style="margin-right: 20px;">角色: {{ roleRarity5Num }}</span>
-              <span style="margin-right: 20px;">光锥: {{ weaponRarity5Num }}</span>
-            </div> -->
+            {{ /if }}
+            <div class="mark">抽卡记录时间段: {{ localFirstTime }} - {{ localLastTime }}</div>
           </div>
         </div>
-        {{ each data item }}
-          <div class="card-item">
-            <div class="card-item-head">
-              {{ item.typeName }}
+        {{ if type == 0 }}
+          {{ each data item }}
+            <div class="card-item">
+              <div class="card-item-head">
+                {{ item.typeName }}
+              </div>
+              <div class="card-item-content">
+                <ul>
+                  {{ each item.records record }}
+                    {{ if record.rank_type >= filterRank }}
+                      <li class="{{ record.className }}">
+                        <img src="{{ pluResPath }}{{ record.imgPath }}" alt="{{ record.name }}">
+                        <div class="number">{{ record.until }}</div>
+                      </li>
+                    {{ /if }}
+                  {{/each}}
+                </ul>
+              </div>
             </div>
-            <div class="card-item-content">
-              <ul>
-                {{ each item.records record }}
-                  {{ if record.rank_type >= 5 }}
-                    <li>
-                      <img src="{{ record.url }}" alt="{{ record.name }}">
-                      <div class="number">{{ record.until }}</div>
-                    </li>
-                  {{ /if }}
-                {{/each}}
-              </ul>
+          {{/each}}
+        {{ else }}
+          {{ set item = data[0] }}
+          {{ each item.groups group }}
+            <div class="card-item">
+              <div class="card-item-head">
+                {{ group.name }}
+              </div>
+              <div class="card-item-content">
+                <ul>
+                  {{ each group.records record }}
+                    {{ if record.rank_type >= filterRank }}
+                      <li class="{{ record.className }}">
+                        <img src="{{ pluResPath }}{{ record.imgPath }}" alt="{{ record.name }}">
+                        <div class="number">{{ record.until }}</div>
+                      </li>
+                    {{ /if }}
+                  {{/each}}
+                </ul>
+              </div>
             </div>
-          </div>
-        {{/each}}
+          {{ /each }}
+        {{ /if }}
       </div>
     </div>
     
