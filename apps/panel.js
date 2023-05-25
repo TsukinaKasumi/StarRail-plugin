@@ -23,7 +23,7 @@ export class Panel extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}(.+)面板(更新)?$`,
+          reg: `^${rulePrefix}(.+)面板(更新)?`,
           fnc: 'panel',
         },
         {
@@ -135,10 +135,12 @@ export class Panel extends plugin {
     }
   }
 
-  /** 获取面板图 */
+   /** 获取面板图 */
   getCharImage(name, avatarId) {
     const folderPath = 'profile/normal-character/';
     const fullFolderPath = pluginResources + '/' + folderPath;
+    const folderPath1 = 'pro-file/pro-character/';
+    const fullFolderPath1 = pluginResources + '/' + folderPath1;
     const leadId = {
       星: [8002, 8004],
       穹: [8001, 8003],
@@ -146,7 +148,10 @@ export class Panel extends plugin {
     _.forIn(leadId, (v, k) => {
       if (v.includes(avatarId)) name = k;
     });
-    if (fs.existsSync(fullFolderPath + `${name}.webp`)) {
+    if (fs.existsSync(fullFolderPath1 + name) && Math.random() < 0.8) {
+      return this.getRandomImage(folderPath1 + name);
+    }
+    else if (fs.existsSync(fullFolderPath + `${name}.webp`)) {
       return folderPath + `${name}.webp`;
     } else if (fs.existsSync(fullFolderPath + name)) {
       return this.getRandomImage(folderPath + name);

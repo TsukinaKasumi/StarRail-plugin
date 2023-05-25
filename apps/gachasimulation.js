@@ -168,7 +168,7 @@ export default class Gacha extends plugin {
     let count = currentData.today.stars.length || 0
     if (
       this.config.limit.count != 0 &&
-      count * 10 >= this.config.limit.count &&
+      count >= this.config.limit.count * 10 &&
       !this.e.isMaster
     ) {
       let fiveCount = 0
@@ -213,16 +213,16 @@ export default class Gacha extends plugin {
         prob = 60 + (this.gachaData[this.type].num5 - 50) * 40
       }
     } else if (this.type === 'up-weapon') {
-      prob = 75
+      prob = 80;
       /** 80次都没中五星 */
       if (this.gachaData[this.type].num5 >= 80) {
         prob = 10000
       } else if (this.gachaData[this.type].num5 >= 62) {
         /** 62抽后逐渐增加概率 */
-        prob = prob + (this.gachaData[this.type].num5 - 61) * 700
-      } else if (this.gachaData[this.type].num5 >= 45) {
+        prob = prob + (this.gachaData[this.type].num5 - 61) * 700;
+      } else if (this.gachaData[this.type].num5 >= 50) {
         /** 50抽后逐渐增加概率 */
-        prob = prob + (this.gachaData[this.type].num5 - 45) * 60
+        prob = prob + (this.gachaData[this.type].num5 - 50) * 60;
       } else if (
         this.gachaData[this.type].num5 >= 10 &&
         this.gachaData[this.type].num5 <= 20
@@ -251,7 +251,8 @@ export default class Gacha extends plugin {
     /** 四星保底数 +1 */
     this.gachaData[this.type].num4++
     /** 五星中 up 的概率 */
-    let upProba = 50
+    let upProba = 50;
+    if (this.type == 'up-weapon') upProba = 75;
     /** 抽中物品属性 */
     let type = 1
     let weaponLifeName = ''
@@ -278,6 +279,7 @@ export default class Gacha extends plugin {
         charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
         charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png'
       } else {
+        logger.mark('武器出金概率为：' + upProba);
         /** 当祈愿获取到5星武器时，有75%的概率为本期UP武器 */
         if (this.gachaData[this.type].isUp5 == true) isBigUP = true
         /** 大保底清零 */
@@ -289,26 +291,20 @@ export default class Gacha extends plugin {
         weaponLifeName = 'weaponlife/' + this.weaponLife[tmpName] + '.png'
       }
     } else {
-      if (this.type == 'normal') {
-        if (lodash.random(1, 100) <= 50) {
-          const chars = gachaInfo.gachaPool.normal.char
-          tmpName = lodash.sample(chars)
-          charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
-          charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png'
-        } else {
-          const weapons = gachaInfo.gachaPool.normal.weapon
-          type = 2
-          tmpName = lodash.sample(weapons)
-          fileName = 'weapon/' + this.weaponJson[tmpName] + '.png'
-          weaponLifeName = 'weaponlife/' + this.weaponLife[tmpName] + '.png'
-        }
+      // 一半半概率歪到武器或者角色，但如果池子是武器池的话，必须是武器！！！！
+      if (lodash.random(1, 100) <= 50 && this.type != 'up-weapon') {
+        if (this.type != 'normal') this.gachaData[this.type].isUp5 = true;
+        const chars = gachaInfo.gachaPool.normal.char;
+        tmpName = lodash.sample(chars);
+        charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]];
+        charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png';
       } else {
-        /** 歪了 大保底 */
-        this.gachaData[this.type].isUp5 = true
-        const chars = gachaInfo.gachaPool.normal.char
-        tmpName = lodash.sample(chars)
-        charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
-        charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png'
+        if (this.type != 'normal') this.gachaData[this.type].isUp5 = true;
+        const weapons = gachaInfo.gachaPool.normal.weapon;
+        type = 2;
+        tmpName = lodash.sample(weapons);
+        fileName = 'weapon/' + this.weaponJson[tmpName] + '.png';
+        weaponLifeName = 'weaponlife/' + this.weaponLife[tmpName] + '.png';
       }
     }
     /** 记录今天五星 */

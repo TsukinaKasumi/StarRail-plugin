@@ -8,10 +8,7 @@
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
 
-### 当前插件版本：Version1.0.0 Alpha
-当前插件处于开发中阶段，部分功能尚未完善（例如伤害计算和面板评分系统），敬请期待后续功能！
-### 5.17更新：由于做了部分调整，请将插件更新到最新版本后再进行面板数据查询！！
-### 5.21更新：支持切换面板api详情请往下滑
+### 5.21更新：支持查询全平台数据(包括欧服以及美服），在config/panelAPI内将API修改为sr.ikechan8370
 更新报错一律执行
 <br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
 ### 使用说明
@@ -20,7 +17,7 @@
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
 
-### 关于申请参加测试，BUG反馈
+### BUG反馈
 
 QQ群：758447726
 <br>注：只有加入QQ群聊才可申请参与内部测试！
@@ -29,9 +26,8 @@ QQ群：758447726
 ---
 星穹铁道插件
 
-支持米游社相关的基本功能，后续会加其他功能，比如查看忘却之庭数据之类（咕咕咕）
-
-有相关的建议和需要的功能可以在issues中提出，会尽量完善，目前正在逐步优化中（进度缓慢）
+支持米游社相关的基本功能，后续会加其他功能，比如查看忘却之庭数据之类
+有相关的建议和需要的功能可以在issues中提出，会尽量完善,核心功能完善后将优化部分代码和功能，以及UI部分。
 
 ### 安装方法
 
@@ -63,8 +59,8 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 查看角色属性，遗器，命座，光锥等信息
 
 ### *更新面板
-使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me & ikechan8370.com
-<br>当前面板图UI版本：Version1.05 Alpha
+使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me
+支持官服、B服、国际服
 
 ### *收入
 查看本月星琼收入
@@ -86,6 +82,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ### *切换面板1/*api列表
 可在config/panelApi中配置
+如果连不上请将API设置为sr.ikechan8370.com
   - https://sr.ikechan8370.com/v1/info/
   - https://lulu.roki.best/v1/info/
   - https://sr.roki.best/v1/info/

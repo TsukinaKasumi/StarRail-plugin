@@ -8,7 +8,7 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import { statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix } from '../utils/common.js'
+import {statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, formatDateTime} from '../utils/common.js'
 // import { promisify } from 'util'
 
 export class Hkrpg extends plugin {
@@ -210,17 +210,8 @@ export class Hkrpg extends plugin {
   }
 
   async getPayLog (e) {
-    let ck = await this.User.getCk()
-    let api = new MysSRApi('', ck)
-    const { url, headers } = api.getUrl('srUser')
-    let userRes = await fetch(url, { headers })
-    let uid
-    try {
-      uid = (await userRes.json())?.data?.list?.filter(i => i.game_biz.includes('hkrpg'))[0].game_uid
-    } catch (e) {
-      await e.reply('请使用#cookie帮助进行cookie绑定后再查看')
-      return false
-    }
+    await this.miYoSummerGetUid()
+    let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
@@ -230,11 +221,11 @@ export class Hkrpg extends plugin {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
       // 未安装逍遥
-      await e.reply('请使用#扫码登录绑定cookie后再进行查看~')
+      await e.reply('authkey获取失败，请使用#扫码登录绑定stoken后再进行查看~')
       return false
     }
     if (!authKey) {
-      await e.reply('请使用#cookie帮助绑定cookie后再进行查看~')
+      await e.reply('authkey获取失败，请使用#扫码登录重新绑定stoken后再进行查看~')
       return false
     }
     authKey = encodeURIComponent(authKey)
@@ -246,14 +237,15 @@ export class Hkrpg extends plugin {
     let payLogList = await res.json()
     result.push(...payLogList.data.list)
     page++
-    while (payLogList.data.list && payLogList.data.list.length > 0) {
+    while (payLogList.data.list && payLogList.data.list.length === 10) {
+      await new Promise(resolve => setTimeout(resolve, 500))
       payLogUrl = getPaylogUrl(authKey, page, size)
       res = await fetch(payLogUrl)
+      payLogList = await res.json()
       result.push(...payLogList.data.list)
       page++
     }
     result = result.filter(r => r.add_num > 0)
-    payLogList = await res.json()
     let t = result.map(i => {
       return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
     }).join('\n')
@@ -288,18 +280,29 @@ export class Hkrpg extends plugin {
     authKey = encodeURIComponent(authKey)
     let result = []
     let page = 1
-    let size = 10
+    let size = 50
     let powerUrl = getPowerUrl(authKey, page, size)
     let res = await fetch(powerUrl)
     let powerChangeRecordList = await res.json()
     result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
     page++
+    let earliest = new Date()
+    earliest.setDate(earliest.getDate() - 8)
     while (powerChangeRecordList.data.list && powerChangeRecordList.data.list.length > 0) {
       powerUrl = getPowerUrl(authKey, page, size)
       res = await fetch(powerUrl)
-      powerChangeRecordList = await res.json()
-      result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
-      page++
+      try {
+        powerChangeRecordList = await res.json()
+        result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
+        page++
+      } catch (err) {
+        // 拉完或者一直拉到报错
+        break
+      }
+      // 只拉七天的中间图不好看。
+      // if (new Date(result[result.length - 1]?.time) < earliest) {
+      //   break
+      // }
       await new Promise(resolve => setTimeout(resolve, 500))
       logger.info('休息0.5秒，继续拉取开拓力记录')
     }

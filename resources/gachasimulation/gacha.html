@@ -29,7 +29,7 @@
             </div>
           </div>
           {{if char.count}}
-          <div class="five-count">{{char.count}}抽</div>
+          <div class="five-count">{{char.isBigUP?'大保底 ':''}}{{char.count}}抽</div>
           {{/if}}
           <div class="char">
             {{if char.type == 1}}
