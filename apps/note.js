@@ -6,7 +6,7 @@ import _ from 'lodash'
 import YAML from 'yaml'
 import fs from 'fs'
 import { rulePrefix } from '../utils/common.js'
-export class hkrpg extends plugin {
+export class Note extends plugin {
   constructor (e) {
     super({
       name: '星铁plugin-体力',

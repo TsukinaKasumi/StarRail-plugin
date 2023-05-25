@@ -25,10 +25,26 @@ export function supportGuoba () {
     configInfo: {
       // 配置项 schemas
       schemas: [{
+        component: 'Divider',
+        label: '通用设置'
+      },
+      {
         field: 'gachaHelp.noteFlag',
         label: '体力',
         bottomHelpMessage: '是否使用本插件的体力模板',
         component: 'Switch'
+      },
+      {
+        field: 'gachaHelp.renderScale',
+        label: '渲染精度',
+        bottomHelpMessage: '设置插件的渲染精度，可选值50~200，建议100。设置高精度会提高图片的精细度，但因图片较大可能会影响渲染与发送速度',
+        component: 'InputNumber',
+        required: true,
+        componentProps: {
+          min: 0,
+          max: 10000,
+          placeholder: '请输入数字'
+        }
       },
       {
         component: 'Divider',

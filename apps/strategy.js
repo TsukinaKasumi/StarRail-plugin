@@ -31,7 +31,7 @@ const roleAlias = {
   彦卿: ['言情', '彦情', '彦青', '言卿', '燕青', 'Yanqing']
 }
 
-export class strategy extends plugin {
+export class Strategy extends plugin {
   constructor () {
     super({
       name: '星铁plugin-角色攻略',

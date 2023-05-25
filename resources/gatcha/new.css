@@ -1,0 +1,207 @@
+
+
+@font-face {
+  font-family: hanyi;
+  src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'tttgbnumber';
+  src: url('../fonts/tttgbnumber.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SR";
+  src: url(../fonts/zh-cn.ttf) format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: PingFangSC-Medium, PingFang SC, sans-serif;
+  width: 810px;
+}
+
+ul,ol {
+  list-style: none;
+}
+
+.container {
+  padding: 40px 40px 0 40px;
+  width: 810px;
+  overflow: hidden;
+  background: url('../images/bkg.png') center no-repeat;
+  background-size: cover;
+  color: #f0eaca;
+  font-family: 'SR', sans-serif;
+  font-size: 1.2rem;
+}
+
+.title {
+  border-bottom: 2px solid #f0eaca;
+  padding-bottom: 8px;
+}
+
+.title-text {
+  font-size: 32px;
+}
+
+.title-sub {
+  margin-left: 8px;
+}
+
+.card {
+  position: relative;
+  margin-top: 16px;
+}
+
+.card-header {
+  padding: 8px 18px;
+  border-top-right-radius: 15px;
+  border-bottom: 4px solid #e2c494;
+  border-top: 1px solid #838385;
+  border-right: 1px solid #838385;
+  background-color: #202020;
+  font-size: 24px;
+}
+
+.card-content {
+  padding: 40px;
+  background-color: rgba(255,255,255, .8);
+}
+
+.card-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../common/cont/logo.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: .1;
+}
+
+.card-item-head {
+  padding: 6px 0;
+  background-color: black;
+  color: #f0eaca;
+  text-align: center;
+  font-size: 22px;
+}
+
+.card-item-content {
+  padding: 20px 0 10px 0;
+}
+
+.data-sum {
+  padding: 30px;
+}
+
+.data-sum .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.data-sum .row .col {
+  width: 25%;
+  text-align: center;
+  font-size: 36px;
+  color: #000;
+}
+
+.data-sum .row .col span {
+  font-size: 18px;
+}
+
+.data-sum .row .col p {
+  display: block;
+  font-size: 16px;
+  color: #616161;
+}
+
+.data-sum .mark {
+  font-size: 16px;
+  color: #616161;
+  text-align: center;
+}
+
+.data-sum .mark::before {
+  content: '-';
+  margin-right: 20px;
+}
+
+.data-sum .mark::after {
+  content: '-';
+  margin-left: 20px;
+}
+
+.card-item-content ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-item-content ul > li {
+  position: relative;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  width: 100px;
+  height: 120px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.card-item-content ul > li.rank5 {
+  background-image: url("../images//rank5bg.webp");
+}
+
+.card-item-content ul > li.rank4 {
+  background-image: url("../images//rank4bg.webp");
+}
+
+
+.card-item-content ul > li img {
+  width: 100%;
+  height: 100px;
+}
+
+.card-item-content ul > li.char img {
+  /* transform: scale(1.2); */
+  object-fit: cover;
+}
+
+.card-item-content ul > li:not(:nth-child(6n)) {
+  margin-right: 10px;
+}
+
+.card-item-content ul > li > .number {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background-color: rgb(240,234,202, .6);
+  color: #000;
+}
+
+.logo {
+  font-size: 24px;
+  font-family: 'tttgbnumber';
+  color: #f0eaca;
+  text-align: center;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}

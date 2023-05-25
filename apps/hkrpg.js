@@ -3,7 +3,7 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
-import { gatchaType, statistics } from '../utils/gatcha.js'
+// import { gatchaType, statistics } from '../utils/gatcha.js'
 import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
@@ -11,7 +11,7 @@ import _ from 'lodash'
 import {statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, formatDateTime} from '../utils/common.js'
 // import { promisify } from 'util'
 
-export class hkrpg extends plugin {
+export class Hkrpg extends plugin {
   constructor (e) {
     super({
       name: '星铁plugin基本信息',
@@ -31,24 +31,8 @@ export class hkrpg extends plugin {
           fnc: 'card'
         },
         {
-          // {
-        //   reg: '^#(星铁|星轨|崩铁|星穹铁道)(.*)面板$',
-        //   fnc: 'avatar'
-        // },
           reg: `^${rulePrefix}帮助$`,
           fnc: 'help'
-        },
-        {
-          reg: `^${rulePrefix}抽卡链接(绑定)?$`,
-          fnc: 'bindAuthKey'
-        },
-        {
-          reg: `^${rulePrefix}(跃迁|抽卡)?(记录|分析)`,
-          fnc: 'gatcha'
-        },
-        {
-          reg: `^${rulePrefix}抽卡帮助$`,
-          fnc: 'gatchahelp'
         },
         {
           reg: `^${rulePrefix}充值记录$`,
@@ -82,9 +66,10 @@ export class hkrpg extends plugin {
       let hasPersonalCK = false
       let uid = e.msg.match(/\d+/)?.[0]
       await this.miYoSummerGetUid()
-      uid ||= await redis.get(`STAR_RAILWAY:UID:${user}`)
-      if (!uid) return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-
+      uid = uid || await redis.get(`STAR_RAILWAY:UID:${user}`)
+      if (!uid) {
+        return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
+      }
       let ck = this.User.getCk()
       if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
         let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
@@ -213,75 +198,15 @@ export class hkrpg extends plugin {
     }
   }
 
-  async gatcha (e) {
-    try {
-      let user = this.e.user_id
-      let type = 11
-      let reg = new RegExp(`^${rulePrefix}(跃迁|抽卡)?(记录|分析)`)
-      let typeName = e.msg.replace(reg, '')
-      if (typeName.includes('常驻')) {
-        type = 1
-      } else if (typeName.includes('武器') || typeName.includes('光锥')) {
-        type = 12
-      } else if (typeName.includes('新手')) {
-        type = 2
-      }
-      let ats = e.message.filter((m) => m.type === 'at')
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
-      }
-      let authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
-      if (!authKey) {
-        await e.reply(
-          '未绑定抽卡链接，请点击链接查看说明\nhttps://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ\n发送[#星铁抽卡链接]绑定'
-        )
-        return false
-      }
-      let result = {}
-      result = await statistics(type, authKey)
-      result.typeName = gatchaType[type]
-      await e.runtime.render('StarRail-plugin', '/gatcha/gatcha.html', result)
-    } catch (err) {
-      await e.reply('抽卡链接已过期，请重新获取并绑定')
-    }
-  }
-
-  async gatchahelp (e) {
-    await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
-  }
-
   async help (e) {
     await e.runtime.render('StarRail-plugin', '/help/help.html')
   }
 
-  /** 复读 */
   async bindSRUid () {
     let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ''))
     let user = this.e.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
-    /** 复读内容 */
     this.reply('绑定成功', false)
-  }
-
-  async bindAuthKey (e) {
-    this.setContext('doBindAuthKey')
-    /** 回复 */
-    await this.reply('请发送抽卡链接', false, { at: true })
-  }
-
-  async doBindAuthKey () {
-    try {
-      let key = this.e.msg.trim()
-      key = key.split('authkey=')[1].split('&')[0]
-      let user = this.e.user_id
-      await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
-      /** 复读内容 */
-      this.reply('绑定成功', false)
-    } catch (error) {
-      this.reply('抽卡链接错误，请检查链接重新绑定', false)
-    }
-    /** 结束上下文 */
-    this.finish('doBindAuthKey')
   }
 
   async getPayLog (e) {

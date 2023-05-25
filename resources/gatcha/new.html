@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gatcha</title>
+  <link rel="stylesheet" href="{{pluResPath}}/gatcha/new.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="title">
+      <span class="title-text">跃迁记录</span>
+      <span class="title-sub">UID:{{ uid }}</span>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        跃迁详情
+      </div>
+      <div class="card-content">
+        <div class="card-item">
+          <div class="card-item-head">
+            数据总览
+          </div>
+          <div class="card-item-content data-sum">
+            <div class="row">
+              <div class="col">
+                <div>{{ totalNum }}<span>抽</span><p>累计已抽</p></div>
+              </div>
+              <div class="col">
+                <div>{{ currInfo.totalNum }}<span>抽</span><p>本期已抽</p></div>
+              </div>
+              <div class="col">
+                <div>{{ currInfo.last['11']['5'] }}<span>抽</span><p>角色未出五星</p></div>
+              </div>
+              <div class="col">
+                <div>{{ currInfo.last['12']['5'] }}<span>抽</span><p>光锥未出五星</p></div>
+              </div>
+            </div>
+            {{ if type == 0 }}
+              <div class="row">
+                <div class="col">
+                  <div>{{ holdNum.num[1] }}<span>　</span><p>五星总计</p></div>
+                </div>
+                <div class="col">
+                  <div>{{ holdNum.holdingRate[1] }}<span>%</span><p>五星持有率</p></div>
+                </div>
+                <div class="col">
+                  <div>{{ holdNum.num[0] }}<span>　</span><p>四星总计</p></div>
+                </div>
+                <div class="col">
+                  <div>{{ holdNum.holdingRate[0] }}<span>%</span><p>四星持有率</p></div>
+                </div>
+              </div>
+            {{ /if }}
+            <div class="mark">抽卡记录时间段: {{ localFirstTime }} - {{ localLastTime }}</div>
+          </div>
+        </div>
+        {{ if type == 0 }}
+          {{ each data item }}
+            <div class="card-item">
+              <div class="card-item-head">
+                {{ item.typeName }}
+              </div>
+              <div class="card-item-content">
+                <ul>
+                  {{ each item.records record }}
+                    {{ if record.rank_type >= filterRank }}
+                      <li class="{{ record.className }}">
+                        <img src="{{ pluResPath }}{{ record.imgPath }}" alt="{{ record.name }}">
+                        <div class="number">{{ record.until }}</div>
+                      </li>
+                    {{ /if }}
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+          {{/each}}
+        {{ else }}
+          {{ set item = data[0] }}
+          {{ each item.groups group }}
+            <div class="card-item">
+              <div class="card-item-head">
+                {{ group.name }}
+              </div>
+              <div class="card-item-content">
+                <ul>
+                  {{ each group.records record }}
+                    {{ if record.rank_type >= filterRank }}
+                      <li class="{{ record.className }}">
+                        <img src="{{ pluResPath }}{{ record.imgPath }}" alt="{{ record.name }}">
+                        <div class="number">{{ record.until }}</div>
+                      </li>
+                    {{ /if }}
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+          {{ /each }}
+        {{ /if }}
+      </div>
+    </div>
+    
+    <div class="logo">
+      Created By Yunzai-Bot & StarRail-plugin
+    </div>
+  </div>
+</body>
+
+</html>
