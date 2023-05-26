@@ -126,9 +126,10 @@ export class Update extends plugin {
    * @returns
    */
   async runUpdate (isForce) {
-    let command = 'git -C ./plugins/StarRail-plugin/ pull --no-rebase'
+    const _path = './plugins/StarRail-plugin/'
+    let command = `git -C ${_path} pull --no-rebase`
     if (isForce) {
-      command = `git -C ./plugins/StarRail-plugin/ checkout . && ${command}`
+      command = `git -C ${_path} fetch --all && git -C ${_path} reset --hard HEAD`
       this.e.reply('正在执行强制更新操作，请稍等')
     } else {
       this.e.reply('正在执行更新操作，请稍等')
