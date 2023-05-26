@@ -120,7 +120,8 @@ export class Panel extends plugin {
         '/panel/panel.html',
         data,
         {
-          retType: 'msgId'
+          retType: 'msgId',
+          scale: 1.6
         }
       )
       msgId &&
