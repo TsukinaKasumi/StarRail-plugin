@@ -39,7 +39,7 @@ ul,ol {
   padding: 40px 40px 0 40px;
   width: 810px;
   overflow: hidden;
-  background: url('../images/bkg.png') center no-repeat;
+  background: url('../common/cont/bkg.png') center no-repeat;
   background-size: cover;
   color: #f0eaca;
   font-family: 'SR', sans-serif;

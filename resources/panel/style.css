@@ -1,31 +1,16 @@
-@font-face {
-  font-family: "SR";
-  src: url(../fonts/zh-cn.ttf) format('truetype');
-}
-
-html,
-body {
-  width: 730px;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'SR', sans-serif;
-}
-
 /* 卡片容器 */
 .container {
   margin: auto;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  background: url('./resources/bkg.png') center no-repeat;
+  background: url('../common/cont/bkg.png') center no-repeat;
   background-size: cover;
   color: #f0eaca;
   padding: 20px 30px;
   font-weight: 500;
   font-size: 1.2rem;
-  transform: scale(1.6);
-  transform-origin: 0 0;
+  width: 730px;
 }
 
 /*******************/
@@ -585,7 +570,7 @@ body {
 /* 遗器信息 */
 .main-content .relic-list .item .relic-info {
   padding: 15px 10px;
-  height: 65px;
+  /* height: 65px; */
   display: flex;
   align-items: center;
   justify-content: center;

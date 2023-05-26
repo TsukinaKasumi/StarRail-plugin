@@ -1,246 +1,237 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+{{extend defaultLayout}}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-  <title>角色面板</title>
-  <link rel="stylesheet" href="{{pluResPath}}/panel/style.css">
-</head>
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/panel/style.css">
+{{/block}}
 
-<body>
-  <div class="container" id="container">
-    <div class="logo">
-      <img src="{{pluResPath}}panel/resources/logo.png">
-    </div>
-    <div class="main-content">
-      <div class="char-info">
-        <div class="char-card">
-          <div class="char-star">
-            <img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{rarity.slice(-1)}}.png" alt="">
-          </div>
-          <div class="char-img">
-            <img src="{{pluResPath}}{{charImage}}" alt="">
-          </div>
-          <div class="skills">
-            {{each behaviorList behavior i}}
-            <div class="item">
-              <div class="icon">
-                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
-                <div class="level">{{behavior.level}}</div>
-              </div>
-              <div class="type">{{behavior.type}}</div>
-            </div>
-            {{/each}}
-          </div>
-        </div>
-        <div class="info-detail">
-          <div class="title">
-            <div class="name">{{name}}</div>
-            <div class="type">
-              <img src="{{pluResPath}}common/element/{{damage_type.toLowerCase()}}.png">
-            </div>
-            <div class="level">Lv.{{level}}</div>
-            <div class="const">
-              <img src="{{pluResPath}}common/path/{{charpath}}.png">
-              {{charpath}}
-            </div>
-            <div class="const">星魂 {{rank}}</div>
-          </div>
-          <div class="detail-list">
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconMaxHP.png" alt=""></div>
-              <div class="text">生命值</div>
-              <div class="multi-line-sum">
-                {{(properties.hpBase+properties.hpDelta).toFixed(0)}}
-              </div>
-              <div class="multi-line">
-                <div>{{properties.hpBase.toFixed(0)}}</div>
-                <div class="delta">+{{properties.hpDelta.toFixed(0)}}</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconAttack.png" alt=""></div>
-              <div class="text">攻击力</div>
-              <div class="multi-line-sum">
-                {{(properties.attackBase+properties.attackDelta).toFixed(0)}}
-              </div>
-              <div class="multi-line">
-                <div>{{properties.attackBase.toFixed(0)}}</div>
-                <div>
-                  <span class="delta">+{{properties.attackDelta.toFixed(0)}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconDefence.png" alt=""></div>
-              <div class="text">防御力</div>
-              <div class="multi-line-sum">
-                {{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}
-              </div>
-              <div class="multi-line">
-                <div>{{properties.defenseBase.toFixed(0)}}</div>
-                <div>
-                  <span class="delta">+{{properties.defenseDelta.toFixed(0)}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="icon">
-                <img src="{{pluResPath}}panel/resources/icon/value/IconSpeed.png">
-              </div>
-              <div class="text">速度</div>
-              <div class="multi-line-sum">
-                {{(properties.speedBase+properties.speedAdd).toFixed(0)}}
-              </div>
-              <div class="multi-line">
-                <div>
-                  {{properties.speedBase.toFixed(0)}}
-                </div>
-                <div>
-                  <span class="delta">+{{properties.speedAdd.toFixed(0)}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalChance.png" alt=""></div>
-              <div class="text">暴击率</div>
-              <div class="value">{{(properties.criticalChance*100).toFixed(1)}}%</div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalDamage.png" alt=""></div>
-              <div class="text">暴击伤害</div>
-              <div class="value">{{(properties.criticalDamage*100).toFixed(1)}}%</div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusResistance.png" alt="">
-              </div>
-              <div class="text">效果抵抗</div>
-              <div class="value">{{(properties.statusResistance*100).toFixed(1)}}%</div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt="">
-              </div>
-              <div class="text">效果命中</div>
-              <div class="value">{{(properties.statusProbability*100).toFixed(1)}}%</div>
-            </div>
-            <div class="item">
-              <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconBreakUp.png" alt="">
-              </div>
-              <div class="text">击破特攻</div>
-              <div class="value">{{(properties.breakDamageAdded*100).toFixed(1)}}%</div>
-            </div>
-            <div class="item">
-              <div class="icon">
-                <img src="{{pluResPath}}panel/resources/icon/value/IconEnergyLimit.png">
-              </div>
-              <div class="text">能量回复</div>
-              <div class="value">{{(100 + properties.spRatio*100).toFixed(1)}}%</div>
-            </div>
-            <div class="item">
-              {{if charpath == '丰饶'}}
-              <div class="icon">
-                <img src="{{pluResPath}}panel/resources/icon/value/IconHealRatio.png">
-              </div>
-              <div class="text">治疗量加成</div>
-              <div class="value">{{(properties.healRatio * 100).toFixed(1)}}%</div>
-              {{else}}
-              <div class="icon">
-                <img src="{{pluResPath}}panel/resources/icon/value/Icon{{damage_type}}AddedRatio.png">
-              </div>
-              <div class="text">属性伤害提高</div>
-              <div class="value">{{(properties[damage_type.toLowerCase() + 'Added']*100).toFixed(1)}}%</div>
-              {{/if}}
-            </div>
-          </div>
-        </div>
+{{block 'main'}}
+<div class="logo">
+  <img src="{{pluResPath}}panel/resources/logo.png">
+</div>
+<div class="main-content">
+  <div class="char-info">
+    <div class="char-card">
+      <div class="char-star">
+        <img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{rarity.slice(-1)}}.png" alt="">
       </div>
-      <div class="info-uid-api">
-        <div class="uid">UID: {{uid}}</div>
-        <div class="api-info">当前面板更新服务：{{api}}</div>
+      <div class="char-img">
+        <img src="{{pluResPath}}{{charImage}}" alt="">
       </div>
-      <div class="artoverview">
-        <div class="item weapon">
-          {{if equipment.id}}
-          <div class="icon">
-            <img src="{{pluResPath}}panel/resources/weapon/{{equipment.id}}.png">
-          </div>
-          {{/if}}
-          <div class="info">
-            <div class="title">
-              <div class="name">{{equipment.name ?? '未装备'}}</div>
-              {{if equipment.rarity}}
-              <div class="star">
-                <img
-                  src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png">
-              </div>
-              {{/if}}
-            </div>
-            {{if equipment.id}}
-            <div class="level-info">
-              <div class="level">Lv.{{equipment.level}}</div>
-              <div class="dy">
-                {{set romanNumerals = ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"]}}
-                <div class="dy-icon level{{equipment.rank}}">
-                  {{romanNumerals[equipment.rank-1]}}
-                </div>
-                叠影{{equipment.rank}}阶
-              </div>
-            </div>
-            {{/if}}
-          </div>
-        </div>
-        <div class="item relic">
-          <div class="info">
-            <div class="title">
-              <div class="name">遗器</div>
-            </div>
-            <div class="level-info">
-              <!-- <div class="score"><b>S</b> 级</div>
-              <div class="total-score">总分：96.3</div> -->
-              <div class="tip-none">暂无评分系统</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="relic-list">
-        {{each relics relic i}}
+      <div class="skills">
+        {{each behaviorList behavior i}}
         <div class="item">
-          <div class="relic-info">
-            <div class="icon">
-              <img src="{{pluResPath}}panel/resources/relic/{{relic.path}}" alt="">
-            </div>
-            <!-- {{relic.id.toString().slice(-4,-1)}}_{{relic.id.toString().slice(-1)}} -->
-            <div class="relic-info-detail">
-              <div class="name">{{relic.name}}</div>
-              <div class="level-info">
-                <div class="star"><img
-                    src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{relic.max_level/3}}.png" alt="">
-                </div>
-                <div class="level">+{{relic.level}}</div>
-              </div>
-              <div class="value">
-                {{relic.main_affix_name}}+{{relic.main_affix_value>=1?relic.main_affix_value.toFixed(1):(relic.main_affix_value*100).toFixed(1)+'%'}}
-              </div>
-            </div>
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
+            <div class="level">{{behavior.level}}</div>
           </div>
-          <div class="relic-value-list">
-            {{each relic.sub_affix_id affix i}}
-            <div class="relic-value">
-              <div class="name">{{affix.name}}</div>
-              <div class="value">+{{affix.value>=1?affix.value.toFixed(1):(affix.value*100).toFixed(1)+'%'}}</div>
-            </div>
-            {{/each}}
-          </div>
+          <div class="type">{{behavior.type}}</div>
         </div>
         {{/each}}
       </div>
     </div>
-    <div class="card-info">
-      Created By Yunzai-Bot & StarRail-Plugin
+    <div class="info-detail">
+      <div class="title">
+        <div class="name">{{name}}</div>
+        <div class="type">
+          <img src="{{pluResPath}}common/element/{{damage_type.toLowerCase()}}.png">
+        </div>
+        <div class="level">Lv.{{level}}</div>
+        <div class="const">
+          <img src="{{pluResPath}}common/path/{{charpath}}.png">
+          {{charpath}}
+        </div>
+        <div class="const">星魂 {{rank}}</div>
+      </div>
+      <div class="detail-list">
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconMaxHP.png" alt=""></div>
+          <div class="text">生命值</div>
+          <div class="multi-line-sum">
+            {{(properties.hpBase+properties.hpDelta).toFixed(0)}}
+          </div>
+          <div class="multi-line">
+            <div>{{properties.hpBase.toFixed(0)}}</div>
+            <div class="delta">+{{properties.hpDelta.toFixed(0)}}</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconAttack.png" alt=""></div>
+          <div class="text">攻击力</div>
+          <div class="multi-line-sum">
+            {{(properties.attackBase+properties.attackDelta).toFixed(0)}}
+          </div>
+          <div class="multi-line">
+            <div>{{properties.attackBase.toFixed(0)}}</div>
+            <div>
+              <span class="delta">+{{properties.attackDelta.toFixed(0)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconDefence.png" alt=""></div>
+          <div class="text">防御力</div>
+          <div class="multi-line-sum">
+            {{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}
+          </div>
+          <div class="multi-line">
+            <div>{{properties.defenseBase.toFixed(0)}}</div>
+            <div>
+              <span class="delta">+{{properties.defenseDelta.toFixed(0)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/icon/value/IconSpeed.png">
+          </div>
+          <div class="text">速度</div>
+          <div class="multi-line-sum">
+            {{(properties.speedBase+properties.speedAdd).toFixed(0)}}
+          </div>
+          <div class="multi-line">
+            <div>
+              {{properties.speedBase.toFixed(0)}}
+            </div>
+            <div>
+              <span class="delta">+{{properties.speedAdd.toFixed(0)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalChance.png" alt=""></div>
+          <div class="text">暴击率</div>
+          <div class="value">{{(properties.criticalChance*100).toFixed(1)}}%</div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalDamage.png" alt=""></div>
+          <div class="text">暴击伤害</div>
+          <div class="value">{{(properties.criticalDamage*100).toFixed(1)}}%</div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusResistance.png" alt="">
+          </div>
+          <div class="text">效果抵抗</div>
+          <div class="value">{{(properties.statusResistance*100).toFixed(1)}}%</div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt="">
+          </div>
+          <div class="text">效果命中</div>
+          <div class="value">{{(properties.statusProbability*100).toFixed(1)}}%</div>
+        </div>
+        <div class="item">
+          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconBreakUp.png" alt="">
+          </div>
+          <div class="text">击破特攻</div>
+          <div class="value">{{(properties.breakDamageAdded*100).toFixed(1)}}%</div>
+        </div>
+        <div class="item">
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/icon/value/IconEnergyLimit.png">
+          </div>
+          <div class="text">能量回复</div>
+          <div class="value">{{(100 + properties.spRatio*100).toFixed(1)}}%</div>
+        </div>
+        <div class="item">
+          {{if charpath == '丰饶'}}
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/icon/value/IconHealRatio.png">
+          </div>
+          <div class="text">治疗量加成</div>
+          <div class="value">{{(properties.healRatio * 100).toFixed(1)}}%</div>
+          {{else}}
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/icon/value/Icon{{damage_type}}AddedRatio.png">
+          </div>
+          <div class="text">属性伤害提高</div>
+          <div class="value">{{(properties[damage_type.toLowerCase() + 'Added']*100).toFixed(1)}}%</div>
+          {{/if}}
+        </div>
+      </div>
     </div>
   </div>
-</body>
-
-</html>
+  <div class="info-uid-api">
+    <div class="uid">UID: {{uid}}</div>
+    <div class="api-info">当前面板更新服务：{{api}}</div>
+  </div>
+  <div class="artoverview">
+    <div class="item weapon">
+      {{if equipment.id}}
+      <div class="icon">
+        <img src="{{pluResPath}}panel/resources/weapon/{{equipment.id}}.png">
+      </div>
+      {{/if}}
+      <div class="info">
+        <div class="title">
+          <div class="name">{{equipment.name ?? '未装备'}}</div>
+          {{if equipment.rarity}}
+          <div class="star">
+            <img
+              src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png">
+          </div>
+          {{/if}}
+        </div>
+        {{if equipment.id}}
+        <div class="level-info">
+          <div class="level">Lv.{{equipment.level}}</div>
+          <div class="dy">
+            {{set romanNumerals = ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"]}}
+            <div class="dy-icon level{{equipment.rank}}">
+              {{romanNumerals[equipment.rank-1]}}
+            </div>
+            叠影{{equipment.rank}}阶
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="item relic">
+      <div class="info">
+        <div class="title">
+          <div class="name">遗器</div>
+        </div>
+        <div class="level-info">
+          <!-- <div class="score"><b>S</b> 级</div>
+              <div class="total-score">总分：96.3</div> -->
+          <div class="tip-none">暂无评分系统</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="relic-list">
+    {{each relics relic i}}
+    <div class="item">
+      <div class="relic-info">
+        <div class="icon">
+          <img src="{{pluResPath}}panel/resources/relic/{{relic.path}}" alt="">
+        </div>
+        <!-- {{relic.id.toString().slice(-4,-1)}}_{{relic.id.toString().slice(-1)}} -->
+        <div class="relic-info-detail">
+          <div class="name">{{relic.name}}</div>
+          <div class="level-info">
+            <div class="star"><img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{relic.max_level/3}}.png"
+                alt="">
+            </div>
+            <div class="level">+{{relic.level}}</div>
+          </div>
+          <div class="value">
+            {{relic.main_affix_name}}+{{relic.main_affix_value>=1?relic.main_affix_value.toFixed(1):(relic.main_affix_value*100).toFixed(1)+'%'}}
+          </div>
+        </div>
+      </div>
+      <div class="relic-value-list">
+        {{each relic.sub_affix_id affix i}}
+        <div class="relic-value">
+          <div class="name">{{affix.name}}</div>
+          <div class="value">+{{affix.value>=1?affix.value.toFixed(1):(affix.value*100).toFixed(1)+'%'}}</div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+<div class="card-info">
+  Created By Yunzai-Bot & StarRail-Plugin
+</div>
+{{/block}}

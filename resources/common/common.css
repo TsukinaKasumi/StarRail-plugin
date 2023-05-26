@@ -1,0 +1,26 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "汉仪润圆-75W";
+  src: url("../fonts/汉仪润圆-75W.ttf") format("truetype");
+}
+@font-face {
+  font-family: "tttgbnumber";
+  src: url("../fonts/tttgbnumber.ttf") format("truetype");
+}
+@font-face {
+  font-family: "SR";
+  src: url("../fonts/SR.ttf") format("truetype");
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "SR", sans-serif;
+  transform: scale(1.4);
+  transform-origin: 0 0;
+  font-size: 18px;
+  width: 600px;
+}/*# sourceMappingURL=common.css.map */
