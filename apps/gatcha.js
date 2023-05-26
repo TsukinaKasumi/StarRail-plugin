@@ -26,7 +26,7 @@ export class Gatcha extends plugin {
           fnc: 'gatchahelp'
         },
         {
-          reg: `^${rulePrefix}更新(抽卡|跃迁)?(记录)?$`,
+          reg: `^${rulePrefix}更新(抽卡|跃迁)(记录)?$`,
           fnc: 'updateGatcha'
         }
       ]
