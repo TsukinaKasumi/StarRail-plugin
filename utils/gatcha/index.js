@@ -327,7 +327,7 @@ function groupByPool (collection) {
     const poolInfo = x[0].poolInfo || {}
     return {
       id: poolInfo.id,
-      name: `${poolInfo.version} ${poolInfo.half} [${poolInfo.to} ~ ${poolInfo.to}]`,
+      name: `${poolInfo.version} ${poolInfo.half} [${poolInfo.from} ~ ${poolInfo.to}]`,
       records: x
     }
   })
