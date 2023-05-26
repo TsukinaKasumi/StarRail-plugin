@@ -5,8 +5,8 @@ import path from 'path'
 
 // 支持锅巴
 export function supportGuoba () {
-  let allGroup = [];
-  Bot.gl.forEach((v, k) => { allGroup.push({label: `${v.group_name}(${k})`, value: k}); });
+  let allGroup = []
+  Bot.gl.forEach((v, k) => { allGroup.push({ label: `${v.group_name}(${k})`, value: k }) })
   return {
     pluginInfo: {
       name: 'StarRail-plugin',
@@ -47,6 +47,12 @@ export function supportGuoba () {
         }
       },
       {
+        field: 'gachaHelp.gatchaUrlGroup',
+        label: '抽卡链接群聊绑定',
+        bottomHelpMessage: '是否允许在群内绑定抽卡链接',
+        component: 'Switch'
+      },
+      {
         component: 'Divider',
         label: '帮助设置'
       },
@@ -57,7 +63,7 @@ export function supportGuoba () {
         component: 'Input',
         required: true,
         componentProps: {
-          placeholder: '请输入链接',
+          placeholder: '请输入链接'
         }
       },
       {
@@ -67,7 +73,7 @@ export function supportGuoba () {
         component: 'Input',
         required: true,
         componentProps: {
-          placeholder: 'Cookie帮助',
+          placeholder: 'Cookie帮助'
         }
       },
       {
@@ -96,7 +102,7 @@ export function supportGuoba () {
           min: 0,
           max: 10000,
           placeholder: '请输入数字',
-          addonAfter: "秒"
+          addonAfter: '秒'
         }
       },
       {
@@ -125,7 +131,7 @@ export function supportGuoba () {
           min: 0,
           max: 10000,
           placeholder: '请输入数量',
-          addonAfter: "次"
+          addonAfter: '次'
         }
       },
       {
@@ -144,7 +150,7 @@ export function supportGuoba () {
           min: 0,
           max: 10000,
           placeholder: '请输入数字',
-          addonAfter: "秒"
+          addonAfter: '秒'
         }
       },
       {
@@ -159,8 +165,7 @@ export function supportGuoba () {
           options: allGroup
         }
       }
-    ],
-
+      ],
       getConfigData () {
         return setting.merge()
       },
