@@ -188,7 +188,8 @@ export class Panel extends plugin {
       let renderData = {
         api: api.split('/')[2],
         uid,
-        data
+        data,
+        type: 'update'
       }
       // 渲染数据
       await runtimeRender(e, '/panel/card.html', renderData)
@@ -348,7 +349,7 @@ export class Panel extends plugin {
       data
     }
     // 渲染数据
-    await runtimeRender(e, '/panel/list.html', renderData, {
+    await runtimeRender(e, '/panel/card.html', renderData, {
       scale: 1.6
     })
   }

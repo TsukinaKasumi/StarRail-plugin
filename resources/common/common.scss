@@ -1,7 +1,7 @@
 @mixin font($name) {
     @font-face {
         font-family: $name;
-        src: url('./fonts/#{$name}.ttf') format('truetype');
+        src: url('./font/#{$name}.ttf') format('truetype');
     }
 }
 

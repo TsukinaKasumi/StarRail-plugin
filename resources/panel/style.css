@@ -570,7 +570,7 @@
 /* 遗器信息 */
 .main-content .relic-list .item .relic-info {
   padding: 15px 10px;
-  /* height: 65px; */
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;

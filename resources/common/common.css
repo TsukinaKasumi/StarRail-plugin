@@ -1,6 +1,6 @@
 @font-face {
   font-family: "SR";
-  src: url("./fonts/SR.ttf") format("truetype");
+  src: url("./font/SR.ttf") format("truetype");
 }
 * {
   box-sizing: border-box;
