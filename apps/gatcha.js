@@ -75,18 +75,19 @@ export class Gatcha extends plugin {
   }
 
   async updateGatcha (e) {
+
+    let user = e.user_id
+    const ats = e.message.filter(m => m.type === 'at')
+    if (ats.length > 0 && !e.atBot) {
+      user = ats[0].qq
+    }
+
+    const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    if (!uid) {
+      return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
+    }
+
     try {
-      let user = e.user_id
-      const ats = e.message.filter(m => m.type === 'at')
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
-      }
-
-      const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-      if (!uid) {
-        return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-      }
-
       const authKey = await this.getAuthKey()
       const date = moment()
       const lastTime = await redis.get(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`)
@@ -105,6 +106,7 @@ export class Gatcha extends plugin {
       await e.reply(msg)
     } catch (error) {
       console.log(error)
+      redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
       await e.reply('抽卡链接已过期，请重新获取并绑定')
     }
   }
