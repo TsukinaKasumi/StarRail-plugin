@@ -8,8 +8,8 @@
   src: url("../fonts/tttgbnumber.ttf") format("truetype");
 }
 @font-face {
-  font-family: "SR";
-  src: url("../fonts/SR.ttf") format("truetype");
+  font-family: "zh-cn";
+  src: url("../fonts/zh-cn.ttf") format("truetype");
 }
 * {
   box-sizing: border-box;
