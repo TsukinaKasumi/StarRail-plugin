@@ -8,8 +8,8 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import {statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, formatDateTime} from '../utils/common.js'
-// import { promisify } from 'util'
+import { statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, formatDateTime } from '../utils/common.js'
+import runtimeRender from '../common/runtimeRender.js'
 
 export class Hkrpg extends plugin {
   constructor (e) {
@@ -98,7 +98,9 @@ export class Hkrpg extends plugin {
         result.game_uid = uid
         result.nickname = '开拓者'
       }
-      await e.runtime.render('StarRail-plugin', '/card/card.html', result)
+      await runtimeRender(e, '/card/card.html', result, {
+        scale: 1.4
+      })
     } catch (err) {
       e.reply('cookie错误或未绑定ck')
     }
@@ -199,7 +201,7 @@ export class Hkrpg extends plugin {
   }
 
   async help (e) {
-    await e.runtime.render('StarRail-plugin', '/help/help.html')
+    await runtimeRender(e, '/help/help.html')
   }
 
   async bindSRUid () {

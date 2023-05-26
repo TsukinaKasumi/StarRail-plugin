@@ -2,6 +2,14 @@
   font-family: "SR";
   src: url("./font/SR.ttf") format("truetype");
 }
+@font-face {
+  font-family: "tttgbnumber";
+  src: url("./font/tttgbnumber.ttf") format("truetype");
+}
+@font-face {
+  font-family: "YS";
+  src: url("./font/YS.ttf") format("truetype");
+}
 * {
   box-sizing: border-box;
   padding: 0;

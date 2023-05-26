@@ -1,22 +1,3 @@
-
-
-@font-face {
-  font-family: hanyi;
-  src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'tttgbnumber';
-  src: url('../fonts/tttgbnumber.ttf');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SR";
-  src: url(../fonts/zh-cn.ttf) format('truetype');
-}
-
 /* * {
   box-sizing: border-box;
 }
