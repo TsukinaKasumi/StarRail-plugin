@@ -3,6 +3,7 @@ import plugin from '../../../lib/plugins/plugin.js'
 import { rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GatchaData from '../utils/gatcha/index.js'
+import setting from '../utils/setting.js'
 
 export class Gatcha extends plugin {
   constructor (e) {
