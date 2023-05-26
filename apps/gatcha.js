@@ -33,6 +33,10 @@ export class Gatcha extends plugin {
     })
   }
 
+  get appconfig () {
+    return setting.getConfig('gachaHelp')
+  }
+
   async gatchahelp (e) {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
   }
