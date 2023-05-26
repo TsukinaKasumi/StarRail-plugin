@@ -3,78 +3,71 @@ import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../utils/common.js'
 import fetch from 'node-fetch'
 import lodash from 'lodash'
+export class srexchange extends plugin {
+  constructor(e) {
+    super({
+      name: '星穹铁道兑换码',
+      dsc: '前瞻直播兑换码',
+      event: 'message',
+      priority: 100,
+      rule: [
+        {
+          reg: `^${rulePrefix}兑换码$`,
+          fnc: 'srgetCode'
+        }
+      ]
+    })
+  }
 
-export class exchange extends plugin {
- constructor(e) {
- super({
- name: '星铁plugin兑换码',
-  dsc: '星穹铁道直播兑换码',
-   event: 'message',
-   priority: -100000,
-   rule: [
-   {
-   reg: /^(#|\*)?(星铁|崩铁)?(直播|前瞻)?兑换码$/,
-   fnc: 'getCode'
-   }
-  ]
-  }  )
-   }
-
-  async getCode() {
-    let reg = this.e.msg.match(/^(#|\*)?(星铁|崩铁)?(直播|前瞻)?兑换码$/)
-    let game = 'srActId'
-    if (reg[1] == '*' || ["星铁", "崩铁"].includes(reg[2])) {
-    game = 'srActId'
-    }
-    this.code_ver = ''
+  async srgetCode() {
     this.now = parseInt(Date.now() / 1000)
-    let actid = await this.getActId(game)
-    if (!actid) return
+    let actid = await this.getActId()
+    if (!actid) return false
     this.actId = actid
 
- /** index info */
-   let index = await this.getData('index')
-   if (!index || !index.data) return
-   if (index.data === null) {
-   return await this.reply(`错误：\n${index.message}`)
-   }
-     
+    /** index info */
+    let index = await this.getData('index')
+    if (!index || !index.data) return false
+    if (index.data === null) {
+      return await this.reply(`错误：\n${index.message}`)
+    }
+
     let index_data = index.data.live;
     let title = index_data['title'];
     this.code_ver = index_data['code_ver'];
     if (index_data.remain > 0) {
-    return await this.reply(`暂无直播兑换码\n${title}`)
-   }
-
-    let code = await this.getData('code')
-    if (!code || !code.data?.code_list) return
-    let codes = [];
-
- for (let val of code.data.code_list) {
- if (val.code){
-    codes.push(val.code)
-  }
- }
-
-   let msg = ''
-   if (codes.length >= 3) {
-    msg = [`${title}-直播兑换码`, `兑换码存在有效期，请及时兑换哦~`, ...codes]
-    msg = await common.makeForwardMsg(this.e, msg, msg[0])
-    } else if (this.e.msg.includes('#')) {
-    msg += codes.join('\n')
-    } else {
-    msg = `${title}-直播兑换码\n`
-    msg += codes.join('\n')
+      return await this.reply(`暂无直播兑换码\n${title}`)
     }
 
-   await this.reply(msg)
+    let code = await this.getData('code')
+    if (!code || !code.data?.code_list) return false
+    let codes = [];
+
+    for (let val of code.data.code_list) {
+      if (val.code) {
+        codes.push(val.code)
+      }
+    }
+
+    let msg = ''
+    if (codes.length >= 3) {
+      msg = [`${title}-直播兑换码`, `兑换码存在有效期，请及时兑换哦~`, `兑换码过期时间: \n${this.deadline}`, ...codes]
+      msg = await common.makeForwardMsg(this.e, msg, msg[0])
+    } else if (this.e.msg.includes('#')) {
+      msg += codes.join('\n')
+    } else {
+      msg = `${title}-直播兑换码\n`
+      msg += codes.join('\n')
+    }
+
+    await this.reply(msg)
   }
 
   async getData(type) {
     let url = {
       index: `https://api-takumi.mihoyo.com/event/miyolive/index`,
       code: `https://api-takumi-static.mihoyo.com/event/miyolive/refreshCode?version=${this.code_ver}&time=${this.now}`,
-      srActId: "https://bbs-api.mihoyo.com/painter/api/user_instant/list?offset=0&size=20&uid=288909600",
+      actId: `https://bbs-api.mihoyo.com/painter/api/user_instant/list?offset=0&size=20&uid=288909600`,
     }
 
     let response
@@ -98,30 +91,27 @@ export class exchange extends plugin {
     return res
   }
 
-  async getActId(game) {
+  async getActId() {
     // 获取 "act_id"
-    let ret = await this.getData(game)
+    let ret = await this.getData('actId')
     if (ret.error || ret.retcode !== 0) {
       return "";
     }
 
-    let actId = "";
     for (const p of ret.data.list) {
       const post = p.post.post;
       if (!post) {
         continue;
       }
-    let structured_content = post.structured_content
+      let date = new Date(post.created_at * 1000)
+      date.setDate(date.getDate() + 1)
+      this.deadline = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} 12:00:00`
+      let structured_content = post.structured_content
 
-    let result = structured_content.match(/{\"link\":\"https:\/\/webstatic.mihoyo.com\/bbs\/event\/live\/index.html\?act_id=(.*?)\\/)
-    if (result) {
-        actId = result[1]
-    }
-      if (actId) {
-        break;
+      let result = structured_content.match(/{\"link\":\"https:\/\/webstatic.mihoyo.com\/bbs\/event\/live\/index.html\?act_id=(.*?)\\/)
+      if (result) {
+        return result[1]
       }
     }
-
-    return actId;
   }
 }
