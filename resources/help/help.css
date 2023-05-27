@@ -3,13 +3,6 @@
     src: url('../common/font/汉仪润圆-75W.ttf') format('truetype');
 }
 
-@font-face {
-    font-family: "tttgbnumber";
-    src: url("../common/font/tttgbnumber.ttf");
-    font-weight: normal;
-    font-style: normal;
-}
-
 .container {
     font-family: "hanyi", sans-serif;
     padding-top: 30px;
@@ -18,7 +11,7 @@
     background-image: url('x.jpg');
     background-size: cover;
     /* 设置背景图片尺寸 */
-    background-position: center center;
+    background-position: -300px center;
     /* 设置背景图片位置 */
     width: 784px;
 }
@@ -56,10 +49,9 @@
 
 .general {
     margin-top: 20px;
-    margin-left: 10px;
+    /* margin-left: 5px; */
     width: 744px;
     padding-bottom: 15px;
-
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px 20px 5px 5px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
@@ -74,6 +66,7 @@
     border: #d0ba94 2px solid;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .avatar-element img {
@@ -94,7 +87,7 @@
 
 .user {
     margin-top: 13px;
-    margin-left: 5px;
+    /* margin-left: 5px; */
     margin-right: 5px;
     height: 155px;
     background: rgba(252, 243, 204, 0.5);
@@ -148,4 +141,8 @@
 
 .pamu-img {
     width: 180px;
+}
+
+.title img {
+    margin: 0 10px;
 }
