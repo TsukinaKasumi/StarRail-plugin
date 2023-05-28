@@ -9,7 +9,7 @@ import path from 'path'
 import { pluginRoot, pluginResources } from '../utils/path.js'
 import { findName } from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
-import { rulePrefix } from '../utils/common.js'
+import {getCk, rulePrefix} from '../utils/common.js'
 import setting from '../utils/setting.js'
 import runtimeRender from '../common/runtimeRender.js'
 
@@ -384,7 +384,7 @@ export class Panel extends plugin {
   /** 通过米游社获取UID */
   async miYoSummerGetUid () {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
-    let ck = this.User.getCk()
+    let ck = getCk(this.e)
     if (!ck) return false
     if (await redis.get(key)) return false
     let api = new MysSRApi('', ck)
