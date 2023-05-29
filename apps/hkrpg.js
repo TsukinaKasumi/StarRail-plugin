@@ -1,6 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import MysSRApi from '../runtime/MysSRApi.js'
-import User from '../../genshin/model/user.js'
 import fetch from 'node-fetch'
 import GsCfg from '../../genshin/model/gsCfg.js'
 // import { gatchaType, statistics } from '../utils/gatcha.js'
@@ -8,7 +7,12 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import { statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, formatDateTime } from '../utils/common.js'
+import {
+  statisticOnlinePeriods,
+  statisticsOnlineDateGeneral,
+  rulePrefix,
+  getCk
+} from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 
 export class Hkrpg extends plugin {
@@ -44,8 +48,6 @@ export class Hkrpg extends plugin {
         }
       ]
     })
-
-    this.User = new User(e)
   }
 
   get appconfig () {
@@ -70,7 +72,7 @@ export class Hkrpg extends plugin {
       if (!uid) {
         return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
       }
-      let ck = this.User.getCk()
+      let ck = await getCk(e)
       if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
         let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
         ck = ckArr[0]
@@ -108,7 +110,7 @@ export class Hkrpg extends plugin {
 
   async miYoSummerGetUid () {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
-    let ck = this.User.getCk()
+    let ck = await getCk(this.e)
     if (!ck) return false
     if (await redis.get(key)) return false
     let api = new MysSRApi('', ck)
@@ -119,85 +121,6 @@ export class Hkrpg extends plugin {
     await redis.set(key, gameUid)
     await redis.setEx(`STAR_RAILWAY:userData:${gameUid}`, 60 * 60, JSON.stringify(userData))
     return userData
-  }
-
-  async avatar (e) {
-    try {
-      let uid = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?.*面板/, '')
-      let avatar = e.msg.replace(/^#(星铁|星轨|崩铁|星穹铁道)?/, '').replace('面板', '')
-      if (!uid) {
-        let user = this.e.user_id
-        let ats = e.message.filter(m => m.type === 'at')
-        if (ats.length > 0 && !e.atBot) {
-          user = ats[0].qq
-        }
-        uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-      }
-      await this.miYoSummerGetUid()
-      if (!uid) {
-        await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
-        return false
-      }
-      let ck = await this.User.getCk()
-      if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-        let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-        ck = ckArr[0]
-      }
-
-      let api = new MysSRApi(uid, ck)
-      const { url, headers } = api.getUrl('srCharacterDetail')
-      let res = await fetch(url, {
-        headers
-      })
-      let cardData = await res.json()
-      let avatarItem = cardData.data.avatar_list.filter(i => i.name === avatar)
-      if (avatarItem.length > 0) {
-        let data = avatarItem[0]
-        let tops = [40, 153, 268, 383, 490, 605]
-        data.ranks.forEach((rank, index) => {
-          rank.width = rank.is_unlocked ? 0 : 60
-          rank.top = tops[index]
-        })
-        let bgColorMap = {
-          2: {
-            bg: '#73de7b',
-            border: '#3aa142'
-          },
-          3: {
-            bg: '#407ac4',
-            border: '#1959ab'
-          },
-          4: {
-            bg: '#9166da',
-            border: '#6234b0'
-          },
-          5: {
-            bg: '#cb9b6d',
-            border: '#b67333'
-          }
-        }
-        data.relics.forEach(r => {
-          r.bg = bgColorMap[r.rarity].bg
-          r.border = bgColorMap[r.rarity].border
-        })
-        data.ornaments.forEach(r => {
-          r.bg = bgColorMap[r.rarity].bg
-          r.border = bgColorMap[r.rarity].border
-        })
-        data.uid = uid
-
-        let rarity = []
-        for (let i = 0; i < data.rarity; i++) {
-          rarity.push(1)
-        }
-        data.rarity = rarity
-        await e.runtime.render('StarRail-plugin', '/avatar/avatar.html', data)
-      } else {
-        await e.reply('请确认该角色存在且在面板首页')
-      }
-    } catch (err) {
-      e.reply('未绑定ck,也有可能是角色未佩戴\n光锥请佩戴光锥后重新查看面板')
-    }
   }
 
   async help (e) {
@@ -313,7 +236,7 @@ export class Hkrpg extends plugin {
     let userDataKey = `STAR_RAILWAY:userData:${uid}`
     let userData = JSON.parse(await redis.get(userDataKey))
     if (!userData) {
-      let ck = this.User.getCk()
+      let ck = await getCk(e)
       let api = new MysSRApi(uid, ck)
       userData = (await api.getData('srUser'))?.data?.list?.[0]
     }

@@ -5,7 +5,7 @@ import fetch from 'node-fetch'
 import _ from 'lodash'
 import YAML from 'yaml'
 import fs from 'fs'
-import { rulePrefix } from '../utils/common.js'
+import {getCk, rulePrefix} from '../utils/common.js'
 export class Note extends plugin {
   constructor (e) {
     super({
@@ -44,7 +44,7 @@ export class Note extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
-    let ck = await this.User.getCk()
+    let ck = await getCk(e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
       return false
@@ -98,7 +98,7 @@ export class Note extends plugin {
 
   async miYoSummerGetUid () {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
-    let ck = this.User.getCk()
+    let ck = await getCk(this.e)
     if (!ck) return false
     // if (await redis.get(key)) return false
     // todo check ck

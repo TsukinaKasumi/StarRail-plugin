@@ -1,4 +1,5 @@
 import { exec } from 'child_process'
+import User from "../../genshin/model/user.js";
 
 export const rulePrefix = '((#|\\*)?(星铁|星轨|崩铁|星穹铁道|铁道|sr)|\\*|＊)'
 
@@ -206,4 +207,22 @@ export function formatDateTime (date) {
   let minute = ('0' + date.getMinutes()).slice(-2)
   let second = ('0' + date.getSeconds()).slice(-2)
   return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+}
+
+export async function getCk (e) {
+  e.isSr = true
+  let user = new User(e)
+  if (typeof user.getCk === 'function') {
+    return user.getCk()
+  }
+  let mysUser = (await user.user()).getMysUser('sr')
+  let ck = {
+    default: {
+      ck: mysUser.ck,
+      uid: mysUser.getUid('sr'),
+      qq: '',
+      ltuid: mysUser.ltuid
+    }
+  }
+  return ck
 }
