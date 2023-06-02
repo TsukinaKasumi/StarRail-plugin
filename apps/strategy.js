@@ -1,8 +1,8 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import { pluginResources } from '../utils/path.js'
-import fs from 'fs'
-
-const rolePath = `${pluginResources}/strategy/角色/`
+import common from '../../../lib/common/common.js'
+import _ from 'lodash'
+import fs from 'node:fs'
+import fetch from 'node-fetch'
+import { rulePrefix } from '../utils/common.js'
 
 const roleAlias = {
   阿兰: ['Alan', '阿郎', '阿蓝', 'Arlan'],
@@ -18,7 +18,7 @@ const roleAlias = {
   开拓者·存护: ['火爷', '火主', '开拓者存护', '火开拓者'],
   开拓者·毁灭: ['物理爷', '物爷', '物理主', '物主', '开拓者毁灭', '岩开拓者'],
   克拉拉: ['可拉拉', '史瓦罗', 'Clara'],
-  娜塔莎: ['那塔莎', '那塔沙', '娜塔沙', 'Natasha','渡鸦'],
+  娜塔莎: ['那塔莎', '那塔沙', '娜塔沙', 'Natasha', '渡鸦'],
   佩拉: ['配拉', '佩啦', '冰砂糖', 'Pela'],
   青雀: ['青却', '卿雀', 'Qingque'],
   三月七: ['三月', '看板娘', '三七', '三祁', '纠缠之缘', 'March7th', '37'],
@@ -31,61 +31,179 @@ const roleAlias = {
   彦卿: ['言情', '彦情', '彦青', '言卿', '燕青', 'Yanqing']
 }
 
-export class Strategy extends plugin {
+export class strategy extends plugin {
   constructor () {
     super({
-      name: '星铁plugin-角色攻略',
-      dsc: '查询崩坏：星穹铁道的角色攻略 数据来源于米游社',
+      name: '米游社星铁攻略',
+      dsc: '米游社星铁攻略图',
       event: 'message',
-      priority: 400,
+      priority: 1,
       rule: [
         {
-          reg: '^#?(.*)(攻略([1-3])?)$',
+          reg: `^${rulePrefix}?(更新)?\\S+攻略([1-4])?$`,
           fnc: 'strategy'
+        },
+        {
+          reg: `^${rulePrefix}攻略(说明|帮助)?$`,
+          fnc: 'strategy_help'
         }
+        // {
+        //   reg: '^#?设置默认攻略([1-4])?$', // 待添加
+        //   fnc: 'strategy_setting'
+        // }
       ]
     })
+
+    this.path = './plugins/StarRail-plugin/temp/strategy'
+
+    this.url = 'https://bbs-api.mihoyo.com/post/wapi/getPostFullInCollection?&gids=6&order_type=2&collection_id='
+    this.collection_id = [
+      // 来源：初始镜像
+      [1996095],
+      // 来源：小橙子阿
+      [1998643],
+      // 来源：星穷中心
+      [2029394]
+    ]
+
+    this.source = ['初始镜像', '小橙子阿', '星穷中心']
+
+    this.oss = '?x-oss-process=image//resize,s_1200/quality,q_90/auto-orient,0/interlace,1/format,jpg'
   }
 
-  async strategy (e) {
-    const reg = /^#?(.*)(攻略([1-3])?)$/
-    const match = reg.exec(e.msg)
-    let roleName = match[1].trim()
-    let group = match[3] ? match[3] : "1"
-    
-    let isSend = false
+  /** 初始化创建配置文件 */
+  async init () {
+    if (!fs.existsSync(this.path)) {
+      fs.mkdirSync(this.path, { recursive: true })
+    }
+    /** 初始化子目录 */
+    for (let subId of [1, 2, 3]) {
+      let path = this.path + '/' + subId
+      if (!fs.existsSync(path)) {
+        fs.mkdirSync(path)
+      }
+    }
+  }
 
-    const roleFiles = this.getRoleList(group)
-    if (roleFiles.includes(roleName)) {
-      isSend = true
-    } else {
-      Object.keys(roleAlias).forEach((value) => {
-        const alias = roleAlias[value]
-        if (alias.includes(roleName)) {
-          roleName = value
-          isSend = true
-        }
-      })
+  /** #心海攻略 */
+  async strategy () {
+    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-4])?$`)
+    let [,,,, isUpdate, roleName, group = 1] = this.e.msg.match(reg)
+    let role = this.getRole(roleName)
+
+    if (!role) return false
+
+    this.sfPath = `${this.path}/${group}/${role}.jpg`
+
+    if (fs.existsSync(this.sfPath) && !isUpdate) {
+      await this.e.reply(segment.image(`file://${this.sfPath}`))
+      return
     }
 
-    if (isSend) {
-      // const image = segment.image(`${rolePath}${group}/${roleName}.jpg`)
-      // this.reply(image)
-      let result = []
-      result.imagePath = `${rolePath}${group}/${roleName}.webp`
-      await e.runtime.render('StarRail-plugin', '/strategy/strategy.html', result)
-      return true
+    if (await this.getImg(role, group)) {
+      await this.e.reply(segment.image(`file://${this.sfPath}`))
+    }
+  }
+
+  /** #攻略帮助 */
+  async strategy_help () {
+    await this.e.reply([
+      '攻略帮助:\n',
+      '#希儿攻略[123]\n',
+      '#更新希儿攻略[123]\n',
+      '#设置默认攻略[123]\n',
+      '示例: 希儿攻略3\n',
+      '\n攻略来源:\n',
+      '1——初始镜像\n',
+      '2——小橙子阿\n',
+      '3——星穷中心'
+    ])
+  }
+
+  /** #设置默认攻略1 */
+  async strategy_setting () {
+    let match = /^#?设置默认攻略([1-4])?$/.exec(this.e.msg)
+    let set = './plugins/genshin/config/mys.set.yaml'
+    let config = fs.readFileSync(set, 'utf8')
+    let num = Number(match[1])
+    if (isNaN(num)) {
+      await this.e.reply('默认攻略设置方式为: \n#设置默认攻略[1234] \n 请增加数字1-4其中一个')
+      return
+    }
+    config = config.replace(/defaultSource: [1-4]/g, 'defaultSource: ' + num)
+    fs.writeFileSync(set, config, 'utf8')
+
+    await this.e.reply('默认攻略已设置为: ' + match[1])
+  }
+
+  /** 下载攻略图 */
+  async getImg (name, group) {
+    group--
+    let msyRes = []
+    this.collection_id[group].forEach((id) => msyRes.push(this.getData(this.url + id)))
+
+    try {
+      msyRes = await Promise.all(msyRes)
+    } catch (error) {
+      this.e.reply('暂无攻略数据，请稍后再试')
+      logger.error(`米游社接口报错：${error}}`)
+      return false
     }
 
-    logger.mark(`[星穹铁道-攻略][strategy]未找到角色 [${roleName}] 放行消息交由云崽处理.`)
+    let posts = _.flatten(_.map(msyRes, (item) => item.data.posts))
+    let url
+    for (let val of posts) {
+      if (val.post.subject.includes(name)) {
+        let max = 0
+        val.image_list.forEach((v, i) => {
+          if (group == 0 && i == 0) {
+            max = 1
+            return
+          }
+          if (Number(v.size) >= Number(val.image_list[max].size)) {
+            max = i
+          }
+        })
+        console.log(max)
+        url = val.image_list[max].url
+        break
+      }
+    }
+
+    if (!url) {
+      this.e.reply(`暂无${name}攻略（${this.source[group]}）\n请尝试其他的攻略来源查询\n*攻略帮助，查看说明`)
+      return false
+    }
+
+    logger.mark(`${this.e.logFnc} 下载星铁${name}攻略图`)
+
+    if (!await common.downFile(url + this.oss, this.sfPath)) {
+      return false
+    }
+
+    logger.mark(`${this.e.logFnc} 下载星铁${name}攻略成功`)
+
+    return true
+  }
+
+  getRole (roleName) {
+    for (const i in roleAlias) {
+      if (roleName === i) {
+        return i
+      } else if (roleAlias[i].includes(roleName)) {
+        return i
+      }
+    }
     return false
   }
 
-  getRoleList (group) {
-    const Path = rolePath + group;
-    const roleFiles = fs.readdirSync(Path)
-    return roleFiles
-      .filter((file) => file.endsWith('.webp'))
-      .map((file) => file.replace(/.webp/g, ''))
+  /** 获取数据 */
+  async getData (url) {
+    let response = await fetch(url, { method: 'get' })
+    if (!response.ok) {
+      return false
+    }
+    const res = await response.json()
+    return res
   }
 }
