@@ -15,8 +15,8 @@ const roleAlias = {
   姬子: ['机子', '寄子', 'Himeko'],
   杰帕德: ['杰哥', 'Gepard'],
   景元: ['JingYuan'],
-  开拓者·存护: ['火爷', '火主', '开拓者存护', '火开拓者'],
-  开拓者·毁灭: ['物理爷', '物爷', '物理主', '物主', '开拓者毁灭', '岩开拓者'],
+  开拓者_存护: ['火爷', '火主', '开拓者存护', '火开拓者'],
+  开拓者_毁灭: ['物理爷', '物爷', '物理主', '物主', '开拓者毁灭', '岩开拓者'],
   克拉拉: ['可拉拉', '史瓦罗', 'Clara'],
   娜塔莎: ['那塔莎', '那塔沙', '娜塔沙', 'Natasha', '渡鸦'],
   佩拉: ['配拉', '佩啦', '冰砂糖', 'Pela'],
@@ -152,20 +152,28 @@ export class strategy extends plugin {
 
     let posts = _.flatten(_.map(msyRes, (item) => item.data.posts))
     let url
+    let [_name, type] = name.split('_')
     for (let val of posts) {
-      if (val.post.subject.includes(name)) {
+      let { post: { subject }, image_list } = val
+      if (
+        subject.includes(name) ||
+        (
+          _name == '开拓者' &&
+          subject.includes(_name) &&
+          subject.includes(type)
+        )
+      ) {
         let max = 0
-        val.image_list.forEach((v, i) => {
-          if (group == 0 && i == 0) {
+        image_list.forEach((v, i) => {
+          if ((group == 0 && i == 0) || (group == 1 && _name == '开拓者')) {
             max = 1
             return
           }
-          if (Number(v.size) >= Number(val.image_list[max].size)) {
+          if (Number(v.size) >= Number(image_list[max].size)) {
             max = i
           }
         })
-        console.log(max)
-        url = val.image_list[max].url
+        url = image_list[max].url
         break
       }
     }
