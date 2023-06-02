@@ -1,3 +1,4 @@
+import plugin from '../../../lib/plugins/plugin.js'
 import common from '../../../lib/common/common.js'
 import _ from 'lodash'
 import fs from 'node:fs'
