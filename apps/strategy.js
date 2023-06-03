@@ -4,33 +4,7 @@ import _ from 'lodash'
 import fs from 'node:fs'
 import fetch from 'node-fetch'
 import { rulePrefix } from '../utils/common.js'
-
-const roleAlias = {
-  阿兰: ['Alan', '阿郎', '阿蓝', 'Arlan'],
-  艾丝妲: ['爱思达', '爱丝妲', '爱思妲', '爱丝达', '艾思达', '艾思妲', '艾丝达', '富婆', 'Asta'],
-  白露: ['龙女', '小龙女', '白鹭', '白鹿', '白麓', 'Bailu'],
-  布洛妮娅: ['布诺妮亚', '布洛妮亚', '布诺妮娅', '布洛尼亚', '鸭鸭', '大鸭鸭', 'Bronya'],
-  丹恒: ['单恒', '单垣', '丹垣', '丹桁', '冷面小青龙', 'DanHeng'],
-  黑塔: ['人偶', '转圈圈', 'Herta'],
-  虎克: ['胡克', 'Hook'],
-  姬子: ['机子', '寄子', 'Himeko'],
-  杰帕德: ['杰哥', 'Gepard'],
-  景元: ['JingYuan'],
-  开拓者_存护: ['火爷', '火主', '开拓者存护', '火开拓者'],
-  开拓者_毁灭: ['物理爷', '物爷', '物理主', '物主', '开拓者毁灭', '岩开拓者'],
-  克拉拉: ['可拉拉', '史瓦罗', 'Clara'],
-  娜塔莎: ['那塔莎', '那塔沙', '娜塔沙', 'Natasha', '渡鸦'],
-  佩拉: ['配拉', '佩啦', '冰砂糖', 'Pela'],
-  青雀: ['青却', '卿雀', 'Qingque'],
-  三月七: ['三月', '看板娘', '三七', '三祁', '纠缠之缘', 'March7th', '37'],
-  桑博: ['Sampo'],
-  素裳: ['李素裳', 'Sushang'],
-  停云: ['停运', '听云', 'Tingyun'],
-  瓦尔特: ['杨叔', '老杨', 'Welt'],
-  希儿: ['希尔', 'Seele'],
-  希露瓦: ['希录瓦', 'Serval'],
-  彦卿: ['言情', '彦情', '彦青', '言卿', '燕青', 'Yanqing']
-}
+import alias from '../utils/alias.js'
 
 export class strategy extends plugin {
   constructor () {
@@ -90,7 +64,7 @@ export class strategy extends plugin {
   async strategy () {
     let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-4])?$`)
     let [,,,, isUpdate, roleName, group = 1] = this.e.msg.match(reg)
-    let role = this.getRole(roleName)
+    let role = alias.get(roleName)
 
     if (!role) return false
 
@@ -117,7 +91,7 @@ export class strategy extends plugin {
       '\n攻略来源:\n',
       '1——初始镜像\n',
       '2——小橙子阿\n',
-      '3——星穷中心'
+      '3——星穹中心'
     ])
   }
 
@@ -153,7 +127,8 @@ export class strategy extends plugin {
 
     let posts = _.flatten(_.map(msyRes, (item) => item.data.posts))
     let url
-    let [_name, type] = name.split('_')
+    // 开拓者特殊匹配
+    let [_name, type] = name.split('·')
     for (let val of posts) {
       let { post: { subject }, image_list } = val
       if (
@@ -164,17 +139,7 @@ export class strategy extends plugin {
           subject.includes(type)
         )
       ) {
-        let max = 0
-        image_list.forEach((v, i) => {
-          if ((group == 0 && i == 0) || (group == 1 && _name == '开拓者')) {
-            max = 1
-            return
-          }
-          if (Number(v.size) >= Number(image_list[max].size)) {
-            max = i
-          }
-        })
-        url = image_list[max].url
+        url = _.maxBy(image_list, (v) => v.height).url
         break
       }
     }
@@ -193,17 +158,6 @@ export class strategy extends plugin {
     logger.mark(`${this.e.logFnc} 下载星铁${name}攻略成功`)
 
     return true
-  }
-
-  getRole (roleName) {
-    for (const i in roleAlias) {
-      if (roleName === i) {
-        return i
-      } else if (roleAlias[i].includes(roleName)) {
-        return i
-      }
-    }
-    return false
   }
 
   /** 获取数据 */
