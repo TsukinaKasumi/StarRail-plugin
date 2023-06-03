@@ -63,11 +63,11 @@ export class strategy extends plugin {
       [1996095],
       // 来源：小橙子阿
       [1998643],
-      // 来源：星穷中心
-      [2029394]
+      // 来源：星穹中心
+      [2029394, 2009142, 2038092]
     ]
 
-    this.source = ['初始镜像', '小橙子阿', '星穷中心']
+    this.source = ['初始镜像', '小橙子阿', '星穹中心']
 
     this.oss = '?x-oss-process=image//resize,s_1200/quality,q_90/auto-orient,0/interlace,1/format,jpg'
   }
