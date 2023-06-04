@@ -350,11 +350,15 @@
 }
 
 .main-content .char-info .info-detail .detail-list .item .multi-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   margin-left: 10px;
-  padding-right: 10px;
+  box-sizing: content-box;
+  padding-right:5px;
   font-size: 13px;
   text-align: right;
-  width: 50px;
+  width: 55px;
   background: #4a4a4a87;
   line-height: 110%;
 }
@@ -522,7 +526,7 @@
 
 /* 遗器评分 */
 .main-content .artoverview .relic .info .level-info .score {
-  border: 1px solid #f0eaca;
+  /* border: 1px solid #f0eaca; */
   padding: 5px 15px;
   border-radius: 6px;
   font-size: 1.4rem;
@@ -576,8 +580,25 @@
   justify-content: center;
   backdrop-filter: blur(4.5px);
   -webkit-backdrop-filter: blur(4.5px);
+  position: relative;
 }
-
+/* 遗器分数 */
+.main-content .relic-list .item .relic-info .score {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  overflow: hidden;
+  z-index: 2;
+  font-size: 1rem;
+  background-color: rgba(240, 234, 202, 0.2);
+  border: 2px solid #f0eaca;
+  height: 1.2rem;
+  box-sizing: content-box;
+  color: #f0eaca;
+  display: flex;
+  padding: 3px 10px 1px 10px;
+  border-radius: 5px 0 5px 0;
+}
 /* 遗器图标 */
 .main-content .relic-list .item .relic-info .icon {
   width: 70px;
@@ -593,6 +614,7 @@
   height: 100%;
   display: block;
 }
+
 
 /* 遗器名称 */
 .main-content .relic-list .item .relic-info .relic-info-detail {
@@ -664,11 +686,16 @@
   padding: 3px 15px;
   display: flex;
   align-items: center;
-  /* color: #f0eaca; */
+  color: #b7b7b7;
   font-size: 0.9rem;
   line-height: 22px;
 }
-
+.main-content .relic-list .item .relic-value-list .relic-value.weight-normal {
+  color: #fff;
+}
+.main-content .relic-list .item .relic-value-list .relic-value.weight-heavy {
+  color: #f0eaca;
+}
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {
   background-color: #5452528f;
 }
@@ -676,10 +703,39 @@
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n) {
   background-color: #08080957;
 }
-
+.main-content .relic-list .item .relic-value-list .relic-value .name {
+  padding-top: 3px;
+  width: 4.5em;
+  display: flex;
+  align-items: center;
+}
+/* 遗器强化次数 */
+.main-content .relic-list .item .relic-value-list .relic-value .adds {
+  display: flex;
+  margin-left: 5px;
+}
+.main-content .relic-list .item .relic-value-list .relic-value .adds .count {
+  border-top: 1px solid #b7b7b7;
+  border-right: 1px solid #b7b7b7;
+  /* border-radius: 6px; */
+  font-size: 0.8rem;
+  /* margin-left: 3px; */
+  transform: rotate(45deg);
+  width: 0.5em;
+  height: 0.5em;
+}
+.main-content .relic-list .item .relic-value-list .relic-value.weight-normal .adds .count {
+  border-color: #fff;
+}
+.main-content .relic-list .item .relic-value-list .relic-value.weight-heavy .adds .count {
+  border-color: #f0eaca;
+}
 /* 遗器属性值列表每项值 */
 .main-content .relic-list .item .relic-value-list .relic-value .value {
   /* font-weight: 600; */
+  padding-top: 3px;
+  display: flex;
+  align-items: center;
   margin-left: auto;
 }
 
