@@ -145,9 +145,7 @@ export class Hkrpg extends plugin {
     try {
       authKey = await getAuthKey(e, uid)
     } catch (err) {
-      // 未安装逍遥
-      await e.reply('authkey获取失败，请使用#扫码登录绑定stoken后再进行查看~')
-      return false
+      authKey = null
     }
     if (!authKey) {
       await e.reply('authkey获取失败，请使用#扫码登录重新绑定stoken后再进行查看~')
