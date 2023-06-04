@@ -27,11 +27,7 @@
       <img src="{{pluResPath}}panel/resources/avatar/{{char.avatarId}}.png" alt="">
     </div>
     <div class="name">
-      {{if type=='update'}}
-      <span class="{{char.is_new?'update_dot':''}}">
-      </span>
-      {{/if}}
-      {{char.name}}
+      {{if type=='update'}}<span class="{{char.is_new?'update_dot':''}}"></span>{{/if}}{{char.name}}
     </div>
   </div>
   {{/each}}

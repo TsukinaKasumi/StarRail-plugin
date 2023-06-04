@@ -36,9 +36,9 @@ span.update_dot {
   border-radius: 50%;
   background-color: #90E900;
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 4px;
   position: relative;
-  bottom: 0.5em;
+  bottom: 0.4em;
   transform: translate(0, 0.3em);
 }
 
