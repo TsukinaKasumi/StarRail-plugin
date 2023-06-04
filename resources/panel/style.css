@@ -704,7 +704,6 @@
   background-color: #08080957;
 }
 .main-content .relic-list .item .relic-value-list .relic-value .name {
-  padding-top: 3px;
   width: 4.5em;
   display: flex;
   align-items: center;
@@ -733,7 +732,6 @@
 /* 遗器属性值列表每项值 */
 .main-content .relic-list .item .relic-value-list .relic-value .value {
   /* font-weight: 600; */
-  padding-top: 3px;
   display: flex;
   align-items: center;
   margin-left: auto;
