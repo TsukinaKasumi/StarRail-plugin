@@ -5,7 +5,7 @@ export default new class {
   /**
    * @description: 获取别名
    * @param {string} name 要匹配的名称
-   * @return {string|false} 为匹配到别名则返回false
+   * @return {string|false} 未匹配到别名则返回false
    */
   get (name) {
     const aliasList = { ...defAlias, ...setting.getConfig('alias') }

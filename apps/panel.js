@@ -115,6 +115,7 @@ export class Panel extends plugin {
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
       logger.debug('面板图:', data.charImage)
+      data.parseInt = parseInt
       let msgId = await runtimeRender(
         e,
         '/panel/panel.html',

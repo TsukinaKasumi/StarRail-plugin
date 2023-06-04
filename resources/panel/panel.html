@@ -47,23 +47,23 @@
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconMaxHP.png" alt=""></div>
           <div class="text">生命值</div>
           <div class="multi-line-sum">
-            {{(properties.hpBase+properties.hpDelta).toFixed(0)}}
+            {{ parseInt(properties.hpBase + properties.hpDelta) }}
           </div>
           <div class="multi-line">
-            <div>{{properties.hpBase.toFixed(0)}}</div>
-            <div class="delta">+{{properties.hpDelta.toFixed(0)}}</div>
+            <div>{{ parseInt(properties.hpBase) }}</div>
+            <div class="delta">+{{parseInt(properties.hpDelta)}}</div>
           </div>
         </div>
         <div class="item">
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconAttack.png" alt=""></div>
           <div class="text">攻击力</div>
           <div class="multi-line-sum">
-            {{(properties.attackBase+properties.attackDelta).toFixed(0)}}
+            {{ parseInt(properties.attackBase + properties.attackDelta) }}
           </div>
           <div class="multi-line">
-            <div>{{properties.attackBase.toFixed(0)}}</div>
+            <div>{{ parseInt(properties.attackBase) }}</div>
             <div>
-              <span class="delta">+{{properties.attackDelta.toFixed(0)}}</span>
+              <span class="delta">+{{ parseInt(properties.attackDelta) }}</span>
             </div>
           </div>
         </div>
@@ -71,12 +71,16 @@
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconDefence.png" alt=""></div>
           <div class="text">防御力</div>
           <div class="multi-line-sum">
-            {{(properties.defenseBase+properties.defenseDelta).toFixed(0)}}
+            {{ parseInt(properties.defenseBase + properties.defenseDelta) }}
           </div>
           <div class="multi-line">
-            <div>{{properties.defenseBase.toFixed(0)}}</div>
             <div>
-              <span class="delta">+{{properties.defenseDelta.toFixed(0)}}</span>
+              {{ parseInt(properties.defenseBase) }}
+            </div>
+            <div>
+              <span class="delta">
+                +{{ parseInt(properties.defenseDelta) }}
+              </span>
             </div>
           </div>
         </div>
@@ -86,51 +90,64 @@
           </div>
           <div class="text">速度</div>
           <div class="multi-line-sum">
-            {{(properties.speedBase+properties.speedAdd).toFixed(0)}}
+            {{ parseInt(properties.speedBase+properties.speedAdd) }}
           </div>
           <div class="multi-line">
             <div>
-              {{properties.speedBase.toFixed(0)}}
+              {{ parseInt(properties.speedBase) }}
             </div>
             <div>
-              <span class="delta">+{{properties.speedAdd.toFixed(0)}}</span>
+              <span class="delta">
+                +{{ parseInt(properties.speedAdd) }}
+              </span>
             </div>
           </div>
         </div>
         <div class="item">
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalChance.png" alt=""></div>
           <div class="text">暴击率</div>
-          <div class="value">{{(properties.criticalChance*100).toFixed(1)}}%</div>
+          <div class="value">{{ parseInt((properties.criticalChance * 100) *10) / 10 }}%</div>
         </div>
         <div class="item">
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconCriticalDamage.png" alt=""></div>
           <div class="text">暴击伤害</div>
-          <div class="value">{{(properties.criticalDamage*100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((properties.criticalDamage*100)*10)/10 }}%
+          </div>
         </div>
         <div class="item">
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusResistance.png" alt="">
           </div>
           <div class="text">效果抵抗</div>
-          <div class="value">{{(properties.statusResistance*100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((properties.statusResistance*100)*10) / 10 }}%
+          </div>
         </div>
         <div class="item">
           <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconStatusProbability.png" alt="">
           </div>
           <div class="text">效果命中</div>
-          <div class="value">{{(properties.statusProbability*100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((properties.statusProbability*100)*10) / 10 }}%
+          </div>
         </div>
         <div class="item">
-          <div class="icon"><img src="{{pluResPath}}panel/resources/icon/value/IconBreakUp.png" alt="">
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/icon/value/IconBreakUp.png">
           </div>
           <div class="text">击破特攻</div>
-          <div class="value">{{(properties.breakDamageAdded*100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((properties.breakDamageAdded*100)*10) / 10 }}%
+          </div>
         </div>
         <div class="item">
           <div class="icon">
             <img src="{{pluResPath}}panel/resources/icon/value/IconEnergyLimit.png">
           </div>
           <div class="text">能量回复</div>
-          <div class="value">{{(100 + properties.spRatio*100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((100 + properties.spRatio*100)*10) / 10 }}%
+          </div>
         </div>
         <div class="item">
           {{if charpath == '丰饶'}}
@@ -138,13 +155,17 @@
             <img src="{{pluResPath}}panel/resources/icon/value/IconHealRatio.png">
           </div>
           <div class="text">治疗量加成</div>
-          <div class="value">{{(properties.healRatio * 100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((properties.healRatio * 100)*10) / 10 }}%
+            </div>
           {{else}}
           <div class="icon">
             <img src="{{pluResPath}}panel/resources/icon/value/Icon{{damage_type}}AddedRatio.png">
           </div>
           <div class="text">属性伤害提高</div>
-          <div class="value">{{(properties[damage_type.toLowerCase() + 'Added']*100).toFixed(1)}}%</div>
+          <div class="value">
+            {{ parseInt((properties[damage_type.toLowerCase() + 'Added'] * 100) * 10) / 10 }}%
+          </div>
           {{/if}}
         </div>
       </div>
@@ -215,7 +236,12 @@
             <div class="level">+{{relic.level}}</div>
           </div>
           <div class="value">
-            {{relic.main_affix_name}}+{{relic.main_affix_value>=1?relic.main_affix_value.toFixed(1):(relic.main_affix_value*100).toFixed(1)+'%'}}
+            {{relic.main_affix_name}}+{{
+            parseInt((
+            relic.main_affix_value >= 1 ?
+            relic.main_affix_value :
+            relic.main_affix_value * 100) * 10) / 10 + '%'
+            }}
           </div>
         </div>
       </div>
@@ -223,7 +249,13 @@
         {{each relic.sub_affix_id affix i}}
         <div class="relic-value">
           <div class="name">{{affix.name}}</div>
-          <div class="value">+{{affix.value>=1?affix.value.toFixed(1):(affix.value*100).toFixed(1)+'%'}}</div>
+          <div class="value">+{{
+            parseInt((
+            affix.value >= 1 ?
+            affix.value:
+            affix.value * 100) * 10) / 10 + '%'
+            }}
+          </div>
         </div>
         {{/each}}
       </div>
