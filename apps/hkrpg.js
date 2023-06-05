@@ -139,7 +139,7 @@ export class Hkrpg extends plugin {
   }
 
   async getPayLog (e) {
-    const reg = /(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\d){0,}$/ig
+    const reg = /(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\d{0,})$/ig
     const command = reg.exec(e.msg)
     let type = command[1]
     const page = command[2] || 1
