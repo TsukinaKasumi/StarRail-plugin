@@ -39,7 +39,7 @@ export class Hkrpg extends plugin {
           fnc: 'help'
         },
         {
-          reg: `^${rulePrefix}充值记录$`,
+          reg: `^${rulePrefix}(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\\d){0,}$`,
           fnc: 'getPayLog'
         },
         {
@@ -68,7 +68,7 @@ export class Hkrpg extends plugin {
       let hasPersonalCK = false
       let uid = e.msg.match(/\d+/)?.[0]
       await this.miYoSummerGetUid()
-      uid = uid || await redis.get(`STAR_RAILWAY:UID:${user}`)
+      uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
       if (!uid) {
         return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
       }
@@ -119,7 +119,11 @@ export class Hkrpg extends plugin {
     userData = userData.data.list[0]
     let { game_uid: gameUid } = userData
     await redis.set(key, gameUid)
-    await redis.setEx(`STAR_RAILWAY:userData:${gameUid}`, 60 * 60, JSON.stringify(userData))
+    await redis.setEx(
+      `STAR_RAILWAY:userData:${gameUid}`,
+      60 * 60,
+      JSON.stringify(userData)
+    )
     return userData
   }
 
@@ -128,13 +132,40 @@ export class Hkrpg extends plugin {
   }
 
   async bindSRUid () {
-    let uid = parseInt(this.e.msg.replace(/[^0-9]/ig, ''))
+    let uid = parseInt(this.e.msg.replace(/[^0-9]/gi, ''))
     let user = this.e.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
     this.reply('绑定成功', false)
   }
 
   async getPayLog (e) {
+    const reg = /(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\d){0,}$/ig
+    const command = reg.exec(e.msg)
+    let type = command[1]
+    const page = command[2] || 1
+    if (type === '充值') type = '古老梦华'
+    if (type === '武器') type = '光锥'
+    let typeen
+    switch (type) {
+      case '星琼':
+        typeen = 'Stellar'
+        break
+      case '古老梦华':
+        typeen = 'Dreams'
+        break
+      case '体力':
+        typeen = 'Power'
+        break
+      case '遗器':
+        typeen = 'Relic'
+        break
+      case '光锥':
+        typeen = 'Cone'
+        break
+      default:
+        typeen = 'Dreams'
+        break
+    }
     await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
     if (!uid) {
@@ -148,31 +179,56 @@ export class Hkrpg extends plugin {
       authKey = null
     }
     if (!authKey) {
-      await e.reply('authkey获取失败，请使用#扫码登录重新绑定stoken后再进行查看~')
+      await e.reply(
+        'authkey获取失败，请使用#扫码登录重新绑定stoken后再进行查看~'
+      )
       return false
     }
     authKey = encodeURIComponent(authKey)
     let result = []
-    let page = 1
     let size = 10
-    let payLogUrl = getPaylogUrl(authKey, page, size)
+    let payLogUrl = getPaylogUrl(authKey, type, page, size)
     let res = await fetch(payLogUrl)
     let payLogList = await res.json()
     result.push(...payLogList.data.list)
-    page++
-    while (payLogList.data.list && payLogList.data.list.length === 10) {
-      await new Promise(resolve => setTimeout(resolve, 500))
-      payLogUrl = getPaylogUrl(authKey, page, size)
-      res = await fetch(payLogUrl)
-      payLogList = await res.json()
-      result.push(...payLogList.data.list)
-      page++
-    }
+    // while (payLogList.data.list && payLogList.data.list.length === 10) {
+    //   await new Promise(resolve => setTimeout(resolve, 500))
+    //   payLogUrl = getPaylogUrl(authKey, page, size)
+    //   res = await fetch(payLogUrl)
+    //   payLogList = await res.json()
+    //   result.push(...payLogList.data.list)
+    //   page++
+    // }
+
+    logger.mark(result)
     result = result.filter(r => r.add_num > 0)
-    let t = result.map(i => {
-      return `${i.time}: ${i.action} 获得${i.add_num}古老梦华`
-    }).join('\n')
-    await e.reply(t)
+    if (type === '体力') result = result.filter(r => r.add_num > 1)
+    if (result.length === 0) {
+      await e.reply('暂无记录')
+      return false
+    }
+    let data = {
+      uid,
+      list: result,
+      type,
+      page,
+      typeen
+    }
+    // let t = result
+    //   .map(i => {
+    //     return `${i.time}: ${i.action} 获得${i.add_num}${type}`
+    //   })
+    //   .join('\n')
+    // await e.reply(t)
+    await runtimeRender(
+      e,
+      '/charge/charge.html',
+      data,
+      {
+        retType: 'msgId',
+        scale: 1.6
+      }
+    )
   }
 
   async statisticsOnline (e) {
@@ -207,16 +263,27 @@ export class Hkrpg extends plugin {
     let powerUrl = getPowerUrl(authKey, page, size)
     let res = await fetch(powerUrl)
     let powerChangeRecordList = await res.json()
-    result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
+    result.push(
+      ...powerChangeRecordList.data.list.filter(
+        i => i.action === '随时间回复开拓力'
+      )
+    )
     page++
     let earliest = new Date()
     earliest.setDate(earliest.getDate() - 8)
-    while (powerChangeRecordList.data.list && powerChangeRecordList.data.list.length > 0) {
+    while (
+      powerChangeRecordList.data.list &&
+      powerChangeRecordList.data.list.length > 0
+    ) {
       powerUrl = getPowerUrl(authKey, page, size)
       res = await fetch(powerUrl)
       try {
         powerChangeRecordList = await res.json()
-        result.push(...powerChangeRecordList.data.list.filter(i => i.action === '随时间回复开拓力'))
+        result.push(
+          ...powerChangeRecordList.data.list.filter(
+            i => i.action === '随时间回复开拓力'
+          )
+        )
         page++
       } catch (err) {
         // 拉完或者一直拉到报错
