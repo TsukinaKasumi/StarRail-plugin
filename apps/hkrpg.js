@@ -200,7 +200,7 @@ export class Hkrpg extends plugin {
     //   page++
     // }
 
-    logger.mark(result)
+    logger.debug(result)
     result = result.filter(r => r.add_num > 0)
     if (type === '体力') result = result.filter(r => r.add_num > 1)
     if (result.length === 0) {
