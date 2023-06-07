@@ -56,6 +56,7 @@ export async function findName(name) {
       希儿: ['希尔', 'Seele'],
       希露瓦: ['希录瓦', 'Serval'],
       彦卿: ['言情', '彦情', '彦青', '言卿', '燕青', 'Yanqing'],
+      银狼:['音浪', '银浪', '隐狼', '淫狼', '骇兔', '鸭子', '小鸭', '小鸭鸭', 'yinlang', 'YinLang'],
     };
     let nameList = defaultAlias;
     if (result) {
