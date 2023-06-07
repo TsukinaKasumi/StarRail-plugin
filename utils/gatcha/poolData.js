@@ -19,5 +19,15 @@ export const poolData = [
     poolName: '天戈麾斥',
     char5: ['景元'],
     weapon5: ['拂晓之前']
+  }, {
+    id: 'ver1.1up',
+    ids: ['2005', '3005'],
+    version: '1.1',
+    half: '上半',
+    from: '2023-06-07 10:30:00',
+    to: '2023-06-28 11:59:59',
+    poolName: '零号协议',
+    char5: ['银狼'],
+    weapon5: ['雨一直下']
   }
 ]
