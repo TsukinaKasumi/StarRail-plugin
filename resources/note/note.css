@@ -1,6 +1,6 @@
 @font-face {
     font-family: hanyi;
-    src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
+    src: url('../common/font/汉仪润圆-75W.ttf') format('truetype');
 }
 html, body {
   width: 720px;

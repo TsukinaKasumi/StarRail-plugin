@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
 import fs from 'fs'
 import path from 'path'
@@ -23,10 +24,10 @@ export default class GatchaData {
       if (fs.existsSync(filePath)) {
         return JSON.parse(fs.readFileSync(filePath))
       } else {
-        return []
+        return Promise.reject('抽卡记录不存在')
       }
     }
-    return []
+    return Promise.reject('查询type为空')
   }
 
   // 卡池统计
@@ -45,9 +46,9 @@ export default class GatchaData {
 
     const obj = {
       /** 本地记录起始时间 */
-      localFirstTime: '',
+      localFirstTime: '2077-06-06 00:00:00',
       /** 本地记录结束时间 */
-      localLastTime: '',
+      localLastTime: '2007-06-06 00:00:00',
       /** 总抽卡数 */
       totalNum: 0,
       /** 常驻池总抽卡数 */
@@ -83,22 +84,27 @@ export default class GatchaData {
       }
     }
     currTotal.total = currTotal.characterTotal[0] + currTotal.characterTotal[1] + currTotal.lightConesTotal[0] + currTotal.lightConesTotal[1]
-    obj.localFirstTime = currPool.to
-    obj.localLastTime = currPool.from
+    // 当前时间节点存在活动卡池
+    if (currPool) {
+      obj.localFirstTime = currPool.to
+      obj.localLastTime = currPool.from
+    }
     const map = new Map()
 
     function withList (list) {
       const limits = { 4: 0, 5: 0 }
       return _.map(_.reverse(list), (item) => {
-        const newItem = { ...item }
+        const newItem = { ...item, isUp: false }
         const rank = Number(item.rank_type)
         const type = Number(item.gacha_type)
-        const flag = isDateOnRange(currPool.from, currPool.to, moment(item.time))
+        const flag = isDateOnRange(currPool?.from, currPool?.to, moment(item.time))
 
+        // 本地记录起始时间根据记录自动前移
         if (moment(item.time).diff(moment(obj.localFirstTime)) < 0) {
           obj.localFirstTime = item.time
         }
 
+        // 本地记录结束时间根据记录自动后移
         if (moment(item.time).diff(moment(obj.localLastTime)) > 0) {
           obj.localLastTime = item.time
         }
@@ -127,6 +133,10 @@ export default class GatchaData {
 
           // 光锥图片本地路径
           newItem.imgPath = `panel/resources/weapon/${item.item_id}.png`
+          // 临时兼容「雨一直下（虚无）」
+          if (item.item_id === '23007') {
+            newItem.imgPath = `panel/resources/weapon/${item.item_id}.webp`
+          }
           // 光锥class
           newItem.className = `cones rank${rank}`
         } else {
@@ -147,6 +157,10 @@ export default class GatchaData {
         const poolInfo = getPool(item.time)
         newItem.poolInfo = poolInfo
         newItem.pool = poolInfo.id
+        // 判断当前5行是否为up五星
+        if (rank === 5 && _.includes(_.concat(poolInfo.char5, poolInfo.weapon5), item.name)) {
+          newItem.isUp = true
+        }
         return newItem
       })
     }
@@ -252,14 +266,14 @@ export default class GatchaData {
     const path = `${pluginRoot}/resources/baseData/${type}.json`
     const data = JSON.parse(fs.readFileSync(path, 'utf-8'))
     const dataMap = new Map(Object.entries(data))
-    // 剔除开拓者、银狼，卡芙卡，罗刹
+    // 剔除开拓者，卡芙卡，罗刹
     if (type === 'character') {
       dataMap.delete('8001')
       dataMap.delete('8002')
       dataMap.delete('8003')
       dataMap.delete('8004')
       dataMap.delete('1005')
-      dataMap.delete('1006')
+      // dataMap.delete('1006')
       dataMap.delete('1203')
     }
     if (rarity) {
@@ -323,11 +337,12 @@ function getPool (time) {
 }
 
 function groupByPool (collection) {
-  return _.mapValues(_.groupBy(collection, (value) => value.pool), (x) => {
+  return _.mapValues(_.groupBy(collection, (value) => value.pool), (x = []) => {
     const poolInfo = x[0].poolInfo || {}
     return {
+      pool: poolInfo,
       id: poolInfo.id,
-      name: `${poolInfo.version} ${poolInfo.half} [${poolInfo.from} ~ ${poolInfo.to}]`,
+      total: x.length,
       records: x
     }
   })

@@ -1,36 +1,7 @@
-@font-face {
-    font-family: hanyi;
-    src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: YS;
-    src: url('../fonts/YS.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: "tttgbnumber";
-    src: url("../fonts/tttgbnumber.ttf");
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "YS", sans-serif;
-    width: 784px;
-    transform: scale(1.4);
-    transform-origin: 0 0;
-}
-
 .container {
     padding: 30px 30px 20px 20px;
+    width: 784px;
+    font-family: 'YS';
 }
 
 
@@ -235,15 +206,18 @@ body {
 }
 
 .role-name {
-    left: 54%;
+    left: 51%;
     transform: translateX(-50%);
     position: absolute;
     top: 29px;
     font-size: 30px;
-    max-width: 45%; /* 限制宽度 45% */
-    display: flex; /* 弹性布局 */
+    max-width: 45%;
+    /* 限制宽度 45% */
+    display: flex;
+    /* 弹性布局 */
     align-items: center;
 }
+
 .nickname {
     flex-grow: 1;
     flex-shrink: 1;
@@ -252,6 +226,7 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .uid {
     flex-grow: 0;
     flex-shrink: 0;

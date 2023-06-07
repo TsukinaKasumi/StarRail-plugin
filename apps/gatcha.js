@@ -19,7 +19,7 @@ export class Gatcha extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: `^${rulePrefix}(角色|光锥|武器|常驻|新手)?(跃迁|抽卡)?(记录|分析)`,
+          reg: `^${rulePrefix}(角色|光锥|武器|常驻|新手)?(跃迁|抽卡)?(记录|分析|统计)`,
           fnc: 'gatcha'
         },
         {
@@ -43,23 +43,32 @@ export class Gatcha extends plugin {
   }
 
   async bindAuthKey (e) {
+    if (!e.isPrivate && !this.appconfig.gatchaUrlGroup) {
+      await this.reply('请私聊绑定', false, { at: true })
+      return false
+    }
     this.setContext('doBindAuthKey')
-    /** 回复 */
     await this.reply('请发送抽卡链接', false, { at: true })
   }
 
   async doBindAuthKey () {
+    if (!this.e.isPrivate && !this.appconfig.gatchaUrlGroup) {
+      await this.reply('请私聊发送抽卡链接', false, { at: true })
+      return false
+    }
     try {
+      const uid = await redis.get(`STAR_RAILWAY:UID:${this.e.user_id}`)
       let key = this.e.msg.trim()
       key = key.split('authkey=')[1].split('&')[0]
       let user = this.e.user_id
       await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
-      /** 复读内容 */
-      this.reply('绑定成功', false)
+      await this.reply('绑定成功，正在获取数据', false)
+      console.log('uid', uid)
+      await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
+      await this.updateGatcha(this.e)
     } catch (error) {
       this.reply('抽卡链接错误，请检查链接重新绑定', false)
     }
-    /** 结束上下文 */
     this.finish('doBindAuthKey')
   }
 
@@ -80,7 +89,6 @@ export class Gatcha extends plugin {
   }
 
   async updateGatcha (e) {
-
     let user = e.user_id
     const ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -107,11 +115,11 @@ export class Gatcha extends plugin {
       await e.reply(`正在获取[${uid}]的跃迁数据...`)
       const gatcha = new GatchaData(uid, authKey)
       await gatcha.updateData()
-      const msg = this.makeForwardMsg('跃迁数据获取成功，你可以使用：', '#星铁跃迁分析\n#星铁角色分析\n#星铁光锥分析\n#星铁常驻分析', '查看具体的跃迁数据')
+      const msg = this.makeForwardMsg('跃迁数据获取成功，你可以使用：', '*跃迁分析\n*角色分析\n*光锥分析\n*常驻分析', '查看具体的跃迁数据')
       await e.reply(msg)
     } catch (error) {
       console.log(error)
-      redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
+      await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
       await e.reply('抽卡链接已过期，请重新获取并绑定')
     }
   }
@@ -153,10 +161,10 @@ export class Gatcha extends plugin {
 
       const gatcha = new GatchaData(uid, type === 2 ? await this.getAuthKey() : '')
       const stat = await gatcha.stat(type)
-      console.log({
-        ...stat,
-        uid
-      })
+      // console.log({
+      //   ...stat,
+      //   uid
+      // })
       await runtimeRender(e, '/gatcha/new.html', {
         ...stat,
         uid,

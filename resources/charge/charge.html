@@ -1,0 +1,38 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}charge/style.css">
+{{/block}}
+{{block 'main'}}
+
+<div class="bkg"><img src="{{pluResPath}}charge/bg_main.b435ab02..png" alt=""></div>
+<div class="bkg"><img src="{{pluResPath}}charge/Deco4.png" alt=""></div>
+<div class="header">
+  <div class="uid">UID {{ uid }}</div>
+  <div class="title">{{type}}记录</div>
+  <div class="subtitle">{{typeen}} History</div>
+</div>
+<div class="lists">
+  <div class="s-list">
+    <table class="list-table">
+      <thead>
+        <tr>
+          <th>时间</th>
+          <th>获取数量</th>
+          <th>变化原因</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{each list item i}}
+        <tr>
+          <td>{{item.time}}</td>
+          <td>{{item.add_num}}</td>
+          <td>{{item.action}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <div class="page">当前第{{page}}页</div>
+  </div>
+</div>
+
+{{/block}}

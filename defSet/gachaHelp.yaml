@@ -4,3 +4,5 @@ docs: https://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ
 noteFlag: true
 # 渲染精度
 renderScale: 100
+# 抽卡链接是否允许群聊
+gatchaUrlGroup: true

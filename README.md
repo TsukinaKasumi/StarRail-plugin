@@ -59,7 +59,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 查看角色属性，遗器，命座，光锥等信息
 
 ### *更新面板
-使用已有的面板API进行面板数据的更新，面板API来源:mihomo.me
+使用已有的面板API进行面板数据的更新，支持的面板API: ikechan8370 / mihomo
 支持官服、B服、国际服
 
 ### *收入
@@ -74,7 +74,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *在线时长
 可查看七天内的在线时长，可能需要重新绑定cookie，建议先#扫码登录然后再绑定星铁uid后进行查看
 
-### #白露攻略
+### *白露攻略
 查看对应角色的攻略，数据来源米游社 感谢[@真心](https://github.com/RealHeart)提供的攻略帮助
 
 ### *抽卡分析角色/光锥/常驻/新手(刷新)

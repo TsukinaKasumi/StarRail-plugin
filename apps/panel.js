@@ -7,9 +7,9 @@ import _ from 'lodash'
 import fs from 'fs'
 import path from 'path'
 import { pluginRoot, pluginResources } from '../utils/path.js'
-import { findName } from '../utils/alias.js'
+import alias from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
-import {getCk, rulePrefix} from '../utils/common.js'
+import { getCk, rulePrefix } from '../utils/common.js'
 import setting from '../utils/setting.js'
 import runtimeRender from '../common/runtimeRender.js'
 
@@ -115,6 +115,7 @@ export class Panel extends plugin {
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
       logger.debug('面板图:', data.charImage)
+      data.parseInt = parseInt
       let msgId = await runtimeRender(
         e,
         '/panel/panel.html',
@@ -245,7 +246,7 @@ export class Panel extends plugin {
    */
   async getCharData (name, uid, e) {
     const data = await this.getPanelData(uid, false, true)
-    const charName = await findName(name)
+    const charName = alias.get(name)
     const charInfo = data.filter(item => item.name === charName)[0]
     if (!charInfo) {
       const data = await this.getPanelData(uid, true)
@@ -290,7 +291,7 @@ export class Panel extends plugin {
           res = await fetch(api + uid, {
             headers: {
               'x-request-sr': getSign(uid),
-              library: 'hewang1an'
+              'library': 'hewang1an'
             }
           })
           cardData = await res.json()
