@@ -12,7 +12,7 @@
 }
 @font-face {
   font-family: "SR";
-  src: url('../fonts/zh-cn.ttf') format('truetype');
+  src: url('../common/font/SR.ttf') format('truetype');
 }
 html {
   width: var(--page-width);

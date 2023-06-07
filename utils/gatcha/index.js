@@ -1,3 +1,4 @@
+/* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable camelcase */
 import fs from 'fs'
 import path from 'path'
@@ -23,10 +24,10 @@ export default class GatchaData {
       if (fs.existsSync(filePath)) {
         return JSON.parse(fs.readFileSync(filePath))
       } else {
-        return []
+        return Promise.reject('抽卡记录不存在')
       }
     }
-    return []
+    return Promise.reject('查询type为空')
   }
 
   // 卡池统计
@@ -93,7 +94,7 @@ export default class GatchaData {
     function withList (list) {
       const limits = { 4: 0, 5: 0 }
       return _.map(_.reverse(list), (item) => {
-        const newItem = { ...item }
+        const newItem = { ...item, isUp: false }
         const rank = Number(item.rank_type)
         const type = Number(item.gacha_type)
         const flag = isDateOnRange(currPool?.from, currPool?.to, moment(item.time))
@@ -156,6 +157,10 @@ export default class GatchaData {
         const poolInfo = getPool(item.time)
         newItem.poolInfo = poolInfo
         newItem.pool = poolInfo.id
+        // 判断当前5行是否为up五星
+        if (rank === 5 && _.includes(_.concat(poolInfo.char5, poolInfo.weapon5), item.name)) {
+          newItem.isUp = true
+        }
         return newItem
       })
     }
@@ -332,11 +337,12 @@ function getPool (time) {
 }
 
 function groupByPool (collection) {
-  return _.mapValues(_.groupBy(collection, (value) => value.pool), (x) => {
+  return _.mapValues(_.groupBy(collection, (value) => value.pool), (x = []) => {
     const poolInfo = x[0].poolInfo || {}
     return {
+      pool: poolInfo,
       id: poolInfo.id,
-      name: `${poolInfo.version} ${poolInfo.half} [${poolInfo.from} ~ ${poolInfo.to}]`,
+      total: x.length,
       records: x
     }
   })

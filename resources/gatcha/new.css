@@ -1,23 +1,4 @@
-
-
-@font-face {
-  font-family: hanyi;
-  src: url('../fonts/汉仪润圆-75W.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'tttgbnumber';
-  src: url('../fonts/tttgbnumber.ttf');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SR";
-  src: url(../fonts/zh-cn.ttf) format('truetype');
-}
-
-* {
+/* * {
   box-sizing: border-box;
 }
 
@@ -29,11 +10,11 @@ html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input,
 body {
   font-family: PingFangSC-Medium, PingFang SC, sans-serif;
   width: 810px;
-}
+} 
 
 ul,ol {
   list-style: none;
-}
+} */
 
 .container {
   padding: 40px 40px 0 40px;
@@ -66,7 +47,7 @@ ul,ol {
 
 .card-header {
   padding: 8px 18px;
-  border-top-right-radius: 15px;
+  border-top-right-radius: 36px;
   border-bottom: 4px solid #e2c494;
   border-top: 1px solid #838385;
   border-right: 1px solid #838385;
@@ -101,8 +82,35 @@ ul,ol {
   font-size: 22px;
 }
 
+.card-item-head-tag {
+  margin-left: 20px;
+  padding: 0 6px;
+  border: 2px solid #f0eaca;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
 .card-item-content {
   padding: 20px 0 10px 0;
+}
+
+.card-item-content .item-up {
+  position: relative;
+}
+
+.card-item-content .item-up::before {
+  content: 'UP';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-bottom-left-radius: 10px;
+  width: 40px;
+  height: 20px;
+  background-color: black;
+  font-weight: 400;
+  vertical-align: middle;
+  opacity: .75;
+  font-size: 14px;
 }
 
 .data-sum {
@@ -132,18 +140,18 @@ ul,ol {
   color: #616161;
 }
 
-.data-sum .mark {
+.card-item-content .mark {
   font-size: 16px;
   color: #616161;
   text-align: center;
 }
 
-.data-sum .mark::before {
+.card-item-content .mark::before {
   content: '-';
   margin-right: 20px;
 }
 
-.data-sum .mark::after {
+.card-item-content .mark::after {
   content: '-';
   margin-left: 20px;
 }

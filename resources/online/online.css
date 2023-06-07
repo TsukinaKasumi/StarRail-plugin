@@ -132,7 +132,7 @@ html {
 
 @font-face {
     font-family: "tttgbnumber";
-    src: url("{{pluResPath}}/fonts/tttgbnumber.ttf");
+    src: url("../common/font/tttgbnumber.ttf");
     font-weight: normal;
     font-style: normal;
 }

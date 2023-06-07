@@ -1,63 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+{{extend defaultLayout}}
 
-<head>
-    <meta charset="UTF-8">
-    <title>card</title>
-    <link rel="stylesheet" href="{{pluResPath}}/month/month.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js">
-</head>
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/month/month.css">
+{{/block}}
 
-<body>
-    <div>
-        <div class="container" id="container">
-            <div class="title">
-                {{month}} | 开拓日历
-            </div>
-            <div class="hint">继续努力，星辰大海在等着你呢！</div>
-            <div class="general">
-                <div class="general-title">当月共获取</div>
-                <div class="xq">
-                    <img src="{{pluResPath}}/month/星琼.png" class="icon">
-                    星琼：{{month_data.current_hcoin}}
-                    <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
-                    星轨通票&星轨专票：{{month_data.current_rails_pass}}
-                </div>
-            </div>
-
-            <div class="general">
-                <div class="general-title">今日共获取</div>
-                <div class="xq">
-                    <img src="{{pluResPath}}/month/星琼.png" class="icon">
-                    星琼：{{day_data.current_hcoin}}
-                    <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
-                    星轨通票&星轨专票：{{day_data.current_rails_pass}}
-                </div>
-            </div>
-            <div class="general">
-                <div class="general-title">昨日共获取</div>
-                <div class="xq">
-                    <img src="{{pluResPath}}/month/星琼.png" class="icon">
-                    星琼：{{day_data.last_hcoin}}
-                    <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
-                    星轨通票&星轨专票：{{day_data.last_rails_pass}}
-                </div>
-            </div>
-            <div class="general">
-                <div class="general-title">
-                    本月星琼收入
-                </div>
-                <div id="Chart" style="height: 300px;"></div>
-            </div>
-            <div class="logo">
-                Created By Yunzai-Bot & StarRail-plugin
-            </div>
-        </div>
-
+{{block 'main'}}
+<div class="title">
+    {{month}} | 开拓日历
+</div>
+<div class="hint">继续努力，星辰大海在等着你呢！</div>
+<div class="general">
+    <div class="general-title">当月共获取</div>
+    <div class="xq">
+        <img src="{{pluResPath}}/month/星琼.png" class="icon">
+        星琼：{{month_data.current_hcoin}}
+        <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
+        星轨通票&星轨专票：{{month_data.current_rails_pass}}
     </div>
+</div>
 
-</body>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"></script>
+<div class="general">
+    <div class="general-title">今日共获取</div>
+    <div class="xq">
+        <img src="{{pluResPath}}/month/星琼.png" class="icon">
+        星琼：{{day_data.current_hcoin}}
+        <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
+        星轨通票&星轨专票：{{day_data.current_rails_pass}}
+    </div>
+</div>
+<div class="general">
+    <div class="general-title">昨日共获取</div>
+    <div class="xq">
+        <img src="{{pluResPath}}/month/星琼.png" class="icon">
+        星琼：{{day_data.last_hcoin}}
+        <img src="{{pluResPath}}/month/车票.png" class="icon" style="margin-left: 20px">
+        星轨通票&星轨专票：{{day_data.last_rails_pass}}
+    </div>
+</div>
+<div class="general">
+    <div class="general-title">
+        本月星琼收入
+    </div>
+    <div id="Chart" style="height: 300px;"></div>
+</div>
+<div class="logo">
+    Created By Yunzai-Bot & StarRail-plugin
+</div>
+
+<script src="{{pluResPath}}/js/echarts.js"></script>
 <script>
     const data = JSON.parse('{{@ pieData}}')
     const chart = echarts.init(document.getElementById('Chart'), undefined, {
@@ -114,5 +104,4 @@
     };
     chart.setOption(option)
 </script>
-
-</html>
+{{/block}}
