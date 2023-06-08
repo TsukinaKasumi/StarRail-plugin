@@ -133,10 +133,6 @@ export default class GatchaData {
 
           // 光锥图片本地路径
           newItem.imgPath = `panel/resources/weapon/${item.item_id}.png`
-          // 临时兼容「雨一直下（虚无）」
-          if (item.item_id === '23007') {
-            newItem.imgPath = `panel/resources/weapon/${item.item_id}.webp`
-          }
           // 光锥class
           newItem.className = `cones rank${rank}`
         } else {
