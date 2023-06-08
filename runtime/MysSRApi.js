@@ -46,6 +46,14 @@ export default class MysSRApi extends MysApi {
         url: `${host}event/srledger/month_info`,
         query: `uid=${this.uid}&region=${this.server}&month=`
       },
+      srChallenge: {
+        url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
+        query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
+      },
+      srRogue: {
+        url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
+        query: `need_detail=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
+      },
       srPayAuthKey: {
         url: `${host}binding/api/genAuthKey`,
         body: {
@@ -62,7 +70,7 @@ export default class MysSRApi extends MysApi {
           device_id: this.deviceId,
           platform: '5',
           seed_time: new Date().getTime() + '',
-          ext_fields: '{"userAgent":"Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.50.1","browserScreenSize":281520,"maxTouchPoints":5,"isTouchSupported":true,"browserLanguage":"zh-CN","browserPlat":"iPhone","browserTimeZone":"Asia/Shanghai","webGlRender":"Apple GPU","webGlVendor":"Apple Inc.","numOfPlugins":0,"listOfPlugins":"unknown","screenRatio":3,"deviceMemory":"unknown","hardwareConcurrency":"4","cpuClass":"unknown","ifNotTrack":"unknown","ifAdBlock":0,"hasLiedResolution":1,"hasLiedOs":0,"hasLiedBrowser":0}',
+          ext_fields: '{"userAgent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.44.1","browserScreenSize":281520,"maxTouchPoints":5,"isTouchSupported":true,"browserLanguage":"zh-CN","browserPlat":"iPhone","browserTimeZone":"Asia/Shanghai","webGlRender":"Apple GPU","webGlVendor":"Apple Inc.","numOfPlugins":0,"listOfPlugins":"unknown","screenRatio":3,"deviceMemory":"unknown","hardwareConcurrency":"4","cpuClass":"unknown","ifNotTrack":"unknown","ifAdBlock":0,"hasLiedResolution":1,"hasLiedOs":0,"hasLiedBrowser":0}',
           app_name: 'account_cn',
           device_fp: '38d7ee834d1e9'
         },
@@ -128,9 +136,9 @@ export default class MysSRApi extends MysApi {
       n = 'okr4obncj8bw5a65hbnn5oo6ixjc3l9w'
     }
     let t = Math.round(new Date().getTime() / 1000)
-    let r = Math.floor(Math.random() * 900000 + 100000)
-    let DS = md5(`salt=${n}&t=${t}&r=${r}&b=${b}&q=${q}`)
-    return `${t},${r},${DS}`
+    let r = Math.floor(Math.random() * 90000 + 10000)
+    let DS = md5(`salt=${n}&t=${t}&r=1${r}&b=${b}&q=${q}`)
+    return `${t},1${r},${DS}`
   }
 
   getDS2 () {
@@ -142,12 +150,12 @@ export default class MysSRApi extends MysApi {
 
   getHeaders (query = '', body = '') {
     const cn = {
-      app_version: '2.50.1',
-      User_Agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.50.1',
-      client_type: 5,
+      app_version: '2.44.1',
+      User_Agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.44.1',
+      client_type: '5',
       Origin: 'https://webstatic.mihoyo.com',
       X_Requested_With: 'com.mihoyo.hyperion',
-      Referer: 'https://webstatic.mihoyo.com'
+      Referer: 'https://webstatic.mihoyo.com/'
     }
     const os = {
       app_version: '2.9.0',
@@ -169,7 +177,8 @@ export default class MysSRApi extends MysApi {
       'x-rpc-page': '3.1.3_#/rpg',
       'User-Agent': client.User_Agent,
       Referer: client.Referer,
-      DS: this.getDs(query, body)
+      DS: this.getDs(query, body),
+      Origin: client.Origin
     }
   }
 
