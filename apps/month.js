@@ -69,7 +69,7 @@ export class Month extends plugin {
         value: v.num
       }
     }))
-    await e.runtime.render('StarRail-plugin', '/month/month.html', data)
+    await e.runtime.render('StarRail-plugin', 'month/month.html', data)
   }
 
   async miYoSummerGetUid () {
