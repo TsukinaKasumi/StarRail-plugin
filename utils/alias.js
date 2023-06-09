@@ -19,6 +19,11 @@ export default new class {
       return false
     }
   }
+
+  getAllName () {
+    // 读取角色文件
+    return { ...defAlias, ...setting.getConfig('alias') }
+  }
 }()
 const defAlias = {
   阿兰: ['Alan', '阿郎', '阿蓝', 'Arlan'],
