@@ -11,7 +11,7 @@ export class abbrSet extends plugin {
       name: '星铁别名设置',
       dsc: '星铁角色别名设置',
       event: 'message',
-      priority: 600,
+      priority: -114514,
       rule: [
         {
           reg: `^${rulePrefix}(设置|配置)(.*)(别名|昵称)$`,
