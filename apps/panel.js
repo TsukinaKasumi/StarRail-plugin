@@ -157,8 +157,8 @@ export class Panel extends plugin {
     } else if (fs.existsSync(fullFolderPath + name)) {
       return this.getRandomImage(folderPath + name)
     } else {
-      // 适配原文件位置
-      return this.getRandomImage(`panel/resources/char_image/${avatarId}`)
+      // 返回默认图位置
+      return `panel/resources/char_image/${avatarId}.png`
     }
   }
 
