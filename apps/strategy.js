@@ -1,10 +1,11 @@
-import plugin from '../../../lib/plugins/plugin.js'
-import common from '../../../lib/common/common.js'
 import _ from 'lodash'
-import fs from 'node:fs'
 import fetch from 'node-fetch'
-import { rulePrefix } from '../utils/common.js'
+import fs from 'node:fs'
+import common from '../../../lib/common/common.js'
+import plugin from '../../../lib/plugins/plugin.js'
 import alias from '../utils/alias.js'
+import { rulePrefix } from '../utils/common.js'
+import setting from '../utils/setting.js'
 
 export class strategy extends plugin {
   constructor () {
@@ -21,11 +22,11 @@ export class strategy extends plugin {
         {
           reg: `^${rulePrefix}攻略(说明|帮助)?$`,
           fnc: 'strategy_help'
+        },
+        {
+          reg: `^${rulePrefix}设置默认攻略([1-3])?$`, // 待添加
+          fnc: 'strategy_setting'
         }
-        // {
-        //   reg: '^#?设置默认攻略([1-4])?$', // 待添加
-        //   fnc: 'strategy_setting'
-        // }
       ]
     })
 
@@ -63,7 +64,9 @@ export class strategy extends plugin {
   /** #心海攻略 */
   async strategy () {
     let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-4])?$`)
-    let [,,,, isUpdate, roleName, group = 1] = this.e.msg.match(reg)
+    let [, , , , isUpdate, roleName,
+      group = setting.getConfig('mys')?.defaultSource
+    ] = this.e.msg.match(reg)
     let role = alias.get(roleName)
 
     if (!role) return false
@@ -97,12 +100,12 @@ export class strategy extends plugin {
 
   /** #设置默认攻略1 */
   async strategy_setting () {
-    let match = /^#?设置默认攻略([1-4])?$/.exec(this.e.msg)
-    let set = './plugins/genshin/config/mys.set.yaml'
+    let match = /设置默认攻略([1-3])?$/.exec(this.e.msg)
+    let set = './plugins/StarRail-plugin/config/mys.yaml'
     let config = fs.readFileSync(set, 'utf8')
     let num = Number(match[1])
     if (isNaN(num)) {
-      await this.e.reply('默认攻略设置方式为: \n#设置默认攻略[1234] \n 请增加数字1-4其中一个')
+      await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[123] \n 请增加数字1-4其中一个')
       return
     }
     config = config.replace(/defaultSource: [1-4]/g, 'defaultSource: ' + num)
