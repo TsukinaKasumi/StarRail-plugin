@@ -17,11 +17,6 @@
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
 
-### BUG反馈
-
-QQ群：758447726
-<br>注：只有加入QQ群聊才可申请参与内部测试！
-
 ### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
 星穹铁道插件
@@ -102,7 +97,6 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ## 特别鸣谢♥
 - mihomo.me：提供面板API来源
-- [狐狸](https://github.com/Tighnari520)(依托答辩)：插件美工
 - [bietiaop](https://github.com/bietiaop)：编写插件部分渲染以及部分功能
 
 ## 贡献者
