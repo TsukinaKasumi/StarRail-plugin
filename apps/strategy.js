@@ -108,10 +108,10 @@ export class strategy extends plugin {
       await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[123] \n 请增加数字1-4其中一个')
       return
     }
-    config = config.replace(/defaultSource: [1-4]/g, 'defaultSource: ' + num)
+    config = config.replace(/defaultSource: [1-3]/g, 'defaultSource: ' + num)
     fs.writeFileSync(set, config, 'utf8')
 
-    await this.e.reply('默认攻略已设置为: ' + match[1])
+    await this.e.reply('星铁默认攻略已设置为: ' + match[1])
   }
 
   /** 下载攻略图 */
