@@ -22,7 +22,7 @@ export class Panel extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}(.+)面板(更新)?`,
+          reg: `^${rulePrefix}(.+)面板(更新)?(.*)`,
           fnc: 'panel'
         },
         {
@@ -30,7 +30,7 @@ export class Panel extends plugin {
           fnc: 'ikun'
         },
         {
-          reg: `^${rulePrefix}(更新面板|面板更新)$`,
+          reg: `^${rulePrefix}(更新面板|面板更新)(.*)`,
           fnc: 'update'
         },
         {
@@ -58,6 +58,7 @@ export class Panel extends plugin {
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.ikun(e)
     if (charName === '更新' || matchResult[5]) return await this.update(e)
+    if (charName === '切换' || charName === '设置') return await this.changeApi(e)
     let uid = messageText.replace(messageReg, '')
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
@@ -181,11 +182,16 @@ export class Panel extends plugin {
   async update (e) {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
+    const messageText = e.msg
+    const messageReg = new RegExp(`^${rulePrefix}(更新面板|面板更新)`)
+    let uid = messageText.replace(messageReg, '')
+    if (!uid) {
+      if (ats.length > 0 && !e.atBot) {
+        user = ats[0].qq
+      }
+      await this.miYoSummerGetUid()
+      uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     }
-    await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
       return await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
     }
@@ -211,11 +217,13 @@ export class Panel extends plugin {
   async apiList (e) {
     if (!e.isMaster) return await e.reply('仅限主人可以查看API列表')
     const apiConfig = setting.getConfig('panelApi')
+    const defaultSelect = apiConfig.default
     const apiList = apiConfig.api
     let msg = 'API列表：\n'
     apiList.forEach((item, i) => {
       msg += `${i + 1}：${item.split('/')[2]}\n`
     })
+    msg += `当前API：\n${defaultSelect}：${apiList[defaultSelect - 1].split('/')[2]}`
     await e.reply(msg)
   }
 
