@@ -1,16 +1,15 @@
 /* eslint-disable camelcase */
-import panelApi from '../runtime/PanelApi.js'
-import fetch from 'node-fetch'
-import MysSRApi from '../runtime/MysSRApi.js'
-import _ from 'lodash'
 import fs from 'fs'
-import path from 'path'
-import { pluginRoot, pluginResources } from '../utils/path.js'
+import _ from 'lodash'
+import fetch from 'node-fetch'
+import runtimeRender from '../common/runtimeRender.js'
+import MysSRApi from '../runtime/MysSRApi.js'
+import panelApi from '../runtime/PanelApi.js'
 import alias from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
 import { getCk, rulePrefix } from '../utils/common.js'
+import { pluginResources, pluginRoot } from '../utils/path.js'
 import setting from '../utils/setting.js'
-import runtimeRender from '../common/runtimeRender.js'
 
 export class Panel extends plugin {
   constructor (e) {
@@ -438,24 +437,23 @@ async function updateData (oldData, newData) {
   returnData.unshift(...newData)
   return returnData
 }
-async function saveData (uid, data) {
-  // 文件路径
-  const filePath = pluginRoot + '/data/panel/' + uid + '.json'
-  // 确保目录存在，如果不存在则创建
-  await fs.promises.mkdir(path.dirname(filePath), { recursive: true })
-  // 判断文件是否存在，并写入数据
+const dataDir = pluginRoot + '/data/panel'
+function saveData (uid, data) {
+  // 判断目录是否存在，不存在则创建
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true })
+  }
   try {
-    await fs.promises.access(filePath, fs.constants.F_OK)
-    await fs.promises.writeFile(filePath, JSON.stringify(data), 'utf-8')
+    fs.writeFileSync(`${dataDir}/${uid}.json`, JSON.stringify(data), 'utf-8')
     return true
   } catch (err) {
-    await fs.promises.appendFile(filePath, JSON.stringify(data), 'utf-8')
+    logger.error('写入失败：', err)
     return false
   }
 }
 function readData (uid) {
   // 文件路径
-  const filePath = pluginRoot + '/data/panel/' + uid + '.json'
+  const filePath = `${dataDir}/${uid}.json`
   // 判断文件是否存在并读取文件
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath))

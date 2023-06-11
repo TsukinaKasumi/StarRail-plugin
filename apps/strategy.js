@@ -86,10 +86,10 @@ export class strategy extends plugin {
   /** #攻略帮助 */
   async strategy_help () {
     await this.e.reply([
-      '攻略帮助:\n',
+      '星铁攻略帮助:\n',
       '*希儿攻略[123]\n',
       '*更新希儿攻略[123]\n',
-      // '#设置默认攻略[123]\n',
+      '*设置默认攻略[123]\n',
       '示例: *希儿攻略2\n',
       '\n攻略来源:\n',
       '1——初始镜像\n',
