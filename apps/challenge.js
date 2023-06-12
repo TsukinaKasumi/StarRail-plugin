@@ -46,7 +46,7 @@ export class Rogue extends plugin {
       return false
     }
     let schedule_type = '1'
-    if (e.msg.indexOf('上期')) {
+    if (e.msg.indexOf('上期') > -1) {
       schedule_type = '2'
     }
     let ck = await getCk(e)

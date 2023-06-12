@@ -6,6 +6,7 @@ import _ from 'lodash'
 import YAML from 'yaml'
 import fs from 'fs'
 import { getCk, rulePrefix } from '../utils/common.js'
+import runtimeRender from '../common/runtimeRender.js'
 
 export class Rogue extends plugin {
   constructor (e) {
@@ -46,7 +47,7 @@ export class Rogue extends plugin {
       return false
     }
     let schedule_type = '1'
-    if (e.msg.indexOf('上期')) {
+    if (e.msg.indexOf('上期') > -1) {
       schedule_type = '2'
     }
     let ck = await getCk(e)
@@ -75,8 +76,16 @@ export class Rogue extends plugin {
     if (cardData.retcode !== 0) {
       return false
     }
-
-    await e.reply(JSON.stringify(cardData))
+    let data = Object.assign(cardData.data, { uid })
+    if (schedule_type === '1') {
+      // 懒得改了
+      data.last_record = data.current_record
+    }
+    await runtimeRender(e, '/rogue/rogue.html', data, {
+      scale: 1.4
+    })
+    // await e.runtime.render('StarRail-plugin', '/rogue/rogue.html', cardData.data)
+    // await e.reply(JSON.stringify(cardData))
   }
 
   async miYoSummerGetUid () {
