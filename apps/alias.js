@@ -14,7 +14,7 @@ export class abbrSet extends plugin {
       priority: -114514,
       rule: [
         {
-          reg: `^${rulePrefix}(设置|配置)(.*)(别名|昵称)$`,
+          reg: `^${rulePrefix}(设置|配置|添加)(.*)(别名|昵称)$`,
           fnc: 'addAlias'
         },
         {
@@ -41,17 +41,18 @@ export class abbrSet extends plugin {
 
   async addAlias() {
     if (!await this.checkAuth()) return
-    let keyName = this.e.msg.replace(new RegExp(`${rulePrefix}|设置|配置|别名|昵称`, 'g'), '').trim()
+    let keyName = this.e.msg.replace(new RegExp(`${rulePrefix}|设置|配置|添加|别名|昵称`, 'g'), '').trim()
     
     logger.info('keyName=',keyName)
+    //检查别名|昵称是否有对应角色
     const name = alias.get(keyName)
-    logger.info('key=',name)
+    if(!name) {
+      await this.e.reply('未识别到角色')
+      return true
+    }
     this.e.roleName = name
     this.setContext('setAliasContext',false,20)
-    logger.info(this)
-    // if (!role) return false
-    // this.e.role = role
-    // this.setContext('setAbbr')
+
 
     await this.reply(`请发送${name}别名，多个用空格隔开`)
   }
@@ -97,12 +98,11 @@ export class abbrSet extends plugin {
     //设置别名的 角色名
     let role = setAliasContext.roleName
 
-    logger.info('设置别名的角色名='+role)
     let setName = this.e.msg.split(' ')
 
     //获取完整 角色别名列表
     let roles = alias.getAllName()
-    logger.info(roles)
+    // logger.info(roles)
     let ret = []
     for (let name of setName) {
       logger.info('别名',name)
@@ -114,7 +114,6 @@ export class abbrSet extends plugin {
       roles[role].push(name)
       ret.push(name)
     }
-    logger.info(roles)
 
     if (ret.length <= 0) {
       await this.reply('设置失败：别名错误或已存在')
