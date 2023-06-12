@@ -41,8 +41,8 @@ export function supportGuoba () {
         component: 'InputNumber',
         required: true,
         componentProps: {
-          min: 0,
-          max: 10000,
+          min: 50,
+          max: 200,
           placeholder: '请输入数字'
         }
       },
@@ -163,6 +163,22 @@ export function supportGuoba () {
           allowDel: true,
           mode: 'multiple',
           options: allGroup
+        }
+      },
+      {
+        component: 'Divider',
+        label: '攻略设置'
+      },
+      {
+        field: 'mys.defaultSource',
+        label: '攻略图默认来源',
+        bottomHelpMessage: '米游社攻略图默认来源设置',
+        component: 'InputNumber',
+        required: true,
+        componentProps: {
+          min: 1,
+          max: 3,
+          placeholder: '请输入数字'
         }
       }
       ],

@@ -8,9 +8,13 @@
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
 
-### 5.21更新：支持查询全平台数据(包括欧服以及美服），在config/panelAPI内将API修改为sr.ikechan8370
-更新报错一律执行
-<br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
+### 5.21更新：支持查询全平台数据(包括欧服以及美服)，在config/panelAPI内将API修改为sr.ikechan8370
+
+如更新报错可尝试执行在`Yunzai根目录`执行以下命令
+```sh
+cd plugins/StarRail-plugin && git reset --hard origin && git pull
+```
+
 ### 使用说明
 
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板、体力以及米游社所拥有的的一切有关星轨的功能
