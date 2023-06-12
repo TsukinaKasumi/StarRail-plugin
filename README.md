@@ -60,12 +60,6 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
   - https://lulu.roki.best/v1/info/
   - https://sr.roki.best/v1/info/
 填入可选api
-示例： 
-default: 1 
-api:
-https://sr.ikechan8370.com/v1/info/
-https://lulu.roki.best/v1/info/
-https://sr.roki.best/v1/info/
 然后可尝试*切换面板1/2/3
 
 ### *绑定＋你的uid
