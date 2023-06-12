@@ -46,7 +46,10 @@ export class Rogue extends plugin {
       let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
       ck = ckArr[0]
     }
-
+    if (!ck) {
+      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
+      return false
+    }
     let api = new MysSRApi(uid, ck)
     let schedule_type = '1'
     if (e.msg.indexOf('上期') > -1) {
