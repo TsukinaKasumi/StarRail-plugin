@@ -51,6 +51,22 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 因为压缩包不支持用`#星铁更新` 进行更新，不方便后续更新升级，所以不推荐下载压缩包
 
 ## 功能介绍
+如遇到更新面板失败可能是面板服务连接超时可尝试以下方法
+
+### *切换面板1/*api列表
+可在config/panelApi中配置
+如果连不上请将API设置为sr.ikechan8370.com
+  - https://sr.ikechan8370.com/v1/info/
+  - https://lulu.roki.best/v1/info/
+  - https://sr.roki.best/v1/info/
+填入可选api
+示例： 
+default: 1 
+api:
+https://sr.ikechan8370.com/v1/info/
+https://lulu.roki.best/v1/info/
+https://sr.roki.best/v1/info/
+然后可尝试*切换面板1/2/3
 
 ### *绑定＋你的uid
 绑定你的星铁uid多ck时可尝试绑定新的uid查询其他账号信息
@@ -96,24 +112,9 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 查询星穹铁道前瞻直播兑换码
 
 ### *跃迁分析
-默认总览,可接角色/光锥/常驻查询其他卡池信息
+默认总览,可接角色/光锥/常驻
 
-### *切换面板1/*api列表
-可在config/panelApi中配置
-如果连不上请将API设置为sr.ikechan8370.com
-  - https://sr.ikechan8370.com/v1/info/
-  - https://lulu.roki.best/v1/info/
-  - https://sr.roki.best/v1/info/
-填入可选api
-示例：
-default: 1
-api:
-  - https://sr.ikechan8370.com/v1/info/
-  - https://lulu.roki.best/v1/info/
-  - https://sr.roki.best/v1/info/
-
-然后可尝试*切换面板1/2/3
-  抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
+抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin)发送#扫码登录进行cookie的绑定，否则可能会报错
 获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)（仅pc，ios）
