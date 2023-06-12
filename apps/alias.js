@@ -71,19 +71,21 @@ export class abbrSet extends plugin {
     if (this.e.isMaster) return true
     /** 管理员 */
     if (abbrSetAuth == 1) {
+
       if (!Bot.gml.has(this.e.group_id)) {
         return false
       }
       if (!Bot.gml.get(this.e.group_id).get(this.e.user_id)) {
         return false
       }
-      if (!this.e.member.is_admin) {
-        this.e.reply('暂无权限，只有管理员才能操作')
-        return false
+      //只有此群管理员才能修改
+      if (this.e.member.is_admin) {
+        return true
       }
     }
 
-    return true
+    this.e.reply('暂无权限，只有管理员才能操作')
+    return false
   }
 
   async setAliasContext() {
@@ -130,6 +132,9 @@ export class abbrSet extends plugin {
   }
 
   async delAlias() {
+    //鉴权
+    if (!await this.checkAuth()) return
+
     let inputName = this.e.msg.replace(new RegExp(`${rulePrefix}|删除|别名|昵称`, 'g'), '').trim()
     // logger.info(inputName)
     let roleNameKey = alias.get(inputName)
