@@ -1,13 +1,14 @@
+import fetch from 'node-fetch'
+import _ from 'lodash'
+import moment from 'moment'
 import User from '../../genshin/model/user.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import setting from '../utils/setting.js'
-import fetch from 'node-fetch'
-import _ from 'lodash'
-import YAML from 'yaml'
-import fs from 'fs'
 import { getCk, rulePrefix } from '../utils/common.js'
+import runtimeRender from '../common/runtimeRender.js'
+import GsCfg from '../../genshin/model/gsCfg.js'
 
-export class Rogue extends plugin {
+export class Challenge extends plugin {
   constructor (e) {
     super({
       name: '星铁plugin-深渊',
@@ -18,14 +19,14 @@ export class Rogue extends plugin {
       rule: [
         {
           reg: `^${rulePrefix}(上期|本期)?深渊$`,
-          fnc: 'rogue'
+          fnc: 'challenge'
         }
       ]
     })
     this.User = new User(e)
   }
 
-  async rogue (e) {
+  async challenge (e) {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -33,26 +34,28 @@ export class Rogue extends plugin {
       this.e.user_id = user
       this.User = new User(this.e)
     }
-    let userData = await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    if (userData.game_uid) {
-      uid = userData.game_uid
-    } else {
-      await e.reply('当前使用的ck无星穹铁道角色，如绑定多个ck请尝试切换ck')
-      return false
-    }
+
+    let uid = e.msg.match(/\d+/)?.[0]
+    await this.miYoSummerGetUid()
+    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
-    let schedule_type = '1'
-    if (e.msg.indexOf('上期') > -1) {
-      schedule_type = '2'
-    }
+
     let ck = await getCk(e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
+      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
+      ck = ckArr[0]
+    }
+    if (!ck) {
+      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
       return false
+    }
+
+    let scheduleType = '1'
+    if (e.msg.indexOf('上期') > -1) {
+      scheduleType = '2'
     }
 
     let api = new MysSRApi(uid, ck)
@@ -63,9 +66,9 @@ export class Rogue extends plugin {
     if (deviceFp) {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
-    const { url, headers } = api.getUrl('srChallenge', { deviceFp, schedule_type })
+    const { url, headers } = api.getUrl('srChallenge', { deviceFp, schedule_type: scheduleType })
     delete headers['x-rpc-page']
-    logger.mark({ url, headers })
+    // logger.mark({ url, headers })
     let res = await fetch(url, {
       headers
     })
@@ -76,7 +79,28 @@ export class Rogue extends plugin {
       return false
     }
 
-    await e.reply(JSON.stringify(cardData))
+    const data = { ...cardData.data }
+    data.beginTime = this.timeForamt(data.begin_time)
+    data.endTime = this.timeForamt(data.end_time)
+    data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
+      return {
+        ...floor,
+        node_1: {
+          ...floor.node_1,
+          challengeTime: this.timeForamt(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
+        },
+        node_2: {
+          ...floor.node_2,
+          challengeTime: this.timeForamt(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
+        }
+      }
+    })
+
+    await runtimeRender(e, '/challenge/index.html', {
+      data,
+      uid,
+      type: scheduleType
+    })
   }
 
   async miYoSummerGetUid () {
@@ -97,5 +121,16 @@ export class Rogue extends plugin {
         JSON.stringify(userData)
     )
     return userData
+  }
+
+  timeForamt (timeObj, format = 'YYYY.MM.DD') {
+    const { year, month, day, hour, minute } = timeObj
+    return moment({
+      year,
+      month: month - 1,
+      day,
+      hour,
+      minute
+    }).format(format)
   }
 }

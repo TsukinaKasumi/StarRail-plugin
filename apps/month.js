@@ -4,7 +4,7 @@ import User from '../../genshin/model/user.js'
 import setting from '../utils/setting.js'
 import _ from 'lodash'
 import fetch from 'node-fetch'
-import { getCk, rulePrefix } from '../utils/common.js'
+import {getCk, rulePrefix} from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 export class Month extends plugin {
   constructor (e) {

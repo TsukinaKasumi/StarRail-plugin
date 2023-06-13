@@ -1,5 +1,5 @@
 import { exec } from 'child_process'
-import User from "../../genshin/model/user.js";
+import User from '../../genshin/model/user.js'
 
 export const rulePrefix = '((#|\\*)?(星铁|星轨|崩铁|星穹铁道|铁道|sr)|\\*|＊)'
 
@@ -216,12 +216,15 @@ export async function getCk (e) {
     return user.getCk()
   }
   let mysUser = (await user.user()).getMysUser('sr')
-  let ck = {
-    default: {
-      ck: mysUser.ck,
-      uid: mysUser.getUid('sr'),
-      qq: '',
-      ltuid: mysUser.ltuid
+  let ck
+  if (mysUser) {
+    ck = {
+      default: {
+        ck: mysUser.ck,
+        uid: mysUser.getUid('sr'),
+        qq: '',
+        ltuid: mysUser.ltuid
+      }
     }
   }
   return ck
