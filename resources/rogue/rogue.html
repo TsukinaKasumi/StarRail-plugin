@@ -1,0 +1,172 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/rogue/rogue.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="header">
+    <div class="header-title">
+        模拟宇宙数据总览
+    </div>
+    <div class="header-uid">
+        uid {{uid}} {{role.nickname}} {{role.level}}级
+    </div>
+    <div class="header-content">
+        <div class="header-content-block">
+            <div class="header-content-block-value">
+                    {{basic_info.unlocked_skill_points}}
+            </div>
+            <div class="header-content-block-title">
+                技能树已激活
+            </div>
+        </div>
+        <div class="header-content-block">
+            <div class="header-content-block-value">
+                {{basic_info.unlocked_miracle_num}}
+            </div>
+            <div class="header-content-block-title">
+                已解锁奇物
+            </div>
+        </div>
+        <div class="header-content-block">
+            <div class="header-content-block-value">
+                {{basic_info.unlocked_buff_num}}
+            </div>
+            <div class="header-content-block-title">
+                已解锁祝福
+            </div>
+        </div>
+    </div>
+</div>
+<div class="statistics-before">
+    统计周期：{{last_record.basic.schedule_begin.year}}.{{last_record.basic.schedule_begin.month}}.{{last_record.basic.schedule_begin.day}} - {{last_record.basic.schedule_end.year}}.{{last_record.basic.schedule_end.month}}.{{last_record.basic.schedule_end.day}}
+</div>
+<div class="records-header">
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+    <div class="records-header-title">
+        本期通关次数：
+    </div>
+    <div class="records-header-value">
+        {{last_record.basic.finish_cnt}}
+    </div>
+</div>
+{{each last_record.records record}}
+<div class="record">
+    <div class="record-world">
+        <img class="record-world-icon" src="{{pluResPath}}/rogue/ball.png"/>
+        <div>{{record.name}} {{record.difficulty}}</div>
+        <div class="high-score">
+            <div class="high-score-title">当前最高积分</div>
+            <div class="high-score-value">{{record.score}}</div>
+        </div>
+    </div>
+    <div class="record-time">
+        挑战时间： {{record.finish_time.year}}.{{record.finish_time.month}}.{{record.finish_time.day}} {{record.finish_time.hour}}:{{record.finish_time.minute}}:{{record.finish_time.second}}
+    </div>
+    <div class="divider"></div>
+    <div class="record-characters">
+        <div class="record-characters-title">
+            通关使用角色
+        </div>
+        <div class="record-characters-list">
+            {{each record.final_lineup avatar}}
+            <div class="avatar-box">
+                <div class="avatar rarity{{avatar.rarity}}">
+                    <div>
+                        <img class="avatar-img" src="{{avatar.icon}}" />
+                    </div>
+                    <div class="avatar-inner"></div>
+                    <div class="avatar-banner">
+                        等级 {{avatar.level}}
+                    </div>
+                    <div class="avatar-element" style="border-color: var(--borderColor-{{avatar.element}});">
+                        <img src="{{pluResPath}}/common/element/{{avatar.element}}.png" />
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="record-wish">
+        {{each record.base_type_list base}}
+        <div class="record-wish-icon">
+            <img src="{{pluResPath}}/common/rogue/{{base.name.slice(1,3)}}.webp"/>
+        </div>
+        <div class="circle-3">
+            {{base.cnt}}
+        </div>
+        {{/each}}
+    </div>
+    <div class="record-wish-detail">
+        <div class="record-wish-detail-header">
+            <span>获得祝福</span>
+        </div>
+        {{each record.buffs buff}}
+        <div class="record-wish-detail-content">
+            <div class="record-wish-detail-content-left">
+                <div class="record-wish-icon">
+                    <img src="{{pluResPath}}/common/rogue/{{buff.base_type.name.slice(1,3)}}.webp"/>
+                </div>
+                <div class="record-wish-detail-content-left-title">
+                    {{buff.base_type.name}} ：
+                </div>
+            </div>
+            <div class="record-wish-detail-content-right">
+                {{each buff.items item}}
+                <div class="record-wish-detail-content-items-{{item.rank}}">
+                    <div class="record-wish-detail-content-items-content"> {{item.name}} </div>
+                    {{if item.is_evoluted }}
+                    <div class="record-wish-detail-content-items-content-badge">
+                        已升级
+                    </div>
+                    {{/if}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="record-wish-detail">
+        <div class="record-wish-detail-header">
+            <span>获得奇物</span>
+        </div>
+        <div class="record-wish-detail-content">
+            {{each record.miracles miracle}}
+            <div class="qiwu">
+                <img src="{{miracle.icon}}"/>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+{{/each}}
+
+<div class="logo">
+    Created By Yunzai-Bot & StarRail-plugin
+</div>
+<style>
+    .header {
+        background-image: url('{{pluResPath}}/rogue/bg.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        /*width: 784px;*/
+        height: 220px;
+    }
+    .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{{pluResPath}}/rogue/oblivious_bg@2x.7b5d7b38.png") no-repeat;
+        filter: hue-rotate(280deg);
+        mix-blend-mode: screen;
+        background-color: #100A0E;
+        opacity: 0.9;
+        z-index: -1;
+    }
+</style>
+{{/block}}
