@@ -43,7 +43,7 @@ export class Rogue extends plugin {
     //   return false
     // }
     let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
+    // await this.miYoSummerGetUid()
     uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
