@@ -1,11 +1,11 @@
+import fetch from 'node-fetch'
+import _ from 'lodash'
+import moment from 'moment'
 import User from '../../genshin/model/user.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import setting from '../utils/setting.js'
-import fetch from 'node-fetch'
-import _ from 'lodash'
-import YAML from 'yaml'
-import fs from 'fs'
 import { getCk, rulePrefix } from '../utils/common.js'
+import runtimeRender from '../common/runtimeRender.js'
 
 export class Rogue extends plugin {
   constructor (e) {
@@ -76,7 +76,36 @@ export class Rogue extends plugin {
       return false
     }
 
-    await e.reply(JSON.stringify(cardData))
+    const data = { ...cardData.data }
+    data.beginTime = moment(data.begin_time).format('YYYY.MM.DD')
+    data.endTime = moment(data.end_time).format('YYYY.MM.DD')
+    data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
+      return {
+        ...floor,
+        node_1: _.map(floor.node_1, (node) => {
+          return {
+            ...node,
+            challengeTime: moment(node.challenge_time).format('YYYY.MM.DD HH:SS')
+          }
+        }),
+        node_2: _.map(floor.node_2, (node) => {
+          return {
+            ...node,
+            challengeTime: moment(node.challenge_time).format('YYYY.MM.DD HH:SS')
+          }
+        })
+      }
+    })
+
+    console.log(data.all_floor_detail)
+
+    // await e.reply(JSON.stringify(cardData))
+    await runtimeRender(e, '/challenge/index.html', {
+      data,
+      uid,
+      type: schedule_type
+    })
+    // await e.reply(JSON.stringify(cardData))
   }
 
   async miYoSummerGetUid () {

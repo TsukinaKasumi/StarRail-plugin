@@ -1,0 +1,203 @@
+.container {
+  padding: 40px 40px 0 40px;
+  width: 800px;
+  overflow: hidden;
+  /* background: url('../common/cont/bkg.png') center no-repeat; */
+  background-size: cover;
+  /* color: #f0eaca; */
+  font-family: 'SR', sans-serif;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+}
+
+.container * {
+  box-sizing: border-box;
+}
+
+img.rogue-star {
+  width: 60px;
+  height: 60px;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.head-item {
+  width: 350px;
+  height: 42px;
+}
+
+.head-item p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dedede;
+  text-align: center;
+  border: 1px #b8b8b8 solid;
+  color: #838383;
+  width: 100%;
+  height: 100%;
+}
+
+.head-item.actived {
+  padding: 4px;
+  background-color: #292929;
+}
+
+.head-item.actived p {
+  border: 2px #494a43 solid;
+  background-color: #292929;
+  color: #efd990;
+}
+
+.body {
+  margin-top: 20px;
+}
+
+.count {
+  color: #aaa;
+}
+
+.summar {
+  margin-top: 10px;
+  border-radius: 12px;
+  padding: 30px 30px;
+  background: url('../images/rogue-bg.png') no-repeat;
+  background-size: cover;
+}
+
+.summar h2 {
+  text-align: center;
+  color: #f3ca87;
+}
+
+.summar-content {
+  display: flex;
+  margin-top: 20px;
+  border: 1px #ddd solid;
+  color: #f0eaca;
+}
+
+.summar-star {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px #ddd solid;
+  width: 25%;
+}
+
+.summar-info {
+  padding: 20px 30px;
+}
+
+.detail-list {
+
+}
+
+.detail-item {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../images/rogue-bg.png') no-repeat;
+  background-size: cover;
+}
+
+.detail-border {
+  border: 2px #ddd solid;
+  border-top-right-radius: 36px;
+}
+
+.detail-head {
+  display: flex;
+  justify-content: space-between;
+  border-top-right-radius: 36px;
+  padding: 20px 30px;
+  background-color: rgba(0, 0, 0, .4);
+}
+
+.detail-title {
+  color: #f0eaca;
+  font-size: 24px;
+}
+
+.detail-title p:last-of-type {
+  margin-top: 8px;
+  font-size: 18px;
+  opacity: .85;
+}
+
+.detail-body {
+  padding: 20px 30px;
+  color: #f0eaca;
+}
+
+.detail-node-title {
+  margin-top: 16px;
+}
+
+.detail-node-title span {
+  opacity: .85;
+  font-size: 16px;
+}
+
+.detail-avatars {
+  margin-top: 14px;
+  display: flex;
+  margin-left: 30px;
+}
+
+.detail-avatar {
+  position: relative;
+  margin-left: 20px;
+  border-top-right-radius: 20px;
+  padding: 4px;
+  width: 120px;
+  height: 140px;
+}
+
+.detail-avatar.rank5 {
+  background-image: url("../images/rank5bg.webp");
+}
+
+.detail-avatar.rank4 {
+  background-image: url("../images/rank4bg.webp");
+}
+
+.detail-avatar-border {
+  border: 2px #ddd solid;
+  border-top-right-radius: 20px;
+  /* width: 100%;
+  height: 100%; */
+}
+
+.detail-avatar img.element {
+  position: absolute;
+  top: 8px;
+  width: 20px;
+  height: 20px;
+}
+
+.detail-avatar img.char {
+  width: 112px;
+  height: 124px;
+}
+
+.detail-avatar .level {
+  position: absolute;
+  background-color: #000;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  text-align: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-family: 'tttgbnumber';
+  /* color: #f0eaca; */
+  text-align: center;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
