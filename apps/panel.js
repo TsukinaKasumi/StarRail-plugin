@@ -1,17 +1,15 @@
 /* eslint-disable camelcase */
-import User from '../../genshin/model/user.js'
-import panelApi from '../runtime/PanelApi.js'
-import fetch from 'node-fetch'
-import MysSRApi from '../runtime/MysSRApi.js'
-import _ from 'lodash'
 import fs from 'fs'
-import path from 'path'
-import { pluginRoot, pluginResources } from '../utils/path.js'
+import _ from 'lodash'
+import fetch from 'node-fetch'
+import runtimeRender from '../common/runtimeRender.js'
+import MysSRApi from '../runtime/MysSRApi.js'
+import panelApi from '../runtime/PanelApi.js'
 import alias from '../utils/alias.js'
 import { getSign } from '../utils/auth.js'
 import { getCk, rulePrefix } from '../utils/common.js'
+import { pluginResources, pluginRoot } from '../utils/path.js'
 import setting from '../utils/setting.js'
-import runtimeRender from '../common/runtimeRender.js'
 
 export class Panel extends plugin {
   constructor (e) {
@@ -23,7 +21,7 @@ export class Panel extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}(.+)面板(更新)?`,
+          reg: `^${rulePrefix}(.+)面板(更新)?(.*)`,
           fnc: 'panel'
         },
         {
@@ -31,7 +29,7 @@ export class Panel extends plugin {
           fnc: 'ikun'
         },
         {
-          reg: `^${rulePrefix}(更新面板|面板更新)$`,
+          reg: `^${rulePrefix}(更新面板|面板更新)(.*)`,
           fnc: 'update'
         },
         {
@@ -48,7 +46,6 @@ export class Panel extends plugin {
         }
       ]
     })
-    this.User = new User(e)
   }
 
   async panel (e) {
@@ -60,6 +57,7 @@ export class Panel extends plugin {
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.ikun(e)
     if (charName === '更新' || matchResult[5]) return await this.update(e)
+    if (charName === '切换' || charName === '设置') return await this.changeApi(e)
     let uid = messageText.replace(messageReg, '')
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
@@ -78,44 +76,20 @@ export class Panel extends plugin {
       data.uid = uid
       data.api = api.split('/')[2]
       // 引入遗器地址数据
-      let relicsPathData = pluginRoot + '/resources/panel/data/relics.json'
-      relicsPathData = JSON.parse(fs.readFileSync(relicsPathData, 'utf-8'))
+      let relicsPathData = readJson('resources/panel/data/relics.json')
       // 引入角色数据
-      let charData = pluginRoot + '/resources/panel/data/character.json'
-      charData = JSON.parse(fs.readFileSync(charData, 'utf-8'))
+      let charData = readJson('resources/panel/data/character.json')
       data.charpath = charData[data.avatarId].path
       data.relics.forEach((item, i) => {
         const filePath = relicsPathData[item.id].icon
         data.relics[i].path = filePath
       })
-      data.behaviorList.splice(5)
-      data.behaviorList.forEach((item, i) => {
-        const nameId = item.id.toString().slice(0, 4)
-        let pathName = ''
-        switch (i) {
-          case 0:
-            pathName = 'basic_atk'
-            break
-          case 1:
-            pathName = 'skill'
-            break
-          case 2:
-            pathName = 'ultimate'
-            break
-          case 3:
-            pathName = 'talent'
-            break
-          case 4:
-            pathName = 'technique'
-            break
-        }
-        const filePath = nameId + '_' + pathName + '.png'
-        data.behaviorList[i].path = filePath
-      })
+      // 行迹
+      data.behaviorList = this.handleBehaviorList(data.behaviorList)
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
-      logger.debug('面板图:', data.charImage)
-      data.parseInt = parseInt
+
+      logger.debug(`${e.logFnc} 面板图:`, data.charImage)
       let msgId = await runtimeRender(
         e,
         '/panel/panel.html',
@@ -135,6 +109,37 @@ export class Panel extends plugin {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
     }
+  }
+
+  /** 处理行迹 */
+  handleBehaviorList (data) {
+    let _data = _.cloneDeep(data)
+    _data.splice(5)
+    _data.forEach((item, i) => {
+      const nameId = item.id.toString().slice(0, 4)
+      let pathName = ''
+      switch (i) {
+        case 0:
+          pathName = 'basic_atk'
+          break
+        case 1:
+          pathName = 'skill'
+          break
+        case 2:
+          pathName = 'ultimate'
+          break
+        case 3:
+          pathName = 'talent'
+          break
+        case 4:
+          pathName = 'technique'
+          break
+      }
+      const filePath = nameId + '_' + pathName + '.png'
+      _data[i].path = filePath
+    })
+    // 去除秘技
+    return _data.filter(i => i.type != '秘技')
   }
 
   /** 获取面板图 */
@@ -157,8 +162,8 @@ export class Panel extends plugin {
     } else if (fs.existsSync(fullFolderPath + name)) {
       return this.getRandomImage(folderPath + name)
     } else {
-      // 适配原文件位置
-      return this.getRandomImage(`panel/resources/char_image/${avatarId}`)
+      // 返回默认图位置
+      return `panel/resources/char_image/${avatarId}.png`
     }
   }
 
@@ -176,11 +181,16 @@ export class Panel extends plugin {
   async update (e) {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
+    const messageText = e.msg
+    const messageReg = new RegExp(`^${rulePrefix}(更新面板|面板更新)`)
+    let uid = messageText.replace(messageReg, '')
+    if (!uid) {
+      if (ats.length > 0 && !e.atBot) {
+        user = ats[0].qq
+      }
+      await this.miYoSummerGetUid()
+      uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     }
-    await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
     if (!uid) {
       return await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
     }
@@ -206,11 +216,13 @@ export class Panel extends plugin {
   async apiList (e) {
     if (!e.isMaster) return await e.reply('仅限主人可以查看API列表')
     const apiConfig = setting.getConfig('panelApi')
+    const defaultSelect = apiConfig.default
     const apiList = apiConfig.api
     let msg = 'API列表：\n'
     apiList.forEach((item, i) => {
       msg += `${i + 1}：${item.split('/')[2]}\n`
     })
+    msg += `当前API：\n${defaultSelect}：${apiList[defaultSelect - 1].split('/')[2]}`
     await e.reply(msg)
   }
 
@@ -433,28 +445,43 @@ async function updateData (oldData, newData) {
   returnData.unshift(...newData)
   return returnData
 }
-async function saveData (uid, data) {
-  // 文件路径
-  const filePath = pluginRoot + '/data/panel/' + uid + '.json'
-  // 确保目录存在，如果不存在则创建
-  await fs.promises.mkdir(path.dirname(filePath), { recursive: true })
-  // 判断文件是否存在，并写入数据
+const dataDir = pluginRoot + '/data/panel'
+function saveData (uid, data) {
+  // 判断目录是否存在，不存在则创建
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true })
+  }
   try {
-    await fs.promises.access(filePath, fs.constants.F_OK)
-    await fs.promises.writeFile(filePath, JSON.stringify(data), 'utf-8')
+    fs.writeFileSync(`${dataDir}/${uid}.json`, JSON.stringify(data), 'utf-8')
     return true
   } catch (err) {
-    await fs.promises.appendFile(filePath, JSON.stringify(data), 'utf-8')
+    logger.error('写入失败：', err)
     return false
   }
 }
-async function readData (uid) {
+function readData (uid) {
   // 文件路径
-  const filePath = pluginRoot + '/data/panel/' + uid + '.json'
+  const filePath = `${dataDir}/${uid}.json`
   // 判断文件是否存在并读取文件
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath))
   } else {
     return []
   }
+}
+/**
+ * @description: 读取JSON文件
+ * @param {string} path 路径
+ * @param {string} root 目录
+ * @return {object}
+ */
+function readJson (file, root = pluginRoot) {
+  if (fs.existsSync(`${root}/${file}`)) {
+    try {
+      return JSON.parse(fs.readFileSync(`${root}/${file}`, 'utf8'))
+    } catch (e) {
+      logger.error(e)
+    }
+  }
+  return {}
 }

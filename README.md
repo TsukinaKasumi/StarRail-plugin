@@ -8,19 +8,18 @@
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
 
-### 5.21更新：支持查询全平台数据(包括欧服以及美服），在config/panelAPI内将API修改为sr.ikechan8370
-更新报错一律执行
-<br>cd plugins/StarRail-plugin && git fetch --all && git reset --hard origin/main
+### 5.21更新：支持查询全平台数据(包括欧服以及美服)，在config/panelAPI内将API修改为sr.ikechan8370
+
+如更新报错可尝试执行在`Yunzai根目录`执行以下命令
+```sh
+cd plugins/StarRail-plugin && git reset --hard origin && git pull
+```
+
 ### 使用说明
 
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板、体力以及米游社所拥有的的一切有关星轨的功能
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
-
-### BUG反馈
-
-QQ群：758447726
-<br>注：只有加入QQ群聊才可申请参与内部测试！
 
 ### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
@@ -44,7 +43,7 @@ github
 git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
 
-安装完成后，发送 `#星铁更新` 即可自动更新 StarRail-plugin
+安装完成后，发送 `#星铁更新` 即可更新 StarRail-plugin
 
 ### 手动下载安装（不推荐）
 
@@ -52,11 +51,25 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 因为压缩包不支持用`#星铁更新` 进行更新，不方便后续更新升级，所以不推荐下载压缩包
 
 ## 功能介绍
+如遇到更新面板失败可能是面板服务连接超时可尝试以下方法
+
+### *切换面板1/*api列表
+可在config/panelApi中配置
+如果连不上请将API设置为sr.ikechan8370.com
+  - https://sr.ikechan8370.com/v1/info/
+  - https://lulu.roki.best/v1/info/
+  - https://sr.roki.best/v1/info/
+填入可选api
+然后可尝试*切换面板1/2/3
 
 ### *绑定＋你的uid
+绑定你的星铁uid多ck时可尝试绑定新的uid查询其他账号信息
 
 ### *希儿面板
 查看角色属性，遗器，命座，光锥等信息
+
+### *面板
+查询已缓存本地面板数据
 
 ### *更新面板
 使用已有的面板API进行面板数据的更新，支持的面板API: [ikechan8370](https://sr.ikechan8370.com/) / [mihomo](https://api.mihomo.me/)
@@ -68,8 +81,8 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *体力
 查看目前开拓力信息和委托完成进度
 
-### *抽卡链接（绑定）
-在群内发送抽卡链接进行绑定，私聊发送可能会导致出错
+### *抽卡链接（绑定/帮助）
+在群内发送抽卡链接进行绑定，私聊发送可能会导致出错/绑定抽卡链接帮助
 
 ### *在线时长
 可查看七天内的在线时长，可能需要重新绑定cookie，建议先#扫码登录然后再绑定星铁uid后进行查看
@@ -80,15 +93,22 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *抽卡分析角色/光锥/常驻/新手(刷新)
 查看卡池抽卡记录信息
 
-### *切换面板1/*api列表
-可在config/panelApi中配置
-如果连不上请将API设置为sr.ikechan8370.com
-  - https://sr.ikechan8370.com/v1/info/
-  - https://lulu.roki.best/v1/info/
-  - https://sr.roki.best/v1/info/
-填入可选api
+### *(上期)深渊
+查询模拟宇宙个人信息带前缀可查询上期深渊
 
-  抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
+### *抽卡
+模拟星穹铁道游戏抽卡后缀可加(光锥,常驻,默认抽卡角色)
+
+### *预估
+预估当前版本或下版本星琼数量
+
+### *兑换码
+查询星穹铁道前瞻直播兑换码
+
+### *跃迁分析
+默认总览,可接角色/光锥/常驻
+
+抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin)发送#扫码登录进行cookie的绑定，否则可能会报错
 获取抽卡链接看[这里](https://starrailstation.com/cn/warp#import)（仅pc，ios）
@@ -102,8 +122,8 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ## 特别鸣谢♥
 - mihomo.me：提供面板API来源
-- [狐狸](https://github.com/Tighnari520)(依托答辩)：插件美工
 - [bietiaop](https://github.com/bietiaop)：编写插件部分渲染以及部分功能
+- [yhs21241](https://github.com/yhs21241/StarRail-plugin-PanelPic)：面板图贡献
 
 ## 贡献者
 
