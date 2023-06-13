@@ -6,6 +6,7 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import setting from '../utils/setting.js'
 import { getCk, rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
+import GsCfg from '../../genshin/model/gsCfg.js'
 
 export class Rogue extends plugin {
   constructor (e) {
@@ -33,27 +34,41 @@ export class Rogue extends plugin {
       this.e.user_id = user
       this.User = new User(this.e)
     }
-    let userData = await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    if (userData.game_uid) {
-      uid = userData.game_uid
-    } else {
-      await e.reply('当前使用的ck无星穹铁道角色，如绑定多个ck请尝试切换ck')
-      return false
-    }
+    // let userData = await this.miYoSummerGetUid()
+    // let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    // if (userData.game_uid) {
+    //   uid = userData.game_uid
+    // } else {
+    //   await e.reply('当前使用的ck无星穹铁道角色，如绑定多个ck请尝试切换ck')
+    //   return false
+    // }
+    let uid = e.msg.match(/\d+/)?.[0]
+    await this.miYoSummerGetUid()
+    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
+
+    let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
+    let ck = ckArr[0]
+    // let ck = await getCk(e)
+    // if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+    // }
+    if (!ck) {
+      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
+      return false
+    }
+
     let scheduleType = '1'
     if (e.msg.indexOf('上期') > -1) {
       scheduleType = '2'
     }
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
-      return false
-    }
+    // let ck = await getCk(e)
+    // if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+    //   await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
+    //   return false
+    // }
 
     let api = new MysSRApi(uid, ck)
     let sdk = api.getUrl('getFp')
