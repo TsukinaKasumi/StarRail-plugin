@@ -45,9 +45,9 @@ export class Rogue extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
-    let schedule_type = '1'
+    let scheduleType = '1'
     if (e.msg.indexOf('上期') > -1) {
-      schedule_type = '2'
+      scheduleType = '2'
     }
     let ck = await getCk(e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
@@ -63,9 +63,9 @@ export class Rogue extends plugin {
     if (deviceFp) {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
-    const { url, headers } = api.getUrl('srChallenge', { deviceFp, schedule_type })
+    const { url, headers } = api.getUrl('srChallenge', { deviceFp, schedule_type: scheduleType })
     delete headers['x-rpc-page']
-    logger.mark({ url, headers })
+    // logger.mark({ url, headers })
     let res = await fetch(url, {
       headers
     })
@@ -77,35 +77,27 @@ export class Rogue extends plugin {
     }
 
     const data = { ...cardData.data }
-    data.beginTime = moment(data.begin_time).format('YYYY.MM.DD')
-    data.endTime = moment(data.end_time).format('YYYY.MM.DD')
+    data.beginTime = this.timeForamt(data.begin_time)
+    data.endTime = this.timeForamt(data.end_time)
     data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
       return {
         ...floor,
-        node_1: _.map(floor.node_1, (node) => {
-          return {
-            ...node,
-            challengeTime: moment(node.challenge_time).format('YYYY.MM.DD HH:SS')
-          }
-        }),
-        node_2: _.map(floor.node_2, (node) => {
-          return {
-            ...node,
-            challengeTime: moment(node.challenge_time).format('YYYY.MM.DD HH:SS')
-          }
-        })
+        node_1: {
+          ...floor.node_1,
+          challengeTime: this.timeForamt(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
+        },
+        node_2: {
+          ...floor.node_2,
+          challengeTime: this.timeForamt(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
+        }
       }
     })
 
-    console.log(data.all_floor_detail)
-
-    // await e.reply(JSON.stringify(cardData))
     await runtimeRender(e, '/challenge/index.html', {
       data,
       uid,
-      type: schedule_type
+      type: scheduleType
     })
-    // await e.reply(JSON.stringify(cardData))
   }
 
   async miYoSummerGetUid () {
@@ -126,5 +118,16 @@ export class Rogue extends plugin {
         JSON.stringify(userData)
     )
     return userData
+  }
+
+  timeForamt (timeObj, format = 'YYYY.MM.DD') {
+    const { year, month, day, hour, minute } = timeObj
+    return moment({
+      year,
+      month: month - 1,
+      day,
+      hour,
+      minute
+    }).format(format)
   }
 }

@@ -2,9 +2,9 @@
   padding: 40px 40px 0 40px;
   width: 800px;
   overflow: hidden;
-  /* background: url('../common/cont/bkg.png') center no-repeat; */
+  background: url('../common/cont/bkg.png') center no-repeat;
   background-size: cover;
-  /* color: #f0eaca; */
+  color: #f0eaca;
   font-family: 'SR', sans-serif;
   font-size: 1.2rem;
   box-sizing: border-box;
@@ -20,6 +20,20 @@ img.rogue-star {
 }
 
 .head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.head .tag {
+  margin-left: 20px;
+  padding: 0 6px;
+  border: 2px solid #f0eaca;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+/* .head {
   display: flex;
   justify-content: space-between;
 }
@@ -50,7 +64,7 @@ img.rogue-star {
   border: 2px #494a43 solid;
   background-color: #292929;
   color: #efd990;
-}
+} */
 
 .body {
   margin-top: 20px;
