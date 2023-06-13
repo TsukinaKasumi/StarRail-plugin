@@ -7,25 +7,13 @@
 {{block 'main'}}
 
   <h2 class="head" style="margin-bottom: 20px;text-align: center;">UID: {{ uid }} 的深渊数据 <span class="tag">{{ type == '1' ? '本期' : '上期' }}</span></h2>
-
-  <!-- <div class="head">
-    <div class="head-item">
-      <p>{{ type == '1' ? '本期' : '上期' }}</p>
-    </div>
-    <div class="head-item{{ type == '1' ? ' actived' : '' }}">
-      <p>本期</p>
-    </div>
-    <div class="head-item{{ type == '2' ? ' actived' : '' }}">
-      <p>上期</p>
-    </div>
-  </div> -->
   
   <div class="body">
     <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
     <div class="summar">
       <h2>混沌回忆挑战回顾</h2>
       <div class="summar-content">
-        <div class="summar-star"><img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X 1</div>
+        <div class="summar-star"><img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ data.star_num }}</div>
         <div class="summar-info">
           <div>最深抵达: {{ data.max_floor }}</div>
           <div style="margin-top: 8px;">战斗次数: {{ data.battle_num }}</div>
@@ -58,7 +46,7 @@
                 <div class="detail-avatar rank{{ avatar.rarity }}">
                   <div class="detail-avatar-border">
                     <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
-                    <img src="{{ pluResPath }}gatcha/images/char/{{ avatar.id }}.png" alt="">
+                    <img class="char" src="{{ pluResPath }}gatcha/images/char/{{ avatar.id }}.png" alt="">
                     <div class="level">等级 {{ avatar.level }}</div>
                   </div>
                 </div>

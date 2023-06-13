@@ -34,6 +34,7 @@ export class Challenge extends plugin {
       this.e.user_id = user
       this.User = new User(this.e)
     }
+
     let uid = e.msg.match(/\d+/)?.[0]
     await this.miYoSummerGetUid()
     uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
@@ -41,6 +42,7 @@ export class Challenge extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
+
     let ck = await getCk(e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
@@ -105,6 +107,7 @@ export class Challenge extends plugin {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
     let ck = await getCk(this.e)
     if (!ck) return false
+    // if (await redis.get(key)) return false
     // todo check ck
     let api = new MysSRApi('', ck)
     let userData = await api.getData('srUser')

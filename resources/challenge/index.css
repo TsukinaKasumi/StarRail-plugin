@@ -33,39 +33,6 @@ img.rogue-star {
   font-size: 18px;
 }
 
-/* .head {
-  display: flex;
-  justify-content: space-between;
-}
-
-.head-item {
-  width: 350px;
-  height: 42px;
-}
-
-.head-item p {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #dedede;
-  text-align: center;
-  border: 1px #b8b8b8 solid;
-  color: #838383;
-  width: 100%;
-  height: 100%;
-}
-
-.head-item.actived {
-  padding: 4px;
-  background-color: #292929;
-}
-
-.head-item.actived p {
-  border: 2px #494a43 solid;
-  background-color: #292929;
-  color: #efd990;
-} */
-
 .body {
   margin-top: 20px;
 }
