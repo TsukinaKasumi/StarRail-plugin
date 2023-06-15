@@ -36,7 +36,7 @@ export class srxx extends plugin {
           fnc: 'srqd',
         },
         {
-          reg: `^${rulePrefix}攻略`,
+          reg: `^${rulePrefix}攻略$`,
           fnc: 'srgl',
         },
       ],
