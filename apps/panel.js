@@ -26,7 +26,7 @@ export class Panel extends plugin {
         },
         {
           reg: `^${rulePrefix}面板(列表)?$`,
-          fnc: 'ikun'
+          fnc: 'plmb'
         },
         {
           reg: `^${rulePrefix}(更新面板|面板更新)(.*)`,
@@ -55,9 +55,10 @@ export class Panel extends plugin {
     let messageReg = new RegExp(`^${rulePrefix}(.+)面板(更新)?`)
     const matchResult = messageText.match(messageReg)
     const charName = matchResult ? matchResult[4] : null
-    if (!charName) return await this.ikun(e)
+    if (!charName) return await this.plmb(e)
     if (charName === '更新' || matchResult[5]) return await this.update(e)
     if (charName === '切换' || charName === '设置') return await this.changeApi(e)
+    if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
@@ -345,7 +346,7 @@ export class Panel extends plugin {
     }
   }
 
-  async ikun (e) {
+  async plmb (e) {
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
