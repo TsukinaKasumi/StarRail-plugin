@@ -78,7 +78,7 @@ export const helpList = [
       desc: '星铁角色面板详情'
     }, {
       icon: 106,
-      title: '*希儿攻略(1|2|3)',
+      title: '*希儿攻略(1 | 2 | 3)',
       desc: '星铁角色攻略'
     }, {
       icon: 100,
@@ -103,7 +103,7 @@ export const helpList = [
     }, {
       icon: 99,
       title: '*收益曲线',
-      desc: '星铁角色收益曲线'
+      desc: '星铁角色收益曲线(仅供参考)'
     }, {
       icon: 106,
       title: '*攻略',
@@ -123,7 +123,7 @@ export const helpList = [
     desc: '星铁插件更新日志'
   } ,{
     icon: 85,
-    title: '*切换面板(1|2|3)',
+    title: '*切换面板(1 | 2 | 3)',
     desc: '切换面板服务'
   } ,{
     icon: 85,
