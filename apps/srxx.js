@@ -10,7 +10,7 @@ import common from '../../../lib/common/common.js';
 import { rulePrefix } from '../utils/common.js'
 import alias from '../utils/alias.js'
 const srrolePath = `${pluginResources}/srsr/`;
-
+const _path = process.cwd() + '/plugins/StarRail-plugin'
 export class srxx extends plugin {
   constructor() {
     super({
@@ -38,7 +38,11 @@ export class srxx extends plugin {
         {
           reg: `^${rulePrefix}攻略$`,
           fnc: 'srgl',
-        },
+        },     
+        {
+          reg: `^${rulePrefix}预估$`,
+          fnc: 'srEstimate'
+        }
       ],
     });
   }
@@ -113,5 +117,13 @@ export class srxx extends plugin {
   msg.push('注意,仅供参考!!!')
   e.reply(await common.makeForwardMsg(e,msg,`星穹铁道全角色攻略`))
     return false
+ }
+
+ async srEstimate(e) {
+  let msg = [
+      segment.image(`${_path}/resources/sryugu/星琼预估.png`),
+  ]
+  e.reply(msg)
+  return true
  }
 }
