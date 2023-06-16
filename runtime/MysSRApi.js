@@ -48,7 +48,7 @@ export default class MysSRApi extends MysApi {
       },
       srChallenge: {
         url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
-        query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
+        query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}&need_all=true&isPrev=${data.schedule_type === '2' ? '1' : ''}`
       },
       srRogue: {
         url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
