@@ -37,7 +37,7 @@ export class Panel extends plugin {
           fnc: 'changeApi'
         },
         {
-          reg: `^${rulePrefix}(API|api)列表`,
+          reg: `^${rulePrefix}(API|api)列表$`,
           fnc: 'apiList'
         },
         {
@@ -266,7 +266,7 @@ export class Panel extends plugin {
       const charInfo = data.filter(item => item.name === charName)[0]
       if (!charInfo) {
         throw Error(
-          '未查询到角色数据，请检查角色是否放在了助战或者展柜，检查角色名是否正确，已设置的会有延迟，请等待一段时间重试。'
+          `未查询到${uid}的角色数据，请检查角色是否放在了助战或者展柜\n请检查角色名是否正确,已设置的会有延迟,等待一段时间后重试~`
         )
       }
       return charInfo
@@ -285,7 +285,7 @@ export class Panel extends plugin {
     let previousData = await readData(uid)
     if ((previousData.length < 1 || isForce) && !forceCache) {
       logger.mark('SR-panelApi强制查询')
-      await this.e.reply('正在更新面板数据中~可能需要一段时间，请耐心等待')
+      await this.e.reply(`正在获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`)
       try {
         logger.mark('SR-panelApi开始查询', uid)
         let time = await redis.get(timeKey)
@@ -294,7 +294,7 @@ export class Panel extends plugin {
           const leftTime = Date.now() - time
           if (leftTime < 1 * 60 * 1000) {
             const seconds = Math.ceil((1 * 60 * 1000 - leftTime) / 1000)
-            throw Error(`查询过于频繁，请${seconds}秒后重试`)
+            throw Error(`查询过于频繁，请${seconds}秒后重试~`)
           }
         }
         const api = await panelApi()
@@ -310,17 +310,17 @@ export class Panel extends plugin {
           cardData = await res.json()
         } catch (error) {
           logger.error(error)
-          throw Error('面板服务连接超时，请稍后重试')
+          throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         }
-        if (!res) throw Error('面板服务连接超时，请稍后重试')
+        if (!res) throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         // 设置查询时间
         await redis.setEx(timeKey, 360 * 60, Date.now().toString())
         if ('detail' in cardData) throw Error(cardData.detail)
         if (!('playerDetailInfo' in cardData)) {
-          throw Error('未查询到任何数据')
+          throw Error(`uid:${uid}未查询到任何数据`)
         }
         if (!cardData.playerDetailInfo.isDisplayAvatarList) {
-          throw Error('角色展柜未开启或者该用户不存在')
+          throw Error(`uid:${uid}更新面板失败\n可能是角色展柜未开启或者该用户不存在`)
         }
         const assistRole = cardData.playerDetailInfo.assistAvatar
         const displayRoles = cardData.playerDetailInfo.displayAvatars || []
