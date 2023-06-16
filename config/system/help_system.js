@@ -45,9 +45,13 @@ export const helpList = [
       title: '*体力',
       desc: '体力和委托信息'
     }, {
-      icon: 56,
+      icon: 107,
       title: '*(上期)宇宙(uid)',
       desc: '模拟宇宙信息(可带uid查询)'
+    }, {
+      icon: 110,
+      title: '*深渊',
+      desc: '忘却之庭信息'
     }, {
       icon: 91,
       title: '*在线时长',
@@ -97,13 +101,13 @@ export const helpList = [
       title: '*xx参考面板(帮助)',
       desc: '星铁角色参考面板(帮助)'
     }, {
-      icon: 61,
+      icon: 111,
       title: '*强度榜',
       desc: '星铁角色强度榜(仅供参考)'
     }, {
       icon: 99,
       title: '*收益曲线',
-      desc: '星铁角色收益曲线(仅供参考)'
+      desc: '星铁各属性收益曲线(仅供参考)'
     }, {
       icon: 106,
       title: '*攻略',
