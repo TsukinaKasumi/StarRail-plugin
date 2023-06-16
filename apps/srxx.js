@@ -1,8 +1,8 @@
 ﻿//以下数据均来自于米游社
-//参考面板来自blue菌hehe
-//强度榜来自水云109
-//全角色攻略来自萧熏儿mua
-
+//参考面板来自@blue菌hehe
+//强度榜来自@水云109
+//全角色攻略来自@萧熏儿mua
+//星琼预估来自@璐璐咔小猪头
 import plugin from '../../../lib/plugins/plugin.js';
 import { pluginResources } from '../utils/path.js';
 import fs from 'fs';
@@ -10,7 +10,6 @@ import common from '../../../lib/common/common.js';
 import { rulePrefix } from '../utils/common.js'
 import alias from '../utils/alias.js'
 const srrolePath = `${pluginResources}/srsr/`;
-const _path = process.cwd() + '/plugins/StarRail-plugin'
 export class srxx extends plugin {
   constructor() {
     super({
