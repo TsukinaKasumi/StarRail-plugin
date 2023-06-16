@@ -32,7 +32,7 @@ export class Update extends plugin {
       priority: 1000,
       rule: [
         {
-          reg: '^#?(星轨|星铁)(插件)?(强制)?更新$',
+          reg: `^${rulePrefix}(插件)?(强制)?更新$`,
           fnc: 'update'
         },
         {

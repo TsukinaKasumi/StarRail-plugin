@@ -115,11 +115,11 @@ export const helpList = [
   auth: 'master',
   list: [{
     icon: 85,
-    title: '#星铁(强制)更新',
-    desc: '更新星铁插件'
+    title: '*(强制)更新',
+    desc: '(强制)更新星铁插件'
   }, {
     icon: 85,
-    title: '#星铁更新日志',
+    title: '*更新日志',
     desc: '星铁插件更新日志'
   } ,{
     icon: 85,
@@ -128,6 +128,6 @@ export const helpList = [
   } ,{
     icon: 85,
     title: '*面板图更新',
-    desc: '安装扩展图，图片较多要一定时间，请勿重复执行'
+    desc: '安装扩展图，需要一定时间，请勿重复执行'
   }]
 }]
