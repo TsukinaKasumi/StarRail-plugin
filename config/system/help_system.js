@@ -85,6 +85,10 @@ export const helpList = [
       title: '*希儿攻略(1 | 2 | 3)',
       desc: '星铁角色攻略'
     }, {
+      icon: 106,
+      title: '*攻略',
+      desc: '星铁全角色攻略'
+    }, {
       icon: 100,
       title: '*抽卡(角色|常驻|光锥)',
       desc: '模拟星穹铁道抽卡'
@@ -108,10 +112,6 @@ export const helpList = [
       icon: 99,
       title: '*收益曲线',
       desc: '星铁各属性收益曲线(仅供参考)'
-    }, {
-      icon: 106,
-      title: '*攻略',
-      desc: '星铁全角色攻略'
     }
   ]
 }, {
