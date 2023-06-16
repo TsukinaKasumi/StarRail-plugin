@@ -1,4 +1,5 @@
 import setting from '../utils/setting.js';
+import Version from '../components/Version.js';
 const decimalAdjust = (type, value, exp = 0) => {
   type = String(type);
   if (!['round', 'floor', 'ceil'].includes(type)) {
@@ -43,10 +44,16 @@ export default function runtimeRender(e, path, renderData = {}, cfg = {}) {
   return e.runtime.render('StarRail-plugin', path, renderData, {
     ...cfg,
     beforeRender({ data }) {
+      let resPath = data.pluResPath
       return {
         ...data,
+        _res_path: resPath,
+        _layout_path: layoutPath,
+        defaultLayout: layoutPath + 'default.html',
+        elemLayout: layoutPath + 'elem.html',
         sys: {
           scale: pct,
+          copyright: `Created By Yunzai-Bot<span class="version">${Version.yunzai}</span> & StarRail-plugin<span class="version">${Version.version}</span>`
         },
         Math,
         MathPro,

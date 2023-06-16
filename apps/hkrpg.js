@@ -35,10 +35,6 @@ export class Hkrpg extends plugin {
           fnc: 'card'
         },
         {
-          reg: `^${rulePrefix}帮助$`,
-          fnc: 'help'
-        },
-        {
           reg: `^${rulePrefix}(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\\d){0,}$`,
           fnc: 'getPayLog'
         },
@@ -125,10 +121,6 @@ export class Hkrpg extends plugin {
       JSON.stringify(userData)
     )
     return userData
-  }
-
-  async help (e) {
-    await runtimeRender(e, '/help/help.html')
   }
 
   async bindSRUid () {
