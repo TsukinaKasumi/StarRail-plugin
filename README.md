@@ -108,6 +108,18 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *跃迁分析
 默认总览,可接角色/光锥/常驻
 
+### *xx参考面板(帮助)
+星铁角色参考面板(帮助)
+
+### *强度榜
+星铁角色强度榜(仅供参考)
+
+### *收益曲线
+星铁各属性收益曲线(仅供参考)
+
+# *攻略
+星铁全角色攻略
+
 抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
 绝大部分功能需要绑定cookie进行使用，推荐使用[逍遥插件](https://gitee.com/Ctrlcvs/xiaoyao-cvs-plugin)发送#扫码登录进行cookie的绑定，否则可能会报错

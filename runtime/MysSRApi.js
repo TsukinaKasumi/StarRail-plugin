@@ -1,6 +1,7 @@
 import MysApi from '../../genshin/model/mys/mysApi.js'
 import md5 from 'md5'
 import _ from 'lodash'
+import crypto from 'crypto'
 const DEVICE_ID = randomString(32).toUpperCase()
 const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
@@ -48,7 +49,7 @@ export default class MysSRApi extends MysApi {
       },
       srChallenge: {
         url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
-        query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}&need_all=true&isPrev=${data.schedule_type === '2' ? '1' : ''}`
+        query: `isPrev=true&need_all=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
       },
       srRogue: {
         url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
@@ -92,6 +93,9 @@ export default class MysSRApi extends MysApi {
       let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
       headers.cookie = cookie?.ck
       this.deviceId = cookie?.device_id
+    }
+    if (!this.deviceId) {
+      this.deviceId = crypto.randomUUID()
     }
     if (this.deviceId) {
       headers['x-rpc-device_id'] = this.deviceId

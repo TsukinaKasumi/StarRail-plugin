@@ -223,7 +223,8 @@ export async function getCk (e) {
         ck: mysUser.ck,
         uid: mysUser.getUid('sr'),
         qq: '',
-        ltuid: mysUser.ltuid
+        ltuid: mysUser.ltuid,
+        device_id: mysUser.device
       }
     }
   }

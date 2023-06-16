@@ -45,9 +45,13 @@ export const helpList = [
       title: '*体力',
       desc: '体力和委托信息'
     }, {
-      icon: 56,
+      icon: 107,
       title: '*(上期)宇宙(uid)',
       desc: '模拟宇宙信息(可带uid查询)'
+    }, {
+      icon: 110,
+      title: '*深渊',
+      desc: '忘却之庭信息'
     }, {
       icon: 91,
       title: '*在线时长',
@@ -81,6 +85,10 @@ export const helpList = [
       title: '*希儿攻略(1 | 2 | 3)',
       desc: '星铁角色攻略'
     }, {
+      icon: 106,
+      title: '*攻略',
+      desc: '星铁全角色攻略'
+    }, {
       icon: 100,
       title: '*抽卡(角色|常驻|光锥)',
       desc: '模拟星穹铁道抽卡'
@@ -97,17 +105,13 @@ export const helpList = [
       title: '*xx参考面板(帮助)',
       desc: '星铁角色参考面板(帮助)'
     }, {
-      icon: 61,
+      icon: 111,
       title: '*强度榜',
       desc: '星铁角色强度榜(仅供参考)'
     }, {
       icon: 99,
       title: '*收益曲线',
-      desc: '星铁角色收益曲线(仅供参考)'
-    }, {
-      icon: 106,
-      title: '*攻略',
-      desc: '星铁全角色攻略'
+      desc: '星铁各属性收益曲线(仅供参考)'
     }
   ]
 }, {
@@ -115,11 +119,11 @@ export const helpList = [
   auth: 'master',
   list: [{
     icon: 85,
-    title: '#星铁(强制)更新',
-    desc: '更新星铁插件'
+    title: '*(强制)更新',
+    desc: '(强制)更新星铁插件'
   }, {
     icon: 85,
-    title: '#星铁更新日志',
+    title: '*更新日志',
     desc: '星铁插件更新日志'
   } ,{
     icon: 85,
@@ -128,6 +132,6 @@ export const helpList = [
   } ,{
     icon: 85,
     title: '*面板图更新',
-    desc: '安装扩展图，图片较多要一定时间，请勿重复执行'
+    desc: '安装扩展图，需要一定时间，请勿重复执行'
   }]
 }]

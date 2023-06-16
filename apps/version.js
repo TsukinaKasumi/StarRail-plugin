@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import { exec, execSync } from 'child_process'
 import { checkPnpm } from '../utils/common.js'
-
+import { rulePrefix } from "../utils/common.js";
 export class StarRailManagement extends plugin {
   constructor (e) {
     super({
@@ -11,7 +11,7 @@ export class StarRailManagement extends plugin {
       priority: 400,
       rule: [
         {
-          reg: '^#?(星轨|星铁)(插件)?更新日志$',
+          reg: `^${rulePrefix}(插件)?更新日志$`,
           fnc: 'updateLog'
         }
       ]
