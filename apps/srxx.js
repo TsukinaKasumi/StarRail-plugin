@@ -94,13 +94,13 @@ export class srxx extends plugin {
 
  async srqd (e) {
   let msg = []
-  msg.push('1.1版本角色强度排行榜\n     注意仅供参考!!!',segment.image(`${srrolePath}/sy/角色强度榜.jpg`))
-  msg.push('输出T0-T1',segment.image(`${srrolePath}/sy/输出榜T0-1.jpg`))
-  msg.push('输出T2',segment.image(`${srrolePath}/sy/输出榜T2.jpg`))
-  msg.push('输出T3',segment.image(`${srrolePath}/sy/输出榜T3.jpg`))
-  msg.push('辅助榜',segment.image(`${srrolePath}/sy/辅助榜.jpg`))
-  msg.push('生存榜',segment.image(`${srrolePath}/sy/生存榜.jpg`))
-  msg.push('注意,仅供参考!!!',segment.image(`${srrolePath}/sy/备注.jpg`))
+  msg.push('1.0版本角色强度排行榜\n     注意仅供参考!!!',segment.image(`${srrolePath}/qd/角色强度榜.jpg`))
+  msg.push('输出T0-T1',segment.image(`${srrolePath}/qd/输出榜T0-1.jpg`))
+  msg.push('输出T2',segment.image(`${srrolePath}/qd/输出榜T2.jpg`))
+  msg.push('输出T3',segment.image(`${srrolePath}/qd/输出榜T3.jpg`))
+  msg.push('辅助榜',segment.image(`${srrolePath}/qd/辅助榜.jpg`))
+  msg.push('生存榜',segment.image(`${srrolePath}/qd/生存榜.jpg`))
+  msg.push('注意,仅供参考!!!',segment.image(`${srrolePath}/qd/备注.jpg`))
   e.reply(await common.makeForwardMsg(e,msg,`星穹铁道角色强度排行榜`))
     return false
  }
@@ -121,7 +121,7 @@ export class srxx extends plugin {
 
  async srEstimate(e) {
   let msg = [
-      segment.image(`${_path}/resources/sryugu/星琼预估.png`),
+      segment.image(`${srrolePath}/yg/星琼预估.png`),
   ]
   e.reply(msg)
   return true
