@@ -14,6 +14,9 @@
 ```sh
 cd plugins/StarRail-plugin && git reset --hard origin && git pull
 ```
+### 交流群
+
+插件交流群(QQ):512897837
 
 ### 使用说明
 
