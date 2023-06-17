@@ -82,7 +82,7 @@ export const helpList = [
       desc: '星铁角色面板详情'
     }, {
       icon: 106,
-      title: '*希儿攻略(1 | 2 | 3)',
+      title: '*希儿攻略(1 | 2 | 3 | 4)',
       desc: '星铁角色攻略'
     }, {
       icon: 106,
@@ -133,5 +133,9 @@ export const helpList = [
     icon: 85,
     title: '*面板图更新',
     desc: '安装扩展图，需要一定时间，请勿重复执行'
+  }, {
+    icon: 85,
+    title: '*设置默认攻略(1 | 2 | 3 | 4)',
+    desc: '设置星铁默认攻略图'
   }]
 }]
