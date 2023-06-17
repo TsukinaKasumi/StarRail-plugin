@@ -63,7 +63,7 @@ export class strategy extends plugin {
 
   /** #心海攻略 */
   async strategy () {
-    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-3])?$`)
+    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-5])?$`)
     let [, , , , isUpdate, roleName,
       group = setting.getConfig('mys')?.defaultSource
     ] = this.e.msg.match(reg)
