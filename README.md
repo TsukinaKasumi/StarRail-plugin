@@ -20,6 +20,9 @@ cd plugins/StarRail-plugin && git reset --hard origin && git pull
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板、体力以及米游社所拥有的的一切有关星轨的功能
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
+### BUG反馈
+
+QQ群：758447726
 
 ### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
@@ -93,7 +96,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *抽卡分析角色/光锥/常驻/新手(刷新)
 查看卡池抽卡记录信息
 
-### *(上期)深渊
+### *(上期)宇宙(uid)
 查询模拟宇宙个人信息带前缀可查询上期深渊
 
 ### *抽卡
@@ -117,8 +120,11 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *收益曲线
 星铁各属性收益曲线(仅供参考)
 
-# *攻略
+### *攻略
 星铁全角色攻略
+
+### *深渊
+忘却之庭信息(查询时可能会有验证码)
 
 抽卡分析默认会缓存结果，后面加上刷新才会获取新的抽卡记录
 
