@@ -24,7 +24,7 @@ export class strategy extends plugin {
           fnc: 'strategy_help'
         },
         {
-          reg: `^${rulePrefix}设置默认攻略([1-3])?$`, // 待添加
+          reg: `^${rulePrefix}设置默认攻略([1-4])?$`, // 待添加
           fnc: 'strategy_setting'
         }
       ]
@@ -87,28 +87,29 @@ export class strategy extends plugin {
   async strategy_help () {
     await this.e.reply([
       '星铁攻略帮助:\n',
-      '*希儿攻略[123]\n',
-      '*更新希儿攻略[123]\n',
-      '*设置默认攻略[123]\n',
+      '*希儿攻略[1234]\n',
+      '*更新希儿攻略[1234]\n',
+      '*设置默认攻略[1234]\n',
       '示例: *希儿攻略2\n',
       '\n攻略来源:\n',
       '1——初始镜像\n',
       '2——小橙子阿\n',
-      '3——星穹中心'
+      '3——星穹中心\n',
+      '4——水云109'
     ])
   }
 
   /** #设置默认攻略1 */
   async strategy_setting () {
-    let match = /设置默认攻略([1-3])?$/.exec(this.e.msg)
+    let match = /设置默认攻略([1-4])?$/.exec(this.e.msg)
     let set = './plugins/StarRail-plugin/config/mys.yaml'
     let config = fs.readFileSync(set, 'utf8')
     let num = Number(match[1])
     if (isNaN(num)) {
-      await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[123] \n 请增加数字1-4其中一个')
+      await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[1234] \n 请增加数字1-4其中一个')
       return
     }
-    config = config.replace(/defaultSource: [1-3]/g, 'defaultSource: ' + num)
+    config = config.replace(/defaultSource: [1-4]/g, 'defaultSource: ' + num)
     fs.writeFileSync(set, config, 'utf8')
 
     await this.e.reply('星铁默认攻略已设置为: ' + match[1])
