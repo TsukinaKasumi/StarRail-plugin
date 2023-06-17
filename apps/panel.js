@@ -10,6 +10,7 @@ import { getSign } from '../utils/auth.js'
 import { getCk, rulePrefix } from '../utils/common.js'
 import { pluginResources, pluginRoot } from '../utils/path.js'
 import setting from '../utils/setting.js'
+import moment from 'moment'
 
 export class Panel extends plugin {
   constructor (e) {
@@ -202,10 +203,14 @@ export class Panel extends plugin {
         api: api.split('/')[2],
         uid,
         data,
-        type: 'update'
+        type: 'update',
+        time: moment().format('YYYY-MM-DD HH:mm:ss'),
+        userName: e.sender.card || e.sender.nickname
       }
       // 渲染数据
-      await runtimeRender(e, '/panel/card.html', renderData)
+      await runtimeRender(e, '/panel/new_card.html', renderData, {
+        scale: 1.6
+      })
       // await e.reply( '更新面板数据成功' );
     } catch (error) {
       logger.error('SR-panelApi', error)
@@ -361,10 +366,12 @@ export class Panel extends plugin {
     let renderData = {
       api: api.split('/')[2],
       uid,
-      data
+      data,
+      time: '该页数据为缓存数据，非最新数据',
+      userName: e.sender.card || e.sender.nickname
     }
     // 渲染数据
-    await runtimeRender(e, '/panel/card.html', renderData, {
+    await runtimeRender(e, '/panel/new_card.html', renderData, {
       scale: 1.6
     })
   }

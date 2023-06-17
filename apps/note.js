@@ -1,11 +1,10 @@
-import User from '../../genshin/model/user.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import setting from '../utils/setting.js'
 import fetch from 'node-fetch'
 import _ from 'lodash'
 import YAML from 'yaml'
 import fs from 'fs'
-import {getCk, rulePrefix} from '../utils/common.js'
+import { getCk, rulePrefix } from '../utils/common.js'
 export class Note extends plugin {
   constructor (e) {
     super({
@@ -21,7 +20,6 @@ export class Note extends plugin {
         }
       ]
     })
-    this.User = new User(e)
   }
 
   async note (e) {
@@ -30,7 +28,6 @@ export class Note extends plugin {
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
       this.e.user_id = user
-      this.User = new User(this.e)
     }
     let userData = await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)

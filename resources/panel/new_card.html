@@ -1,0 +1,38 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/panel/new_card.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="other-text">
+    <div class="title">角色数据</div>
+    <div class="update-service">面板更新服务: {{api}}</div>
+    <div class="uid">UID:{{uid}}</div>
+    <div class="update-time">更新时间：{{time}}</div>
+    <div class="_copyright">Card by StarRail-Plugin & Yunzai-Bot</div>
+</div>
+<div class="data">
+    <div class="title">
+        <div class="left">
+            <span class="golden-circle">●</span>为本次更新角色
+            <span class="grey-circle">●</span>为历史缓存角色
+        </div>
+        <div class="right">
+            昵称: {{userName}}
+        </div>
+    </div>
+    <div class="item-list">
+        {{each data char i}}
+        <div class="item" data-isUpdate="{{type=='update'&&char.is_new}}">
+            <div class="avatar">
+                <img src="{{pluResPath}}panel/resources/avatar/{{char.avatarId}}.png">
+            </div>
+            <div class="text" data-isCircle="{{type}}">
+                {{char.name}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{/block}}

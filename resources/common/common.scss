@@ -30,6 +30,7 @@ body {
     padding: 20px 15px 10px 15px;
     background-size: contain;
 }
+
 .head-box {
     border-radius: 15px;
     padding: 10px 20px;
@@ -37,29 +38,35 @@ body {
     color: #fff;
     margin-top: 30px;
 }
+
 .head-box .title {
     font-family: "tttgbnumber", "印品南征北战NZBZ体", NZBZ, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
     font-size: 36px;
     text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
 }
+
 .head-box .title .label {
     display: inline-block;
     margin-left: 10px;
 }
+
 .head-box .genshin_logo {
     position: absolute;
     top: 1px;
     right: 15px;
     width: 97px;
 }
+
 .head-box .label {
     font-size: 16px;
     text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, 0.9);
 }
+
 .head-box .label span {
     color: #d3bc8e;
     padding: 0 2px;
 }
+
 .copyright {
     font-size: 14px;
     text-align: center;

@@ -1,0 +1,148 @@
+.container {
+    background: url(./resources/subject.png) #353434 no-repeat;
+    background-size: 100%;
+    height: 406px;
+    width: 996px;
+    padding: 0;
+    position: relative;
+}
+
+.other-text {
+    color: #a4a4a4;
+
+    .title {
+        position: absolute;
+        left: 63px;
+        top: 40px;
+        font-size: 40px;
+        writing-mode: vertical-lr;
+
+
+        $lr: -35px;
+        $tb : -12px;
+
+        &::before {
+            content: "「";
+            position: absolute;
+            left: $lr;
+            top: $tb
+        }
+
+        &::after {
+            content: '」';
+            position: absolute;
+            bottom: $tb;
+            right: $lr;
+        }
+    }
+
+    .update-service {
+        position: absolute;
+        bottom: 17%;
+        left: 17%;
+        transform: translate(-50%, -50%) rotate(41deg);
+        font-size: 14px;
+    }
+
+    .uid {
+        position: absolute;
+        bottom: 12px;
+        left: 27px;
+        font-size: 14px;
+    }
+
+    .update-time {
+        position: absolute;
+        bottom: 64px;
+        left: 286px;
+        font-size: 14px;
+    }
+
+    ._copyright {
+        position: absolute;
+        bottom: 15px;
+        left: 333px;
+        font-size: 23px;
+    }
+}
+
+.data {
+    position: absolute;
+
+    width: 785px;
+    height: 300px;
+    left: 182px;
+    top: 14px;
+
+    .title {
+        height: 50px;
+        border-bottom: 1px solid #000000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 22px;
+    }
+
+    %circle {
+        margin: 0 10px;
+    }
+
+    .golden-circle {
+        @extend %circle;
+        color: #b4921d;
+    }
+
+    .grey-circle {
+        @extend %circle;
+        color: #898989
+    }
+
+    .item-list {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+        max-height: 210px;
+        overflow: hidden;
+
+        .item {
+            width: 80px;
+            text-align: center;
+            margin: 0 14px;
+            margin-bottom: 20px;
+            --color: #898989;
+            color: var(--color);
+
+            &[data-isUpdate='true'] {
+                --color: #ac9548;
+            }
+
+            &[data-isUpdate='false'] {
+                --color: #898989;
+            }
+
+            .avatar {
+                width: 60px;
+                height: 60px;
+                margin: 0 auto;
+                margin-bottom: 3px;
+                border-radius: 50%;
+                border: 2px solid var(--color);
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .text {
+                position: relative;
+                display: flex;
+                justify-content: center;
+
+                &[data-isCircle='update']::before {
+                    content: '●';
+                    margin-right: 3px;
+                }
+            }
+        }
+    }
+}
