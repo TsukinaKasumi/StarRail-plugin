@@ -10,7 +10,7 @@ export const helpCfg = {
   title: '星铁帮助',
   subTitle: 'Yunzai-Bot & StarRail-plugin',
   columnCount: 3,
-  colWidth: 265,
+  colWidth: 275,
   theme: 'all',
   themeExclude: ['default'],
   style: {
@@ -82,7 +82,7 @@ export const helpList = [
       desc: '星铁角色面板详情'
     }, {
       icon: 106,
-      title: '*希儿攻略(1 | 2 | 3 | 4)',
+      title: '*希儿攻略(1 | 2 | 3 | 4 |5)',
       desc: '星铁角色攻略'
     }, {
       icon: 106,
@@ -115,7 +115,7 @@ export const helpList = [
     }
   ]
 }, {
-  group: '星铁插件管理,仅管理员可用',
+  group: '插件管理,仅管理员可用',
   auth: 'master',
   list: [{
     icon: 85,
@@ -135,7 +135,7 @@ export const helpList = [
     desc: '安装扩展图，需要一定时间，请勿重复执行'
   }, {
     icon: 85,
-    title: '*设置默认攻略(1 | 2 | 3 | 4)',
-    desc: '设置星铁默认攻略图'
+    title: '*设置默认攻略(1 | 2 | 3 | 4 |5)',
+    desc: '设置星铁默认攻略'
   }]
 }]
