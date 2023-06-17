@@ -3,8 +3,6 @@ import MysSRApi from '../runtime/MysSRApi.js'
 import setting from '../utils/setting.js'
 import fetch from 'node-fetch'
 import _ from 'lodash'
-import YAML from 'yaml'
-import fs from 'fs'
 import { getCk, rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GsCfg from '../../genshin/model/gsCfg.js'
@@ -25,6 +23,10 @@ export class Rogue extends plugin {
       ]
     })
     this.User = new User(e)
+  }
+
+  get app2config() {
+    return setting.getConfig("cookieHelp")
   }
 
   async rogue (e) {
