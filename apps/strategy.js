@@ -20,7 +20,7 @@ export class strategy extends plugin {
           fnc: 'strategy'
         },
         {
-          reg: `^${rulePrefix}攻略(说明|帮助)?$`,
+          reg: `^${rulePrefix}攻略(说明|帮助)$`,
           fnc: 'strategy_help'
         },
         {
