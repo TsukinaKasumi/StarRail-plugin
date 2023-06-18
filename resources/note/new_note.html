@@ -23,7 +23,7 @@
             <span class="is golden">已签到</span>
         </div> -->
     </header>
-    <time>- 统计时间：{{time}}-</time>
+    <time>- 统计时间：{{time}} -</time>
     <section class="energy">
         <div class="title">
             <div class="text">
@@ -51,20 +51,22 @@
                 <span class="golden">{{accepted_epedition_num}}</span>/{{total_expedition_num}}
             </div>
         </div>
-        {{each expeditions ex}}
-        <div class="item">
-            <div class="data">
-                <div class="text">{{ex.name}}</div>
-                <div class="mark">{{ex.format_remaining_time}}</div>
-                <div class="avatar">
-                    {{each ex.avatars avatar}}
-                    <img src="{{avatar}}">
-                    {{/each}}
+        <div class="item-list">
+            {{each expeditions ex}}
+            <div class="item">
+                <div class="data">
+                    <div class="text">{{ex.name}}</div>
+                    <div class="mark">{{ex.format_remaining_time}}</div>
+                    <div class="avatar">
+                        {{each ex.avatars avatar}}
+                        <img src="{{avatar}}">
+                        {{/each}}
+                    </div>
                 </div>
+                <div class="progress" style="width: {{ex.progress}};"></div>
             </div>
-            <div class="progress" style="width: {{ex.progress}};"></div>
+            {{/each}}
         </div>
-        {{/each}}
     </section>
     <div class="uid">UID：{{uid}}</div>
 </article>

@@ -1,5 +1,6 @@
 .container {
   background: url(./resources/bkg.jpg) center;
+  font-size: 20px;
 }
 
 article {
@@ -66,7 +67,7 @@ article section.energy .title {
 article section.energy .title .text {
   width: 70%;
   padding: 5px 0;
-  border-bottom: 1px solid #767676;
+  border-bottom: 2px solid #767676;
 }
 article section.energy .title .number {
   flex: 1;
@@ -75,7 +76,7 @@ article section.energy .title .number {
   justify-content: center;
 }
 article section.energy .title .number span {
-  font-size: 24px;
+  font-size: 27px;
 }
 article section.energy .progress-bar {
   height: 10px;
@@ -91,7 +92,7 @@ article section.energy .progress-bar .progress {
   border-radius: inherit;
 }
 article section.energy .info {
-  font-size: 14px;
+  font-size: 15px;
 }
 article section.other {
   display: flex;
@@ -100,9 +101,6 @@ article section.other {
 article section.other span {
   font-size: 22px;
 }
-article section.entrust {
-  min-height: 223px;
-}
 article section.entrust .title {
   display: flex;
   justify-content: space-between;
@@ -110,16 +108,19 @@ article section.entrust .title {
   margin-bottom: 7px;
 }
 article section.entrust .title .right {
-  font-size: 13px;
+  font-size: 15px;
 }
 article section.entrust .title .right span {
   font-size: 18px;
 }
-article section.entrust .item {
+article section.entrust .item-list {
+  min-height: 180px;
+}
+article section.entrust .item-list .item {
   background: #cccccc;
   margin-bottom: 5px;
 }
-article section.entrust .item .data {
+article section.entrust .item-list .item .data {
   display: flex;
   height: 35px;
   justify-content: space-between;
@@ -127,17 +128,17 @@ article section.entrust .item .data {
   font-size: 15px;
   padding: 0 10px;
 }
-article section.entrust .item .data .avatar {
+article section.entrust .item-list .item .data .avatar {
   display: flex;
   justify-content: space-between;
   width: 68px;
 }
-article section.entrust .item .data .avatar img {
+article section.entrust .item-list .item .data .avatar img {
   height: 30px;
   border-radius: 50%;
   border: 1px solid #9c8d5c;
 }
-article section.entrust .item .data .mark {
+article section.entrust .item-list .item .data .mark {
   border: 1.5px solid #9c8d5c;
   border-radius: 3px;
   padding: 0 3px;
@@ -147,10 +148,9 @@ article section.entrust .item .data .mark {
   left: 50%;
   transform: translateX(-50%);
 }
-article section.entrust .item .progress {
+article section.entrust .item-list .item .progress {
   background: #ac9854;
   height: 5px;
-  width: 33%;
 }
 article .uid {
   position: absolute;

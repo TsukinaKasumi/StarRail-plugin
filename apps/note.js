@@ -142,5 +142,5 @@ function getRecoverTimeStr (seconds) {
     .getMinutes()
     .toString()
     .padStart(2, '0')}`
-  return `预计<span class="golden">[${str}]</span>${timeStr}完全恢复`
+  return `<span class="golden">[${str}]</span>${timeStr}完全恢复`
 }

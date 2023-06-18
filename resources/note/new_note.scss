@@ -1,5 +1,6 @@
 .container {
     background: url(./resources/bkg.jpg) center;
+    font-size: 20px;
 }
 
 
@@ -83,7 +84,7 @@ article {
                 .text {
                     width: 70%;
                     padding: 5px 0;
-                    border-bottom: 1px solid #767676;
+                    border-bottom: 2px solid #767676;
                 }
 
                 .number {
@@ -93,7 +94,7 @@ article {
                     justify-content: center;
 
                     span {
-                        font-size: 24px;
+                        font-size: 27px;
                     }
                 }
             }
@@ -114,7 +115,7 @@ article {
             }
 
             .info {
-                font-size: 14px;
+                font-size: 15px;
             }
         }
 
@@ -128,7 +129,6 @@ article {
         }
 
         &.entrust {
-            min-height: 223px;
 
             .title {
                 display: flex;
@@ -137,7 +137,7 @@ article {
                 margin-bottom: 7px;
 
                 .right {
-                    font-size: 13px;
+                    font-size: 15px;
 
                     span {
                         font-size: 18px;
@@ -145,48 +145,52 @@ article {
                 }
             }
 
-            .item {
-                background: #cccccc;
-                margin-bottom: 5px;
 
-                .data {
-                    display: flex;
-                    height: 35px;
-                    justify-content: space-between;
-                    align-items: center;
-                    font-size: 15px;
-                    padding: 0 10px;
+            .item-list {
+                min-height: (35px + 5px + 5px) * 4;
 
+                .item {
+                    background: #cccccc;
+                    margin-bottom: 5px;
 
-                    .avatar {
+                    .data {
                         display: flex;
+                        height: 35px;
                         justify-content: space-between;
-                        width: 68px;
+                        align-items: center;
+                        font-size: 15px;
+                        padding: 0 10px;
 
-                        img {
-                            height: 30px;
-                            border-radius: 50%;
-                            border: 1px solid #9c8d5c;
+
+                        .avatar {
+                            display: flex;
+                            justify-content: space-between;
+                            width: 68px;
+
+                            img {
+                                height: 30px;
+                                border-radius: 50%;
+                                border: 1px solid #9c8d5c;
+                            }
+                        }
+
+                        .mark {
+                            border: 1.5px solid #9c8d5c;
+                            border-radius: 3px;
+                            padding: 0 3px;
+                            font-size: 13px;
+                            color: #9c8d5c;
+                            position: absolute;
+                            left: 50%;
+                            transform: translateX(-50%);
                         }
                     }
 
-                    .mark {
-                        border: 1.5px solid #9c8d5c;
-                        border-radius: 3px;
-                        padding: 0 3px;
-                        font-size: 13px;
-                        color: #9c8d5c;
-                        position: absolute;
-                        left: 50%;
-                        transform: translateX(-50%);
+
+                    .progress {
+                        background: #ac9854;
+                        height: 5px;
                     }
-                }
-
-
-                .progress {
-                    background: #ac9854;
-                    height: 5px;
-                    width: 33%;
                 }
             }
         }
