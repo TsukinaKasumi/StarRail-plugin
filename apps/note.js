@@ -1,12 +1,11 @@
-import MysSRApi from '../runtime/MysSRApi.js'
-import setting from '../utils/setting.js'
-import fetch from 'node-fetch'
 import _ from 'lodash'
-import YAML from 'yaml'
-import fs from 'fs'
-import { getCk, rulePrefix } from '../utils/common.js'
 import moment from 'moment'
+import fetch from 'node-fetch'
 import runtimeRender from '../common/runtimeRender.js'
+import MysSRApi from '../runtime/MysSRApi.js'
+import { getCk, rulePrefix } from '../utils/common.js'
+import setting from '../utils/setting.js'
+
 export class Note extends plugin {
   constructor (e) {
     super({
@@ -84,10 +83,9 @@ export class Note extends plugin {
     })
     // logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
-      data.ktl_full = '开拓力已全部恢复'
-      data.ktl_full_time_str = '<span class="golden">已完全恢复</span>'
+      data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
     } else {
-      data.ktl_full = `${formatDuration(data.stamina_recover_time)}`
+      data.ktl_full = `${formatDuration(data.stamina_recover_time)} |`
       data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
     }
     data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
