@@ -38,10 +38,15 @@
 
     .update-service {
         position: absolute;
-        bottom: 17%;
-        left: 17%;
-        transform: translate(-50%, -50%) rotate(41deg);
+        bottom: 20%;
+        left: 15%;
+        transform: translate(-50%, -50%) rotate(40.5deg);
         font-size: 14px;
+        text-align: end;
+        width: 277px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis
     }
 
     .uid {
@@ -53,8 +58,10 @@
 
     .update-time {
         position: absolute;
-        bottom: 64px;
-        left: 286px;
+        bottom: 62px;
+        left: 263px;
+        width: 308px;
+        text-align: center;
         font-size: 14px;
     }
 
