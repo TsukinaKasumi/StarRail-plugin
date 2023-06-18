@@ -7,12 +7,7 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import {
-  statisticOnlinePeriods,
-  statisticsOnlineDateGeneral,
-  rulePrefix,
-  getCk
-} from '../utils/common.js'
+import { statisticOnlinePeriods,statisticsOnlineDateGeneral,rulePrefix,getCk } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 
 export class Hkrpg extends plugin {
@@ -127,7 +122,7 @@ export class Hkrpg extends plugin {
     let uid = parseInt(this.e.msg.replace(/[^0-9]/gi, ''))
     let user = this.e.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
-    this.reply('绑定成功', false)
+    this.reply(`绑定成功,当前绑定[sr]uid:${uid}`, false)
   }
 
   async getPayLog (e) {
