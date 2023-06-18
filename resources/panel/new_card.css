@@ -123,6 +123,7 @@
   position: relative;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
 }
 .data .item-list .item .text[data-isCircle=update]::before {
   content: "●";
