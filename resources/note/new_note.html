@@ -1,0 +1,74 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/note/new_note.css">
+{{/block}}
+
+{{block 'main'}}
+<article>
+    <header>
+        <img src="http://q2.qlogo.cn/headimg_dl?dst_uin={{ktl_qq}}&amp;spec=640">
+        <div class="info">
+            <p>
+                <span class="grey">昵称：</span>
+                {{ktl_name}}
+            </p>
+            <p>
+                <span class="grey">UID：</span>
+                {{uid}}
+            </p>
+        </div>
+        <!-- <div class="sign-in">
+            <span class="grey">今日米游社：</span>
+            <span class="is golden">已签到</span>
+        </div> -->
+    </header>
+    <time>- 统计时间：{{time}}-</time>
+    <section class="energy">
+        <div class="title">
+            <div class="text">
+                开拓力状态：
+            </div>
+            <div class="number">
+                <span class="golden">{{current_stamina}}</span>/{{max_stamina}}
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: {{stamina_progress}};"></div>
+        </div>
+        <div class="info">
+            {{@ktl_full_time_str}}
+        </div>
+    </section>
+    <!-- <section class="other">
+        <p>每日实训：<span class="golden">100</span>/180</p>
+        <p>模拟宇宙：<span class="golden">100</span>/180</p>
+    </section> -->
+    <section class="entrust">
+        <div class="title">
+            <div>委托状态:</div>
+            <div class="right">委托执行：
+                <span class="golden">{{accepted_epedition_num}}</span>/{{total_expedition_num}}
+            </div>
+        </div>
+        {{each expeditions ex}}
+        <div class="item">
+            <div class="data">
+                <div class="text">{{ex.name}}</div>
+                <div class="mark">{{ex.format_remaining_time}}</div>
+                <div class="avatar">
+                    {{each ex.avatars avatar}}
+                    <img src="{{avatar}}">
+                    {{/each}}
+                </div>
+            </div>
+            <div class="progress" style="width: {{ex.progress}};"></div>
+        </div>
+        {{/each}}
+    </section>
+    <div class="uid">UID：{{uid}}</div>
+</article>
+<footer>
+    Create By Yunzai-Bot & StarRail-plugin
+</footer>
+{{/block}}

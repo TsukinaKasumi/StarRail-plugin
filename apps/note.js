@@ -5,6 +5,8 @@ import _ from 'lodash'
 import YAML from 'yaml'
 import fs from 'fs'
 import { getCk, rulePrefix } from '../utils/common.js'
+import moment from 'moment'
+import runtimeRender from '../common/runtimeRender.js'
 export class Note extends plugin {
   constructor (e) {
     super({
@@ -71,26 +73,31 @@ export class Note extends plugin {
     }
 
     let data = cardData.data
-    const icons = YAML.parse(
-      fs.readFileSync(setting.configPath + 'dispatch_icon.yaml', 'utf-8')
-    )
-    logger.mark(icons)
+    // const icons = YAML.parse(
+    //   fs.readFileSync(setting.configPath + 'dispatch_icon.yaml', 'utf-8')
+    // )
+    // logger.debug(icons)
     data.expeditions.forEach(ex => {
-      ex.remaining_time = formatDuration(ex.remaining_time)
-      ex.icon = icons[ex.name]
-      if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
+      ex.format_remaining_time = formatDuration(ex.remaining_time)
+      ex.progress = (72000 - ex.remaining_time) / 72000 * 100 + '%'
+      // ex.icon = icons[ex.name]
     })
-    logger.warn(data.expeditions)
+    // logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力已全部恢复'
+      data.ktl_full_time_str = '<span class="golden">已完全恢复</span>'
     } else {
       data.ktl_full = `${formatDuration(data.stamina_recover_time)}`
       data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
     }
+    data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
+    data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
     data.uid = uid // uid显示
     data.ktl_name = e.nickname // 名字显示
     data.ktl_qq = parseInt(e.user_id) // QQ头像
-    await e.runtime.render('StarRail-plugin', '/note/note.html', data)
+    await runtimeRender(e, '/note/new_note.html', data, {
+      scale: 1.6
+    })
   }
 
   async miYoSummerGetUid () {
@@ -115,6 +122,7 @@ export class Note extends plugin {
 }
 
 function formatDuration (seconds) {
+  if (seconds == 0) return '已完成'
   const hours = Math.floor(seconds / 3600)
   const minutes = Math.floor((seconds % 3600) / 60)
   return `${hours.toString().padStart(2, '0')}时${minutes
@@ -136,5 +144,5 @@ function getRecoverTimeStr (seconds) {
     .getMinutes()
     .toString()
     .padStart(2, '0')}`
-  return `预计[${str}]${timeStr}完全恢复`
+  return `预计<span class="golden">[${str}]</span>${timeStr}完全恢复`
 }

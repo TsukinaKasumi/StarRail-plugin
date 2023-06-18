@@ -176,6 +176,9 @@ article {
                         padding: 0 3px;
                         font-size: 13px;
                         color: #9c8d5c;
+                        position: absolute;
+                        left: 50%;
+                        transform: translateX(-50%);
                     }
                 }
 

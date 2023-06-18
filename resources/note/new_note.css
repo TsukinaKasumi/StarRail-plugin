@@ -143,6 +143,9 @@ article section.entrust .item .data .mark {
   padding: 0 3px;
   font-size: 13px;
   color: #9c8d5c;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 article section.entrust .item .progress {
   background: #ac9854;
@@ -160,4 +163,4 @@ article .uid {
 footer {
   text-align: center;
   margin-top: 10px;
-}/*# sourceMappingURL=new.css.map */
+}/*# sourceMappingURL=new_note.css.map */
