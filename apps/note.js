@@ -62,7 +62,7 @@ export class Note extends plugin {
     }
     const cardData = await api.getData(isPro ? 'srWidget' : 'srNote', { deviceFp })
     await api.checkCode(e, cardData)
-    if (!cardData || cardData !== 0) return false
+    if (!cardData || cardData.retcode !== 0) return false
     let data = cardData.data
     data.type = isPro ? 'module' : 'ordinary'
     data.userData = userData
