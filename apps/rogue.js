@@ -53,7 +53,7 @@ export class Rogue extends plugin {
       return false
     }
     let api = new MysSRApi(uid, ck)
-    let schedule_type = '3'
+    let schedule_type = '1'
     if (e.msg.indexOf('上期') > -1) {
       schedule_type = '2'
     }
