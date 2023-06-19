@@ -51,14 +51,15 @@ article {
             right: 1px;
             font-size: 14px;
             display: flex;
-            height: 15px;
-            line-height: 15px;
+            align-items: center;
 
             .is {
                 border: 1px solid #9c8d5c;
                 border-radius: 3px;
                 padding: 0 2px;
                 font-size: 13px;
+                height: 14px;
+                line-height: 14px;
 
                 &.grey {
                     border: 1px solid #767676;

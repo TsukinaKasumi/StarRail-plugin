@@ -11,7 +11,7 @@
         <div class="info">
             <p>
                 <span class="grey">昵称：</span>
-                {{ktl_name}}
+                {{userData.nickname}}
             </p>
             <p>
                 <span class="grey">UID：</span>
@@ -52,8 +52,9 @@
         <div class="title">
             <div>委托状态:</div>
             <div class="right">委托执行：
-                <span class="golden">{{accepted_epedition_num
-                    ||accepted_expedition_num}}</span>/{{total_expedition_num}}
+                <span class="golden">{{
+                    accepted_epedition_num ?? accepted_expedition_num
+                    }}</span>/{{total_expedition_num}}
             </div>
         </div>
         <div class="item-list">
