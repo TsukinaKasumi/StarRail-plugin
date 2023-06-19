@@ -1,6 +1,5 @@
 .container {
   background: url(../common/cont/bkg2.jpg) center;
-  font-size: 20px;
 }
 
 article {
@@ -50,6 +49,9 @@ article header .sign-in .is {
   padding: 0 2px;
   font-size: 13px;
 }
+article header .sign-in .is.grey {
+  border: 1px solid #767676;
+}
 article time {
   display: block;
   margin: 5px 0;
@@ -97,6 +99,7 @@ article section.energy .info {
 article section.other {
   display: flex;
   justify-content: space-between;
+  font-size: 16px;
 }
 article section.other span {
   font-size: 22px;
@@ -156,12 +159,15 @@ article section.entrust .item-list .item .progress {
   background: #ac9854;
   height: 5px;
 }
-article .uid {
+article .uid, article .data-source {
   position: absolute;
   bottom: 15px;
   right: 35px;
   color: #767676;
   font-size: 14px;
+}
+article .data-source {
+  left: 40px;
 }
 
 footer {

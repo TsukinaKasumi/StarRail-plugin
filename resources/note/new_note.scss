@@ -1,6 +1,5 @@
 .container {
     background: url(../common/cont/bkg2.jpg) center;
-    font-size: 20px;
 }
 
 
@@ -60,6 +59,10 @@ article {
                 border-radius: 3px;
                 padding: 0 2px;
                 font-size: 13px;
+
+                &.grey {
+                    border: 1px solid #767676;
+                }
             }
         }
     }
@@ -122,6 +125,7 @@ article {
         &.other {
             display: flex;
             justify-content: space-between;
+            font-size: 16px;
 
             span {
                 font-size: 22px;
@@ -207,6 +211,11 @@ article {
         right: 35px;
         color: #767676;
         font-size: 14px;
+    }
+
+    .data-source {
+        @extend .uid;
+        left: 40px;
     }
 }
 

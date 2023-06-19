@@ -47,6 +47,7 @@ export class Note extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
+    this.uid = uid
     let ck = await getCk(e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
@@ -75,32 +76,9 @@ export class Note extends plugin {
     if (cardData.retcode !== 0) {
       return false
     }
-
     let data = cardData.data
-    // const icons = YAML.parse(
-    //   fs.readFileSync(setting.configPath + 'dispatch_icon.yaml', 'utf-8')
-    // )
-    // logger.debug(icons)
-    data.expeditions.forEach(ex => {
-      ex.format_remaining_time = formatDuration(ex.remaining_time)
-      ex.progress = (72000 - ex.remaining_time) / 72000 * 100 + '%'
-      // ex.icon = icons[ex.name]
-    })
-    // logger.warn(data.expeditions)
-    if (data.max_stamina === data.current_stamina) {
-      data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
-    } else {
-      data.ktl_full = `${formatDuration(data.stamina_recover_time, 'HH小时mm分钟')} |`
-      data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
-    }
-    data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
-    data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
-    data.uid = uid // uid显示
-    data.ktl_name = e.nickname // 名字显示
-    data.ktl_qq = parseInt(e.user_id) // QQ头像
-    await runtimeRender(e, '/note/new_note.html', data, {
-      scale: 1.6
-    })
+    data.type = 'ordinary'
+    await this.handleData(data)
   }
 
   async widget (e) {
@@ -122,6 +100,7 @@ export class Note extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
+    this.uid = uid
     let ck = await getCk(e, true)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
@@ -150,9 +129,30 @@ export class Note extends plugin {
     if (cardData.retcode !== 0) {
       return false
     }
-
     let data = cardData.data
-    await e.reply(JSON.stringify(data))
+    data.type = 'module'
+    await this.handleData(data)
+  }
+
+  async handleData (data) {
+    data.expeditions.forEach(ex => {
+      ex.format_remaining_time = formatDuration(ex.remaining_time)
+      ex.progress = (72000 - ex.remaining_time) / 72000 * 100 + '%'
+    })
+    if (data.max_stamina === data.current_stamina) {
+      data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
+    } else {
+      data.ktl_full = `${formatDuration(data.stamina_recover_time, 'HH小时mm分钟')} |`
+      data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
+    }
+    data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
+    data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
+    data.ktl_name = this.e.nickname // 名字显示
+    data.ktl_qq = parseInt(this.e.user_id) // QQ头像
+    data.uid = this.uid
+    await runtimeRender(this.e, '/note/new_note.html', data, {
+      scale: 1.6
+    })
   }
 
   async miYoSummerGetUid () {
@@ -196,5 +196,5 @@ function getRecoverTimeStr (seconds) {
     .getMinutes()
     .toString()
     .padStart(2, '0')}`
-  return `<span class="golden">[${str}]</span>${timeStr}完全恢复`
+  return `<span class="golden">[${str}]</span> ${timeStr}完全恢复`
 }

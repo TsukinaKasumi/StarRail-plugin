@@ -2,7 +2,6 @@ import MysApi from '../../genshin/model/mys/mysApi.js'
 import md5 from 'md5'
 import _ from 'lodash'
 import crypto from 'crypto'
-import {getAllWebAddress} from "../../Guoba-Plugin/utils/common.js";
 const DEVICE_ID = randomString(32).toUpperCase()
 const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
@@ -122,8 +121,8 @@ export default class MysSRApi extends MysApi {
         'x-rpc-app_version': '2.40.1',
         'User-Agent': 'okhttp/4.8.0',
         'x-rpc-client_type': '5',
-        Referer: 'https://app.mihoyo.com',
-        Origin: 'https://webstatic.mihoyo.com',
+        'Referer': 'https://app.mihoyo.com',
+        'Origin': 'https://webstatic.mihoyo.com',
         // Cookie: this.cookies,
         // DS: this.getDS2(),
         'x-rpc-sys_version': '12',
@@ -131,7 +130,7 @@ export default class MysSRApi extends MysApi {
         'x-rpc-device_id': DEVICE_ID,
         'x-rpc-device_name': DEVICE_NAME,
         'x-rpc-device_model': 'Mi 10',
-        Host: 'api-takumi.mihoyo.com'
+        'Host': 'api-takumi.mihoyo.com'
       }
       headers = Object.assign(headers, extra)
     } else {
@@ -210,9 +209,9 @@ export default class MysSRApi extends MysApi {
       'x-rpc-client_type': client.client_type,
       'x-rpc-page': '3.1.3_#/rpg',
       'User-Agent': client.User_Agent,
-      Referer: client.Referer,
-      DS: this.getDs(query, body),
-      Origin: client.Origin
+      'Referer': client.Referer,
+      'DS': this.getDs(query, body),
+      'Origin': client.Origin
     }
   }
 
@@ -269,3 +268,4 @@ export function generateSeed (length = 16) {
   }
   return result
 }
+
