@@ -5,7 +5,7 @@ let User
 try {
   User = (await import('../../xiaoyao-cvs-plugin/model/user.js')).default
 } catch (e) {
-  logger.warn('建议安装逍遥插件自动获取星穹铁道抽卡链接')
+  logger.warn('建议安装逍遥插件以获得更佳体验')
 }
 
 /**
@@ -38,4 +38,16 @@ export async function getAuthKey (e, srUid, authAppid = 'csc') {
   })
   res = await res.json()
   return res?.data?.authkey
+}
+
+export async function getStoken (e) {
+  if (!User) {
+    throw new Error('未安装逍遥插件，无法自动刷新抽卡链接')
+  }
+  let user = new User(e)
+  // set genshin uid
+  await user.getCookie(e)
+  let ck = await user.getStoken(e.user_id)
+  ck = `stuid=${ck.stuid};stoken=${ck.stoken};mid=${ck.mid};`
+  return ck
 }

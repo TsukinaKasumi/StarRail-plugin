@@ -2,6 +2,7 @@ import MysApi from '../../genshin/model/mys/mysApi.js'
 import md5 from 'md5'
 import _ from 'lodash'
 import crypto from 'crypto'
+import {getAllWebAddress} from "../../Guoba-Plugin/utils/common.js";
 const DEVICE_ID = randomString(32).toUpperCase()
 const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
@@ -39,6 +40,10 @@ export default class MysSRApi extends MysApi {
         url: `${hostRecord}game_record/app/hkrpg/api/note`,
         query: `role_id=${this.uid}&server=${this.server}`
       },
+      srWidget: {
+        url: `${hostRecord}game_record/app/hkrpg/aapi/widget`,
+        dsSalt: 'x6'
+      },
       srCard: {
         url: `${hostRecord}game_record/app/hkrpg/api/index`,
         query: `role_id=${this.uid}&server=${this.server}`
@@ -62,7 +67,8 @@ export default class MysSRApi extends MysApi {
           game_biz: 'hkrpg_cn',
           game_uid: this.uid * 1,
           region: 'prod_gf_cn'
-        }
+        },
+        dsSalt: 'web'
       },
       getFp: {
         url: `${hostPublicData}device-fp/api/getFp`,
@@ -79,7 +85,7 @@ export default class MysSRApi extends MysApi {
       }
     }
     if (!urlMap[type]) return false
-    let { url, query = '', body = '', noDs = '' } = urlMap[type]
+    let { url, query = '', body = '', noDs = false, dsSalt = '' } = urlMap[type]
     if (query) url += `?${query}`
     if (body) body = JSON.stringify(body)
 
@@ -100,8 +106,18 @@ export default class MysSRApi extends MysApi {
     if (this.deviceId) {
       headers['x-rpc-device_id'] = this.deviceId
     }
+    switch (dsSalt) {
+      case 'web': {
+        headers.DS = this.getDS2()
+        break
+      }
+      case 'x6': {
+        headers.DS = this.getDsX6(query, body)
+        break
+      }
+      default:
+    }
     if (type === 'srPayAuthKey') {
-      headers.DS = this.getDS2()
       let extra = {
         'x-rpc-app_version': '2.40.1',
         'User-Agent': 'okhttp/4.8.0',
@@ -109,7 +125,7 @@ export default class MysSRApi extends MysApi {
         Referer: 'https://app.mihoyo.com',
         Origin: 'https://webstatic.mihoyo.com',
         // Cookie: this.cookies,
-        DS: this.getDS2(),
+        // DS: this.getDS2(),
         'x-rpc-sys_version': '12',
         'x-rpc-channel': 'mihoyo',
         'x-rpc-device_id': DEVICE_ID,
@@ -150,6 +166,20 @@ export default class MysSRApi extends MysApi {
     let r = randomString(6)
     let sign = md5(`salt=jEpJb9rRARU2rXDA9qYbZ3selxkuct9a&t=${t}&r=${r}`)
     return `${t},${r},${sign}`
+  }
+
+  async getDsX6 (q = '', b = '') {
+    let salt
+    try {
+      let mysTool = await import('../../xiaoyao-cvs-plugin/model/mys/mysTool.js')
+      salt = mysTool.default.salt2
+    } catch (e) {
+      throw new Error('需要安装逍遥插件使用此功能')
+    }
+    let t = Math.round(new Date().getTime() / 1000)
+    let r = Math.floor(Math.random() * 900000 + 100000)
+    let DS = md5(`salt=${salt}&t=${t}&r=${r}&b=${b}&q=${q}`)
+    return `${t},${r},${DS}`
   }
 
   getHeaders (query = '', body = '') {
