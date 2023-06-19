@@ -16,7 +16,7 @@ export class Note extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}体力$`,
+          reg: `^${rulePrefix}体力(pro)?$`,
           fnc: 'note'
         }
       ]
@@ -24,6 +24,7 @@ export class Note extends plugin {
   }
 
   async note (e) {
+    const isPro = /pro/.test(e.msg)
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -42,7 +43,7 @@ export class Note extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
-    let ck = await getCk(e)
+    let ck = await getCk(e, isPro)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
       return false
@@ -59,29 +60,27 @@ export class Note extends plugin {
         await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
       }
     }
-    const { url, headers } = api.getUrl('srNote', { deviceFp })
-    logger.mark({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
-
-    let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srNote')
-    if (cardData.retcode !== 0) {
-      return false
-    }
-
+    const cardData = await api.getData(isPro ? 'srWidget' : 'srNote', { deviceFp })
+    if (!cardData) return false
     let data = cardData.data
-    // const icons = YAML.parse(
-    //   fs.readFileSync(setting.configPath + 'dispatch_icon.yaml', 'utf-8')
-    // )
-    // logger.debug(icons)
+    data.type = isPro ? 'module' : 'ordinary'
+    data.userData = userData
+    data.uid = uid
+    data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
+    data.ktl_name = this.e.nickname // 名字显示
+    data.ktl_qq = parseInt(this.e.user_id) // QQ头像
+    data = this.handleData(data)
+    logger.debug(data)
+    await runtimeRender(this.e, '/note/new_note.html', data, {
+      scale: 1.6
+    })
+  }
+
+  handleData (data) {
     data.expeditions.forEach(ex => {
       ex.format_remaining_time = formatDuration(ex.remaining_time)
       ex.progress = (72000 - ex.remaining_time) / 72000 * 100 + '%'
-      // ex.icon = icons[ex.name]
     })
-    // logger.warn(data.expeditions)
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
     } else {
@@ -89,13 +88,7 @@ export class Note extends plugin {
       data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
     }
     data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
-    data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
-    data.uid = uid // uid显示
-    data.ktl_name = e.nickname // 名字显示
-    data.ktl_qq = parseInt(e.user_id) // QQ头像
-    await runtimeRender(e, '/note/new_note.html', data, {
-      scale: 1.6
-    })
+    return data
   }
 
   async miYoSummerGetUid () {
@@ -139,5 +132,5 @@ function getRecoverTimeStr (seconds) {
     .getMinutes()
     .toString()
     .padStart(2, '0')}`
-  return `<span class="golden">[${str}]</span>${timeStr}完全恢复`
+  return `<span class="golden">[${str}]</span> ${timeStr}完全恢复`
 }
