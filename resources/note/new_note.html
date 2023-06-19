@@ -56,7 +56,7 @@
             <div class="item">
                 <div class="data">
                     <div class="text">{{ex.name}}</div>
-                    <div class="mark">{{ex.format_remaining_time}}</div>
+                    <div class="mark" data-remaining_time="{{ex.remaining_time}}">{{ex.format_remaining_time}}</div>
                     <div class="avatar">
                         {{each ex.avatars avatar}}
                         <img src="{{avatar}}">

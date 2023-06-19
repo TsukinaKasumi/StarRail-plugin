@@ -85,7 +85,7 @@ export class Note extends plugin {
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
     } else {
-      data.ktl_full = `${formatDuration(data.stamina_recover_time)} |`
+      data.ktl_full = `${formatDuration(data.stamina_recover_time, 'HH小时mm分钟')} |`
       data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
     }
     data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
@@ -119,13 +119,10 @@ export class Note extends plugin {
   }
 }
 
-function formatDuration (seconds) {
+function formatDuration (seconds, format = 'HH时mm分') {
   if (seconds == 0) return '已完成'
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  return `${hours.toString().padStart(2, '0')}时${minutes
-    .toString()
-    .padStart(2, '0')}分`
+  const duration = moment.duration(5500, 'seconds')
+  return moment.utc(duration.asMilliseconds()).format(format)
 }
 
 /**

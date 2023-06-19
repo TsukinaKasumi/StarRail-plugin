@@ -536,10 +536,10 @@
   border-color: #f0eaca;
 }
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n+1) {
-  background-color: rgba(73, 67, 59, 0.6117647059);
+  background-color: rgba(132, 124, 111, 0.6549019608);
 }
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n) {
-  background-color: rgba(45, 41, 36, 0.6117647059);
+  background-color: rgba(104, 98, 88, 0.6549019608);
 }
 .main-content .relic-list .item .relic-value-list .name {
   width: 4.5em;

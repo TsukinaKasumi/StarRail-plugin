@@ -175,14 +175,19 @@ article {
                         }
 
                         .mark {
-                            border: 1.5px solid #9c8d5c;
+                            --color: #000000;
+                            border: 1.5px solid var(--color);
                             border-radius: 3px;
                             padding: 0 3px;
                             font-size: 13px;
-                            color: #9c8d5c;
+                            color: var(--color);
                             position: absolute;
                             left: 50%;
                             transform: translateX(-50%);
+
+                            &[data-remaining_time='0'] {
+                                --color: #9c8d5c;
+                            }
                         }
                     }
 
