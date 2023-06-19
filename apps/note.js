@@ -121,7 +121,7 @@ export class Note extends plugin {
 
 function formatDuration (seconds, format = 'HH时mm分') {
   if (seconds == 0) return '已完成'
-  const duration = moment.duration(5500, 'seconds')
+  const duration = moment.duration(seconds, 'seconds')
   return moment.utc(duration.asMilliseconds()).format(format)
 }
 
