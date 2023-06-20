@@ -471,6 +471,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        $item-color: #847c6fa7;
 
         .item {
             width: calc(33% - 10px);
@@ -483,6 +484,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            background: $item-color;
 
             &:nth-child(3n) {
                 margin-right: 0;
@@ -494,7 +496,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                backdrop-filter: blur(4.5px);
+                // backdrop-filter: blur(4.5px);
                 position: relative;
 
                 .score {
@@ -588,8 +590,6 @@
             .relic-value-list {
                 flex-grow: 1;
 
-                /* flex-shrink: 1; */
-                /* background: #f0eaca; */
                 .relic-value {
                     padding: 3px 15px;
                     display: flex;
@@ -618,10 +618,9 @@
                         }
                     }
 
-                    $item-color: #847c6fa7;
 
                     &:nth-child(2n + 1) {
-                        background-color: $item-color;
+                        background-color: lighten($item-color, 10%);
                     }
 
                     &:nth-child(2n) {
