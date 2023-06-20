@@ -191,6 +191,7 @@
                 display: flex;
                 align-items: flex-end;
                 border-bottom: 1px solid #f0eaca;
+                text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
 
                 .name {
                     --font-size: 2.2rem;
@@ -230,6 +231,20 @@
                     margin-bottom: 5px;
                     margin-left: auto;
                     white-space: nowrap;
+                    // 命座颜色
+                    $background-list: (#606060,
+                        #F08080,
+                        #ADFF2F,
+                        #7B68EE,
+                        #FFB6C1,
+                        #20B2AA,
+                        #ff5222);
+
+                    @for $i from 0 to length($list: $background-list) {
+                        &.rank-#{$i} {
+                            background: nth($background-list, $i + 1);
+                        }
+                    }
                 }
             }
 
@@ -306,14 +321,25 @@
         }
     }
 
+    $item-color: #847c6fa7;
+
+    %box-style {
+        background: linear-gradient(to top, #4a4e4f, $item-color);
+        box-shadow: 2px 2px 4px #4b4b4b;
+    }
+
     .artoverview {
         display: flex;
         justify-content: space-between;
+        text-shadow: 1px 1px 1px #000;
+
+        .item {
+            @extend %box-style
+        }
 
         .weapon {
             width: 58%;
             height: 100px;
-            border: 1px solid #f0eaca;
             border-radius: 10px;
             padding: 0px 5px;
             box-sizing: border-box;
@@ -392,18 +418,20 @@
                         width: 18px;
                         text-align: center;
                         margin-right: 5px;
+                        text-shadow: none;
+
+                        &.level5 {
+                            background: #ffd070 !important;
+                            color: #332c1f;
+                        }
                     }
 
-                    .level5 {
-                        background: #ffd070 !important;
-                        color: #332c1f;
-                    }
+
                 }
             }
         }
 
         .relic {
-            border: 1px solid #f0eaca;
             border-radius: 10px;
             padding: 0px 5px;
             box-sizing: border-box;
@@ -466,25 +494,26 @@
         }
     }
 
+
+
     .relic-list {
         margin-top: 20px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        $item-color: #847c6fa7;
+
 
         .item {
+            @extend %box-style;
             width: calc(33% - 10px);
-            border: 1px solid #f0eaca;
             border-radius: 10px;
-            box-sizing: border-box;
             margin-bottom: 10px;
             margin-right: 15px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: $item-color;
+
 
             &:nth-child(3n) {
                 margin-right: 0;
@@ -499,6 +528,7 @@
                 // backdrop-filter: blur(4.5px);
                 position: relative;
 
+
                 .score {
                     position: absolute;
                     top: -2px;
@@ -506,14 +536,15 @@
                     overflow: hidden;
                     z-index: 2;
                     font-size: 1rem;
-                    background-color: rgba(240, 234, 202, 0.2);
+                    background-color: lighten($item-color, 13%);
                     border: 2px solid #f0eaca;
                     height: 1.2rem;
                     box-sizing: content-box;
                     color: #f0eaca;
                     display: flex;
                     padding: 3px 10px 1px 10px;
-                    border-radius: 5px 0 5px 0;
+                    border-radius: 10px 0 10px 0;
+                    text-shadow: 1px 1px 1px #000;
                 }
 
                 .icon {
@@ -544,6 +575,7 @@
                         white-space: nowrap;
                         overflow: hidden;
                         font-size: 0.9rem;
+                        text-shadow: 1px 1px 1px #000;
                     }
 
                     .level-info {
@@ -708,6 +740,7 @@
     padding: 0 5px;
     justify-content: space-between;
     margin: 10px 0px;
+    text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
 
     .uid {
         font-weight: 700;

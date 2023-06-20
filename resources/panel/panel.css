@@ -173,6 +173,7 @@
   display: flex;
   align-items: flex-end;
   border-bottom: 1px solid #f0eaca;
+  text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .main-content .char-info .info-detail .title .name {
   --font-size: 2.2rem;
@@ -208,6 +209,27 @@
   margin-bottom: 5px;
   margin-left: auto;
   white-space: nowrap;
+}
+.main-content .char-info .info-detail .title .const.rank-0 {
+  background: #606060;
+}
+.main-content .char-info .info-detail .title .const.rank-1 {
+  background: #F08080;
+}
+.main-content .char-info .info-detail .title .const.rank-2 {
+  background: #ADFF2F;
+}
+.main-content .char-info .info-detail .title .const.rank-3 {
+  background: #7B68EE;
+}
+.main-content .char-info .info-detail .title .const.rank-4 {
+  background: #FFB6C1;
+}
+.main-content .char-info .info-detail .title .const.rank-5 {
+  background: #20B2AA;
+}
+.main-content .char-info .info-detail .title .const.rank-6 {
+  background: #ff5222;
 }
 .main-content .char-info .info-detail .detail-list {
   display: flex;
@@ -272,14 +294,18 @@
 .main-content .char-info .info-detail .detail-list .item .multi-line .delta {
   color: #9be802;
 }
+.main-content .relic-list .item, .main-content .artoverview .item {
+  background: linear-gradient(to top, #4a4e4f, rgba(132, 124, 111, 0.6549019608));
+  box-shadow: 2px 2px 4px #4b4b4b;
+}
 .main-content .artoverview {
   display: flex;
   justify-content: space-between;
+  text-shadow: 1px 1px 1px #000;
 }
 .main-content .artoverview .weapon {
   width: 58%;
   height: 100px;
-  border: 1px solid #f0eaca;
   border-radius: 10px;
   padding: 0px 5px;
   box-sizing: border-box;
@@ -347,13 +373,13 @@
   width: 18px;
   text-align: center;
   margin-right: 5px;
+  text-shadow: none;
 }
-.main-content .artoverview .weapon .info .level-info .level5 {
+.main-content .artoverview .weapon .info .level-info .dy-icon.level5 {
   background: #ffd070 !important;
   color: #332c1f;
 }
 .main-content .artoverview .relic {
-  border: 1px solid #f0eaca;
   border-radius: 10px;
   padding: 0px 5px;
   box-sizing: border-box;
@@ -410,16 +436,13 @@
 }
 .main-content .relic-list .item {
   width: calc(33% - 10px);
-  border: 1px solid #f0eaca;
   border-radius: 10px;
-  box-sizing: border-box;
   margin-bottom: 10px;
   margin-right: 15px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: rgba(132, 124, 111, 0.6549019608);
 }
 .main-content .relic-list .item:nth-child(3n) {
   margin-right: 0;
@@ -439,14 +462,15 @@
   overflow: hidden;
   z-index: 2;
   font-size: 1rem;
-  background-color: rgba(240, 234, 202, 0.2);
+  background-color: rgba(163, 157, 146, 0.6549019608);
   border: 2px solid #f0eaca;
   height: 1.2rem;
   box-sizing: content-box;
   color: #f0eaca;
   display: flex;
   padding: 3px 10px 1px 10px;
-  border-radius: 5px 0 5px 0;
+  border-radius: 10px 0 10px 0;
+  text-shadow: 1px 1px 1px #000;
 }
 .main-content .relic-list .item .relic-info .icon {
   width: 70px;
@@ -474,6 +498,7 @@
   white-space: nowrap;
   overflow: hidden;
   font-size: 0.9rem;
+  text-shadow: 1px 1px 1px #000;
 }
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info {
   width: 100%;
@@ -595,6 +620,7 @@
   padding: 0 5px;
   justify-content: space-between;
   margin: 10px 0px;
+  text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 .info-uid-api .uid {
   font-weight: 700;
