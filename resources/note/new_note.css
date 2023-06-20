@@ -45,9 +45,9 @@ article header .sign-in {
 article header .sign-in .is {
   border: 1px solid #9c8d5c;
   border-radius: 3px;
-  padding: 0 2px;
-  font-size: 13px;
-  height: 14px;
+  padding: 1px 2px;
+  font-size: 12px;
+  height: 16px;
   line-height: 14px;
 }
 article header .sign-in .is.grey {

@@ -124,8 +124,16 @@
   display: flex;
   justify-content: center;
   white-space: nowrap;
+  align-items: center;
 }
 .data .item-list .item .text[data-isCircle=update]::before {
   content: "●";
   margin-right: 3px;
+}
+.data .item-list .item .text .rank {
+  color: #ffffff;
+  margin-left: 3px;
+  padding: 0 3px;
+  border-radius: 3px;
+  font-size: 15px;
 }/*# sourceMappingURL=new_card.css.map */

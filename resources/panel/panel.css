@@ -210,27 +210,6 @@
   margin-left: auto;
   white-space: nowrap;
 }
-.main-content .char-info .info-detail .title .const.rank-0 {
-  background: #606060;
-}
-.main-content .char-info .info-detail .title .const.rank-1 {
-  background: #F08080;
-}
-.main-content .char-info .info-detail .title .const.rank-2 {
-  background: #ADFF2F;
-}
-.main-content .char-info .info-detail .title .const.rank-3 {
-  background: #7B68EE;
-}
-.main-content .char-info .info-detail .title .const.rank-4 {
-  background: #FFB6C1;
-}
-.main-content .char-info .info-detail .title .const.rank-5 {
-  background: #20B2AA;
-}
-.main-content .char-info .info-detail .title .const.rank-6 {
-  background: #ff5222;
-}
 .main-content .char-info .info-detail .detail-list {
   display: flex;
   flex-direction: column;

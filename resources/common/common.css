@@ -81,4 +81,32 @@ body {
   color: #d3bc8e;
   display: inline-block;
   padding: 0 3px;
+}
+
+.const-rank-0 {
+  background: #606060;
+}
+
+.const-rank-1 {
+  background: #ADFF2F;
+}
+
+.const-rank-2 {
+  background: #FFB6C1;
+}
+
+.const-rank-3 {
+  background: #1aa1d7;
+}
+
+.const-rank-4 {
+  background: #F08080;
+}
+
+.const-rank-5 {
+  background: #7B68EE;
+}
+
+.const-rank-6 {
+  background: #ff5222;
 }/*# sourceMappingURL=common.css.map */

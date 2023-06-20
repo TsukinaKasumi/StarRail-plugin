@@ -82,3 +82,20 @@ body {
     display: inline-block;
     padding: 0 3px;
 }
+
+// 命座颜色
+$background-list: (
+    #606060,
+    #ADFF2F,
+    #FFB6C1,
+    #1aa1d7,
+    #F08080,
+    #7B68EE,
+    #ff5222
+);
+
+@for $i from 0 to length($list: $background-list) {
+    .const-rank-#{$i} {
+        background: nth($background-list, $i + 1);
+    }
+}
