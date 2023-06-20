@@ -18,11 +18,6 @@ export class Note extends plugin {
         {
           reg: `^${rulePrefix}体力(pro)?$`,
           fnc: 'note'
-        },
-        {
-          reg: '^#fuckmhy123456$',
-          fnc: 'widget',
-          log: false
         }
       ]
     })
@@ -82,60 +77,6 @@ export class Note extends plugin {
     })
   }
 
-  async widget (e) {
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-    }
-    let userData = await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    if (userData.game_uid) {
-      uid = userData.game_uid
-    } else {
-      await e.reply('当前使用的ck无星穹铁道角色，如绑定多个ck请尝试切换ck')
-      return false
-    }
-    if (!uid) {
-      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
-      return false
-    }
-    this.uid = uid
-    let ck = await getCk(e, true)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
-      return false
-    }
-
-    let api = new MysSRApi(uid, ck)
-    let deviceFp = await redis.get(`STARRAIL:DEVICE_FP:${uid}`)
-    if (!deviceFp) {
-      let sdk = api.getUrl('getFp')
-      let res = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-      let fpRes = await res.json()
-      deviceFp = fpRes?.data?.device_fp
-      if (deviceFp) {
-        await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-      }
-    }
-    const { url, headers } = api.getUrl('srWidget', { deviceFp })
-    logger.mark({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
-
-    let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srWidget')
-    if (cardData.retcode !== 0) {
-      return false
-    }
-    let data = cardData.data
-    // data.type = 'module'
-    // await this.handleData(data)
-    e.reply(JSON.stringify(data, null, '\t'))
-  }
-
   handleData (data) {
     data.expeditions.forEach(ex => {
       ex.format_remaining_time = formatDuration(ex.remaining_time)
@@ -143,6 +84,7 @@ export class Note extends plugin {
     })
     if (data.max_stamina === data.current_stamina) {
       data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
+      data.ktl_full_time_str = ''
     } else {
       data.ktl_full = `${formatDuration(data.stamina_recover_time, 'HH小时mm分钟')} |`
       data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
