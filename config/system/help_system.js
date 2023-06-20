@@ -42,8 +42,8 @@ export const helpList = [
       desc: '月度星琼统计'
     }, {
       icon: 95,
-      title: '*体力',
-      desc: '体力和委托信息'
+      title: '*体力(pro)',
+      desc: '体力和委托信息(pro尚未施工完成)'
     }, {
       icon: 107,
       title: '*(上期)宇宙(uid)',
@@ -80,7 +80,12 @@ export const helpList = [
       icon: 66,
       title: '*希儿面板(uid)',
       desc: '星铁角色面板详情'
-    }, {
+    }
+  ]
+}, {
+    group: '星穹铁道攻略信息,来自米游社(数据仅供参考)',
+      list :[
+    {
       icon: 106,
       title: '*希儿攻略(1 | 2 | 3 | 4 |5)',
       desc: '星铁角色攻略'
@@ -145,5 +150,6 @@ export const helpList = [
     icon: 85,
     title: '*设置默认攻略(1 | 2 | 3 | 4 |5)',
     desc: '设置星铁默认攻略'
-  }]
-}]
+  }
+]}
+]
