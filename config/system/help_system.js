@@ -43,7 +43,7 @@ export const helpList = [
     }, {
       icon: 95,
       title: '*体力(pro)',
-      desc: '体力和委托信息(pro尚未施工完成)'
+      desc: '体力和委托信息'
     }, {
       icon: 107,
       title: '*(上期)宇宙(uid)',

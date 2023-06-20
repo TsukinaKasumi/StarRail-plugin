@@ -218,7 +218,13 @@ export async function getCk (e, s = false) {
     stoken = await getStoken(e)
   }
   if (typeof user.getCk === 'function') {
-    return user.getCk()
+    let ck = user.getCk()
+    Object.keys(ck).forEach(k => {
+      if (ck[k].ck) {
+        ck[k].ck = `${stoken}${ck[k].ck}`
+      }
+    })
+    return ck
   }
   let mysUser = (await user.user()).getMysUser('sr')
   let ck
