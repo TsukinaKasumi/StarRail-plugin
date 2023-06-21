@@ -33,9 +33,17 @@ export const helpList = [
       title: '*绑定uid(uid)',
       desc: '绑定你的星铁uid'
     }, {
-      icon: 75,
-      title: '*卡片',
-      desc: '角色卡片(仅支持绑定ck查询)'
+      icon: 63,
+      title: '*更新面板(uid)',
+      desc: '更新星铁面板数据'
+    }, {
+      icon: 66,
+      title: '*希儿面板(uid)',
+      desc: '星铁角色面板详情'
+    }, {
+      icon: 107,
+      title: '*(上期)宇宙(uid)',
+      desc: '模拟宇宙信息(可带uid查询)'
     }, {
       icon: 98,
       title: '*收入',
@@ -45,9 +53,9 @@ export const helpList = [
       title: '*体力(pro)',
       desc: '体力和委托信息'
     }, {
-      icon: 107,
-      title: '*(上期)宇宙(uid)',
-      desc: '模拟宇宙信息(可带uid查询)'
+      icon: 75,
+      title: '*卡片',
+      desc: '角色卡片(仅支持绑定ck查询)'
     }, {
       icon: 110,
       title: '*深渊',
@@ -67,19 +75,11 @@ export const helpList = [
     }, {
       icon: 97,
       title: '*更新跃迁/抽卡',
-      desc: '更新抽卡记录'
+      desc: '更新本地抽卡记录'
     }, {
       icon: 97,
       title: '*跃迁分析(角色|光锥|常驻)',
       desc: '抽卡分析默认为总览'
-    }, {
-      icon: 63,
-      title: '*更新面板(uid)',
-      desc: '更新星铁面板数据'
-    }, {
-      icon: 66,
-      title: '*希儿面板(uid)',
-      desc: '星铁角色面板详情'
     }
   ]
 }, {
