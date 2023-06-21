@@ -1,9 +1,10 @@
+/* 卡片容器 */
 .container {
   margin: auto;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  background: url("../common/cont/bkg2.jpg") center no-repeat;
+  background: url('../common/cont/bkg.png') center no-repeat;
   background-size: cover;
   color: #f0eaca;
   padding: 20px 30px;
@@ -12,6 +13,12 @@
   width: 730px;
 }
 
+/*******************/
+/* 头部 */
+/* .header {
+  
+} */
+/* 标题 */
 .header .title {
   font-size: 2rem;
   text-align: center;
@@ -21,17 +28,35 @@
   justify-content: space-between;
   align-items: center;
 }
+
+/* 标题的提示 */
 .header .title .tip {
   margin: 0;
   padding: 0;
   font-size: 1.2rem;
   text-align: left;
 }
+
+/* 标题的文字 */
 .header .title .text {
   margin: 0;
   padding: 0;
   font-size: 2.8rem;
 }
+
+/* 标题的 LOGO */
+.logo {
+  height: 4rem;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+}
+
+.logo img {
+  height: 100%;
+}
+
+/* 顶部的信息 */
 .header .info {
   display: flex;
   justify-content: space-between;
@@ -40,44 +65,48 @@
   font-size: 1.4rem;
   padding: 0 25px 0 10px;
 }
+
+/* UID */
 .header .info .uid {
   margin-top: 14px;
   font-weight: 500;
 }
+
+/* 种类 */
 .header .info .type {
   display: flex;
   align-items: center;
 }
+
+/* 种类的图标 */
 .header .info .type .icon {
   width: 3rem;
   height: 3rem;
 }
+
 .header .info .type .icon img {
   width: 100%;
   height: 100%;
 }
 
-.logo {
-  height: 4rem;
-  position: absolute;
-  right: 10px;
-  bottom: 0;
-}
-.logo img {
-  height: 100%;
-}
-
+/*******************/
+/* 主要内容 */
 .main-content {
   margin-top: 7px;
   /* border: 2px solid #f0eaca; */
   border-radius: 10px;
   /* padding: 20px; */
 }
+
+/*******************/
+/* 角色信息 */
 .main-content .char-info {
   display: flex;
   justify-content: left;
   align-items: center;
 }
+
+/* 角色信息卡片 */
 .main-content .char-info .char-card {
   width: 280px;
   height: 475px;
@@ -88,6 +117,28 @@
   flex-shrink: 0;
   flex-grow: 0;
 }
+
+/* 角色星级 */
+.main-content .char-info .char-star {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 1.8rem;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.main-content .char-info .char-star img {
+  height: 120%;
+  display: block;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 封面图 */
 .main-content .char-info .char-card .char-img {
   width: 100%;
   height: 100%;
@@ -99,26 +150,29 @@
   /* left: 50%; */
   /* transform: translate(-50%, -50%); */
 }
+
 .main-content .char-info .char-card .char-img img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
+
+/* 技能 */
 .main-content .char-info .char-card .skills {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+  backdrop-filter: blur(4.5px);
   -webkit-backdrop-filter: blur(4.5px);
-          backdrop-filter: blur(4.5px);
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 7px;
   box-sizing: border-box;
-  background: rgba(25, 25, 25, 0.3);
+  background: rgb(25 25 25 / 30%);
 }
+
 .main-content .char-info .char-card .skills .item {
   display: flex;
   justify-content: center;
@@ -127,6 +181,8 @@
   box-sizing: border-box;
   margin: 0 3px;
 }
+
+/* 技能图标 */
 .main-content .char-info .char-card .skills .item .icon {
   width: 36px;
   height: 36px;
@@ -135,32 +191,37 @@
   border: 2.5px solid #f0eaca;
   position: relative;
 }
+
+.char-card .skills .item .icon .level {
+  position: absolute;
+  font-size: 12px;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #000000;
+  background: #ffff;
+  width: 20px;
+  text-align: center;
+  box-shadow: 0 0 5px 0 #000;
+  border-radius: 4px;
+  font-weight: 900;
+}
+
 .main-content .char-info .char-card .skills .item .icon img {
   width: 100%;
   height: 100%;
   display: block;
 }
+
+/* 技能等级文字 */
 .main-content .char-info .char-card .skills .item .type {
   font-size: 70%;
   margin-top: 10px;
 }
-.main-content .char-info .char-star {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 90px;
-  height: 1.8rem;
-  overflow: hidden;
-  z-index: 2;
-}
-.main-content .char-info .char-star img {
-  height: 120%;
-  display: block;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+
+/*******************/
+/* 详细信息 */
 .main-content .char-info .info-detail {
   flex-grow: 1;
   flex-shrink: 1;
@@ -169,12 +230,15 @@
   flex-direction: column;
   height: 100%;
 }
+
+/* 角色昵称、等级等 */
 .main-content .char-info .info-detail .title {
   display: flex;
   align-items: flex-end;
   border-bottom: 1px solid #f0eaca;
-  text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
+
+/* 角色昵称 */
 .main-content .char-info .info-detail .title .name {
   --font-size: 2.2rem;
   font-size: var(--font-size);
@@ -182,22 +246,29 @@
   max-width: calc(var(--font-size) * 4);
   overflow: hidden;
 }
+
+/*角色种类*/
 .main-content .char-info .info-detail .title .type {
   width: 1.8rem;
   height: 1.8rem;
   margin-left: 5px;
   margin-bottom: 5px;
 }
+
 .main-content .char-info .info-detail .title .type img {
   width: 100%;
   height: 100%;
   display: block;
 }
+
+/* 角色等级 */
 .main-content .char-info .info-detail .title .level {
   margin-left: 10px;
   font-size: 1rem;
   margin-bottom: 3px;
 }
+
+/* 角色命座 */
 .main-content .char-info .info-detail .title .const {
   display: flex;
   align-items: center;
@@ -210,6 +281,17 @@
   margin-left: auto;
   white-space: nowrap;
 }
+
+.title .const img {
+  height: 20px;
+  margin-right: 2px;
+}
+
+.title .const:nth-child(5) {
+  margin-left: 5px !important;
+}
+
+/* 属性列表 */
 .main-content .char-info .info-detail .detail-list {
   display: flex;
   flex-direction: column;
@@ -220,6 +302,7 @@
   overflow: hidden;
   /* flex-wrap: wrap; */
 }
+
 .main-content .char-info .info-detail .detail-list .item {
   display: flex;
   align-items: center;
@@ -227,9 +310,11 @@
   border-radius: 5px;
   margin-bottom: 6px;
   flex: 1;
+  backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-          backdrop-filter: blur(3px);
 }
+
+/* 属性图标 */
 .main-content .char-info .info-detail .detail-list .item .icon {
   width: 1.8rem;
   height: 1.8rem;
@@ -237,6 +322,7 @@
   position: relative;
   margin-left: 4px;
 }
+
 .main-content .char-info .info-detail .detail-list .item .icon img {
   position: absolute;
   left: 50%;
@@ -245,18 +331,24 @@
   height: 120%;
   display: block;
 }
+
+/* 属性名称 */
 .main-content .char-info .info-detail .detail-list .item .text {
   margin-left: 8px;
 }
+
+/* 属性值 */
 .main-content .char-info .info-detail .detail-list .item .value {
   margin-left: auto;
   margin-right: 17px;
 }
+
 .main-content .char-info .info-detail .detail-list .item .multi-line-sum {
   /*background: #00ff8c;*/
   margin-left: auto;
   text-align: right;
 }
+
 .main-content .char-info .info-detail .detail-list .item .multi-line {
   display: flex;
   flex-direction: column;
@@ -267,24 +359,42 @@
   font-size: 13px;
   text-align: right;
   width: 55px;
-  background: rgba(74, 74, 74, 0.5294117647);
+  background: #4a4a4a87;
   line-height: 110%;
 }
+
 .main-content .char-info .info-detail .detail-list .item .multi-line .delta {
   color: #9be802;
 }
-.main-content .relic-list .item, .main-content .artoverview .item {
-  background: linear-gradient(to top, #4a4e4f, rgba(132, 124, 111, 0.6549019608));
-  box-shadow: 2px 2px 4px #4b4b4b;
+
+/*******************/
+
+.info-uid-api {
+  display: flex;
+  font-size: 1rem;
+  color: #f0eaca;
+  padding: 0 5px;
+  justify-content: space-between;
+  margin: 10px 0px;
 }
+
+.info-uid-api .uid {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/*******************/
+/* 光锥、遗器总览 */
 .main-content .artoverview {
   display: flex;
   justify-content: space-between;
-  text-shadow: 1px 1px 1px #000;
 }
+
+/* 光锥 */
 .main-content .artoverview .weapon {
   width: 58%;
   height: 100px;
+  border: 1px solid #f0eaca;
   border-radius: 10px;
   padding: 0px 5px;
   box-sizing: border-box;
@@ -292,6 +402,51 @@
   margin-right: 17px;
   align-items: center;
 }
+
+/* 遗器 */
+.main-content .artoverview .relic {
+  border: 1px solid #f0eaca;
+  border-radius: 10px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* 信息 */
+.main-content .artoverview .item .info {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content .artoverview .item .info .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 名称 */
+.main-content .artoverview .item .info .title .name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+
+/* 等级信息 */
+.main-content .artoverview .item .info .level-info {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* 光锥图标 */
 .main-content .artoverview .weapon .icon {
   height: 100%;
   overflow: hidden;
@@ -301,8 +456,9 @@
   margin-right: 5px;
   padding: 0 10px;
 }
+
 .main-content .artoverview .weapon .icon::after {
-  content: "";
+  content: '';
   display: block;
   top: 10px;
   bottom: 10px;
@@ -311,10 +467,13 @@
   position: absolute;
   right: 0px;
 }
+
 .main-content .artoverview .weapon .icon img {
   height: 100%;
   display: block;
 }
+
+/* 光锥星级 */
 .main-content .artoverview .weapon .info .title .star {
   width: 80px;
   height: 1.5rem;
@@ -324,6 +483,7 @@
   flex-grow: 0;
   flex-shrink: 0;
 }
+
 .main-content .artoverview .weapon .info .title .star img {
   height: 120%;
   display: block;
@@ -332,6 +492,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* 光锥等级 */
 .main-content .artoverview .weapon .info .level-info .level {
   border: 1px solid #f0eaca;
   padding: 5px 15px;
@@ -339,6 +501,8 @@
   font-size: 0.9rem;
   margin-right: 15px;
 }
+
+/* 光锥叠影 */
 .main-content .artoverview .weapon .info .level-info .dy {
   border: 1px solid #f0eaca;
   padding: 5px 25px;
@@ -346,27 +510,21 @@
   font-size: 0.9rem;
   display: flex;
 }
+
 .main-content .artoverview .weapon .info .level-info .dy-icon {
   border-radius: 50%;
   background: #282828;
   width: 18px;
   text-align: center;
   margin-right: 5px;
-  text-shadow: none;
 }
-.main-content .artoverview .weapon .info .level-info .dy-icon.level5 {
+
+.main-content .artoverview .weapon .info .level-info .level5 {
   background: #ffd070 !important;
   color: #332c1f;
 }
-.main-content .artoverview .relic {
-  border-radius: 10px;
-  padding: 0px 5px;
-  box-sizing: border-box;
-  flex-grow: 1;
-  flex-shrink: 1;
-  display: flex;
-  align-items: center;
-}
+
+/* 遗器评分 */
 .main-content .artoverview .relic .info .level-info .score {
   /* border: 1px solid #f0eaca; */
   padding: 5px 15px;
@@ -374,6 +532,8 @@
   font-size: 1.4rem;
   margin-right: 10px;
 }
+
+/* 遗器总分 */
 .main-content .artoverview .relic .info .level-info .total-score {
   border: 1px solid #f0eaca;
   padding: 5px 15px;
@@ -383,39 +543,22 @@
   align-items: center;
   justify-content: center;
 }
-.main-content .artoverview .item .info {
-  flex-grow: 1;
-  flex-shrink: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.main-content .artoverview .item .info .title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.main-content .artoverview .item .info .title .name {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 1.5rem;
-}
-.main-content .artoverview .item .info .level-info {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
+
+/*******************/
+/* 遗器列表 */
 .main-content .relic-list {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
+/* 遗器列表每项 */
 .main-content .relic-list .item {
   width: calc(33% - 10px);
+  border: 1px solid #f0eaca;
   border-radius: 10px;
+  box-sizing: border-box;
   margin-bottom: 10px;
   margin-right: 15px;
   overflow: hidden;
@@ -423,17 +566,24 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
 .main-content .relic-list .item:nth-child(3n) {
   margin-right: 0;
 }
+
+/* 遗器信息 */
 .main-content .relic-list .item .relic-info {
   padding: 15px 10px;
   height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
   position: relative;
 }
+
+/* 遗器分数 */
 .main-content .relic-list .item .relic-info .score {
   position: absolute;
   top: -2px;
@@ -441,16 +591,17 @@
   overflow: hidden;
   z-index: 2;
   font-size: 1rem;
-  background-color: rgba(163, 157, 146, 0.6549019608);
+  background-color: rgba(240, 234, 202, 0.2);
   border: 2px solid #f0eaca;
   height: 1.2rem;
   box-sizing: content-box;
   color: #f0eaca;
   display: flex;
   padding: 3px 10px 1px 10px;
-  border-radius: 10px 0 10px 0;
-  text-shadow: 1px 1px 1px #000;
+  border-radius: 5px 0 5px 0;
 }
+
+/* 遗器图标 */
 .main-content .relic-list .item .relic-info .icon {
   width: 70px;
   height: 70px;
@@ -460,10 +611,14 @@
   flex-shrink: 0;
   margin-right: 5px;
 }
+
 .main-content .relic-list .item .relic-info .icon img {
   height: 100%;
   display: block;
 }
+
+
+/* 遗器名称 */
 .main-content .relic-list .item .relic-info .relic-info-detail {
   display: flex;
   overflow: hidden;
@@ -471,14 +626,16 @@
   justify-content: center;
   /* align-items: center; */
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .name {
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   font-size: 0.9rem;
-  text-shadow: 1px 1px 1px #000;
 }
+
+/* 遗器星级 */
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info {
   width: 100%;
   margin-top: 2px;
@@ -486,6 +643,7 @@
   /* justify-content: space-between; */
   align-items: center;
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info .star {
   width: 50px;
   height: 1rem;
@@ -494,6 +652,7 @@
   flex-grow: 0;
   flex-shrink: 0;
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info .star img {
   height: 120%;
   display: block;
@@ -502,6 +661,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .main-content .relic-list .item .relic-info .relic-info-detail .level-info .level {
   border: 1px solid #f0eaca;
   padding: 0px 5px;
@@ -509,13 +669,21 @@
   font-size: 0.8rem;
   margin-left: 3px;
 }
+
+/* 遗器属性值 */
 .main-content .relic-list .item .relic-info .relic-info-detail .value {
   margin-top: 2px;
   font-size: 15px;
 }
+
+/* 遗器属性值列表 */
 .main-content .relic-list .item .relic-value-list {
   flex-grow: 1;
+  /* flex-shrink: 1; */
+  /* background: #f0eaca; */
 }
+
+/* 遗器属性值列表每项 */
 .main-content .relic-list .item .relic-value-list .relic-value {
   padding: 3px 15px;
   display: flex;
@@ -524,34 +692,36 @@
   font-size: 0.9rem;
   line-height: 22px;
 }
+
 .main-content .relic-list .item .relic-value-list .relic-value.weight-normal {
   color: #fff;
 }
-.main-content .relic-list .item .relic-value-list .relic-value.weight-normal .adds .count {
-  border-color: #fff;
-}
+
 .main-content .relic-list .item .relic-value-list .relic-value.weight-heavy {
   color: #f0eaca;
 }
-.main-content .relic-list .item .relic-value-list .relic-value.weight-heavy .adds .count {
-  border-color: #f0eaca;
+
+.main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n + 1) {
+  background-color: #5452528f;
 }
-.main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n+1) {
-  background-color: rgba(156, 149, 138, 0.6549019608);
-}
+
 .main-content .relic-list .item .relic-value-list .relic-value:nth-child(2n) {
-  background-color: rgba(104, 98, 88, 0.6549019608);
+  background-color: #08080957;
 }
-.main-content .relic-list .item .relic-value-list .name {
+
+.main-content .relic-list .item .relic-value-list .relic-value .name {
   width: 4.5em;
   display: flex;
   align-items: center;
 }
-.main-content .relic-list .item .relic-value-list .adds {
+
+/* 遗器强化次数 */
+.main-content .relic-list .item .relic-value-list .relic-value .adds {
   display: flex;
   margin-left: 5px;
 }
-.main-content .relic-list .item .relic-value-list .adds .count {
+
+.main-content .relic-list .item .relic-value-list .relic-value .adds .count {
   border-top: 1px solid #b7b7b7;
   border-right: 1px solid #b7b7b7;
   /* border-radius: 6px; */
@@ -561,54 +731,29 @@
   width: 0.5em;
   height: 0.5em;
 }
-.main-content .relic-list .item .relic-value-list .value {
+
+.main-content .relic-list .item .relic-value-list .relic-value.weight-normal .adds .count {
+  border-color: #fff;
+}
+
+.main-content .relic-list .item .relic-value-list .relic-value.weight-heavy .adds .count {
+  border-color: #f0eaca;
+}
+
+/* 遗器属性值列表每项值 */
+.main-content .relic-list .item .relic-value-list .relic-value .value {
   /* font-weight: 600; */
   display: flex;
   align-items: center;
   margin-left: auto;
 }
 
-.char-card .skills .item .icon .level {
-  position: absolute;
-  font-size: 12px;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  color: #000000;
-  background: white;
-  width: 20px;
-  text-align: center;
-  box-shadow: 0 0 5px 0 #000;
-  border-radius: 4px;
-  font-weight: 900;
-}
 
-.title .const img {
-  height: 20px;
-  margin-right: 2px;
-}
-.title .const:nth-child(5) {
-  margin-left: 5px !important;
-}
 
-.info-uid-api {
-  display: flex;
-  font-size: 1rem;
-  color: #f0eaca;
-  padding: 0 5px;
-  justify-content: space-between;
-  margin: 10px 0px;
-  text-shadow: 0 0 3px #000, 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-.info-uid-api .uid {
-  font-weight: 700;
-  font-size: 20px;
-}
-
+/* 卡片信息 */
 .card-info {
   margin-top: 20px;
   text-align: center;
   font-style: italic;
   text-shadow: 1px 1px 1px #000;
-}/*# sourceMappingURL=panel.css.map */
+}
