@@ -33,6 +33,10 @@ article header img {
 }
 article header .info p:nth-child(1) {
   margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 70%;
 }
 article header .sign-in {
   position: absolute;

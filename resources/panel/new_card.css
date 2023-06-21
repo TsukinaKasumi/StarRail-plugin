@@ -78,6 +78,12 @@
   align-items: center;
   font-size: 22px;
 }
+.data .title .right {
+  max-width: 40%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .data .grey-circle, .data .golden-circle {
   margin: 0 10px;
 }
@@ -136,4 +142,5 @@
   padding: 0 3px;
   border-radius: 3px;
   font-size: 15px;
+  text-shadow: 0 0 2px #000;
 }/*# sourceMappingURL=new_card.css.map */

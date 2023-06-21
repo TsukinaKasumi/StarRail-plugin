@@ -42,6 +42,10 @@ article {
         .info {
             p:nth-child(1) {
                 margin-bottom: 10px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                max-width: 70%;
             }
         }
 

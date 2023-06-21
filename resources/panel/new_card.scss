@@ -88,6 +88,13 @@
         justify-content: space-between;
         align-items: center;
         font-size: 22px;
+
+        .right {
+            max-width: 40%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
 
     %circle {
@@ -158,6 +165,7 @@
                     padding: 0 3px;
                     border-radius: 3px;
                     font-size: 15px;
+                    text-shadow: 0 0 2px #000;
                 }
             }
         }
