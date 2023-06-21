@@ -1,0 +1,181 @@
+.container {
+  background: url(../common/cont/bkg2.jpg) center;
+}
+
+article {
+  background-image: url(./resources/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 780px;
+  padding: 0 75px;
+  padding-top: 23px;
+  position: relative;
+}
+article span.grey {
+  color: #767676;
+}
+article span.golden {
+  color: #9c8d5c;
+}
+article header {
+  margin-top: 7px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #767676;
+  position: relative;
+}
+article header img {
+  border-radius: 50%;
+  border: 3px solid #767676;
+  height: 80px;
+  margin: 0 15px;
+}
+article header .info p:nth-child(1) {
+  margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+article header .sign-in {
+  position: absolute;
+  bottom: 4px;
+  right: 1px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+article header .sign-in .is {
+  border: 1px solid #9c8d5c;
+  border-radius: 3px;
+  padding: 1px 2px;
+  font-size: 12px;
+  height: 16px;
+  line-height: 14px;
+}
+article header .sign-in .is.grey {
+  border: 1px solid #767676;
+}
+article time {
+  display: block;
+  margin: 5px 0;
+  text-align: center;
+  font-size: 13px;
+}
+article section {
+  background: #e8e7e7;
+  padding: 7px 15px;
+  margin-bottom: 12px;
+}
+article section.energy .title {
+  display: flex;
+}
+article section.energy .title .text {
+  width: 70%;
+  padding: 5px 0;
+  border-bottom: 2px solid #767676;
+}
+article section.energy .title .number {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+article section.energy .title .number span {
+  font-size: 27px;
+}
+article section.energy .progress-bar {
+  height: 10px;
+  background-color: #767676;
+  border-radius: 10px;
+  margin: 7px 0;
+  overflow: hidden;
+  border: 1px solid #ac9854;
+}
+article section.energy .progress-bar .progress {
+  height: 100%;
+  background-color: #e7c554;
+  border-radius: inherit;
+}
+article section.energy .info {
+  font-size: 15px;
+}
+article section.other {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+article section.other span {
+  font-size: 22px;
+}
+article section.entrust .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 7px;
+}
+article section.entrust .title .right {
+  font-size: 15px;
+}
+article section.entrust .title .right span {
+  font-size: 18px;
+}
+article section.entrust .item-list {
+  min-height: 180px;
+}
+article section.entrust .item-list .item {
+  background: #cccccc;
+  margin-bottom: 5px;
+}
+article section.entrust .item-list .item .data {
+  display: flex;
+  height: 35px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  padding: 0 10px;
+}
+article section.entrust .item-list .item .data .avatar {
+  display: flex;
+  justify-content: space-between;
+  width: 68px;
+}
+article section.entrust .item-list .item .data .avatar img {
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #9c8d5c;
+}
+article section.entrust .item-list .item .data .mark {
+  --color: #000000;
+  border: 1.5px solid var(--color);
+  border-radius: 3px;
+  padding: 0 3px;
+  font-size: 13px;
+  color: var(--color);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+article section.entrust .item-list .item .data .mark[data-remaining_time="0"] {
+  --color: #9c8d5c;
+}
+article section.entrust .item-list .item .progress {
+  background: #ac9854;
+  height: 5px;
+}
+article .uid, article .data-source {
+  position: absolute;
+  bottom: 15px;
+  right: 35px;
+  color: #767676;
+  font-size: 14px;
+}
+article .data-source {
+  left: 40px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 10px;
+}/*# sourceMappingURL=new_note.css.map */

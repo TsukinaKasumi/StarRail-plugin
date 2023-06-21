@@ -1,0 +1,146 @@
+@charset "UTF-8";
+.container {
+  background: url(./resources/subject.png) #353434 no-repeat;
+  background-size: 100%;
+  height: 406px;
+  width: 996px;
+  padding: 0;
+  position: relative;
+}
+
+.other-text {
+  color: #a4a4a4;
+}
+.other-text .title {
+  position: absolute;
+  left: 63px;
+  top: 40px;
+  font-size: 40px;
+  writing-mode: vertical-lr;
+}
+.other-text .title::before {
+  content: "「";
+  position: absolute;
+  left: -35px;
+  top: -12px;
+}
+.other-text .title::after {
+  content: "」";
+  position: absolute;
+  bottom: -12px;
+  right: -35px;
+}
+.other-text .update-service {
+  position: absolute;
+  bottom: 20%;
+  left: 15%;
+  transform: translate(-50%, -50%) rotate(40.5deg);
+  font-size: 14px;
+  text-align: end;
+  width: 277px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.other-text .uid {
+  position: absolute;
+  bottom: 12px;
+  left: 27px;
+  font-size: 14px;
+}
+.other-text .update-time {
+  position: absolute;
+  bottom: 62px;
+  left: 263px;
+  width: 308px;
+  text-align: center;
+  font-size: 14px;
+}
+.other-text ._copyright {
+  position: absolute;
+  bottom: 15px;
+  left: 333px;
+  font-size: 23px;
+}
+
+.data {
+  position: absolute;
+  width: 785px;
+  height: 300px;
+  left: 182px;
+  top: 14px;
+}
+.data .title {
+  height: 50px;
+  border-bottom: 1px solid #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 22px;
+}
+.data .title .right {
+  max-width: 40%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.data .grey-circle, .data .golden-circle {
+  margin: 0 10px;
+}
+.data .golden-circle {
+  color: #b4921d;
+}
+.data .grey-circle {
+  color: #898989;
+}
+.data .item-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  max-height: 210px;
+  overflow: hidden;
+}
+.data .item-list .item {
+  width: 80px;
+  text-align: center;
+  margin: 0 14px;
+  margin-bottom: 20px;
+  --color: #898989;
+  color: var(--color);
+}
+.data .item-list .item[data-isUpdate=true] {
+  --color: #ac9548;
+}
+.data .item-list .item[data-isUpdate=false] {
+  --color: #898989;
+}
+.data .item-list .item .avatar {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  margin-bottom: 3px;
+  border-radius: 50%;
+  border: 2px solid var(--color);
+}
+.data .item-list .item .avatar img {
+  width: 100%;
+}
+.data .item-list .item .text {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+  align-items: center;
+}
+.data .item-list .item .text[data-isCircle=update]::before {
+  content: "●";
+  margin-right: 3px;
+}
+.data .item-list .item .text .rank {
+  color: #ffffff;
+  margin-left: 3px;
+  padding: 0 3px;
+  border-radius: 3px;
+  font-size: 15px;
+  text-shadow: 0 0 2px #000;
+}/*# sourceMappingURL=new_card.css.map */

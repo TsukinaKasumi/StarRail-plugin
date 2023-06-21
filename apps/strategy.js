@@ -16,15 +16,15 @@ export class strategy extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}?(更新)?\\S+攻略([1-4])?$`,
+          reg: `^${rulePrefix}?(更新)?\\S+攻略([1-5])?$`,
           fnc: 'strategy'
         },
         {
-          reg: `^${rulePrefix}攻略(说明|帮助)?$`,
+          reg: `^${rulePrefix}攻略(说明|帮助)$`,
           fnc: 'strategy_help'
         },
         {
-          reg: `^${rulePrefix}设置默认攻略([1-4])?$`, // 待添加
+          reg: `^${rulePrefix}设置默认攻略([1-5])?$`, 
           fnc: 'strategy_setting'
         }
       ]
@@ -63,7 +63,7 @@ export class strategy extends plugin {
 
   /** #心海攻略 */
   async strategy () {
-    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-4])?$`)
+    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-5])?$`)
     let [, , , , isUpdate, roleName,
       group = setting.getConfig('mys')?.defaultSource
     ] = this.e.msg.match(reg)
@@ -87,29 +87,30 @@ export class strategy extends plugin {
   async strategy_help () {
     await this.e.reply([
       '星铁攻略帮助:\n',
-      '*希儿攻略[1234]\n',
-      '*更新希儿攻略[1234]\n',
-      '*设置默认攻略[1234]\n',
+      '*希儿攻略[12345]\n',
+      '*更新希儿攻略[12345]\n',
+      '*设置默认攻略[12345]\n',
       '示例: *希儿攻略2\n',
       '\n攻略来源:\n',
       '1——初始镜像\n',
       '2——小橙子阿\n',
       '3——星穹中心\n',
-      '4——水云109'
+      '4——水云109\n',
+      '5——幻仙十六'
     ])
   }
 
   /** #设置默认攻略1 */
   async strategy_setting () {
-    let match = /设置默认攻略([1-4])?$/.exec(this.e.msg)
+    let match = /设置默认攻略([1-5])?$/.exec(this.e.msg)
     let set = './plugins/StarRail-plugin/config/mys.yaml'
     let config = fs.readFileSync(set, 'utf8')
     let num = Number(match[1])
     if (isNaN(num)) {
-      await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[1234] \n 请增加数字1-4其中一个')
+      await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[12345] \n 请增加数字1-5其中一个')
       return
     }
-    config = config.replace(/defaultSource: [1-4]/g, 'defaultSource: ' + num)
+    config = config.replace(/defaultSource: [1-5]/g, 'defaultSource: ' + num)
     fs.writeFileSync(set, config, 'utf8')
 
     await this.e.reply('星铁默认攻略已设置为: ' + match[1])

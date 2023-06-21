@@ -1,5 +1,6 @@
 import { exec } from 'child_process'
 import User from '../../genshin/model/user.js'
+import {getStoken} from "./authkey.js";
 
 export const rulePrefix = '((#|\\*)?(星铁|星轨|崩铁|星穹铁道|铁道|sr)|\\*|＊)'
 
@@ -209,18 +210,28 @@ export function formatDateTime (date) {
   return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
 }
 
-export async function getCk (e) {
+export async function getCk (e, s = false) {
   e.isSr = true
+  let stoken = ''
   let user = new User(e)
+  if (s) {
+    stoken = await getStoken(e)
+  }
   if (typeof user.getCk === 'function') {
-    return user.getCk()
+    let ck = user.getCk()
+    Object.keys(ck).forEach(k => {
+      if (ck[k].ck) {
+        ck[k].ck = `${stoken}${ck[k].ck}`
+      }
+    })
+    return ck
   }
   let mysUser = (await user.user()).getMysUser('sr')
   let ck
   if (mysUser) {
     ck = {
       default: {
-        ck: mysUser.ck,
+        ck: `${stoken}${mysUser.ck}`,
         uid: mysUser.getUid('sr'),
         qq: '',
         ltuid: mysUser.ltuid,

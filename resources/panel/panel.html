@@ -1,7 +1,7 @@
 {{extend defaultLayout}}
 
 {{block 'css'}}
-<link rel="stylesheet" href="{{pluResPath}}/panel/style.css">
+<link rel="stylesheet" href="{{pluResPath}}/panel/panel.css">
 {{/block}}
 
 {{block 'main'}}
@@ -40,7 +40,7 @@
           <img src="{{pluResPath}}common/path/{{charpath}}.png">
           {{charpath}}
         </div>
-        <div class="const">星魂 {{rank}}</div>
+        <div class="const const-rank-{{rank}}">星魂 {{rank}}</div>
       </div>
       <div class="detail-list">
         <div class="item">
@@ -140,12 +140,12 @@
           <div class="text">治疗量加成</div>
           <div class="value">{{MathPro.floor10(properties.healRatio * 100,-1)}}%</div>
           {{else}}
-            <div class="icon">
-              <img src="{{pluResPath}}panel/resources/icon/value/Icon{{damage_type}}AddedRatio.png">
-            </div>
-            <div class="text">属性伤害提高</div>
-            <div class="value">{{MathPro.floor10(properties[damage_type.toLowerCase() + 'Added']*100,-1)}}%</div>
-            {{/if}}
+          <div class="icon">
+            <img src="{{pluResPath}}panel/resources/icon/value/Icon{{damage_type}}AddedRatio.png">
+          </div>
+          <div class="text">属性伤害提高</div>
+          <div class="value">{{MathPro.floor10(properties[damage_type.toLowerCase() + 'Added']*100,-1)}}%</div>
+          {{/if}}
         </div>
       </div>
     </div>
@@ -195,8 +195,8 @@
           <!-- <div class="score"><b>S</b> 级</div> -->
           <div class="total-score">{{relic_score.toFixed(1)}}分</div>
           {{else}}
-            <div class="tip-none">暂无评分</div>
-            {{/if}}
+          <div class="tip-none">暂无评分</div>
+          {{/if}}
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
-import User from '../../genshin/model/user.js'
-import MysSRApi from '../runtime/MysSRApi.js'
-import setting from '../utils/setting.js'
-import fetch from 'node-fetch'
 import _ from 'lodash'
-import YAML from 'yaml'
-import fs from 'fs'
-import {getCk, rulePrefix} from '../utils/common.js'
+import moment from 'moment'
+import fetch from 'node-fetch'
+import runtimeRender from '../common/runtimeRender.js'
+import MysSRApi from '../runtime/MysSRApi.js'
+import { getCk, rulePrefix } from '../utils/common.js'
+import setting from '../utils/setting.js'
+
 export class Note extends plugin {
   constructor (e) {
     super({
@@ -16,21 +16,20 @@ export class Note extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}体力$`,
+          reg: `^${rulePrefix}体力(pro)?$`,
           fnc: 'note'
         }
       ]
     })
-    this.User = new User(e)
   }
 
   async note (e) {
+    const isPro = /pro/.test(e.msg)
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
       this.e.user_id = user
-      this.User = new User(this.e)
     }
     let userData = await this.miYoSummerGetUid()
     let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -44,7 +43,7 @@ export class Note extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
-    let ck = await getCk(e)
+    let ck = await getCk(e, isPro)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
       return false
@@ -61,39 +60,37 @@ export class Note extends plugin {
         await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
       }
     }
-    const { url, headers } = api.getUrl('srNote', { deviceFp })
-    logger.mark({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
-
-    let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srNote')
-    if (cardData.retcode !== 0) {
-      return false
-    }
-
+    const cardData = await api.getData(isPro ? 'srWidget' : 'srNote', { deviceFp })
+    await api.checkCode(e, cardData)
+    if (!cardData || cardData.retcode !== 0) return false
     let data = cardData.data
-    const icons = YAML.parse(
-      fs.readFileSync(setting.configPath + 'dispatch_icon.yaml', 'utf-8')
-    )
-    logger.mark(icons)
-    data.expeditions.forEach(ex => {
-      ex.remaining_time = formatDuration(ex.remaining_time)
-      ex.icon = icons[ex.name]
-      if (ex.remaining_time == '00时00分') ex.remaining_time = '委托已完成'
+    data.type = isPro ? 'module' : 'ordinary'
+    data.userData = userData
+    data.uid = uid
+    data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
+    data.ktl_name = this.e.nickname // 名字显示
+    data.ktl_qq = parseInt(this.e.user_id) // QQ头像
+    data = this.handleData(data)
+    logger.debug(data)
+    await runtimeRender(this.e, '/note/new_note.html', data, {
+      scale: 1.6
     })
-    logger.warn(data.expeditions)
+  }
+
+  handleData (data) {
+    data.expeditions.forEach(ex => {
+      ex.format_remaining_time = formatDuration(ex.remaining_time)
+      ex.progress = (72000 - ex.remaining_time) / 72000 * 100 + '%'
+    })
     if (data.max_stamina === data.current_stamina) {
-      data.ktl_full = '开拓力已全部恢复'
+      data.ktl_full = '开拓力<span class="golden">已完全恢复</span>！'
+      data.ktl_full_time_str = ''
     } else {
-      data.ktl_full = `${formatDuration(data.stamina_recover_time)}`
+      data.ktl_full = `${formatDuration(data.stamina_recover_time, 'HH小时mm分钟')} |`
       data.ktl_full_time_str = getRecoverTimeStr(data.stamina_recover_time)
     }
-    data.uid = uid // uid显示
-    data.ktl_name = e.nickname // 名字显示
-    data.ktl_qq = parseInt(e.user_id) // QQ头像
-    await e.runtime.render('StarRail-plugin', '/note/note.html', data)
+    data.stamina_progress = (data.current_stamina / data.max_stamina) * 100 + '%'
+    return data
   }
 
   async miYoSummerGetUid () {
@@ -117,12 +114,10 @@ export class Note extends plugin {
   }
 }
 
-function formatDuration (seconds) {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  return `${hours.toString().padStart(2, '0')}时${minutes
-    .toString()
-    .padStart(2, '0')}分`
+function formatDuration (seconds, format = 'HH时mm分') {
+  if (seconds == 0) return '已完成'
+  const duration = moment.duration(seconds, 'seconds')
+  return moment.utc(duration.asMilliseconds()).format(format)
 }
 
 /**
@@ -139,5 +134,5 @@ function getRecoverTimeStr (seconds) {
     .getMinutes()
     .toString()
     .padStart(2, '0')}`
-  return `预计[${str}]${timeStr}完全恢复`
+  return `<span class="golden">[${str}]</span> ${timeStr}完全恢复`
 }

@@ -14,15 +14,18 @@
 ```sh
 cd plugins/StarRail-plugin && git reset --hard origin && git pull
 ```
+### 交流群
 
+插件交流群(QQ):758447726
+
+### UI问题反馈
+
+QQ群：512897837
 ### 使用说明
 
 `StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板、体力以及米游社所拥有的的一切有关星轨的功能
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
-### BUG反馈
-
-QQ群：758447726
 
 ### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
@@ -56,7 +59,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ## 功能介绍
 如遇到更新面板失败可能是面板服务连接超时可尝试以下方法
 
-### *切换面板1/*api列表
+### *切换面板1/ *api列表
 可在config/panelApi中配置
 如果连不上请将API设置为sr.ikechan8370.com
   - https://sr.ikechan8370.com/v1/info/
@@ -90,7 +93,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ### *在线时长
 可查看七天内的在线时长，可能需要重新绑定cookie，建议先#扫码登录然后再绑定星铁uid后进行查看
 
-### *白露攻略(1|2|3|4)可使用*设置默认攻略(1|2|3|4)设置建议使用攻略4
+### * 白露攻略(1|2|3|4|5) 可使用*设置默认攻略(1|2|3|4|5)设置建议使用攻略4或5
 查看对应角色的攻略，数据来源米游社 感谢[@真心](https://github.com/RealHeart)提供的攻略帮助
 
 ### *抽卡分析角色/光锥/常驻/新手(刷新)

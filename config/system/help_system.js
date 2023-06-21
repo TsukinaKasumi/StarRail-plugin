@@ -10,7 +10,7 @@ export const helpCfg = {
   title: '星铁帮助',
   subTitle: 'Yunzai-Bot & StarRail-plugin',
   columnCount: 3,
-  colWidth: 265,
+  colWidth: 275,
   theme: 'all',
   themeExclude: ['default'],
   style: {
@@ -42,7 +42,7 @@ export const helpList = [
       desc: '月度星琼统计'
     }, {
       icon: 95,
-      title: '*体力',
+      title: '*体力(pro)',
       desc: '体力和委托信息'
     }, {
       icon: 107,
@@ -80,9 +80,14 @@ export const helpList = [
       icon: 66,
       title: '*希儿面板(uid)',
       desc: '星铁角色面板详情'
-    }, {
+    }
+  ]
+}, {
+    group: '星穹铁道攻略信息,来自米游社(数据仅供参考)',
+      list :[
+    {
       icon: 106,
-      title: '*希儿攻略(1 | 2 | 3 | 4)',
+      title: '*希儿攻略(1 | 2 | 3 | 4 |5)',
       desc: '星铁角色攻略'
     }, {
       icon: 106,
@@ -112,10 +117,18 @@ export const helpList = [
       icon: 99,
       title: '*收益曲线',
       desc: '星铁各属性收益曲线(仅供参考)'
+    }, {
+      icon: 102,
+      title: '*商店光锥推荐',
+      desc: '跃迁商店推荐兑换光锥(仅供参考)'
+    }, {
+      icon: 108,
+      title: '*深渊攻略',
+      desc: '模拟宇宙阵容推荐(仅供参考)'
     }
   ]
 }, {
-  group: '星铁插件管理,仅管理员可用',
+  group: '插件管理,仅管理员可用',
   auth: 'master',
   list: [{
     icon: 85,
@@ -135,7 +148,8 @@ export const helpList = [
     desc: '安装扩展图，需要一定时间，请勿重复执行'
   }, {
     icon: 85,
-    title: '*设置默认攻略(1 | 2 | 3 | 4)',
-    desc: '设置星铁默认攻略图'
-  }]
-}]
+    title: '*设置默认攻略(1 | 2 | 3 | 4 |5)',
+    desc: '设置星铁默认攻略'
+  }
+]}
+]
