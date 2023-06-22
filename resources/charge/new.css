@@ -1,0 +1,115 @@
+.container {
+  background: url(./bg_main.b435ab02..png) no-repeat;
+  background-size: cover;
+  position: relative;
+  z-index: -1;
+}
+.container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url(./Deco4.png) no-repeat;
+  background-size: contain;
+  height: 400px;
+  width: 100%;
+  z-index: -1;
+}
+
+.header {
+  position: absolute;
+  left: 0;
+  top: 35px;
+  width: 100%;
+  text-align: end;
+  font-size: 32px;
+}
+.header .zh {
+  color: #c0a878;
+  margin-right: 65px;
+}
+.header .en {
+  color: #d1d1d1;
+  margin-right: 10px;
+}
+.header hr {
+  border-color: #dbbf79;
+  border-style: solid;
+}
+
+.info-box {
+  margin-top: 134px;
+}
+.info-box .info, .info-box .title {
+  outline-offset: -5px;
+  background: #c0c0bb;
+  padding: 0px 15px;
+}
+.info-box .title {
+  outline: 1px solid #000;
+  height: 44px;
+  line-height: 44px;
+  border-top-right-radius: 30px;
+}
+.info-box .info {
+  margin-top: 4px;
+  outline: 1px dashed #000;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+.info-box .info .avatar {
+  height: 40px;
+  width: 40px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.info-box .info .avatar img {
+  width: 100%;
+  height: 100%;
+}
+.info-box .info .text {
+  display: flex;
+  font-size: 14px;
+  flex: 1;
+  justify-content: space-between;
+}
+.info-box .info .text .left {
+  border-left: 1px solid #000;
+  padding-left: 14px;
+}
+.info-box .info .text .left .uid {
+  font-size: 7px;
+}
+
+.time {
+  font-size: 12px;
+  margin: 14px 0;
+  text-align: center;
+  color: #ac9548;
+}
+
+table {
+  background: #c0c0bb;
+  width: 100%;
+  padding: 10px;
+  outline: 1px solid #8c7948;
+  outline-offset: -5px;
+  color: #ffffff;
+}
+table th {
+  background: #c0a878;
+}
+table tbody td {
+  text-align: center;
+}
+table tbody tr:nth-child(odd) td {
+  background: #e8e0e0;
+}
+
+.page {
+  margin-top: 13px;
+  text-align: center;
+  color: #ffffff;
+}/*# sourceMappingURL=new.css.map */

@@ -1,0 +1,137 @@
+.container {
+    background: url(./bg_main.b435ab02..png) no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: -1;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url(./Deco4.png) no-repeat;
+        background-size: contain;
+        height: 400px;
+        width: 100%;
+        z-index: -1;
+    }
+}
+
+.header {
+    position: absolute;
+    left: 0;
+    top: 35px;
+    width: 100%;
+    text-align: end;
+    font-size: 32px;
+
+    .zh {
+        color: #c0a878;
+        margin-right: 65px;
+    }
+
+    .en {
+        color: #d1d1d1;
+        margin-right: 10px;
+    }
+
+    hr {
+        border: {
+            color: #dbbf79;
+            style: solid;
+        }
+    }
+
+}
+
+.info-box {
+    margin-top: 134px;
+
+    %public {
+        outline-offset: -5px;
+        background: #c0c0bb;
+        padding: 0px 15px;
+    }
+
+    .title {
+        @extend %public;
+        outline: 1px solid #000;
+        height: 44px;
+        line-height: 44px;
+        border-top-right-radius: 30px;
+    }
+
+    .info {
+        @extend %public;
+        margin-top: 4px;
+        outline: 1px dashed #000;
+        height: 70px;
+        display: flex;
+        align-items: center;
+
+        .avatar {
+            height: 40px;
+            width: 40px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            margin-right: 10px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .text {
+            display: flex;
+            font-size: 14px;
+            flex: 1;
+            justify-content: space-between;
+
+            .left {
+                border-left: 1px solid #000;
+                padding-left: 14px;
+
+                .uid {
+                    font-size: 7px
+                }
+            }
+        }
+    }
+}
+
+.time {
+    font-size: 12px;
+    margin: 14px 0;
+    text-align: center;
+    color: #ac9548;
+}
+
+table {
+    background: #c0c0bb;
+    width: 100%;
+    padding: 10px;
+    outline: 1px solid #8c7948;
+    outline-offset: -5px;
+    color: #ffffff;
+
+    th {
+        background: #c0a878;
+    }
+
+    tbody {
+        td {
+            text-align: center;
+        }
+
+        tr:nth-child(odd) td {
+            background: #e8e0e0;
+        }
+    }
+}
+
+.page {
+    margin-top: 13px;
+    text-align: center;
+    color: #ffffff;
+}
