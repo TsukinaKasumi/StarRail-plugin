@@ -61,8 +61,8 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 ### *切换面板1/ *api列表
 可在config/panelApi中配置
-如果连不上请将API设置为sr.ikechan8370.com
-  - https://sr.ikechan8370.com/v1/info/
+如果连不上请将API设置为avocado.wiki
+  - https://avocado.wiki/v1/info/
   - https://lulu.roki.best/v1/info/
   - https://sr.roki.best/v1/info/
 填入可选api
@@ -78,7 +78,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 查询已缓存本地面板数据
 
 ### *更新面板
-使用已有的面板API进行面板数据的更新，支持的面板API: [ikechan8370](https://sr.ikechan8370.com/) / [mihomo](https://api.mihomo.me/)
+使用已有的面板API进行面板数据的更新，支持的面板API: [鳄梨](https://avocado.wiki/) / [mihomo](https://api.mihomo.me/)
 支持官服、B服、国际服（亚服/港澳台服/欧服/美服）
 
 ### *收入
