@@ -29,5 +29,15 @@ export const poolData = [
     poolName: '零号协议',
     char5: ['银狼'],
     weapon5: ['雨一直下']
+  }, {
+    id: 'ver1.1down',
+    ids: ['2006', '3006'],
+    version: '1.1',
+    half: '下半',
+    from: '2023-06-28 12:00:00',
+    to: '2023-07-18 14:59:59',
+    poolName: '寻索世间',
+    char5: ['罗刹'],
+    weapon5: ['棺的回响']
   }
 ]
