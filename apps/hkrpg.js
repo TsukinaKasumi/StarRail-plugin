@@ -123,6 +123,7 @@ export class Hkrpg extends plugin {
     let user = this.e.user_id
     await redis.set(`STAR_RAILWAY:UID:${user}`, uid)
     this.reply(`绑定成功,当前绑定[sr]uid:${uid}`, false)
+    return false
   }
 
   async getPayLog (e) {
