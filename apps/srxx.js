@@ -50,7 +50,11 @@ export class srxx extends plugin {
         {
           reg: `^${rulePrefix}商店光锥推荐$`,
           fnc: 'srgz'
-        }
+        }     
+        // {
+        //   reg: `^${rulePrefix}(.*)配队$`,
+        //   fnc: 'srpd'
+        // }
       ],
     });
   }
@@ -354,12 +358,13 @@ export class srxx extends plugin {
     return false
  }
 
- async srgz(e) {
+ async srgz (e) {
   let msg = [
       segment.image(`${srrolePath}/gz/商店光锥推荐.jpg`),
   ]
   e.reply(msg)
   return true
  }
+
 
 }
