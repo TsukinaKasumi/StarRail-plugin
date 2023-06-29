@@ -183,7 +183,7 @@ export class srxx extends plugin {
     ],
     '注意,仅供参考!!!'
   ]
-  e.reply(await common.makeForwardMsg(e,msg,`星穹铁道全角色攻略`))
+  e.reply(await common.makeForwardMsg(e,msg,`星穹铁道1.1下半全角色攻略`))
     return false
  }
 
