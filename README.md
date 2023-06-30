@@ -8,12 +8,10 @@
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
 
-### 5.21更新：支持查询全平台数据(包括欧服以及美服)，在config/panelAPI内将API修改为sr.ikechan8370
+### 如果您有需求使用喵喵插件的星铁面板可参考issue做修改
 
-如更新报错可尝试执行在`Yunzai根目录`执行以下命令
-```sh
-cd plugins/StarRail-plugin && git reset --hard origin && git pull
-```
+https://gitee.com/yoimiya-kokomi/miao-plugin/issues/I7EDHN
+
 ### 交流群
 
 插件交流群(QQ):758447726
