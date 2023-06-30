@@ -1,3 +1,4 @@
 resources/profile/normal-character/
 data/
 *.css.map
+temp/
