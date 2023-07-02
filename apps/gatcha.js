@@ -81,7 +81,7 @@ export class Gatcha extends plugin {
     const authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
     if (!authKey) {
       await this.e.reply(
-        '未绑定抽卡链接，请点击链接查看说明\nhttps://mp.weixin.qq.com/s/FFHTor5DiG3W_rfQVs3KJQ\n发送[#星铁抽卡链接]绑定'
+        `未绑定抽卡链接，请点击链接查看说明\n${this.appconfig.docs}\n发送[#星铁抽卡链接]绑定`
       )
       return false
     }
