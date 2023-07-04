@@ -3,7 +3,7 @@ import { createRequire } from 'module'
 import _ from 'lodash'
 import { Restart } from '../../other/restart.js'
 import fs from 'fs'
-import {rulePrefix} from "../utils/common.js";
+import { rulePrefix } from '../utils/common.js'
 
 const _path = process.cwd()
 const require = createRequire(import.meta.url)
@@ -12,7 +12,7 @@ const resPath = `${_path}/plugins/StarRail-plugin/resources/`
 
 const checkAuth = async function (e) {
   if (!e.isMaster) {
-    e.reply(`只有主人才能使用该命令哦~`)
+    e.reply('只有主人才能使用该命令哦~')
     return false
   }
   return true
@@ -36,7 +36,7 @@ export class Update extends plugin {
           fnc: 'update'
         },
         {
-          reg: `^${rulePrefix}(强制)?(更新面板图|面板图更新)$`,
+          reg: `^${rulePrefix}(强制)?(更新面板图|面板图更新)(github|gitee)?$`,
           fnc: 'updateRes',
           desc: '【#管理】更新素材'
         }
@@ -44,11 +44,12 @@ export class Update extends plugin {
     })
   }
 
-  async updateRes(e) {
+  async updateRes (e) {
     if (!await checkAuth(e)) {
       return true
     }
     let isForce = e.msg.includes('强制')
+    let isGayhub = e.msg.includes('github')
     let command = ''
     if (fs.existsSync(`${resPath}/pro-file/`)) {
       e.reply('开始尝试更新，请耐心等待~')
@@ -56,7 +57,7 @@ export class Update extends plugin {
       if (isForce) {
         command = 'git  checkout . && git  pull'
       }
-      exec(command, {cwd: `${resPath}/pro-file/`}, function (error, stdout, stderr) {
+      exec(command, { cwd: `${resPath}/pro-file/` }, function (error, stdout, stderr) {
         console.log(stdout)
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
           e.reply('目前所有图片都已经是最新了~')
@@ -74,7 +75,11 @@ export class Update extends plugin {
         }
       })
     } else {
-      command = `git clone https://github.com/yhs21241/StarRail-plugin-PanelPic.git "${resPath}/pro-file/" --depth=1`
+      let url = 'https://gitee.com/yuan_hu_sheng/StarRail-plugin-PanelPic.git'
+      if (isGayhub) {
+        url = 'https://github.com/yhs21241/StarRail-plugin-PanelPic.git'
+      }
+      command = `git clone ${url} "${resPath}/pro-file/" --depth=1`
       e.reply('开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~')
       exec(command, function (error, stdout, stderr) {
         if (error) {
@@ -86,7 +91,6 @@ export class Update extends plugin {
     }
     return true
   }
-
 
   /**
    * rule - 更新星铁插件
