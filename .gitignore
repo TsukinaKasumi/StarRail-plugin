@@ -1,4 +1,16 @@
+# 面板图
 resources/profile/normal-character/
+
+# 用户数据
 data/
+
+# sass编译map
 *.css.map
-temp/
+
+# 忽略temp文件夹
+temp/*
+
+# 排除攻略456文件夹
+!temp/strategy/
+temp/strategy/*
+!temp/strategy/[456]/

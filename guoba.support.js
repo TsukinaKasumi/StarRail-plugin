@@ -189,7 +189,7 @@ export function supportGuoba () {
         required: true,
         componentProps: {
           min: 1,
-          max: 3,
+          max: 6,
           placeholder: '请输入数字'
         }
       }
