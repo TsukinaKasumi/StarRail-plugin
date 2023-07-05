@@ -53,6 +53,18 @@ export function supportGuoba () {
         component: 'Switch'
       },
       {
+        field: 'gachaHelp.abbrSetAuth',
+        label: '角色别名管理权限',
+        bottomHelpMessage: '# 别名设置权限 0-所有群员都可以添加 1-群管理员才能添加 2-主人才能添加',
+        component: 'InputNumber',
+        required: true,
+        componentProps: {
+          min: 0,
+          max: 2,
+          placeholder: '请输入0-2数字'
+        }
+      },
+      {
         component: 'Divider',
         label: '帮助设置'
       },

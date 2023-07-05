@@ -87,6 +87,23 @@ class Setting {
   // 获取对应模块用户配置
   getConfig (app) {
     return { ...this.getdefSet(app), ...this.getYaml(app, 'config') }
+        // return this.mergeConfigObjectArray({...this.getdefSet(app)},{...this.getYaml(app, 'config')});
+  }
+
+  //合并两个对象 相同的数组对象 主要用于yml的列表属性合并 并去重  先备份一下方法
+  mergeConfigObjectArray(obj1,obj2){
+    for (const key in obj2) {
+      if (Array.isArray(obj2[key]) && Array.isArray(obj1[key])) {
+        //合并两个对象中相同 数组属性
+        const uniqueElements = new Set([...obj1[key], ...obj2[key]]);
+        obj1[key] = [...uniqueElements];
+      } else {
+        //否则以obj2中的为准
+        obj1[key] = obj2[key];
+      }
+    }
+
+    return obj1;
   }
 
   // 设置对应模块用户配置
