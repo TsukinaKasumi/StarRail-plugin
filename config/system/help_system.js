@@ -144,7 +144,7 @@ export const helpList = [
     desc: '切换面板服务'
   } ,{
     icon: 85,
-    title: '*(强制)面板图更新(github)',
+    title: '*(强制)图像更新(github)',
     desc: '安装扩展图，需要一定时间，请勿重复执行'
   }, {
     icon: 85,
