@@ -36,7 +36,7 @@ export class Update extends plugin {
           fnc: 'update'
         },
         {
-          reg: `^${rulePrefix}(强制)?(更新面板图|面板图更新)(github|gitee)?$`,
+          reg: `^${rulePrefix}(强制)?(更新图像|图像更新)(github|gitee)?$`,
           fnc: 'updateRes',
           desc: '【#管理】更新素材'
         }
