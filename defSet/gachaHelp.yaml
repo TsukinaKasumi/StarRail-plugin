@@ -6,6 +6,5 @@ noteFlag: true
 renderScale: 100
 # 抽卡链接是否允许群聊
 gatchaUrlGroup: true
-
 # 别名设置权限 0-所有群员都可以添加 1-群管理员才能添加 2-主人才能添加
 abbrSetAuth: 2

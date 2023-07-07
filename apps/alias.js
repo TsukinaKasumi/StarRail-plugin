@@ -41,8 +41,8 @@ export class abbrSet extends plugin {
 
   async addAlias() {
     if (!await this.checkAuth()) return
-    let keyName = this.e.msg.replace(new RegExp(`${rulePrefix}|设置|配置|添加|别名|昵称`, 'g'), '').trim()
-    
+    let keyName = this.e.msg.replace(new RegExp(`${rulePrefix}|设置|配置|添加|别名|昵称(.*)`, 'g'), '').trim()
+
     logger.info('keyName=',keyName)
     //检查别名|昵称是否有对应角色
     const name = alias.get(keyName)
@@ -156,10 +156,10 @@ export class abbrSet extends plugin {
     this.save(roles)
 
     await this.reply(`删除${roleNameKey}别名成功：${inputName}`)
-    
 
 
-    
+
+
   }
 
   async aliasList() {

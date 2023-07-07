@@ -87,7 +87,7 @@ class Setting {
   // 获取对应模块用户配置
   getConfig (app) {
     return { ...this.getdefSet(app), ...this.getYaml(app, 'config') }
-    // return this.mergeConfigObjectArray({...this.getdefSet(app)},{...this.getYaml(app, 'config')});
+        // return this.mergeConfigObjectArray({...this.getdefSet(app)},{...this.getYaml(app, 'config')});
   }
 
   //合并两个对象 相同的数组对象 主要用于yml的列表属性合并 并去重  先备份一下方法
