@@ -69,7 +69,7 @@ export class srxx extends plugin {
     if (!role) return false
     const roleFiles = this.getRoleList()
     if (roleFiles.includes(role)) {
-      const image = segment.image(`${srrolePath}/${role}.jpg`)
+      const image = segment.image(`${srrolePath}/${role}.png`)
       this.reply(image)
       return true
     }
@@ -80,8 +80,8 @@ export class srxx extends plugin {
     getRoleList () {
       const roleFiles = fs.readdirSync(srrolePath)
       return roleFiles
-        .filter((file) => file.endsWith('.jpg'))
-        .map((file) => file.replace(/.jpg/g, ''))
+        .filter((file) => file.endsWith('.png'))
+        .map((file) => file.replace(/.png/g, ''))
     }
 
 
