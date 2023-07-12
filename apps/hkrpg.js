@@ -26,7 +26,7 @@ export class Hkrpg extends plugin {
           fnc: 'bindSRUid'
         },
         {
-          reg: `^${rulePrefix}(卡片|探索)$`,
+          reg: `^${rulePrefix}(卡片|探索|角色)$`,
           fnc: 'card'
         },
         {
