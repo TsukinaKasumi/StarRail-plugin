@@ -157,6 +157,17 @@ export class Panel extends plugin {
     _.forIn(leadId, (v, k) => {
       if (v.includes(avatarId)) name = k
     })
+    this.config = setting.getConfig('PanelSetting')
+    // 判断是否为群聊，并且群聊是否在限制名单中
+    if (
+      this.e.isGroup &&
+      'no_profile' in this.config &&
+      this.config.no_profile &&
+      this.config.no_profile.includes(this.e.group_id)
+    ) {
+      // 返回默认图位置
+      return `panel/resources/char_image/${avatarId}.png`
+    }
     if (fs.existsSync(fullFolderPath1 + name) && Math.random() < 0.8) {
       return this.getRandomImage(folderPath1 + name)
     } else if (fs.existsSync(fullFolderPath + `${name}.webp`)) {
@@ -385,8 +396,10 @@ export class Panel extends plugin {
     if (OP_setting.originalPic || e.isMaster) {
       ImgPath = pluginResources + '/' + ImgPath
       if (!OP_setting.backCalloriginalPic) {
+        // eslint-disable-next-line no-undef
         return e.reply(segment.image(ImgPath))
       } else {
+        // eslint-disable-next-line no-undef
         return e.reply(segment.image(ImgPath), false, {
           recallMsg: OP_setting.backCalloriginalPicTime
         })

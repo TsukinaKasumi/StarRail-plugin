@@ -93,6 +93,18 @@ export function supportGuoba () {
         label: '面板设置'
       },
       {
+        field: 'PanelSetting.no_profile',
+        label: '禁用群号',
+        bottomHelpMessage: '禁用第三方面板图功能的群',
+        component: 'Select',
+        componentProps: {
+          allowAdd: true,
+          allowDel: true,
+          mode: 'multiple',
+          options: allGroup
+        }
+      },
+      {
         field: 'PanelSetting.originalPic',
         label: '面板原图',
         bottomHelpMessage: '是否开启面板原图开关',
@@ -166,7 +178,7 @@ export function supportGuoba () {
         }
       },
       {
-        field: 'gccfg.recall.disable_group',
+        field: 'gccfg.disable_group',
         label: '禁用群号',
         bottomHelpMessage: '禁用抽卡功能的群',
         component: 'Select',

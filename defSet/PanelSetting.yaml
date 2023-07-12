@@ -6,3 +6,7 @@ backCalloriginalPic: true
 
 #  原图撤回时间
 backCalloriginalPicTime: 30
+
+# 面板图加量包屏蔽群号
+no_profile:
+  - 12345678
