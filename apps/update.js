@@ -85,7 +85,7 @@ export class Update extends plugin {
         if (error) {
           e.reply('角色图片加量包安装失败！\nError code: ' + error.code + '\n' + error.stack + '\n 请稍后重试。')
         } else {
-          e.reply('角色图片加量包安装成功！您后续也可以通过 #星铁面板图更新 命令来更新图像')
+          e.reply('角色图片加量包安装成功！您后续也可以通过 *图像更新 命令来更新图像')
         }
       })
     }
