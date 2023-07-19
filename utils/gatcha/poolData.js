@@ -39,5 +39,15 @@ export const poolData = [
     poolName: '寻索世间',
     char5: ['罗刹'],
     weapon5: ['棺的回响']
+  }, {
+    id: 'ver1.2up',
+    ids: ['2007', '3007'],
+    version: '1.2',
+    half: '上半',
+    from: '2023-07-19 10:30:00',
+    to: '2023-08-10 11:59:59',
+    poolName: '业途游魂',
+    char5: [ '刃' ],
+    weapon5: [ '到不了的彼岸' ]
   }
 ]
