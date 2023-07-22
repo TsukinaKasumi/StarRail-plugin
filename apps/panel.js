@@ -57,7 +57,7 @@ export class Panel extends plugin {
     const matchResult = messageText.match(messageReg)
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.plmb(e)
-    if (charName === '更新' || matchResult[5]) return await this.update(e)
+    if (charName === '更新' || matchResult[5]) return false
     if (charName === '切换' || charName === '设置') return await this.changeApi(e)
     if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
@@ -219,6 +219,7 @@ export class Panel extends plugin {
       // 渲染数据
       await renderCard(e, renderData)
       // await e.reply( '更新面板数据成功' );
+      return false
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
