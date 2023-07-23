@@ -7,7 +7,7 @@
 {{block 'main'}}
 
   <h2 class="head" style="margin-bottom: 20px;text-align: center;">UID: {{ uid }} 的深渊数据 <span class="tag">{{ type == '1' ? '本期' : '上期' }}</span></h2>
-  
+
   <div class="body">
     <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
     <div class="summar">
@@ -77,7 +77,7 @@
   </div>
 
   <div class="logo">
-    Created By Yunzai-Bot & StarRail-plugin
+    {{@sys.createdby}}
   </div>
 
 {{/block}}
