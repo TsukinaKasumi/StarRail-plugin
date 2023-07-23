@@ -1,4 +1,5 @@
 import plugin from '../../../lib/plugins/plugin.js'
+import common from "../../../lib/common/common.js"
 import fs from 'node:fs'
 import alias from '../utils/alias.js'
 import { rulePrefix } from '../utils/common.js'
@@ -72,14 +73,14 @@ export class abbrSet extends plugin {
     /** 管理员 */
     if (abbrSetAuth == 1) {
 
-      if (!Bot.gml.has(this.e.group_id)) {
+      if (!this.e.bot?.gml?.has(this.e.group_id)) {
         return false
       }
-      if (!Bot.gml.get(this.e.group_id).get(this.e.user_id)) {
+      if (!this.e.bot?.gml?.get(this.e.group_id)?.get(this.e.user_id)) {
         return false
       }
       //只有此群管理员才能修改
-      if (this.e.member.is_admin) {
+      if (this.e.member?.is_admin) {
         return true
       }
     }
@@ -185,48 +186,10 @@ export class abbrSet extends plugin {
       msg.push(`${num}.${result.aliases[i]}\n`)
     }
 
-    let title = `${result.name}别名，${msg.length}个`
+    const title = `${result.name}别名，${msg.length}个`
 
-    msg = await this.makeForwardMsg(Bot.uin, title, msg)
+    msg = await common.makeForwardMsg(this.e, msg, title)
 
     await this.e.reply(msg)
-  }
-
-  async makeForwardMsg(qq, title, msg) {
-    let nickname = Bot.nickname
-    if (this.e.isGroup) {
-      let info = await Bot.getGroupMemberInfo(this.e.group_id, qq)
-      nickname = info.card ?? info.nickname
-    }
-    let userInfo = {
-      user_id: Bot.uin,
-      nickname
-    }
-
-    let forwardMsg = [
-      {
-        ...userInfo,
-        message: title
-      },
-      {
-        ...userInfo,
-        message: msg
-      }
-    ]
-
-    /** 制作转发内容 */
-    if (this.e.isGroup) {
-      forwardMsg = await this.e.group.makeForwardMsg(forwardMsg)
-    } else {
-      forwardMsg = await this.e.friend.makeForwardMsg(forwardMsg)
-    }
-
-    /** 处理描述 */
-    forwardMsg.data = forwardMsg.data
-      .replace(/\n/g, '')
-      .replace(/<title color="#777777" size="26">(.+?)<\/title>/g, '___')
-      .replace(/___+/, `<title color="#777777" size="26">${title}</title>`)
-
-    return forwardMsg
   }
 }
