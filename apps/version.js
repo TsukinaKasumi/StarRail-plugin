@@ -1,7 +1,7 @@
 import plugin from '../../../lib/plugins/plugin.js'
-import { exec, execSync } from 'child_process'
-import { checkPnpm } from '../utils/common.js'
-import { rulePrefix } from "../utils/common.js";
+import common from "../../../lib/common/common.js"
+import { rulePrefix } from '../utils/common.js'
+import { execSync } from "child_process";
 export class StarRailManagement extends plugin {
   constructor (e) {
     super({
