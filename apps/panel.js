@@ -278,8 +278,12 @@ export class Panel extends plugin {
       const data = await this.getPanelData(uid, true)
       const charInfo = data.filter(item => item.name === charName)[0]
       if (!charInfo) {
+        let realName = charName
+        if (charName === false) {
+          realName = name
+        }
         throw Error(
-          `未查询到uid：${uid}角色${charName}的数据，请检查角色是否放在了助战或者展柜\n请检查角色名是否正确,已设置的会有延迟,等待一段时间后重试~`
+          `未查询到uid：${uid}角色${realName}的数据，请检查角色是否放在了助战或者展柜\n请检查角色名是否正确,已设置的会有延迟,等待一段时间后重试~`
         )
       }
       return charInfo
