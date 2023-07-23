@@ -69,7 +69,12 @@ export class Note extends plugin {
     data.uid = uid
     data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
     data.ktl_name = this.e.nickname // 名字显示
-    data.ktl_qq = parseInt(this.e.user_id) // QQ头像
+    if (this.e.member?.getAvatarUrl) // 头像
+      data.ktl_avatar = await this.e.member.getAvatarUrl()
+    else if (this.e.friend?.getAvatarUrl)
+      data.ktl_avatar = await this.e.friend.getAvatarUrl()
+    else
+      data.ktl_avatar = this.e.bot.avatar
     data = this.handleData(data)
     logger.debug(data)
     await runtimeRender(this.e, '/note/new_note.html', data, {
