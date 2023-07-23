@@ -142,7 +142,7 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 ## 特别鸣谢♥
 - mihomo.me：提供面板API来源
 - [bietiaop](https://github.com/bietiaop)：编写插件部分渲染以及部分功能
-- [yhs21241](https://github.com/yhs21241/StarRail-plugin-PanelPic)：面板图贡献
+- [香菜](https://gitee.com/yuan_hu_sheng/StarRail-plugin-PanelPic)：面板图贡献
 
 ## 贡献者
 
