@@ -4,8 +4,10 @@ import fs from 'node:fs'
 import common from '../../../lib/common/common.js'
 import plugin from '../../../lib/plugins/plugin.js'
 import alias from '../utils/alias.js'
-import { rulePrefix } from '../utils/common.js'
+import { ForwardMsg, rulePrefix} from '../utils/common.js'
 import setting from '../utils/setting.js'
+// 最大攻略数量
+let maxNum = 6
 
 export class strategy extends plugin {
   constructor () {
@@ -16,7 +18,7 @@ export class strategy extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}?(更新)?\\S+攻略([1-6])?$`,
+          reg: `^${rulePrefix}?(更新)?\\S+攻略([0-${maxNum}])?$`,
           fnc: 'strategy'
         },
         {
@@ -24,7 +26,7 @@ export class strategy extends plugin {
           fnc: 'strategy_help'
         },
         {
-          reg: `^${rulePrefix}设置默认攻略([1-6])?$`, 
+          reg: `^${rulePrefix}设置默认攻略([0-${maxNum}])?$`,
           fnc: 'strategy_setting'
         }
       ]
@@ -63,7 +65,7 @@ export class strategy extends plugin {
 
   /** #心海攻略 */
   async strategy () {
-    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([1-6])?$`)
+    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([0-${maxNum}])?$`)
     let [, , , , isUpdate, roleName,
       group = setting.getConfig('mys')?.defaultSource
     ] = this.e.msg.match(reg)
@@ -71,6 +73,23 @@ export class strategy extends plugin {
 
     if (!role) return false
 
+    if (group === 0) {
+      // eslint-disable-next-line no-unused-vars
+      let msg = []
+      // eslint-disable-next-line no-unused-vars
+      for (let i = 1; i <= maxNum; i++) {
+        this.sfPath = `${this.path}/${i}/${role}.jpg`
+        if (fs.existsSync(this.sfPath) && !isUpdate) {
+          msg.push(segment.image(`file://${this.sfPath}`))
+          continue
+        }
+        if (i < 4 && await this.getImg(role, i)) {
+          msg.push(segment.image(`file://${this.sfPath}`))
+        }
+      }
+      await ForwardMsg(this.e, msg)
+      return
+    }
     this.sfPath = `${this.path}/${group}/${role}.jpg`
 
     if (fs.existsSync(this.sfPath) && !isUpdate) {
@@ -87,9 +106,9 @@ export class strategy extends plugin {
   async strategy_help () {
     await this.e.reply([
       '星铁攻略帮助:\n',
-      '*希儿攻略[123456]\n',
-      '*更新希儿攻略[123456]\n',
-      '*设置默认攻略[123456]\n',
+      '*希儿攻略[0123456]\n',
+      '*更新希儿攻略[0123456]\n',
+      '*设置默认攻略[0123456]\n',
       '示例: *希儿攻略2\n',
       '\n攻略来源:\n',
       '1——初始镜像\n',
@@ -103,15 +122,17 @@ export class strategy extends plugin {
 
   /** #设置默认攻略1 */
   async strategy_setting () {
-    let match = /设置默认攻略([1-6])?$/.exec(this.e.msg)
+    let newREG = new RegExp('设置默认攻略([0-' + maxNum + '])?$', 'g')
+    let match = newREG.exec(this.e.msg)
     let set = './plugins/StarRail-plugin/config/mys.yaml'
     let config = fs.readFileSync(set, 'utf8')
     let num = Number(match[1])
     if (isNaN(num)) {
-      await this.e.reply('星铁默认攻略设置方式为: \n*设置默认攻略[123456] \n 请增加数字1-6其中一个')
+      await this.e.reply(`星铁默认攻略设置方式为: \n*设置默认攻略[0123456] \n 请增加数字0-${maxNum}其中一个`)
       return
     }
-    config = config.replace(/defaultSource: [1-6]/g, 'defaultSource: ' + num)
+    newREG = new RegExp('defaultSource: [0-' + maxNum + ']', 'g')
+    config = config.replace(newREG, 'defaultSource: ' + num)
     fs.writeFileSync(set, config, 'utf8')
 
     await this.e.reply('星铁默认攻略已设置为: ' + match[1])

@@ -1,6 +1,6 @@
-import { exec } from 'child_process'
+import { exec} from 'child_process'
 import User from '../../genshin/model/user.js'
-import {getStoken} from "./authkey.js";
+import { getStoken} from './authkey.js'
 
 export const rulePrefix = '((#|\\*)?(星铁|星轨|崩铁|星穹铁道|铁道|sr)|\\*|＊)'
 
@@ -9,6 +9,24 @@ export async function checkPnpm () {
   let ret = await execSync('pnpm -v')
   if (ret.stdout) npm = 'pnpm'
   return npm
+}
+
+// 发送转发消息
+// 输入data一个数组,元素是字符串,每一个元素都是一条消息.
+export async function ForwardMsg(e, data) {
+  let msgList = [];
+  for (let i of data) {
+    msgList.push({
+      message: i,
+      nickname: Bot.nickname,
+      user_id: Bot.uin,
+    });
+  }
+  if (msgList.length == 1) {
+    await e.reply(msgList[0].message);
+  } else {
+    await e.reply(await Bot.makeForwardMsg(msgList));
+  }
 }
 
 async function execSync (cmd) {
