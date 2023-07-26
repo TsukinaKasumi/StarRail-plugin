@@ -94,7 +94,7 @@ export class Panel extends plugin {
       logger.debug(`${e.logFnc} 面板图:`, data.charImage)
       let msgId = await runtimeRender(
         e,
-        '/panel/panel.html',
+        '/panel/new_panel.html',
         data,
         {
           retType: 'msgId',
