@@ -173,6 +173,9 @@ export class strategy extends plugin {
     }
 
     if (!url) {
+      if (setting.getConfig('mys')?.defaultSource === 0) {
+        return false
+      }
       this.e.reply(`暂无${name}攻略（${this.source[group]}）\n请尝试其他的攻略来源查询\n*攻略帮助，查看说明`)
       return false
     }
