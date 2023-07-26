@@ -11,24 +11,6 @@ export async function checkPnpm () {
   return npm
 }
 
-// 发送转发消息
-// 输入data一个数组,元素是字符串,每一个元素都是一条消息.
-export async function ForwardMsg(e, data) {
-  let msgList = [];
-  for (let i of data) {
-    msgList.push({
-      message: i,
-      nickname: Bot.nickname,
-      user_id: Bot.uin,
-    });
-  }
-  if (msgList.length == 1) {
-    await e.reply(msgList[0].message);
-  } else {
-    await e.reply(await Bot.makeForwardMsg(msgList));
-  }
-}
-
 async function execSync (cmd) {
   return new Promise((resolve, reject) => {
     exec(cmd, { windowsHide: true }, (error, stdout, stderr) => {
