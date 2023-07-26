@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import common from '../../../lib/common/common.js'
 import plugin from '../../../lib/plugins/plugin.js'
 import alias from '../utils/alias.js'
-import { ForwardMsg, rulePrefix} from '../utils/common.js'
+import { rulePrefix } from '../utils/common.js'
 import setting from '../utils/setting.js'
 // 最大攻略数量
 let maxNum = 6
@@ -87,7 +87,8 @@ export class strategy extends plugin {
           msg.push(segment.image(`file://${this.sfPath}`))
         }
       }
-      await ForwardMsg(this.e, msg)
+      if (msg.length)
+        await this.reply(await common.makeForwardMsg(this.e, msg))
       return
     }
     this.sfPath = `${this.path}/${group}/${role}.jpg`
