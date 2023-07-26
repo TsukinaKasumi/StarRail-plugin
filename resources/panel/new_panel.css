@@ -1,11 +1,12 @@
 body {
-  width: 940px;
+  width: 900px;
 }
 
 .container {
   width: 100%;
   color: #fce097;
   background: url(../common/cont/bkg.png) center no-repeat;
+  background-size: cover;
   padding: 20px 35px 10px 35px;
 }
 
@@ -60,7 +61,7 @@ ul {
   border: 1px solid #fce097;
   border-radius: 3px;
   font-size: 16px;
-  padding: 0 2px;
+  padding: 0 5px;
   text-shadow: 1px 1px 1px #000;
 }
 .header .right .dividing-line {
@@ -243,7 +244,7 @@ ul {
   gap: 11px 30px;
 }
 .relic-list .item {
-  width: 420px;
+  width: 400px;
   height: 170px;
   border: 1px solid #fce097;
   border-left-width: 5px;
@@ -321,7 +322,7 @@ ul {
   padding: 8px;
   font-size: 15px;
   position: relative;
-  color: #6a6a6a;
+  color: #a5a5a5;
 }
 .relic-list .item .attribute .attribute-item.weight-normal {
   color: #fff;
