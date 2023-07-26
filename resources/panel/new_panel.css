@@ -20,6 +20,7 @@ ul {
   width: 382px;
   border: 1px solid #fce097;
   border-radius: 50px 0;
+  overflow: hidden;
   position: relative;
 }
 .header .left img {
