@@ -5,13 +5,17 @@ body {
 .container {
   width: 100%;
   color: #fce097;
-  background: url(../common/cont/bkg.png) center no-repeat;
+  background: url(../common/cont/bkg.png) center top no-repeat;
   background-size: cover;
   padding: 20px 35px 10px 35px;
 }
 
 ul {
   list-style: none;
+}
+
+.relic-list .item, .arms-box, .header .right .attribute-box .attribute-item, .header .left {
+  border: 1px solid #fce097;
 }
 
 .header {
@@ -57,7 +61,6 @@ ul {
 }
 .header .right .info .star-soul {
   margin-left: auto;
-  margin-right: 10px;
   border: 1px solid #fce097;
   border-radius: 3px;
   font-size: 16px;
@@ -67,8 +70,7 @@ ul {
 .header .right .dividing-line {
   height: 15px;
   margin: 6px 0px;
-  background: url(./resources/dividing-line.png) center no-repeat;
-  background-size: cover;
+  background: url(./resources/dividing-line.png) 0% 0%/100% no-repeat;
 }
 .header .right .attribute-box .attribute-item {
   height: 40px;
@@ -323,6 +325,7 @@ ul {
   font-size: 15px;
   position: relative;
   color: #a5a5a5;
+  border-radius: 5px;
 }
 .relic-list .item .attribute .attribute-item.weight-normal {
   color: #fff;
@@ -330,8 +333,11 @@ ul {
 .relic-list .item .attribute .attribute-item.weight-heavy {
   color: #fce097;
 }
+.relic-list .item .attribute .attribute-item:nth-child(2n) {
+  background: rgba(40, 39, 35, 0.5921568627);
+}
 .relic-list .item .attribute .attribute-item:nth-child(2n+1) {
-  background: rgba(46, 45, 42, 0.3215686275);
+  background: rgba(81, 79, 74, 0.5725490196);
 }
 .relic-list .item .attribute .attribute-item.main_affix {
   font-size: 18px;

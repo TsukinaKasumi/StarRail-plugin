@@ -2,10 +2,12 @@ body {
     width: 900px;
 }
 
+$color: #fce097;
+
 .container {
     width: 100%;
-    color: #fce097;
-    background: url(../common/cont/bkg.png) center no-repeat;
+    color: $color;
+    background: url(../common/cont/bkg.png) center top no-repeat;
     background-size: cover;
     padding: 20px 35px 10px 35px;
 }
@@ -14,13 +16,19 @@ ul {
     list-style: none;
 }
 
+%common {
+    // box-shadow: 0px 0px 5px 1px $color;
+    border: 1px solid $color;
+}
+
 .header {
     display: flex;
     height: 577px;
 
     .left {
+        @extend %common;
         width: 382px;
-        border: 1px solid #fce097;
+        border: 1px solid $color;
         border-radius: 50px 0;
         overflow: hidden;
         position: relative;
@@ -65,8 +73,8 @@ ul {
 
             .star-soul {
                 margin-left: auto;
-                margin-right: 10px;
-                border: 1px solid #fce097;
+                // margin-right: 10px;
+                border: 1px solid $color;
                 border-radius: 3px;
                 font-size: 16px;
                 padding: 0 5px;
@@ -77,14 +85,14 @@ ul {
         .dividing-line {
             height: 15px;
             margin: 6px 0px;
-            background: url(./resources/dividing-line.png) center no-repeat;
-            background-size: cover;
+            background: url(./resources/dividing-line.png) 0% 0%/100% no-repeat;
         }
 
         .attribute-box {
             .attribute-item {
+                @extend %common;
                 height: 40px;
-                border: 1px solid #fce097;
+                border: 1px solid $color;
                 margin-top: 10px;
                 border-radius: 5px;
                 display: flex;
@@ -137,9 +145,10 @@ ul {
 }
 
 .arms-box {
+    @extend %common;
     margin-top: 10px;
     height: 105px;
-    border: 1px solid #fce097;
+    border: 1px solid $color;
     border-radius: 30px 0;
     display: flex;
     align-items: center;
@@ -172,7 +181,7 @@ ul {
                 justify-content: space-between;
 
                 div {
-                    border: 1px solid #fce097;
+                    border: 1px solid $color;
                     border-radius: 5px;
                     padding: 0 5px;
 
@@ -225,7 +234,7 @@ ul {
 
     .hr {
         width: 1px;
-        background: #fce097;
+        background: $color;
         height: 65px;
     }
 
@@ -241,7 +250,7 @@ ul {
             .img {
                 width: 50px;
                 height: 50px;
-                border: 1px solid #fce097;
+                border: 1px solid $color;
                 border-radius: 50%;
                 overflow: hidden;
                 margin: 0 auto;
@@ -254,7 +263,7 @@ ul {
 
             .level {
                 margin: 0 auto;
-                border: 1px solid #fce097;
+                border: 1px solid $color;
                 width: 30px;
                 text-shadow: 1px 1px 1px #000;
                 background: #5a5a5a90;
@@ -287,9 +296,10 @@ ul {
     gap: 11px 30px;
 
     .item {
+        @extend %common;
         width: 400px;
         height: 170px;
-        border: 1px solid #fce097;
+        border: 1px solid $color;
         border-left-width: 5px;
         border-radius: 30px 0;
         display: flex;
@@ -323,7 +333,7 @@ ul {
                     position: absolute;
                     right: -5px;
                     bottom: -5px;
-                    border: 1px solid #fce097;
+                    border: 1px solid $color;
                     border-radius: 5px;
                     font-size: 12px;
                     padding: 0 5px;
@@ -353,7 +363,7 @@ ul {
             .score {
                 margin-left: 10px;
                 padding: 3px 10px;
-                border: 1px solid #fce097;
+                border: 1px solid $color;
                 border-radius: 5px;
                 font-size: 15px;
                 margin-top: 8px;
@@ -377,6 +387,7 @@ ul {
                 font-size: 15px;
                 position: relative;
                 color: #a5a5a5;
+                border-radius: 5px;
 
                 &.weight-normal {
                     color: #fff;
@@ -386,8 +397,12 @@ ul {
                     color: #fce097;
                 }
 
+                &:nth-child(2n) {
+                    background: #28272397;
+                }
+
                 &:nth-child(2n+1) {
-                    background: #2e2d2a52;
+                    background: #514f4a92;
                 }
 
                 &.main_affix {
@@ -428,7 +443,7 @@ ul {
                 content: '';
                 height: 100px;
                 width: 1px;
-                background: #fce097;
+                background: $color;
                 position: absolute;
                 left: -1px;
                 top: 50%;

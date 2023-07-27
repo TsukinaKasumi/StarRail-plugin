@@ -250,7 +250,7 @@
                     <img src="{{iconPath}}/Icon{{affix.tag}}.png" alt="">
                 </div> -->
                 <div class="name">{{affix.name}}</div>
-                <div class="cont">{{'>'.repeat(affix.cnt)}}</div>
+                <div class="cont">{{'>'.repeat(affix.cnt - 1)}}</div>
                 <div class="add-attribute">
                     +{{affix.value>=1?Math.floor(affix.value):MathPro.floor10(affix.value*100,-1)+'%'}}</div>
             </div>
@@ -260,6 +260,6 @@
     {{/each}}
 </div>
 <div class="copyright">
-  {{@sys.createdby}}
+    {{@sys.createdby}}
 </div>
 {{/block}}
