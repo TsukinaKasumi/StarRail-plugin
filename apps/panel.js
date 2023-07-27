@@ -12,6 +12,11 @@ import { pluginResources, pluginRoot } from '../utils/path.js'
 import setting from '../utils/setting.js'
 import moment from 'moment'
 
+// 引入遗器地址数据
+const relicsPathData = readJson('resources/panel/data/relics.json')
+// 引入角色数据
+const charData = readJson('resources/panel/data/character.json')
+
 export class Panel extends plugin {
   constructor (e) {
     super({
@@ -77,14 +82,9 @@ export class Panel extends plugin {
       let data = await this.getCharData(charName, uid, e)
       data.uid = uid
       data.api = api.split('/')[2]
-      // 引入遗器地址数据
-      let relicsPathData = readJson('resources/panel/data/relics.json')
-      // 引入角色数据
-      let charData = readJson('resources/panel/data/character.json')
       data.charpath = charData[data.avatarId].path
       data.relics.forEach((item, i) => {
-        const filePath = relicsPathData[item.id].icon
-        data.relics[i].path = filePath
+        data.relics[i].path = relicsPathData[item.id]?.icon
       })
       // 行迹
       data.behaviorList = this.handleBehaviorList(data.behaviorList)
@@ -219,7 +219,7 @@ export class Panel extends plugin {
       // 渲染数据
       await renderCard(e, renderData)
       // await e.reply( '更新面板数据成功' );
-      return false
+      return true
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
@@ -375,11 +375,12 @@ export class Panel extends plugin {
     }
     const api = await panelApi()
     const data = await this.getPanelData(uid, false)
+    const lastUpdateTime = data.find(i => i.is_new && i.lastUpdateTime)?.lastUpdateTime
     let renderData = {
       api: api.split('/')[2],
       uid,
       data,
-      time: '该页数据为缓存数据，非最新数据'
+      time: moment(lastUpdateTime).format('YYYY-MM-DD HH:mm:ss dddd') ?? '该页数据为缓存数据，非最新数据'
     }
     // 渲染数据
     await renderCard(e, renderData)
@@ -442,21 +443,22 @@ export class Panel extends plugin {
 async function updateData (oldData, newData) {
   let returnData = oldData
   // logger.mark('SR-updateData', oldData, newData);
+  const handle = (name) => {
+    return name === '{nickname}' || name === '{NICKNAME}' ? '开拓者' : name
+  }
   oldData.forEach((oldItem, i) => {
-    if (oldData[i].name === '{nickname}' || oldData[i].name === '{NICKNAME}') {
-      oldData[i].name = '开拓者'
-    }
+    oldData[i].name = handle(oldData[i].name)
     oldData[i].relics = oldItem.relics || []
     oldData[i].behaviorList = oldItem.behaviorList || []
     oldData[i].is_new = false
   })
   newData.forEach((newItem, i) => {
     newData[i].is_new = true
-    if (newData[i].name === '{nickname}' || newData[i].name === '{NICKNAME}') {
-      newData[i].name = '开拓者'
-    }
+    newData[i].name = handle(newData[i].name)
     newData[i].relics = newItem.relics || []
     newData[i].behaviorList = newItem.behaviorList || []
+    // 最后更新时间
+    newData[i].lastUpdateTime = Date.now()
     returnData = returnData.filter(
       oldItem => oldItem.avatarId != newItem.avatarId
     )
@@ -464,20 +466,23 @@ async function updateData (oldData, newData) {
   returnData.unshift(...newData)
   return returnData
 }
+
 const dataDir = pluginRoot + '/data/panel'
+
 function saveData (uid, data) {
   // 判断目录是否存在，不存在则创建
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true })
   }
   try {
-    fs.writeFileSync(`${dataDir}/${uid}.json`, JSON.stringify(data), 'utf-8')
+    fs.writeFileSync(`${dataDir}/${uid}.json`, JSON.stringify(data, null, '\t'), 'utf-8')
     return true
   } catch (err) {
     logger.error('写入失败：', err)
     return false
   }
 }
+
 function readData (uid) {
   // 文件路径
   const filePath = `${dataDir}/${uid}.json`
