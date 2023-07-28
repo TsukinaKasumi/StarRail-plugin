@@ -7,8 +7,8 @@ $color: #fce097;
 .container {
     width: 100%;
     color: $color;
-    background: url(../common/cont/bkg.png) center top no-repeat;
-    background-size: cover;
+    background: url(../common/cont/bkg.png) center 0%/150% no-repeat;
+    // background-size: cover;
     padding: 20px 35px 10px 35px;
 }
 
@@ -18,7 +18,7 @@ ul {
 
 %common {
     // box-shadow: 0px 0px 5px 1px $color;
-    border: 1px solid $color;
+    border: 2px solid $color;
 }
 
 .header {
@@ -28,7 +28,6 @@ ul {
     .left {
         @extend %common;
         width: 382px;
-        border: 1px solid $color;
         border-radius: 50px 0;
         overflow: hidden;
         position: relative;
@@ -74,7 +73,7 @@ ul {
             .star-soul {
                 margin-left: auto;
                 // margin-right: 10px;
-                border: 1px solid $color;
+                border: 2px solid $color;
                 border-radius: 3px;
                 font-size: 16px;
                 padding: 0 5px;
@@ -92,7 +91,6 @@ ul {
             .attribute-item {
                 @extend %common;
                 height: 40px;
-                border: 1px solid $color;
                 margin-top: 10px;
                 border-radius: 5px;
                 display: flex;
@@ -148,7 +146,6 @@ ul {
     @extend %common;
     margin-top: 10px;
     height: 105px;
-    border: 1px solid $color;
     border-radius: 30px 0;
     display: flex;
     align-items: center;
@@ -181,7 +178,7 @@ ul {
                 justify-content: space-between;
 
                 div {
-                    border: 1px solid $color;
+                    border: 2px solid $color;
                     border-radius: 5px;
                     padding: 0 5px;
 
@@ -250,7 +247,7 @@ ul {
             .img {
                 width: 50px;
                 height: 50px;
-                border: 1px solid $color;
+                border: 2px solid $color;
                 border-radius: 50%;
                 overflow: hidden;
                 margin: 0 auto;
@@ -263,7 +260,7 @@ ul {
 
             .level {
                 margin: 0 auto;
-                border: 1px solid $color;
+                border: 2px solid $color;
                 width: 30px;
                 text-shadow: 1px 1px 1px #000;
                 background: #5a5a5a90;
@@ -299,7 +296,6 @@ ul {
         @extend %common;
         width: 400px;
         height: 170px;
-        border: 1px solid $color;
         border-left-width: 5px;
         border-radius: 30px 0;
         display: flex;
@@ -333,7 +329,7 @@ ul {
                     position: absolute;
                     right: -5px;
                     bottom: -5px;
-                    border: 1px solid $color;
+                    border: 2px solid $color;
                     border-radius: 5px;
                     font-size: 12px;
                     padding: 0 5px;
@@ -363,7 +359,7 @@ ul {
             .score {
                 margin-left: 10px;
                 padding: 3px 10px;
-                border: 1px solid $color;
+                border: 2px solid $color;
                 border-radius: 5px;
                 font-size: 15px;
                 margin-top: 8px;
