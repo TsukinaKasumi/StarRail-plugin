@@ -219,7 +219,7 @@ export class Panel extends plugin {
       // 渲染数据
       await renderCard(e, renderData)
       // await e.reply( '更新面板数据成功' );
-      return true
+      return false
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
