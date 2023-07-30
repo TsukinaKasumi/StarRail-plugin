@@ -7,7 +7,7 @@ import GatchaData from '../utils/gatcha/index.js'
 import setting from '../utils/setting.js'
 
 export class Gatcha extends plugin {
-  constructor (e) {
+  constructor(e) {
     super({
       name: '星铁plug抽卡分析',
       dsc: '星铁plug抽卡分析',
@@ -35,15 +35,15 @@ export class Gatcha extends plugin {
     })
   }
 
-  get appconfig () {
+  get appconfig() {
     return setting.getConfig('gachaHelp')
   }
 
-  async gatchahelp (e) {
+  async gatchahelp(e) {
     await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
   }
 
-  async bindAuthKey (e) {
+  async bindAuthKey(e) {
     if (!e.isPrivate && !this.appconfig.gatchaUrlGroup) {
       await this.reply('请私聊绑定', false, { at: true })
       return false
@@ -52,7 +52,7 @@ export class Gatcha extends plugin {
     await this.reply('请发送抽卡链接', false, { at: true })
   }
 
-  async doBindAuthKey () {
+  async doBindAuthKey() {
     if (!this.e.isPrivate && !this.appconfig.gatchaUrlGroup) {
       await this.reply('请私聊发送抽卡链接', false, { at: true })
       return false
@@ -73,7 +73,7 @@ export class Gatcha extends plugin {
     this.finish('doBindAuthKey')
   }
 
-  async getAuthKey () {
+  async getAuthKey() {
     let user = this.e.user_id
     let ats = this.e.message.filter((m) => m.type === 'at')
     if (ats.length > 0 && !this.e.atBot) {
@@ -89,7 +89,7 @@ export class Gatcha extends plugin {
     return authKey
   }
 
-  async updateGatcha (e) {
+  async updateGatcha(e) {
     let user = e.user_id
     const ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -125,7 +125,7 @@ export class Gatcha extends plugin {
     }
   }
 
-  async gatcha (e) {
+  async gatcha(e) {
     let user = e.user_id
     const ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -177,3 +177,4 @@ export class Gatcha extends plugin {
       await e.reply('本地暂无抽卡记录，请发送#星铁更新跃迁，更新抽卡记录')
     }
   }
+}
