@@ -297,6 +297,14 @@ export class Hkrpg extends plugin {
       general: JSON.stringify(data),
       details
     })
-    await e.runtime.render('StarRail-plugin', 'online/index.html', renderData)
+    await runtimeRender(
+      e,
+      '/online/index.html',
+      renderData,
+      {
+        retType: 'msgId',
+        scale: 1.6
+      }
+    )
   }
 }
