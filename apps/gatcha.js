@@ -178,3 +178,4 @@ export class Gatcha extends plugin {
     }
   }
 }
+
