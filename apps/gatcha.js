@@ -177,3 +177,5 @@ export class Gatcha extends plugin {
       await e.reply('本地暂无抽卡记录，请发送#星铁更新跃迁，更新抽卡记录')
     }
   }
+}
+

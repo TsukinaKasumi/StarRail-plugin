@@ -1,0 +1,378 @@
+body {
+  width: 900px;
+}
+
+.container {
+  width: 100%;
+  color: #fce097;
+  background: url(../common/cont/bkg.png) center 0%/150% no-repeat;
+  padding: 20px 35px 10px 35px;
+}
+
+ul {
+  list-style: none;
+}
+
+.relic-list .item, .arms-box, .header .right .attribute-box .attribute-item, .header .left {
+  border: 2px solid #fce097;
+}
+
+.header {
+  display: flex;
+  height: 577px;
+}
+.header .left {
+  width: 382px;
+  border-radius: 50px 0;
+  overflow: hidden;
+  position: relative;
+}
+.header .left img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.header .right {
+  flex: 1;
+  margin-left: 20px;
+}
+.header .right .info {
+  height: 44px;
+  display: flex;
+  align-items: end;
+}
+.header .right .info .role-name {
+  font-size: 44px;
+  height: 100%;
+}
+.header .right .info .element {
+  height: 35px;
+  margin: 0 3px;
+}
+.header .right .info .element img {
+  width: 100%;
+  height: 100%;
+}
+.header .right .info .level {
+  margin-left: 10px;
+}
+.header .right .info .star-soul {
+  margin-left: auto;
+  border: 2px solid #fce097;
+  border-radius: 3px;
+  font-size: 16px;
+  padding: 0 5px;
+  text-shadow: 1px 1px 1px #000;
+}
+.header .right .dividing-line {
+  height: 15px;
+  margin: 6px 0px;
+  background: url(./resources/dividing-line.png) 0% 0%/100% no-repeat;
+}
+.header .right .attribute-box .attribute-item {
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+.header .right .attribute-box .attribute-item .icon {
+  width: 15px;
+  height: 100%;
+  margin-left: 15px;
+  position: relative;
+}
+.header .right .attribute-box .attribute-item .icon img {
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.header .right .attribute-box .attribute-item .name {
+  margin-left: 15px;
+}
+.header .right .attribute-box .attribute-item .value {
+  margin-left: auto;
+  margin-right: 10px;
+}
+.header .right .attribute-box .attribute-item .add-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  box-sizing: content-box;
+  padding-right: 5px;
+  font-size: 14px;
+  text-align: right;
+  width: 55px;
+  height: 100%;
+  background: rgba(74, 74, 74, 0.5294117647);
+}
+.header .right .attribute-box .attribute-item .add-value .delta {
+  color: #9be802;
+}
+
+.arms-box {
+  margin-top: 10px;
+  height: 105px;
+  border-radius: 30px 0;
+  display: flex;
+  align-items: center;
+}
+.arms-box .arms {
+  display: flex;
+  height: 85px;
+  flex: 1;
+  margin-left: 30px;
+  text-align: center;
+}
+.arms-box .arms .arms-img {
+  margin-right: 30px;
+}
+.arms-box .arms .arms-img img {
+  height: 100%;
+  width: 100%;
+}
+.arms-box .arms .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100px;
+}
+.arms-box .arms .info .level-box {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.arms-box .arms .info .level-box div {
+  border: 2px solid #fce097;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+.arms-box .arms .info .level-box div:nth-child(1) {
+  margin-right: 5px;
+}
+.arms-box .arms .info .star {
+  height: 14px;
+  position: relative;
+}
+.arms-box .arms .info .star img {
+  height: 200%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.arms-box .arms .attribute {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.arms-box .arms .attribute .item {
+  height: 25px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.arms-box .arms .attribute .item .icon {
+  height: 100%;
+  margin-right: 2px;
+}
+.arms-box .arms .attribute .item .icon img {
+  width: 100%;
+  height: 100%;
+}
+.arms-box .hr {
+  width: 1px;
+  background: #fce097;
+  height: 65px;
+}
+.arms-box .talent {
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+}
+.arms-box .talent .item {
+  position: relative;
+  width: 33%;
+}
+.arms-box .talent .item .img {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #fce097;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.arms-box .talent .item .img img {
+  width: 100%;
+  height: 100%;
+}
+.arms-box .talent .item .level {
+  margin: 0 auto;
+  border: 2px solid #fce097;
+  width: 30px;
+  text-shadow: 1px 1px 1px #000;
+  background: rgba(90, 90, 90, 0.5647058824);
+  text-align: center;
+  border-radius: 5px;
+  font-size: 12px;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.arms-box .talent .item .type {
+  margin-top: 13px;
+  text-align: center;
+}
+
+.other-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.relic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px 30px;
+}
+.relic-list .item {
+  width: 400px;
+  height: 170px;
+  border-left-width: 5px;
+  border-radius: 30px 0;
+  display: flex;
+}
+.relic-list .item[data-rank="3"] {
+  border-color: #276d98;
+}
+.relic-list .item[data-rank="4"] {
+  border-color: #9819b3;
+}
+.relic-list .item .info {
+  width: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0;
+}
+.relic-list .item .info .relic-icon {
+  height: 50px;
+  margin-top: 10px;
+  position: relative;
+}
+.relic-list .item .info .relic-icon img {
+  height: 100%;
+}
+.relic-list .item .info .relic-icon .level {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  border: 2px solid #fce097;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 0 5px;
+  width: 35px;
+  text-shadow: 1px 1px 1px #000;
+  background: rgba(90, 90, 90, 0.5647058824);
+}
+.relic-list .item .info .star {
+  height: 25px;
+}
+.relic-list .item .info .star img {
+  width: 100%;
+  height: 100%;
+}
+.relic-list .item .info .relic-name {
+  width: 105px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.relic-list .item .info .score {
+  margin-left: 10px;
+  padding: 3px 10px;
+  border: 2px solid #fce097;
+  border-radius: 5px;
+  font-size: 15px;
+  margin-top: 8px;
+  width: 70px;
+  text-align: center;
+  white-space: nowrap;
+}
+.relic-list .item .attribute {
+  flex: 1;
+  position: relative;
+  padding: 10px;
+}
+.relic-list .item .attribute .attribute-item {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 8px;
+  font-size: 15px;
+  position: relative;
+  color: #a5a5a5;
+  border-radius: 5px;
+}
+.relic-list .item .attribute .attribute-item.weight-normal {
+  color: #fff;
+}
+.relic-list .item .attribute .attribute-item.weight-heavy {
+  color: #fce097;
+}
+.relic-list .item .attribute .attribute-item:nth-child(2n) {
+  background: rgba(40, 39, 35, 0.5921568627);
+}
+.relic-list .item .attribute .attribute-item:nth-child(2n+1) {
+  background: rgba(81, 79, 74, 0.5725490196);
+}
+.relic-list .item .attribute .attribute-item.main_affix {
+  font-size: 18px;
+  color: #fff;
+  font-weight: 700;
+}
+.relic-list .item .attribute .attribute-item .icon {
+  position: relative;
+  width: 10px;
+  height: 100%;
+}
+.relic-list .item .attribute .attribute-item .icon img {
+  height: 160%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.relic-list .item .attribute .attribute-item .name {
+  margin-left: 10px;
+}
+.relic-list .item .attribute .attribute-item .cont {
+  position: absolute;
+  left: 50%;
+}
+.relic-list .item .attribute .attribute-item .add-attribute {
+  margin-left: auto;
+}
+.relic-list .item .attribute::after {
+  content: "";
+  height: 100px;
+  width: 1px;
+  background: #fce097;
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.copyright {
+  margin-top: 15px;
+  font-size: 16px;
+}/*# sourceMappingURL=new_panel.css.map */

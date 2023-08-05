@@ -1,0 +1,265 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/panel/new_panel.css">
+{{/block}}
+
+{{block 'main'}}
+{{set iconPath = pluResPath + 'panel/resources/icon/value'}}
+<div class="header">
+    <div class="left">
+        <img src="{{pluResPath}}{{charImage}}">
+    </div>
+    <div class="right">
+        <div class="info">
+            <div class="role-name">{{name}}</div>
+            <div class="element">
+                <img src="{{pluResPath}}common/element/{{damage_type.toLowerCase()}}.png">
+            </div>
+            <div class="path">{{charpath}}</div>
+            <div class="level">Lv.{{level}}</div>
+            <div class="star-soul const-rank-{{rank}}">星魂 {{rank}}</div>
+        </div>
+        <div class="dividing-line"></div>
+        <div class="attribute-box">
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconMaxHP.png">
+                </div>
+                <div class="name">生命值</div>
+                <div class="value">
+                    {{Math.floor(properties.hpBase+properties.hpDelta)}}
+                </div>
+                <div class="add-value">
+                    <div>
+                        {{MathPro.floor10(properties.hpBase,-1)}}
+                    </div>
+                    <div class="delta">
+                        +{{MathPro.floor10(properties.hpDelta,-1)}}
+                    </div>
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconAttack.png">
+                </div>
+                <div class="name">攻击力</div>
+                <div class="value">
+                    {{Math.floor(properties.attackBase+properties.attackDelta)}}
+                </div>
+                <div class="add-value">
+                    <div>
+                        {{MathPro.floor10(properties.attackBase,-1)}}
+                    </div>
+                    <div class="delta">
+                        +{{MathPro.floor10(properties.attackDelta,-1)}}
+                    </div>
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconDefence.png">
+                </div>
+                <div class="name">防御力</div>
+                <div class="value">
+                    {{Math.floor(properties.defenseBase+properties.defenseDelta)}}
+                </div>
+                <div class="add-value">
+                    <div>
+                        {{MathPro.floor10(properties.defenseBase,-1)}}
+                    </div>
+                    <div class="delta">
+                        +{{MathPro.floor10(properties.defenseDelta,-1)}}
+                    </div>
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconSpeed.png">
+                </div>
+                <div class="name">速度</div>
+                <div class="value">
+                    {{Math.floor(properties.speedBase+properties.speedAdd)}}
+                </div>
+                <div class="add-value">
+                    <div>
+                        {{MathPro.floor10(properties.speedBase,-1)}}
+                    </div>
+                    <div class="delta">
+                        +{{MathPro.floor10(properties.speedAdd,-1)}}
+                    </div>
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconCriticalChance.png">
+                </div>
+                <div class="name">暴击率</div>
+                <div class="value">
+                    {{MathPro.floor10(properties.criticalChance*100,-1)}}%
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconCriticalDamage.png">
+                </div>
+                <div class="name">暴击伤害</div>
+                <div class="value">
+                    {{MathPro.floor10(properties.criticalDamage*100,-1)}}%
+                </div>
+            </div>
+            <!-- <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconStatusResistance.png">
+                </div>
+                <div class="name">效果抵抗</div>
+                <div class="value">
+                    {{MathPro.floor10(properties.statusResistance*100,-1)}}%
+                </div>
+            </div> -->
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconStatusProbability.png">
+                </div>
+                <div class="name">效果命中</div>
+                <div class="value">
+                    {{MathPro.floor10(properties.statusProbability*100,-1)}}%
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconBreakUp.png">
+                </div>
+                <div class="name">击破特攻</div>
+                <div class="value">
+                    {{MathPro.floor10(properties.breakDamageAdded*100,-1)}}%
+                </div>
+            </div>
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconEnergyLimit.png">
+                </div>
+                <div class="name">能量回复</div>
+                <div class="value">
+                    {{MathPro.floor10(100 + properties.spRatio*100,-1)}}%
+                </div>
+            </div>
+            <div class="attribute-item">
+                {{if charpath == '丰饶'}}
+                <div class="icon">
+                    <img src="{{iconPath}}/IconHealRatio.png">
+                </div>
+                <div class="name">治疗量加成</div>
+                <div class="value">
+                    {{MathPro.floor10(properties.healRatio * 100,-1)}}%
+                </div>
+                {{else}}
+                <div class="icon">
+                    <img src="{{iconPath}}/Icon{{damage_type}}AddedRatio.png">
+                </div>
+                <div class="name">属性伤害提高</div>
+                <div class="value">
+                    {{MathPro.floor10(properties[damage_type.toLowerCase() + 'Added']*100,-1)}}%
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="arms-box">
+    {{if equipment.id}}
+    <div class="arms">
+        <div class="arms-img">
+            <img src="{{pluResPath}}panel/resources/weapon/{{equipment.id}}.png">
+        </div>
+        <div class="info">
+            <div>{{equipment.name}}</div>
+            <div class="level-box">
+                <div class="level">Lv.{{equipment.level}}</div>
+                <div class="rank">叠影{{equipment.rank}}</div>
+            </div>
+            <div class="star">
+                <img
+                    src="{{pluResPath}}panel/resources/star/LightCore_{{equipment.rarity.slice(-7,equipment.rarity.length)}}.png">
+            </div>
+        </div>
+        <div class="attribute">
+            <div class="item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconMaxHP.png">
+                </div>
+                <div class="text">生命值：-</div>
+            </div>
+            <div class="item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconAttack.png">
+                </div>
+                <div class="text">攻击力：-</div>
+            </div>
+            <div class="item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconDefence.png">
+                </div>
+                <div class="text">防御力：-</div>
+            </div>
+        </div>
+
+    </div>
+    <div class="hr"></div>
+    {{/if}}
+    <div class="talent">
+        {{each behaviorList behavior i}}
+        <div class="item">
+            <div class="img">
+                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
+            </div>
+            <div class="level">{{behavior.level}}</div>
+            <div class="type">{{behavior.type}}</div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<div class="other-info">
+    <div class="uid">UID：{{uid}}</div>
+    <div class="api">当前面版服务：{{api}}</div>
+</div>
+<div class="relic-list">
+    {{each relics relic i}}
+    <div class="item" data-rank="{{relic.max_level / 3}}">
+        <div class="info">
+            <div class="relic-icon">
+                <img src="{{pluResPath}}panel/resources/relic/{{relic.path}}">
+                <div class="level">+{{relic.level}}</div>
+            </div>
+            <div class="star">
+                <img src="{{pluResPath}}panel/resources/star/LightCore_Rarity{{relic.max_level/3}}.png">
+            </div>
+            <div class="relic-name">{{relic.name}}</div>
+            <div class="score">{{relic.score?relic.score.toFixed(1):0}}分</div>
+        </div>
+        <div class="attribute">
+            <div class="attribute-item main_affix">
+                <div class="name">{{relic.main_affix_name}}</div>
+                <div class="add-attribute">
+                    +{{relic.main_affix_value>=1?Math.floor(relic.main_affix_value):MathPro.floor10(relic.main_affix_value*100,-1)+'%'}}
+                </div>
+            </div>
+            {{each relic.sub_affix_id affix i}}
+            <div class="attribute-item {{affix.weight>0?(affix.weight>=1?'weight-heavy':'weight-normal'):''}}">
+                <!-- <div class="icon">
+                    <img src="{{iconPath}}/Icon{{affix.tag}}.png" alt="">
+                </div> -->
+                <div class="name">{{affix.name}}</div>
+                <div class="cont">{{'>'.repeat(affix.cnt - 1)}}</div>
+                <div class="add-attribute">
+                    +{{affix.value>=1?Math.floor(affix.value):MathPro.floor10(affix.value*100,-1)+'%'}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+<div class="copyright">
+    {{@sys.createdby}}
+</div>
+{{/block}}
