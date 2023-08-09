@@ -45,7 +45,7 @@ export const poolData = [
     version: '1.2',
     half: '上半',
     from: '2023-07-19 10:30:00',
-    to: '2023-08-10 11:59:59',
+    to: '2023-08-09 11:59:59',
     poolName: '业途游魂',
     char5: [ '刃' ],
     weapon5: [ '到不了的彼岸' ]
@@ -54,7 +54,7 @@ export const poolData = [
     ids: ['2008', '3008'],
     version: '1.2',
     half: '下半',
-    from: '2023-08-10 12:00:00',
+    from: '2023-08-09 12:00:00',
     to: '2023-08-29 14:59:59',
     poolName: '夜将不眠',
     char5: [ '卡芙卡' ],
