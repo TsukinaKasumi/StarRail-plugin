@@ -49,5 +49,15 @@ export const poolData = [
     poolName: '业途游魂',
     char5: [ '刃' ],
     weapon5: [ '到不了的彼岸' ]
+  }, {
+    id: 'ver1.2down',
+    ids: ['2008', '3008'],
+    version: '1.2',
+    half: '下半',
+    from: '2023-08-10 12:00:00',
+    to: '2023-08-29 14:59:59',
+    poolName: '夜将不眠',
+    char5: [ '卡芙卡' ],
+    weapon5: [ '只需等待' ]
   }
 ]
