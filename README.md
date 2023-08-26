@@ -8,9 +8,9 @@
 <img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
 </div>
 
-### 如果您有需求使用喵喵插件的星铁面板可参考issue做修改
+### 如果您有需求使用喵喵插件的星铁面板可使用该项目👇
 
-https://gitee.com/yoimiya-kokomi/miao-plugin/issues/I7EDHN
+[同时使用喵喵星铁面板.js](https://gitee.com/Zyy955/Yunzai-Bot-plugin/blob/main/StarRail.js) from [@Zyy955](https://gitee.com/Zyy955)
 
 ### 交流群
 
