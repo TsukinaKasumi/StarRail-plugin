@@ -37,7 +37,7 @@ export default class GatchaData {
     /** 当前总数 */
     const currTotal = {
       /** 角色总数 */
-      characterTotal: [this.getItemTotalNum('character', '4'), this.getItemTotalNum('character', '5')],
+      characterTotal: [this.getItemTotalNum('characters', '4'), this.getItemTotalNum('characters', '5')],
       /** 光锥总数 */
       lightConesTotal: [this.getItemTotalNum('light_cones', '4'), this.getItemTotalNum('light_cones', '5')],
       /** 总卡数 */
@@ -258,19 +258,19 @@ export default class GatchaData {
     return `${pluginRoot}/data/gatcha/${this.uid}/${poolId}.json`
   }
 
-  getItemTotalNum (type = 'character', rarity) {
+  getItemTotalNum (type = 'characters', rarity) {
     const path = `${pluginRoot}/resources/baseData/${type}.json`
     const data = JSON.parse(fs.readFileSync(path, 'utf-8'))
     const dataMap = new Map(Object.entries(data))
-    // 剔除开拓者，卡芙卡，罗刹
-    if (type === 'character') {
+    // 剔除开拓者
+    if (type === 'characters') {
       dataMap.delete('8001')
       dataMap.delete('8002')
       dataMap.delete('8003')
       dataMap.delete('8004')
-      dataMap.delete('1005')
+      // dataMap.delete('1005')
       // dataMap.delete('1006')
-      dataMap.delete('1203')
+      // dataMap.delete('1203')
     }
     if (rarity) {
       let total = 0
