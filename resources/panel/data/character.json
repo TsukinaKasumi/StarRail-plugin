@@ -28921,6 +28921,11 @@
     ],
     "character_material": "guide/Nwflower/character_material/1211.png"
   },
+  "1213": {
+    "id": "1213",
+    "name": "丹恒•饮月",
+    "path": "毁灭"
+  },
   "8001": {
     "id": "8001",
     "name": "开拓者 (物理)",
