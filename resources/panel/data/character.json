@@ -20810,6 +20810,8 @@
   "1111": {
     "id": "1111",
     "name": "卢卡",
+    "rarity": "4",
+    "element": "物理",
     "path": "虚无"
   },
   "1201": {
@@ -25437,6 +25439,8 @@
   "1205": {
     "id": "1205",
     "name": "刃",
+    "rarity": "5",
+    "element": "风",
     "path": "毁灭"
   },
   "1206": {
@@ -26593,6 +26597,8 @@
   "1207": {
     "id": "1207",
     "name": "驭空",
+    "rarity": "4",
+    "element": "虚数",
     "path": "同谐"
   },
   "1209": {
@@ -28920,6 +28926,13 @@
       "guide/OriginMirror/character_overview/1211.png"
     ],
     "character_material": "guide/Nwflower/character_material/1211.png"
+  },
+  "1213": {
+    "id": "1213",
+    "name": "丹恒•饮月",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "毁灭"
   },
   "8001": {
     "id": "8001",
