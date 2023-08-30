@@ -59,5 +59,15 @@ export const poolData = [
     poolName: '夜将不眠',
     char5: [ '卡芙卡' ],
     weapon5: [ '只需等待' ]
+  }, {
+    id: 'ver1.3up',
+    ids: ['2009', '3009'],
+    version: '1.3',
+    half: '上半',
+    from: '2023-08-30 10:20:00',
+    to: '2023-09-20 11:59:59',
+    poolName: '濯世垂虹',
+    char5: [ '丹恒•饮月' ],
+    weapon5: [ '比阳光更明亮的' ]
   }
 ]
