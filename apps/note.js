@@ -24,7 +24,9 @@ export class Note extends plugin {
   }
 
   async note (e) {
-    const isPro = /pro/.test(e.msg)
+    // const isPro = /pro/.test(e.msg)
+    // 20230907 体力默认改用小组件
+    const isPro = true
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
