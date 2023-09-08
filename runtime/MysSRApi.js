@@ -59,6 +59,10 @@ export default class MysSRApi extends MysApi {
         url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
         query: `need_detail=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
       },
+      srRogueLocust: {
+        url: `${hostRecord}game_record/app/hkrpg/api/rogue_locust`,
+        query: `need_detail=true&role_id=${this.uid}&server=${this.server}`
+      },
       srPayAuthKey: {
         url: `${host}binding/api/genAuthKey`,
         body: {
