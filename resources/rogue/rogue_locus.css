@@ -49,6 +49,43 @@
     margin-left: 3px;
     color: #c7c7c7;
 }
+.radar {
+  /*background-image: url("locust/radar.png");*/
+  height: 450px;
+  position: relative;
+}
+.radar-block {
+  margin-top: -60px;
+}
+.radar-bg {
+  width: 100%;
+
+}
+.radar-num {
+  background: #0b0c11;
+  border-radius: 8px;
+  border: #c7c7c7 solid 1px;
+  width: 16px;
+  /*padding-left: 0px;*/
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.radar-icon {
+  font-size: 12px;
+  color: #b2a8e9;
+  width: 30px;
+  height: 30px;
+  background: #0b0c11;
+  border-radius: 15px;
+  border: #c7c7c7 solid 1px;
+  position: absolute;
+}
+.radar-icon img {
+  margin-left: 1px;
+  margin-top: 1px;
+  width: 26px;
+}
 .records-header {
     margin-left: 5px;
     margin-right: 5px;
@@ -306,6 +343,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
   display: flex;
+  flex-wrap: wrap;
 }
 .record-weakness-content-item {
   width: 95%;
@@ -404,6 +442,18 @@
     height: 32px;
     margin-top: 3px;
     margin-left: 3px;
+}
+.record-pass-area-block {
+  background: #1B2044;
+  border: #575288 solid 1px;
+  border-left: #575288 solid 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  min-width: 200px;
+}
+.record-pass-area-block img {
+  width: 30px;
+  vertical-align: middle;
 }
 .logo {
     font-size: 16px;
