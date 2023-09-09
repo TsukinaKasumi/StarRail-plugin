@@ -45,6 +45,10 @@ export const helpList = [
       title: '*(上期)宇宙(uid)',
       desc: '模拟宇宙信息(可带uid查询)'
     }, {
+      icon: 107,
+      title: '*寰宇蝗灾',
+      desc: '模拟宇宙寰宇蝗灾信息'
+    }, {
       icon: 98,
       title: '*收入',
       desc: '月度星琼统计'
