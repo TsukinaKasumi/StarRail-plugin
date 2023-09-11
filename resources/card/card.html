@@ -5,105 +5,100 @@
 {{/block}}
 
 {{block 'main'}}
-<div class="user">
-    <div class="user-inner">
-        <div class="srlogo">
-            <img src="{{pluResPath}}/common/cont/logo.png" />
-        </div>
-        <div class="role-name">
-            <div class="nickname">{{nickname}}</div>
-            <div class="uid">{{game_uid}}</div>
-        </div>
-        <div class="region">
-            {{region_name}} {{level}}
-        </div>
-        <div class="pamu">
-            <img src="{{pluResPath}}/common/cont/pamu.png" />
-        </div>
+<div class="main">
+  <div class="close">
+    <div class="icon">
+      <div class="line line1"></div>
+      <div class="line line2"></div>
+      <div class="dot"></div>
+      <div class="line line3"></div>
+      <div class="line line4"></div>
     </div>
-
-</div>
-<div class="title">
-    <img src="{{pluResPath}}/common/cont/star.png">
-    <div>数据总览</div>
-</div>
-<div class="general">
-    <div class="general-inner" style="padding-bottom: 30px;">
-        <div class="general-inner-block">
-            <div class="general-inner-block-value">
-                {{stats.active_days}}
-            </div>
-            <div class="general-inner-block-title">
-                活跃天数
-            </div>
-        </div>
-        <div class="general-inner-block">
-            <div class="general-inner-block-value">
-                {{stats.avatar_num}}
-            </div>
-            <div class="general-inner-block-title">
-                已解锁角色
-            </div>
-        </div>
-        <div class="general-inner-block">
-            <div class="general-inner-block-value">
-                {{stats.achievement_num}}
-            </div>
-            <div class="general-inner-block-title">
-                达成成就数
-            </div>
-        </div>
-        <div class="general-inner-block">
-            <div class="general-inner-block-value">
-                {{stats.chest_num}}
-            </div>
-            <div class="general-inner-block-title">
-                战利品开启
-            </div>
-        </div>
-        <div class="general-inner-block">
-            <div class="general-inner-block-value">
-                {{stats.abyss_process}}
-            </div>
-            <div class="general-inner-block-title">
-                忘却之庭
-            </div>
-        </div>
+  </div>
+  <div class="head" style="--bg-image:url({{phone_background_image_url}})">
+    <div class="plugin_info">
+      <div class="logo">
+        <div class="icon"><img src="{{pluResPath}}/card/images/logo.png" alt=""></div>
+        <div class="title">StarRail-Plugin</div>
+      </div>
     </div>
-</div>
-<div class="title">
-    <img src="{{pluResPath}}/common/cont/star.png" alt="SVG image" style="width: 36px">
-    <div>我的角色</div>
-</div>
-<div class="general">
-    <div class="general-inner">
+    <div class="user_info">
+      <div class="avatar"><img src="{{cur_head_icon_url}}" alt=""></div>
+      <div class="info">
+        <div class="line">
+          <div class="nickname">{{nickname}}</div>
+          <div class="level">Lv.{{level}}</div>
+        </div>
+        <div class="line">
+          <div class="server">{{region_name}}</div>
+          <div class="uid">UID{{game_uid}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="account_info">
+      <div class="big_info">
+        <div class="item">
+          <div class="value">{{stats.active_days}}</div>
+          <div class="title">活跃天数</div>
+        </div>
+        <div class="item">
+          <div class="value">{{stats.avatar_num}}</div>
+          <div class="title">已解锁角色</div>
+        </div>
+      </div>
+      <div class="small_info">
+        <div class="item">
+          <div class="value">{{stats.achievement_num}}</div>
+          <div class="title">达成成就数</div>
+        </div>
+        <div class="item">
+          <div class="value">{{stats.chest_num}}</div>
+          <div class="title">战利品开启</div>
+        </div>
+        <div class="item">
+          <div class="value">{{stats.abyss_process}}</div>
+          <div class="title">忘却之庭</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="title">
+      <img src="{{pluResPath}}/common/cont/star.png" alt="SVG image" style="width: 36px">
+      <div>我的角色</div>
+    </div>
+    <div class="general">
+      <div class="general-inner">
         {{each avatar_list avatar}}
         <div class="avatar-box">
-            <div class="avatar rarity{{avatar.rarity}}">
-                <div>
-                    <img class="avatar-img" src="{{avatar.icon}}" />
-                </div>
-                <div class="avatar-inner"></div>
-                <div class="avatar-banner">
-                    等级 {{avatar.level}}
-                </div>
-                <div class="avatar-element" style="border-color: var(--borderColor-{{avatar.element}});">
-                    <img src="{{pluResPath}}/common/element/{{avatar.element}}.png" />
-                </div>
-                {{if avatar.rank != 0}}
-                <div class="avatar-命座">
-                    <span>{{avatar.rank}}</span>
-                </div>
-                {{/if}}
+          <div class="avatar rarity{{avatar.rarity}}">
+            <div>
+              <img class="avatar-img" src="{{avatar.icon}}" />
             </div>
-            <div class="avatar-name">
-                {{avatar.name}}
+            <div class="avatar-inner"></div>
+            <div class="avatar-banner">
+              等级 {{avatar.level}}
             </div>
+            <div class="avatar-element" style="border-color: var(--borderColor-{{avatar.element}});">
+              <img src="{{pluResPath}}/common/element/{{avatar.element}}.png" />
+            </div>
+            {{if avatar.rank != 0}}
+            <div class="avatar-const">
+              <span>{{avatar.rank}}</span>
+            </div>
+            {{/if}}
+          </div>
+          <div class="avatar-name">
+            {{avatar.name}}
+          </div>
         </div>
         {{/each}}
+      </div>
     </div>
+  </div>
 </div>
+<!--
 <div class="logo">
     {{@sys.createdby}}
-</div>
+</div> -->
 {{/block}}

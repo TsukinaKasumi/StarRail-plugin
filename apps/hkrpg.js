@@ -7,7 +7,7 @@ import setting from '../utils/setting.js'
 import { getPaylogUrl, getPowerUrl } from '../utils/mysNoCkNeededUrl.js'
 import { getAuthKey } from '../utils/authkey.js'
 import _ from 'lodash'
-import { statisticOnlinePeriods,statisticsOnlineDateGeneral,rulePrefix,getCk } from '../utils/common.js'
+import { statisticOnlinePeriods, statisticsOnlineDateGeneral, rulePrefix, getCk } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 
 export class Hkrpg extends plugin {
@@ -86,7 +86,6 @@ export class Hkrpg extends plugin {
           userData = (await api.getData('srUser'))?.data?.list?.[0]
         }
         result = Object.assign(cardData.data, userData)
-        result.level = result.level + '级'
       } else {
         result.game_uid = uid
         result.nickname = '开拓者'
