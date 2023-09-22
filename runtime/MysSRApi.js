@@ -53,11 +53,19 @@ export default class MysSRApi extends MysApi {
       },
       srChallenge: {
         url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
-        query: `isPrev=true&need_all=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
+        query: `isPrev=&need_all=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
+      },
+      srChallengeSimple: {
+        url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
+        query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
       },
       srRogue: {
         url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
         query: `need_detail=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
+      },
+      srRogueLocust: {
+        url: `${hostRecord}game_record/app/hkrpg/api/rogue_locust`,
+        query: `need_detail=true&role_id=${this.uid}&server=${this.server}`
       },
       srPayAuthKey: {
         url: `${host}binding/api/genAuthKey`,

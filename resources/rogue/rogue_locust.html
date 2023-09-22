@@ -1,0 +1,271 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}/rogue/rogue_locus.css">
+{{/block}}
+
+{{block 'main'}}
+<div class="header">
+    <div class="header-title">
+        模拟宇宙寰宇蝗灾数据总览
+    </div>
+    <div class="header-uid">
+      uid {{uid}} {{role.nickname}} {{role.level}}级
+    </div>
+    <div class="header-content">
+        <div class="header-content-block">
+            <div class="header-content-block-value">
+              {{basic.cnt.narrow}}
+            </div>
+            <div class="header-content-block-title">
+                行者之道
+            </div>
+        </div>
+        <div class="header-content-block">
+            <div class="header-content-block-value">
+              {{basic.cnt.miracle}}
+            </div>
+            <div class="header-content-block-title">
+                已解锁奇物
+            </div>
+        </div>
+        <div class="header-content-block">
+            <div class="header-content-block-value">
+              {{basic.cnt.event}}
+            </div>
+            <div class="header-content-block-title">
+                已解锁事件
+            </div>
+        </div>
+    </div>
+</div>
+<div class="radar">
+  <div class="radar-block">
+    <div>
+      <img src="{{pluResPath}}/rogue/locust/radar.png" class="radar-bg"/>
+    </div>
+    <div class="radar-icon" style="top: 133px; left: 260px">
+      <div style="margin-top: -40px;margin-bottom: 8px">
+        <div style="text-align: center">丰饶</div>
+        <div class="radar-num">{{basic.destiny[3].level}}</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/丰饶.webp"/>
+    </div>
+    <div class="radar-icon" style="top: 317px; left: 183px">
+      <div style="margin-top: -40px;margin-bottom: 8px;display: flex;position: absolute;left: -52px;top: 65px">
+        <div style="text-align: center">存护</div>
+        <div class="radar-num">{{basic.destiny[0].level}}</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/存护.webp"/>
+    </div>
+    <div class="radar-icon" style="top: 168px; left: 335px">
+      <div style="margin-top: -40px;margin-bottom: 8px;display: flex;position: absolute;left: 25px;top: 20px;width: 50px;">
+        <div class="radar-num">{{basic.destiny[4].level}}</div>
+        <div style="text-align: center">巡猎</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/巡猎.webp"/>
+    </div>
+    <div class="radar-icon" style="top: 317px; left: 335px">
+      <div style="margin-top: -40px;margin-bottom: 8px;display: flex;position: absolute;left: 32px;top: 65px;width: 50px;">
+        <div class="radar-num">{{basic.destiny[6].level}}</div>
+        <div style="text-align: center">欢愉</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/欢愉.webp"/>
+    </div>
+    <div class="radar-icon" style="top: 240px; left: 370px">
+      <div style="margin-top: -40px;margin-bottom: 8px;display: flex;position: absolute;left: 34px;top: 45px;width: 50px;">
+        <div class="radar-num">{{basic.destiny[5].level}}</div>
+        <div style="text-align: center">毁灭</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/毁灭.webp"/>
+    </div>
+    <div class="radar-icon" style="top: 168px; left: 183px">
+      <div style="margin-top: -40px;margin-bottom: 8px;display: flex;position: absolute;left: -50px;top: 20px;width: 50px;">
+        <div style="text-align: center">虚无</div>
+        <div class="radar-num">{{basic.destiny[2].level}}</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/虚无.webp"/>
+    </div>
+    <div class="radar-icon" style="top: 240px; left: 150px">
+      <div style="margin-top: -40px;margin-bottom: 8px;display: flex;position: absolute;left: -56px;top: 45px;width: 50px;">
+        <div style="text-align: center">记忆</div>
+        <div class="radar-num">{{basic.destiny[1].level}}</div>
+      </div>
+      <img src="{{pluResPath}}/common/rogue/记忆.webp"/>
+    </div>
+  </div>
+
+</div>
+<div class="records-header">
+    <div class="circle-1"></div>
+    <div class="circle-2"></div>
+    <div class="records-header-title">
+        仅展示最近3次的通关数据
+    </div>
+</div>
+{{each detail.records record}}
+<div class="record">
+    <div class="record-world">
+        <img class="record-world-icon" src="{{pluResPath}}/rogue/locust/locust.png"/>
+        <div>模拟宇宙：寰宇蝗灾 难度{{record.difficulty}}</div>
+<!--            <div class="high-score">-->
+<!--                <div class="high-score-title">当前最高积分</div>-->
+<!--                <div class="high-score-value">3200</div>-->
+<!--            </div>-->
+    </div>
+    <div class="record-time">
+        挑战时间： {{record.finish_time.year}}.{{record.finish_time.month}}.{{record.finish_time.day}} {{record.finish_time.hour}}:{{record.finish_time.minute}}:{{record.finish_time.second}}
+    </div>
+    <div class="divider"></div>
+    <div class="record-characters">
+        <div class="record-characters-title">
+            通关出战角色
+        </div>
+        <div class="record-characters-list">
+          {{each record.final_lineup avatar}}
+          <div class="avatar-box">
+            <div class="avatar rarity{{avatar.rarity}}">
+              <div>
+                <img class="avatar-img" src="{{avatar.icon}}" />
+              </div>
+              <div class="avatar-inner"></div>
+              <div class="avatar-banner">
+                等级 {{avatar.level}}
+              </div>
+              <div class="avatar-element" style="border-color: var(--borderColor-{{avatar.element}});">
+                <img src="{{pluResPath}}/common/element/{{avatar.element}}.png" />
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+    </div>
+    <div class="record-wish">
+      {{each record.base_type_list base}}
+      <div class="record-wish-icon">
+        <img src="{{pluResPath}}/common/rogue/{{base.name.slice(1,3)}}.webp"/>
+      </div>
+      <div class="circle-3">
+        {{base.cnt}}
+      </div>
+      {{/each}}
+    </div>
+    {{if record.fury.type === 0}}
+    <div class="record-clock">
+      位面紊乱倒计时：{{record.fury.point}}
+    </div>
+    {{else}}
+    <div class="record-clock">
+      扰动等级：{{record.fury.point}}
+    </div>
+    {{/if}}
+    <div class="record-weakness">
+      <div class="record-weakness-header">
+        <span>弱化效果</span>
+      </div>
+      {{each record.worm_weak weak}}
+      <div class="record-weakness-content">
+        <div class="record-weakness-content-item">
+          {{weak}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  <div class="record-weakness">
+    <div class="record-weakness-header">
+      <span>已缓存角色</span>
+    </div>
+    <div class="record-weakness-content">
+      {{each record.cached_avatars cache}}
+      <div class="record-cache-role">
+        <img src="{{cache.icon}}"/>
+        <div style="text-align: center">
+          等级{{cache.level}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="record-wish-detail">
+      <div class="record-weakness-header">
+          <span>获得祝福</span>
+      </div>
+    {{each record.buffs buff}}
+    <div class="record-weakness-content" style="flex-wrap: unset">
+      <div class="record-wish-detail-content-left">
+        <div class="record-wish-icon">
+          <img src="{{pluResPath}}/common/rogue/{{buff.base_type.name.slice(1,3)}}.webp"/>
+        </div>
+        <div class="record-wish-detail-content-left-title">
+          {{buff.base_type.name}} ：
+        </div>
+      </div>
+      <div class="record-wish-detail-content-right">
+        {{each buff.items item}}
+        <div class="record-wish-detail-content-items-{{item.rank}}">
+          <div class="record-wish-detail-content-items-content"> {{item.name}} </div>
+          {{if item.is_evoluted }}
+          <div class="record-wish-detail-content-items-content-badge">
+            已升级
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="record-wish-detail">
+      <div class="record-weakness-header">
+          <span>获得奇物</span>
+      </div>
+    <div class="record-weakness-content">
+      {{each record.miracles miracle}}
+      <div class="qiwu">
+        <img src="{{miracle.icon}}"/>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="record-wish-detail">
+    <div class="record-weakness-header">
+      <span>通过区域类型</span>
+    </div>
+    <div class="record-weakness-content">
+      {{each record.blocks bb}}
+      <div class="record-pass-area-block">
+        <img src="{{pluResPath}}/rogue/locust/{{bb.name}}.png"/>
+        {{bb.name}} x{{bb.num}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{/each}}
+<div class="logo">
+  {{@sys.createdby}}
+</div>
+<style>
+  .header {
+    background-image: url('{{pluResPath}}/rogue/bg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    /*width: 784px;*/
+    height: 220px;
+  }
+  .container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("{{pluResPath}}/rogue/locust/bg_fanyu.png") no-repeat;
+    /*filter: hue-rotate(280deg);*/
+    mix-blend-mode: screen;
+    background-color: #100A0E;
+    opacity: 0.9;
+    z-index: -1;
+  }
+</style>
+{{/block}}

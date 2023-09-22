@@ -188,19 +188,19 @@
                 <div class="icon">
                     <img src="{{iconPath}}/IconMaxHP.png">
                 </div>
-                <div class="text">生命值：-</div>
+                <div class="text">生命值：{{MathPro.floor10(equipment.hp)}}</div>
             </div>
             <div class="item">
                 <div class="icon">
                     <img src="{{iconPath}}/IconAttack.png">
                 </div>
-                <div class="text">攻击力：-</div>
+                <div class="text">攻击力：{{MathPro.floor10(equipment.atk)}}</div>
             </div>
             <div class="item">
                 <div class="icon">
                     <img src="{{iconPath}}/IconDefence.png">
                 </div>
-                <div class="text">防御力：-</div>
+                <div class="text">防御力：{{MathPro.floor10(equipment.def)}}</div>
             </div>
         </div>
 

@@ -20807,6 +20807,13 @@
     ],
     "character_material": "guide/Nwflower/character_material/1109.png"
   },
+  "1110": {
+    "id": "1110",
+    "name": "玲可",
+    "rarity": "4",
+    "element": "量子",
+    "path": "丰饶"
+  },
   "1111": {
     "id": "1111",
     "name": "卢卡",
@@ -26600,6 +26607,13 @@
     "rarity": "4",
     "element": "虚数",
     "path": "同谐"
+  },
+  "1208": {
+    "id": "1208",
+    "name": "符玄",
+    "rarity": "5",
+    "element": "量子",
+    "path": "存护"
   },
   "1209": {
     "id": "1209",
