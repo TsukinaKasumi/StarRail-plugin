@@ -18,7 +18,7 @@ export class Challenge extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}(上期|本期)?(深渊|忘却之庭)$`,
+          reg: `^${rulePrefix}(上期|本期)?(深渊|忘却之庭|混沌)$`,
           fnc: 'challenge'
         }
       ]
