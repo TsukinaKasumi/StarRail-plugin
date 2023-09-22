@@ -133,4 +133,8 @@ export class Challenge extends plugin {
       minute
     }).format(format)
   }
+
+  get app2config () {
+    return setting.getConfig('cookieHelp')
+  }
 }
