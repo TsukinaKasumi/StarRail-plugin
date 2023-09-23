@@ -14,3 +14,6 @@ temp/*
 !temp/strategy/
 temp/strategy/*
 !temp/strategy/[456]/
+
+# 不忽略
+!resources/panel/data
