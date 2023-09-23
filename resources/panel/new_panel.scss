@@ -453,3 +453,17 @@ ul {
     margin-top: 15px;
     font-size: 16px;
 }
+
+.skill_tree {
+  width: 100%;
+  margin-top: 15px;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid $color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #skillTreeCanvas {
+    width: 80%;
+  }
+}

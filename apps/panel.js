@@ -16,6 +16,19 @@ import moment from 'moment'
 const relicsPathData = readJson('resources/panel/data/relics.json')
 // 引入角色数据
 const charData = readJson('resources/panel/data/character.json')
+// 引入技能树位置
+const skillTreeData = readJson('resources/panel/data/skillTree.json')
+// 技能树背景图
+const skillTreeImgBaseURL = 'panel/resources/skill_tree/'
+const skillTreeImg = {
+  存护: `${skillTreeImgBaseURL}Knight.svg`,
+  智识: `${skillTreeImgBaseURL}Mage.svg`,
+  丰饶: `${skillTreeImgBaseURL}Priest.svg`,
+  巡猎: `${skillTreeImgBaseURL}Rogue.svg`,
+  毁灭: `${skillTreeImgBaseURL}Warrior.svg`,
+  同谐: `${skillTreeImgBaseURL}Shaman.svg`,
+  虚无: `${skillTreeImgBaseURL}Warlock.svg`
+}
 
 export class Panel extends plugin {
   constructor (e) {
@@ -87,6 +100,9 @@ export class Panel extends plugin {
         data.relics[i].path = relicsPathData[item.id]?.icon
       })
       // 行迹
+      data.skillTreeBkg = skillTreeImg[data.charpath]
+      data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
+
       data.behaviorList = this.handleBehaviorList(data.behaviorList)
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
@@ -142,6 +158,18 @@ export class Panel extends plugin {
     })
     // 去除秘技
     return _data.filter(i => i.type != '秘技')
+  }
+
+  /** 处理技能树 */
+  handleSkillTree (data, charpath) {
+    let _data = _.cloneDeep(data)
+    _data = _data.map(item => {
+      return {
+        ...item,
+        position: skillTreeData[charpath][item.anchor]
+      }
+    })
+    return _data
   }
 
   /** 获取面板图 */
@@ -321,7 +349,7 @@ export class Panel extends plugin {
           res = await fetch(api + uid, {
             headers: {
               'x-request-sr': getSign(uid),
-              'library': 'hewang1an'
+              library: 'hewang1an'
             }
           })
           cardData = await res.json()
@@ -517,6 +545,7 @@ async function renderCard (e, data) {
     ...data
   }
   await runtimeRender(e, '/panel/new_card.html', renderData, {
+    escape: false,
     scale: 1.6
   })
 }
