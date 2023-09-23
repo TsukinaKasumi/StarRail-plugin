@@ -259,7 +259,204 @@
     </div>
     {{/each}}
 </div>
+<div class="skill_tree">
+  <canvas id="skillTreeCanvas" width="1000" height="1000"></canvas>
+</div>
 <div class="copyright">
     {{@sys.createdby}}
 </div>
+<script>
+let skillTree = {{@(JSON.stringify( skillTree || [] )) }};
+const skillTreeBkg = "{{ pluResPath }}{{ skillTreeBkg }}";
+const lockIcon = "{{ pluResPath }}panel/resources/skill_tree/lock.png";
+const config = {
+  imgBaseURL: "https://avocado.wiki"
+}
+const type1 = [
+  "Point09",
+  "Point10",
+  "Point11",
+  "Point12",
+  "Point13",
+  "Point14",
+  "Point15",
+  "Point16",
+  "Point17",
+  "Point18",
+];
+const type2 = [ "Point01", "Point02", "Point03", "Point04", "Point05" ];
+const type3 = [ "Point06", "Point07", "Point08" ];
+const dom = document.querySelector('.skill_tree');
+  const draw = async () => {
+    const canvas = document.querySelector( "#skillTreeCanvas" );
+    if ( !canvas ) return;
+    const img = new Image();
+    // 需要修改，背景图
+    img.src = skillTreeBkg;
+    img.onload = async () => {
+      canvas.width = img.width * 2;
+      canvas.height = img.height * 2;
+      const ctx = canvas.getContext( "2d" );
+      if ( !ctx ) return;
+      ctx.drawImage( img, 0, 0, img.width * 2, img.height * 2 );
+      const active = skillTree?.map( ( skill ) => {
+        if ( skill?.level ) return skill.id.toString();
+      } );
+      const promiseArr = [];
+      skillTree.forEach( async ( skill ) => {
+        const promiseTemp = new Promise( ( resolve ) => {
+          const position = skill.position;
+          const x = position[ 0 ];
+          const y = position[ 1 ];
+          let [ width, height ] = [ 0, 0 ];
+          let imageColor = "rgb(0,0,0)";
+          let lock = false;
+          let level = null;
+          let max_level = null;
+          const icon = new Image();
+          icon.setAttribute( "crossOrigin", "anonymous" );
+          if ( !active?.includes( skill.id.toString() ) ) {
+            lock = true;
+          }
+          if ( skill?.level ) level = skill.level;
+          if ( !skill ) return;
+          icon.src = `${ config.imgBaseURL }${ skill.icon }`;
+          if ( type1.includes( skill.anchor ) ) {
+            level = null;
+            imageColor = "rgb(0,0,0)";
+            width = height = 102;
+          } else if ( type2.includes( skill.anchor ) ) {
+            imageColor = "rgb(254, 239, 204)";
+            width = height = 138;
+            max_level = skill?.max_level || null;
+          } else if ( type3.includes( skill.anchor ) ) {
+            level = null;
+            imageColor = "rgb(0,0,0)";
+            width = height = 144;
+          }
+          icon.onload = () => {
+            // ctx.drawImage( icon, x + 5, y + 5, width - 10, height - 10 );
+            applyImageColor(
+              icon,
+              imageColor,
+              x + 5,
+              y + 5,
+              width - 10,
+              height - 10
+            );
+
+            resolve( true );
+          };
+          icon.onerror = () => {
+            ctx.fillStyle = lock ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0)";
+            ctx.beginPath();
+            ctx.arc( x + width / 2, y + height / 2, width / 2, 0, 2 * Math.PI );
+            ctx.fill();
+            // 在相应位置写上文字加载失败
+            ctx.strokeStyle = "rgb(255,255,255)";
+            ctx.font = "30px SR";
+            ctx.lineWidth = 4;
+            ctx.textAlign = "center";
+            ctx.strokeText(
+              "加载失败",
+              x + width / 2,
+              y + height / 2,
+              width
+            );
+            ctx.fillStyle = "rgb(0,0,0)";
+            ctx.fillText(
+              "加载失败",
+              x + width / 2,
+              y + height / 2,
+              width
+            );
+            resolve( false );
+          };
+          if ( level ) {
+            ctx.strokeStyle = "rgb(0,0,0)";
+            ctx.font = "40px SR";
+            ctx.lineWidth = 10;
+            ctx.textAlign = "center";
+            ctx.strokeText(
+              `${ level.toString() }${ max_level ? `/${ max_level }` : "" }`,
+              x + width / 2,
+              y + height + 40,
+              width
+            );
+            ctx.fillStyle = "rgb(255,255,255)";
+            // 文字居中
+            ctx.fillText(
+              `${ level.toString() }${ max_level ? `/${ max_level }` : "" }`,
+              x + width / 2,
+              y + height + 40,
+              width
+            );
+          }
+          if ( lock ) {
+            // 填充圆形，不透明度为0.33，黑色
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
+            ctx.beginPath();
+            ctx.arc( x + width / 2, y + height / 2, width / 2, 0, 2 * Math.PI );
+            ctx.fill();
+            // 绘图锁
+            ctx.fillStyle = "rgba(0,0,0,0.5)";
+            ctx.beginPath();
+            ctx.arc( x + width - 10, y + 10, 18, 0, 2 * Math.PI );
+            ctx.fill();
+            const lockImg = new Image();
+            lockImg.src = lockIcon;
+            lockImg.onload = () => {
+              applyImageColor(
+                lockImg,
+                "rgb(255,255,255)",
+                x + width - 20,
+                y,
+                20,
+                20
+              );
+            };
+          }
+        } );
+
+        promiseArr.push( promiseTemp );
+      } );
+
+      await Promise.all( promiseArr );
+    };
+  };
+  const applyImageColor = (
+    img,
+    color,
+    x,
+    y,
+    width,
+    height
+  ) => {
+    const tempCanvas = document.createElement( "canvas" );
+    const tempCtx = tempCanvas.getContext( "2d" );
+    if ( !tempCtx ) return;
+    tempCanvas.width = img.width;
+    tempCanvas.height = img.height;
+
+    // 绘制原始图像
+    tempCtx.drawImage( img, 0, 0 );
+
+    // 修改图像颜色
+    tempCtx.globalCompositeOperation = "source-in";
+    tempCtx.fillStyle = color;
+    tempCtx.fillRect( 0, 0, tempCanvas.width, tempCanvas.height );
+
+    // 将修改后的图像绘制回画布
+    const canvas = document.querySelector( "#skillTreeCanvas" );
+    if ( canvas ) {
+      const ctx = canvas.getContext( "2d" );
+      if ( ctx ) {
+        ctx.drawImage( tempCanvas, x, y, width, height );
+        // 销毁临时画布
+        tempCanvas.remove();
+      }
+    }
+  };
+  draw();
+</script>
 {{/block}}

@@ -30,8 +30,7 @@ ul {
 .header .left img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .header .right {
   flex: 1;
@@ -375,4 +374,20 @@ ul {
 .copyright {
   margin-top: 15px;
   font-size: 16px;
-}/*# sourceMappingURL=new_panel.css.map */
+}
+
+.skill_tree {
+  width: 100%;
+  margin-top: 15px;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #fce097;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.skill_tree #skillTreeCanvas {
+  width: 80%;
+}
+
+/*# sourceMappingURL=new_panel.css.map */
