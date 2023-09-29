@@ -262,6 +262,22 @@
 <div class="skill_tree">
   <canvas id="skillTreeCanvas" width="1000" height="1000"></canvas>
 </div>
+{{if damages}}
+<div class="damages">
+	<div class="damages_item">
+		<div class="name">动作</div>
+		<div class="value">暴击伤害</div>
+		<div class="value">期望伤害</div>
+	</div>
+	{{each damages damage i}}
+	<div class="damages_item">
+		<div class="name">{{damage.name}}</div>
+		<div class="value">{{MathPro.floor10(damage.damage,0)}}</div>
+		<div class="value">{{MathPro.floor10(damage.damage_qw,0)}}</div>
+	</div>
+	{{/each}}
+</div>
+{{/if}}
 <div class="copyright">
     {{@sys.createdby}}
 </div>
