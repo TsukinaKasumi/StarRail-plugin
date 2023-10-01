@@ -6,17 +6,13 @@ import runtimeRender from '../common/runtimeRender.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import panelApi from '../runtime/PanelApi.js'
 import alias from '../utils/alias.js'
-import weapon_ability from './damage/weapon.js'
-import avatar_ability from './damage/avatar.js'
-import relice_ability from './damage/relice.js'
 import { getSign } from '../utils/auth.js'
 import { getCk, rulePrefix } from '../utils/common.js'
 import { pluginResources, pluginRoot } from '../utils/path.js'
 import setting from '../utils/setting.js'
 import moment from 'moment'
+import { damage as damageCalculator } from '../utils/damage/main.js'
 
-// 引入技能数值
-const skilldictData = readJson('resources/panel/data/SkillData.json')
 // 引入遗器地址数据
 const relicsPathData = readJson('resources/panel/data/relics.json')
 // 引入角色数据
@@ -81,7 +77,7 @@ export class Panel extends plugin {
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.plmb(e)
     if (charName === '更新' || matchResult[5]) return false
-    if (charName === '切换' || charName === '设置') return await this.changeApi(e)
+    if (charName === '切换' || charName === '设置') { return await this.changeApi(e) }
     if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
     if (!uid) {
@@ -107,26 +103,22 @@ export class Panel extends plugin {
       // 行迹
       data.skillTreeBkg = skillTreeImg[data.charpath]
       data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
-	  data.skilllist = _.cloneDeep(data.behaviorList)
+      data.skilllist = _.cloneDeep(data.behaviorList)
       data.behaviorList = this.handleBehaviorList(data.behaviorList)
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
-      
-	  // 伤害
-	  if (String(data.avatarId) == '1102' && String(data.equipment.id) == '23001') {
-		data.damages = this.getdamages(data)
-	  }
-	  logger.mark('damages：', data.damages)
+
+      // 伤害
+      let damage = damageCalculator(data)
+      if (damage) {
+        data.damages = damage.damage
+        logger.mark('damages：', data.damages.damage)
+      }
       logger.debug(`${e.logFnc} 面板图:`, data.charImage)
-      let msgId = await runtimeRender(
-        e,
-        '/panel/new_panel.html',
-        data,
-        {
-          retType: 'msgId',
-          scale: 1.6
-        }
-      )
+      let msgId = await runtimeRender(e, '/panel/new_panel.html', data, {
+        retType: 'msgId',
+        scale: 1.6
+      })
       msgId &&
         redis.setEx(
           `STAR_RAILWAY:panelOrigImg:${msgId.message_id}`,
@@ -138,293 +130,7 @@ export class Panel extends plugin {
       return await e.reply(error.message)
     }
   }
-  
-  /** 处理伤害技能 */
-  getdamages (data) {
-	var damage_list = []
-	if (String(data.avatarId) == '1102') {
-	  var skills = ['Normal','BPSkill','Ultra']
-	}
-	for (let i = 0; i < skills.length; i++){
-	  let skill_list = this.getdamages_num(skills[i], data)
-	  damage_list.push(skill_list)
-	}
-	return damage_list
-  }
-  
-  
-  /** 处理伤害 */
-  getdamages_num(skill_type, data) {
-	  let base_attr = this.get_base_attr(data.properties)
-	  let attribute_bonus = this.get_attribute_bonus(data)
-	  logger.mark('base_attr：', base_attr)
-	  logger.mark('attribute_bonus：', attribute_bonus)
-	  /** 天赋星魂区 */
-	  logger.mark('检查战斗生效的天赋星魂')
-	  attribute_bonus = avatar_ability(data, base_attr, attribute_bonus)
-	  /** 技能区 */
-	  let skill_info = skilldictData[data.avatarId]['skillList'][skill_type]
-	  logger.mark('技能类型：', skill_info[1])
-	  if(skill_type == 'Normal'){
-		  var skill_multiplier = getskilllevelnum(data.avatarId, data.behaviorList, 'basic_atk', skill_info[3])
-	  }else if(skill_type == 'BPSkill'){
-		  var skill_multiplier = getskilllevelnum(data.avatarId, data.behaviorList, 'skill', skill_info[3])
-	  }else if(skill_type == 'Ultra'){
-		  var skill_multiplier = getskilllevelnum(data.avatarId, data.behaviorList, 'ultimate', skill_info[3])
-	  }else if(skill_type == 'Talent'){
-		  var skill_multiplier = getskilllevelnum(data.avatarId, data.behaviorList, 'talent', skill_info[3])
-	  }
-	  logger.mark('技能区：', skill_multiplier)
-	  
-	  /** 战斗buff区 */
-      logger.mark('检查武器战斗生效的buff')
-      var Ultra_Use = skilldictData[data.avatarId]['Ultra_Use']
-      attribute_bonus = weapon_ability(data.equipment, Ultra_Use, base_attr, attribute_bonus)
-	  
-	  logger.mark('检查遗器战斗生效的buff')
-	  let relic_sets = data.relic_sets
-	  if(relic_sets.length > 0){
-		  for (let i = 0; i < relic_sets.length; i++){
-			  attribute_bonus = relice_ability(relic_sets[i], base_attr, attribute_bonus)
-		  }
-	  }
-	  logger.mark(attribute_bonus)
-	  
-	  /** 属性计算 */
-	  let merged_attr = this.merge_attribute(base_attr, attribute_bonus)
-	  logger.mark('merged_attr：', merged_attr)
-	  let skill_list = {}
-	  if(skill_info[0] == 'attack'){
-		var attack = merged_attr['attack']
-		logger.mark('攻击力: ', attack)
-		/** 模拟 同属性弱点 同等级 的怪物 */
-		/** 韧性条减伤 */
-		var enemy_damage_reduction = 0.1
-		var damage_reduction = 1 - enemy_damage_reduction
-		logger.mark('韧性区: ', damage_reduction)
-		/** 抗性区 */
-		var enemy_status_resistance = 0.0
-		var merged_attrkey = Object.keys(merged_attr)
-		for (let i = 0; i < merged_attrkey.length; i++){
-			var attr = merged_attrkey[i]
-			if (attr.search("ResistancePenetration") != -1){
-				/** 检查是否有某一属性的抗性穿透 */
-				var attr_name = attr.replace('ResistancePenetration', '')
-				if (attr_name.search(data.damage_type) != -1 || attr_name.search("AllDamage") != -1){
-					logger.mark(attr_name + '属性' + merged_attr[attr] + '穿透加成')
-					enemy_status_resistance = enemy_status_resistance + merged_attr[attr]
-				}
-				/** 检查是否有某一技能属性的抗性穿透 */
-				if (attr_name.search('_') != -1){
-					var skill_name = attr_name.split('_')[0]
-					var skillattr_name = attr_name.split('_')[1]
-					if((skill_name.search(skill_type) != -1 || skill_name.search(skill_info[3]) != -1) && (skillattr_name.search(data.damage_type) != -1 || skillattr_name.search('AllDamage') != -1)){
-						enemy_status_resistance = enemy_status_resistance + merged_attr[attr]
-						logger.mark(skill_name + '对' + skillattr_name + '属性有' + merged_attr[attr] + '穿透加成')
-					}
-				}
-			}
-		}
-		var resistance_area = 1.0 - (0 - enemy_status_resistance)
-		logger.mark('抗性区: ', resistance_area)
-		
-		/** 防御区 */
-		/** 检查是否有 ignore_defence */
-		logger.mark('检查是否有 ignore_defence')
-		var ignore_defence = 1.0
-		if(merged_attr['ignore_defence']){
-			ignore_defence = 1 - merged_attr['ignore_defence']
-		}
-		logger.mark('ignore_defence: ', ignore_defence)
-		var enemy_defence = (data.level * 10 + 200) * ignore_defence
-		var defence_multiplier = (data.level * 10 + 200) / (data.level * 10 + 200 + enemy_defence)
-		logger.mark('防御区: ', defence_multiplier)
-		
-		/** 增伤区 */
-		logger.mark('检查是否有对某一个技能的伤害加成')
-		var injury_area = 0.0
-		var element_area = 0.0
-		for (let i = 0; i < merged_attrkey.length; i++){
-			var attr = merged_attrkey[i]
-			/** 检查是否有对某一个技能的伤害加成 */
-			if (attr.search("DmgAdd") != -1){
-				var attr_name = attr.split('DmgAdd')[0]
-				if (attr_name.search(skill_type) != -1 || attr_name.search(skill_info[3]) != -1){
-					logger.mark(attr + '对' + skill_type + '有' + merged_attr[attr] + '伤害加成')
-					injury_area = injury_area + merged_attr[attr]
-				}
-			}
-			/** 检查有无符合属性的伤害加成 */
-			if (attr.search("AddedRatio") != -1){
-				var attr_name = attr.split('AddedRatio')[0]
-				if (attr_name.search(data.damage_type) != -1 || attr_name.search("AllDamage") != -1){
-					logger.mark(attr + '对' + data.damage_type + '有' + merged_attr[attr] + '伤害加成')
-					injury_area = injury_area + merged_attr[attr]
-				}
-			}
-		}
-		injury_area = injury_area + 1
-		logger.mark('增伤区: ', injury_area)
-		
-		/** 易伤区 */
-		logger.mark('检查是否有易伤加成')
-		var damage_ratio = this.get_let_value(merged_attr, 'DmgRatio')
-		/** 检查是否有对特定技能的易伤加成 */
-		for (let i = 0; i < merged_attrkey.length; i++){
-			var attr = merged_attrkey[i]
-			if (attr.search("_DmgRatio") != -1){
-				var attr_name = attr.split('_')[0]
-				if (attr_name.search(skill_type) != -1 || attr_name.search(skill_info[3]) != -1){
-					logger.mark(attr + '对' + skill_type + '有' + merged_attr[attr] + '易伤加成')
-					damage_ratio = damage_ratio + merged_attr[attr]
-				}
-			}
-		}
-		damage_ratio = damage_ratio + 1
-		logger.info('易伤: ', damage_ratio)
-		
-		/** 爆伤区 */
-		if (skill_type == 'DOT'){
-			var critical_damage_base = 0.0
-		}
-		else{
-			logger.mark('检查是否有爆伤加成')
-			var critical_damage_base = this.get_let_value(merged_attr, 'CriticalDamageBase')
-			/** 检查是否有对特定技能的爆伤加成 */
-			for (let i = 0; i < merged_attrkey.length; i++){
-				var attr = merged_attrkey[i]
-				if (attr.search("_CriticalDamageBase") != -1){
-					var skill_name = attr.split('_')[0]
-					if (skill_name.search(skill_type) != -1 || skill_name.search(skill_info[3]) != -1){
-						logger.mark(attr + '对' + skill_type + '有' + merged_attr[attr] + '爆伤加成')
-						critical_damage_base = critical_damage_base + merged_attr[attr]
-					}
-				}
-			}
-		}
-		var critical_damage = critical_damage_base + 1
-		logger.mark('暴伤: ', critical_damage)
-		
-		/** 暴击区 */
-		logger.mark('检查是否有暴击加成')
-		var critical_chance_base = merged_attr['CriticalChanceBase']
-		/** 检查是否有对特定技能的暴击加成 */
-		for (let i = 0; i < merged_attrkey.length; i++){
-			var attr = merged_attrkey[i]
-			if (attr.search("_CriticalChance") != -1){
-				var skill_name = attr.split('_')[0]
-				if (skill_name.search(skill_type) != -1 || skill_name.search(skill_info[3]) != -1){
-					logger.mark(attr + '对' + skill_type + '有' + merged_attr[attr] + '暴击加成')
-					critical_chance_base = critical_chance_base + merged_attr[attr]
-				}
-			}
-		}
-		critical_chance_base = Math.min(1, critical_chance_base)
-		logger.mark('暴击: ', critical_chance_base)
-		
-		/** 期望伤害 */
-		var qiwang_damage = (critical_chance_base * critical_damage_base) + 1
-		logger.mark('暴击期望: ', qiwang_damage)
-		var damage = attack * skill_multiplier * damage_ratio * injury_area * defence_multiplier * resistance_area * damage_reduction * critical_damage
-		var damage_qw = attack * skill_multiplier * damage_ratio * injury_area * defence_multiplier * resistance_area * damage_reduction * qiwang_damage
-		logger.mark(skill_info[1] + '暴击伤害: ' + damage + ' 期望伤害：' + damage_qw)
-		
-		skill_list['name'] = skill_info[1]
-		skill_list['damage'] = damage
-		skill_list['damage_qw'] = damage_qw
-	  }
-	  return skill_list
-  }
-  
-  merge_attribute(base_attr, attribute_bonus){
-	  let merged_attr = {}
-	  var attr_list = ['attack', 'defence', 'hp', 'speed']
-	  var attribute_bonuskey = Object.keys(attribute_bonus)
-	  for (let i = 0; i < attribute_bonuskey.length; i++){
-		  if(attribute_bonuskey[i].search("Attack") != -1 || attribute_bonuskey[i].search("Defence") != -1 || attribute_bonuskey[i].search("HP") != -1 || attribute_bonuskey[i].search("Speed") != -1){
-			  if(attribute_bonuskey[i].search("Delta") != -1){
-				var attr = attribute_bonuskey[i].replace('Delta', '').toLowerCase()
-				if(attr_list.includes(attr)){
-					var attr_value = this.get_let_value(merged_attr, attr)
-					merged_attr[attr] = attr_value + this.get_let_value(attribute_bonus, attribute_bonuskey[i])
-				}
-			  }else if(attribute_bonuskey[i].search("AddedRatio") != -1){
-				var attr = attribute_bonuskey[i].replace('AddedRatio', '').toLowerCase()
-				if(attr_list.includes(attr)){
-					var attr_value = this.get_let_value(merged_attr, attr)
-					merged_attr[attr] = attr_value + base_attr[attr] * (1 + this.get_let_value(attribute_bonus, attribute_bonuskey[i]))
-				}
-			  }
-		  }else if(attribute_bonuskey[i].search("Base") != -1){
-			  merged_attr[attribute_bonuskey[i]] = this.get_let_value(base_attr, attribute_bonuskey[i]) + this.get_let_value(attribute_bonus, attribute_bonuskey[i])
-		  }else{
-			  merged_attr[attribute_bonuskey[i]] = this.get_let_value(attribute_bonus, attribute_bonuskey[i])
-		  }
-	  }
-	  return merged_attr
-  }
-  
-  /** 处理基础属性 */
-  get_base_attr(properties){
-	  let base_attr = {}
-	  /** 生命 */
-	  base_attr['hp'] = properties.hpBase
-	  /** 攻击 */
-	  base_attr['attack'] = properties.attackBase
-	  /** 防御 */
-	  base_attr['defence'] = properties.defenseBase
-	  /** 暴击 */
-	  base_attr['CriticalChanceBase'] = 0.05
-	  /** 爆伤 */
-	  base_attr['CriticalDamageBase'] = 0.5
-	  /** 速度 */
-	  base_attr['speed'] = properties.speedBase
-	  return base_attr
-  }
-  
-  /** 处理加成属性 */
-  get_attribute_bonus(data){
-	  let attribute_bonus = {}
-	  /** 处理遗器属性 */
-	  let relics = data.relics
-	  relics.forEach((relic, i) => {
-		  /** 处理遗器主属性 */
-		  var properties_name = relic.main_affix_tag
-		  var properties_value = relic.main_affix_value
-		  attribute_bonus[properties_name] = this.get_let_value(attribute_bonus, properties_name) + properties_value
-		  /** 处理遗器副属性 */
-		  let sub_affix = relic.sub_affix_id
-		  sub_affix.forEach((sub_info, j) => {
-			/* logger.mark('sub_info：', sub_info) */
-			var properties_name = sub_info.tag
-			var properties_value = sub_info.value
-			attribute_bonus[properties_name] = this.get_let_value(attribute_bonus, properties_name) + properties_value
-		  })
-	  })
-	  /** 处理技能树属性 */
-	  let skilllist = data.skilllist
-	  skilllist.forEach((behavior, i) => {
-		  /* logger.mark('behavior：', behavior) */
-		  if(charData[data.avatarId]['skill_tree'][behavior.id]['levels']['1']['status_add']['property']){
-			var properties_name = charData[data.avatarId]['skill_tree'][behavior.id]['levels']['1']['status_add']['property']
-			var properties_value = charData[data.avatarId]['skill_tree'][behavior.id]['levels']['1']['status_add']['value']
-			attribute_bonus[properties_name] = this.get_let_value(attribute_bonus, properties_name) + properties_value
-		  }
-	  })
-	  /** 处理武器副属性 */
-	  /** 找不到json位置写在战斗buff里了 */
-	  return attribute_bonus
-  }
-  
-  
-  get_let_value(let_list, name){
-	  if(let_list[name]){
-		  return let_list[name]
-	  }else{
-		  return 0
-	  }
-  }
-  
+
   /** 处理行迹 */
   handleBehaviorList (data) {
     let _data = _.cloneDeep(data)
@@ -560,7 +266,9 @@ export class Panel extends plugin {
     apiList.forEach((item, i) => {
       msg += `${i + 1}：${item.split('/')[2]}\n`
     })
-    msg += `当前API：\n${defaultSelect}：${apiList[defaultSelect - 1].split('/')[2]}`
+    msg += `当前API：\n${defaultSelect}：${
+      apiList[defaultSelect - 1].split('/')[2]
+    }`
     await e.reply(msg)
   }
 
@@ -626,7 +334,9 @@ export class Panel extends plugin {
     let previousData = await readData(uid)
     if ((previousData.length < 1 || isForce) && !forceCache) {
       logger.mark('SR-panelApi强制查询')
-      await this.e.reply(`正在获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`)
+      await this.e.reply(
+        `正在获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`
+      )
       try {
         logger.mark('SR-panelApi开始查询', uid)
         let time = await redis.get(timeKey)
@@ -653,7 +363,7 @@ export class Panel extends plugin {
           logger.error(error)
           throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         }
-        if (!res) throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
+        if (!res) { throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`) }
         // 设置查询时间
         await redis.setEx(timeKey, 360 * 60, Date.now().toString())
         if ('detail' in cardData) throw Error(cardData.detail)
@@ -661,7 +371,9 @@ export class Panel extends plugin {
           throw Error(`uid:${uid}未查询到任何数据`)
         }
         if (!cardData.playerDetailInfo.isDisplayAvatarList) {
-          throw Error(`uid:${uid}更新面板失败\n可能是角色展柜未开启或者该用户不存在`)
+          throw Error(
+            `uid:${uid}更新面板失败\n可能是角色展柜未开启或者该用户不存在`
+          )
         }
         const assistRole = cardData.playerDetailInfo.assistAvatar
         const displayRoles = cardData.playerDetailInfo.displayAvatars || []
@@ -699,12 +411,16 @@ export class Panel extends plugin {
     }
     const api = await panelApi()
     const data = await this.getPanelData(uid, false)
-    const lastUpdateTime = data.find(i => i.is_new && i.lastUpdateTime)?.lastUpdateTime
+    const lastUpdateTime = data.find(
+      i => i.is_new && i.lastUpdateTime
+    )?.lastUpdateTime
     let renderData = {
       api: api.split('/')[2],
       uid,
       data,
-      time: moment(lastUpdateTime).format('YYYY-MM-DD HH:mm:ss dddd') ?? '该页数据为缓存数据，非最新数据'
+      time:
+        moment(lastUpdateTime).format('YYYY-MM-DD HH:mm:ss dddd') ??
+        '该页数据为缓存数据，非最新数据'
     }
     // 渲染数据
     await renderCard(e, renderData)
@@ -767,7 +483,7 @@ export class Panel extends plugin {
 async function updateData (oldData, newData) {
   let returnData = oldData
   // logger.mark('SR-updateData', oldData, newData);
-  const handle = (name) => {
+  const handle = name => {
     return name === '{nickname}' || name === '{NICKNAME}' ? '开拓者' : name
   }
   oldData.forEach((oldItem, i) => {
@@ -799,29 +515,16 @@ function saveData (uid, data) {
     fs.mkdirSync(dataDir, { recursive: true })
   }
   try {
-    fs.writeFileSync(`${dataDir}/${uid}.json`, JSON.stringify(data, null, '\t'), 'utf-8')
+    fs.writeFileSync(
+      `${dataDir}/${uid}.json`,
+      JSON.stringify(data, null, '\t'),
+      'utf-8'
+    )
     return true
   } catch (err) {
     logger.error('写入失败：', err)
     return false
   }
-}
-
-/** 处理技能倍率 */
-function getskilllevelnum(avatarId, behaviorList, leveltype, skilltype){
-  if(leveltype == 'basic_atk'){
-	  var skilllevel = behaviorList[0]['level']
-  }else if(leveltype == 'skill'){
-	  var skilllevel = behaviorList[1]['level']
-  }else if(leveltype == 'ultimate'){
-	  var skilllevel = behaviorList[2]['level']
-  }else if(leveltype == 'talent'){
-	  var skilllevel = behaviorList[3]['level']
-  }else{
-	  var skilllevel = 1
-  }
-  logger.mark(leveltype + '技能等级: '+ skilllevel)
-  return skilldictData[avatarId][skilltype][skilllevel - 1]
 }
 
 function readData (uid) {

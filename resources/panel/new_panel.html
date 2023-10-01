@@ -263,19 +263,40 @@
   <canvas id="skillTreeCanvas" width="1000" height="1000"></canvas>
 </div>
 {{if damages}}
-<div class="damages">
-	<div class="damages_item">
-		<div class="name">动作</div>
-		<div class="value">暴击伤害</div>
-		<div class="value">期望伤害</div>
-	</div>
-	{{each damages damage i}}
-	<div class="damages_item">
-		<div class="name">{{damage.name}}</div>
-		<div class="value">{{MathPro.floor10(damage.damage,0)}}</div>
-		<div class="value">{{MathPro.floor10(damage.damage_qw,0)}}</div>
-	</div>
-	{{/each}}
+<div class="damage">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">伤害计算</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td width="30%">动作</td>
+        <td>暴击伤害</td>
+        <td>期望伤害</td>
+      </tr>
+      {{each damages damage i}}
+      <tr>
+        <td>{{damage.title}}</td>
+        <td>{{MathPro.floor10(damage.value.critical,0)}}</td>
+        <td>{{MathPro.floor10(damage.value.expect,0)}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{ else }}
+<div class="damage">
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="3" style="border: none;">
+          该角色未推出伤害计算或者数据过旧不支持计算
+        </th>
+      </tr>
+    </tbody>
+  </table>
 </div>
 {{/if}}
 <div class="copyright">

@@ -390,37 +390,50 @@ ul {
   width: 80%;
 }
 
-.damages {
+.damage {
   width: 100%;
   margin-top: 15px;
-  justify-content: center;
+  max-width: 100%;
+  border: 0.1em solid #fce097;
+  border-radius: 0.5em;
+  overflow: hidden;
+  flex-shrink: 1;
+  box-sizing: border-box;
+  display: flex;
 }
-
-.damages_item {
+.damage table {
+  font-size: 1.2em;
   width: 100%;
-  height: 40px;
-  margin-top: 10px;
-  display: flex;
-  border: 2px solid #fce097;
-  border-radius: 5px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.damage table th,
+.damage table td {
+  padding: 0.5em;
+  border: 0.1em solid #fce097;
   text-align: center;
 }
-
-.damages_item .name{
-  height: 40px;
-  text-align: center;
-  margin-left: 2%;
-  width:35%;
-  line-height: 40px;
-  display: flex;
+.damage table th:nth-child(1),
+.damage table td:nth-child(1) {
+  border-left: none;
 }
-
-.damages_item .value{
-  height: 40px;
-  text-align: center;
-  width:30%;
-  line-height: 40px;
-  display: flex;
+.damage table th:nth-last-child(1),
+.damage table td:nth-last-child(1) {
+  border-right: none;
+}
+.damage table tbody tr:nth-last-child(1) td {
+  border-bottom: none;
+}
+.damage table thead {
+  font-size: 1.1em;
+  background-color: #fce097;
+  color: #000;
+}
+.damage table thead tr:nth-child(1) th {
+  border-top: none;
+}
+.damage table thead tr th {
+  padding: 0.3em;
 }
 
 /*# sourceMappingURL=new_panel.css.map */
