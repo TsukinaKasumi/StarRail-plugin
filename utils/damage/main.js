@@ -7,7 +7,7 @@ export function damage(charinfo) {
         return null;
     if (!('properties' in charinfo.equipment))
         return null;
-    if (!("skillTree" in charinfo))
+    if (!('skillTree' in charinfo))
         return null;
     let skill_info = skilldict[String(charinfo.avatarId)]['skillList'];
     if (!skill_info)
@@ -404,8 +404,11 @@ function get_attribute_bonus(data) {
     });
     let skilllist = data.skillTree;
     skilllist.forEach((behavior, i) => {
-        if (char_dict[data.avatarId].skill_tree[behavior.id].levels['1'].status_add
-            .property) {
+        if (data.avatarId in char_dict &&
+            'skill_tree' in char_dict[data.avatarId] &&
+            behavior.id in char_dict[data.avatarId].skill_tree &&
+            char_dict[data.avatarId].skill_tree[behavior.id].levels['1'].status_add
+                .property) {
             let properties_name = char_dict[data.avatarId].skill_tree[behavior.id].levels['1'].status_add
                 .property;
             let properties_value = char_dict[data.avatarId].skill_tree[behavior.id].levels['1'].status_add
