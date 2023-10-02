@@ -22,7 +22,7 @@ const Avatar = (data, _, attribute_bonus) => {
                 attribute_bonus['SpeedAddedRatio'] =
                     0.5 + get_let_value(attribute_bonus, 'SpeedAddedRatio');
             }
-            let all_damage_added_ratio = getskilllevelnum(String(data.avatarId), data.skillTree, 'talent', 'Talent');
+            let all_damage_added_ratio = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'talent', 'Talent');
             attribute_bonus['AllDamageAddedRatio'] =
                 all_damage_added_ratio +
                     get_let_value(attribute_bonus, 'AllDamageAddedRatio');
@@ -78,12 +78,12 @@ const Avatar = (data, _, attribute_bonus) => {
                     1 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
             }
             let enemy_status_resistance = 0.03 +
-                getskilllevelnum(String(data.avatarId), data.skillTree, 'skill', 'BPSkill_D');
+                getskilllevelnum(String(data.avatarId), data.damageSkillList, 'skill', 'BPSkill_D');
             attribute_bonus['QuantumResistancePenetration'] =
                 enemy_status_resistance +
                     get_let_value(attribute_bonus, 'QuantumResistancePenetration');
-            let ultra_defence = getskilllevelnum(String(data.avatarId), data.skillTree, 'ultimate', 'Ultra_D');
-            let talent_defence = getskilllevelnum(String(data.avatarId), data.skillTree, 'talent', 'Talent');
+            let ultra_defence = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'ultimate', 'Ultra_D');
+            let talent_defence = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'talent', 'Talent');
             let ignore_defence = ultra_defence + talent_defence;
             attribute_bonus['ignore_defence'] =
                 ignore_defence + get_let_value(attribute_bonus, 'ignore_defence');
@@ -116,9 +116,9 @@ const Avatar = (data, _, attribute_bonus) => {
                     0.3 + get_let_value(attribute_bonus, 'CriticalDamageBase');
             }
             attribute_bonus['CriticalChanceBase'] =
-                getskilllevelnum(String(data.avatarId), data.skillTree, 'skill', 'BPSkill_CC') + get_let_value(attribute_bonus, 'CriticalChanceBase');
+                getskilllevelnum(String(data.avatarId), data.damageSkillList, 'skill', 'BPSkill_CC') + get_let_value(attribute_bonus, 'CriticalChanceBase');
             attribute_bonus['HPAddedRatio'] =
-                getskilllevelnum(String(data.avatarId), data.skillTree, 'skill', 'BPSkill_HP') + get_let_value(attribute_bonus, 'HPAddedRatio');
+                getskilllevelnum(String(data.avatarId), data.damageSkillList, 'skill', 'BPSkill_HP') + get_let_value(attribute_bonus, 'HPAddedRatio');
         },
         '1209': () => {
             if (data.rank >= 4) {
@@ -127,8 +127,8 @@ const Avatar = (data, _, attribute_bonus) => {
             }
             attribute_bonus['SpeedAddedRatio'] =
                 0.1 + get_let_value(attribute_bonus, 'SpeedAddedRatio');
-            let critical_damage_base_t = getskilllevelnum(String(data.avatarId), data.skillTree, 'talent', 'Talent_CD');
-            let critical_damage_base_u = getskilllevelnum(String(data.avatarId), data.skillTree, 'ultimate', 'Ultra_CD');
+            let critical_damage_base_t = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'talent', 'Talent_CD');
+            let critical_damage_base_u = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'ultimate', 'Ultra_CD');
             attribute_bonus['CriticalDamageBase'] =
                 critical_damage_base_t +
                     get_let_value(attribute_bonus, 'CriticalDamageBase');
@@ -162,12 +162,12 @@ const Avatar = (data, _, attribute_bonus) => {
             }
             attribute_bonus['SpeedAddedRatio'] =
                 0.1 + get_let_value(attribute_bonus, 'SpeedAddedRatio');
-            let all_damage_added_ratio = getskilllevelnum(String(data.avatarId), data.skillTree, 'skill', 'BPSkill') + 0.1;
+            let all_damage_added_ratio = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'skill', 'BPSkill') + 0.1;
             attribute_bonus['AllDamageAddedRatio'] =
                 get_let_value(attribute_bonus, 'AllDamageAddedRatio') +
                     all_damage_added_ratio * 4;
             attribute_bonus['AttackAddedRatio'] =
-                getskilllevelnum(String(data.avatarId), data.skillTree, 'talent', 'Talent') + get_let_value(attribute_bonus, 'AttackAddedRatio');
+                getskilllevelnum(String(data.avatarId), data.damageSkillList, 'talent', 'Talent') + get_let_value(attribute_bonus, 'AttackAddedRatio');
         },
         '1212': () => {
             if (data.rank >= 1) {
@@ -192,14 +192,14 @@ const Avatar = (data, _, attribute_bonus) => {
             }
             attribute_bonus['UltraDmgAdd'] =
                 0.2 + get_let_value(attribute_bonus, 'UltraDmgAdd');
-            let critical_chance_base = getskilllevelnum(String(data.avatarId), data.skillTree, 'talent', 'Talent_CD');
+            let critical_chance_base = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'talent', 'Talent_CD');
             attribute_bonus['Ultra_CriticalChanceBase'] =
                 get_let_value(attribute_bonus, 'Ultra_CriticalChanceBase') +
                     critical_chance_base;
             attribute_bonus['BPSkill1_CriticalChanceBase'] =
                 get_let_value(attribute_bonus, 'BPSkill1_CriticalChanceBase') +
                     critical_chance_base;
-            let attack_added_ratio = getskilllevelnum(String(data.avatarId), data.skillTree, 'talent', 'Talent_atk');
+            let attack_added_ratio = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'talent', 'Talent_atk');
             attribute_bonus['BPSkill1AttackAddedRatio'] =
                 get_let_value(attribute_bonus, 'BPSkill1AttackAddedRatio') +
                     critical_chance_base;
@@ -219,12 +219,12 @@ const Avatar = (data, _, attribute_bonus) => {
             }
             attribute_bonus['AllDamageAddedRatio'] =
                 0.15 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
-            let critical_damage_base = getskilllevelnum(String(data.avatarId), data.skillTree, 'ultimate', 'Ultra_CD');
+            let critical_damage_base = getskilllevelnum(String(data.avatarId), data.damageSkillList, 'ultimate', 'Ultra_CD');
             attribute_bonus['Talent1_CriticalDamageBase'] =
                 get_let_value(attribute_bonus, 'Talent1_CriticalDamageBase') +
                     critical_damage_base;
             attribute_bonus['TalentDmgAdd'] =
-                getskilllevelnum(String(data.avatarId), data.skillTree, 'skill', 'BPSkill_add') + get_let_value(attribute_bonus, 'TalentDmgAdd');
+                getskilllevelnum(String(data.avatarId), data.damageSkillList, 'skill', 'BPSkill_add') + get_let_value(attribute_bonus, 'TalentDmgAdd');
         },
     };
     String(data.avatarId) in avatarGetter &&

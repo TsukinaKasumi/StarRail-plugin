@@ -103,7 +103,10 @@ export class Panel extends plugin {
       // 行迹
       data.skillTreeBkg = skillTreeImg[data.charpath]
       data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
-      data.skilllist = _.cloneDeep(data.behaviorList)
+      // data.skilllist = _.cloneDeep(data.behaviorList)
+      data.damageSkillList = data.behaviorList.filter(
+        skill => !(skill.level == 0 && skill.max_level == 1)
+      )
       data.behaviorList = this.handleBehaviorList(data.behaviorList)
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
