@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 let SR = {
-  miao: true,
+  miao: false,
   sr: true
 }
 
