@@ -11,7 +11,7 @@
 ### 如果您有需求使用喵喵插件的星铁面板可使用该项目👇
 
 [同时使用喵喵星铁面板.js](https://gitee.com/Zyy955/Yunzai-Bot-plugin/blob/main/StarRail.js) from [@Zyy955](https://gitee.com/Zyy955)【已失效】  
-可使用 ** #【喵喵|星铁】插件面板【开启|关闭】 ** 命令
+可使用 #【喵喵|星铁】插件面板【开启|关闭】 命令
 
 ### 交流群
 
