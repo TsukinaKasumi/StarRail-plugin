@@ -95,7 +95,7 @@ const Avatar = (data, _, attribute_bonus) => {
             }
             if (data.rank >= 2) {
                 attribute_bonus['DOTDmgAdd'] =
-                    0.55 + get_let_value(attribute_bonus, 'DOTDmgAdd');
+                    0.25 + get_let_value(attribute_bonus, 'DOTDmgAdd');
             }
         },
         '1205': () => {
