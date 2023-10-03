@@ -12,6 +12,7 @@ import { pluginResources, pluginRoot } from '../utils/path.js'
 import setting from '../utils/setting.js'
 import moment from 'moment'
 import { damage as damageCalculator } from '../utils/damage/main.js'
+import { AvatarRankSkillUp } from '../utils/damage/data/data.js'
 
 // 引入遗器地址数据
 const relicsPathData = readJson('resources/panel/data/relics.json')
@@ -103,11 +104,8 @@ export class Panel extends plugin {
       // 行迹
       data.skillTreeBkg = skillTreeImg[data.charpath]
       data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
-      // data.skilllist = _.cloneDeep(data.behaviorList)
-      data.damageSkillList = data.behaviorList.filter(
-        skill => !(skill.level == 0 && skill.max_level == 1)
-      )
-      data.behaviorList = this.handleBehaviorList(data.behaviorList)
+      data.skilllist = _.cloneDeep(data.behaviorList)
+      data.behaviorList = this.handleBehaviorList(data.behaviorList, data.avatarId, data.rank)
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
 
@@ -135,11 +133,26 @@ export class Panel extends plugin {
   }
 
   /** 处理行迹 */
-  handleBehaviorList (data) {
+  handleBehaviorList (data, avatarId, rank) {
     let _data = _.cloneDeep(data)
     _data.splice(5)
     _data.forEach((item, i) => {
       const nameId = item.id.toString().slice(0, 4)
+	  let Behaviorid = item.id.toString().slice(0, 5) + item.id.toString().slice(-1)
+	  for(let m = 1; m <= rank; m++){
+		  let rankid = (avatarId * 100 + m).toString()
+		  let level_up_skill = AvatarRankSkillUp[rankid]
+		  if(level_up_skill){
+			  for(let j = 0; j < level_up_skill.length; j++){
+					let skill_id = level_up_skill[j]['id']
+					let skill_up_num = level_up_skill[j]['num']
+					if(String(skill_id) == String(Behaviorid)){
+						let skilllevel = item.level + skill_up_num
+						_data[i].level = skilllevel
+					}
+			  }
+		  }
+	  }
       let pathName = ''
       switch (i) {
         case 0:

@@ -1,0 +1,1914 @@
+{
+    "20000": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20001": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20002": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20003": {
+        "1": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "20004": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20005": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20006": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20007": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20008": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20009": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20010": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20011": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20012": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20013": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20014": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20015": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20016": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20017": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20018": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20019": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "20020": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21000": {
+        "1": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.0800000000745058
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.10000000009313226
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.14000000013038516
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ]
+    },
+    "21001": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21002": {
+        "1": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.22000000020489097
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ]
+    },
+    "21003": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21004": {
+        "1": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.3500000003259629
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.4200000003911555
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.49000000045634806
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.5600000005215406
+                }
+            }
+        ]
+    },
+    "21005": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21006": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21007": {
+        "1": [
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.10000000009313226
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.12499999976716936
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.1500000001396984
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.17499999981373549
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ]
+    },
+    "21008": {
+        "1": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.25000000023283064
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3500000003259629
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "21009": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21010": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21011": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21012": {
+        "1": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.25000000023283064
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.3500000003259629
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "21013": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21014": {
+        "1": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21015": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21016": {
+        "1": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21017": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21018": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21019": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21020": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21021": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21022": {
+        "1": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21023": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21024": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21026": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.10000000009313226
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.12499999976716936
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.1500000001396984
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.17499999981373549
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ]
+    },
+    "21027": {
+        "1": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.1500000001396984
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ]
+    },
+    "21028": {
+        "1": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21029": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21030": {
+        "1": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
+    "21031": {
+        "1": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.1500000001396984
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ]
+    },
+    "21032": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "21033": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.4200000003911555
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.48000000044703484
+                }
+            }
+        ]
+    },
+    "21034": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "22000": {
+        "1": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.25000000023283064
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3500000003259629
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "23000": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "23001": {
+        "1": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.2700000002514571
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ]
+    },
+    "23002": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "23003": {
+        "1": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.10000000009313226
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.14000000013038516
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ]
+    },
+    "23004": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "23005": {
+        "1": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            },
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            },
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            },
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            },
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "DefenceAddedRatio",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            },
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "23006": {
+        "1": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AllDamageTypeAddedRatio",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "23007": {
+        "1": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "StatusProbabilityBase",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "23008": {
+        "1": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "AttackAddedRatio",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    },
+    "23009": {
+        "1": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            },
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            },
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            },
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.2700000002514571
+                }
+            },
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.2700000002514571
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            },
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ]
+    },
+    "23010": {
+        "1": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.4200000003911555
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.48000000044703484
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.5400000005029142
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.6000000005587935
+                }
+            }
+        ]
+    },
+    "23011": {
+        "1": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            },
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.2800000002607703
+                }
+            },
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.14000000013038516
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            },
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.3600000003352761
+                }
+            },
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            },
+            {
+                "PropertyType": "SPRatioBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ]
+    },
+    "23012": {
+        "1": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.3500000003259629
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.45000000041909516
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.5000000004656613
+                }
+            }
+        ]
+    },
+    "23013": {
+        "1": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            },
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            },
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.14000000013038516
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            },
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.2700000002514571
+                }
+            },
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "HPAddedRatio",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            },
+            {
+                "PropertyType": "HealRatioBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ]
+    },
+    "23015": {
+        "1": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.2700000002514571
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ]
+    },
+    "24000": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "24001": {
+        "1": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.0800000000745058
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.10000000009313226
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.14000000013038516
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ]
+    },
+    "24002": {
+        "1": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.0800000000745058
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.10000000009313226
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.12000000011175871
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.14000000013038516
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "StatusResistanceBase",
+                "Value": {
+                    "Value": 0.1600000001490116
+                }
+            }
+        ]
+    },
+    "21025": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": []
+    },
+    "24003": {
+        "1": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.25000000023283064
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.3500000003259629
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "BreakDamageAddedRatioBase",
+                "Value": {
+                    "Value": 0.40000000037252903
+                }
+            }
+        ]
+    }
+}
