@@ -6,9 +6,17 @@
 
 {{block 'main'}}
 <div class="other-text">
-    <div class="title">角色数据</div>
+    <div class="left_banner">
+      <div class="left_bar"></div>
+      <div class="title">角色数据</div>
+      <div class="uid">
+        <div class="code"></div>
+        <div class="text">UID:{{uid}}</div>
+      </div>
+    </div>
+    <div class="tg"></div>
+    <div class="tgl"></div>
     <div class="update-service">面板更新服务: {{api}}</div>
-    <div class="uid">UID:{{uid}}</div>
     <div class="update-time">更新时间：{{time}}</div>
     <div class="_copyright">{{@sys.createdby}}</div>
 </div>
