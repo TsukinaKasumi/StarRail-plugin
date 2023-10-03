@@ -1,14 +1,14 @@
 import fs from 'fs'
 
 let SR = {
-  miao: true,
+  miao: false,
   sr: true
 }
 
 /**
  * 是否拦截星铁插件的绑定UID
+ * 拦截后默认使用云崽绑定的星铁UID
  * false为不拦截、true为拦截
- * 没装星铁插件别开...
  */
 let intercept = true
 
@@ -65,6 +65,10 @@ export class StarRail extends plugin {
   }
 
   async Sr (e) {
+    if (!e.isMaster) {
+      e.reply('只有主人才能使用该命令哦~')
+      return false
+    }
     const fileurl = import.meta.url
     const sr_name = fileurl.substring(fileurl.lastIndexOf('/') + 1).split('?')[0]
     const _path = process.cwd() + "/plugins"
