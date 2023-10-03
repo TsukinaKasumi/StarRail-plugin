@@ -65,6 +65,10 @@ export class StarRail extends plugin {
   }
 
   async Sr (e) {
+    if (!e.isMaster) {
+      e.reply('只有主人才能使用该命令哦~')
+      return false
+    }
     const fileurl = import.meta.url
     const sr_name = fileurl.substring(fileurl.lastIndexOf('/') + 1).split('?')[0]
     const _path = process.cwd() + "/plugins"
