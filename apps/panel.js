@@ -6,13 +6,14 @@ import runtimeRender from '../common/runtimeRender.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import panelApi from '../runtime/PanelApi.js'
 import alias from '../utils/alias.js'
-import { getSign } from '../utils/auth.js'
-import { getCk, rulePrefix } from '../utils/common.js'
-import { pluginResources, pluginRoot } from '../utils/path.js'
+import {getSign} from '../utils/auth.js'
+import {getCk, rulePrefix} from '../utils/common.js'
+import {pluginResources, pluginRoot} from '../utils/path.js'
 import setting from '../utils/setting.js'
 import moment from 'moment'
-import { damage as damageCalculator } from '../utils/damage/main.js'
-import { AvatarRankSkillUp } from '../utils/damage/data/data.js'
+import {damage as damageCalculator} from '../utils/damage/main.js'
+import {AvatarRankSkillUp} from '../utils/damage/data/data.js'
+import NoteUser from '../../genshin/model/mys/NoteUser.js'
 
 // 引入遗器地址数据
 const relicsPathData = readJson('resources/panel/data/relics.json')
@@ -70,7 +71,7 @@ export class Panel extends plugin {
   }
 
   async panel (e) {
-    let user = this.e.user_id
+    let user = this.e.user
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
     let messageReg = new RegExp(`^${rulePrefix}(.+)面板(更新)?`)
@@ -78,9 +79,20 @@ export class Panel extends plugin {
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.plmb(e)
     if (charName === '更新' || matchResult[5]) return false
-    if (charName === '切换' || charName === '设置') { return await this.changeApi(e) }
+    if (charName === '切换' || charName === '设置') {
+      return await this.changeApi(e)
+    }
     if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
+    if (!uid) {
+      if (ats.length > 0 && !e.atBot) {
+        let { at = '' } = e
+        user = await NoteUser.create(at)
+      }
+      await this.miYoSummerGetUid()
+      uid = user?.getUid('sr') || ""
+    }
+    user = this.e.user_id
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
@@ -121,11 +133,11 @@ export class Panel extends plugin {
         scale: 1.6
       })
       msgId &&
-        redis.setEx(
-          `STAR_RAILWAY:panelOrigImg:${msgId.message_id}`,
-          60 * 60,
-          data.charImage
-        )
+      redis.setEx(
+        `STAR_RAILWAY:panelOrigImg:${msgId.message_id}`,
+        60 * 60,
+        data.charImage
+      )
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
@@ -138,21 +150,21 @@ export class Panel extends plugin {
     _data.splice(5)
     _data.forEach((item, i) => {
       const nameId = item.id.toString().slice(0, 4)
-	  let Behaviorid = item.id.toString().slice(0, 5) + item.id.toString().slice(-1)
-	  for(let m = 1; m <= rank; m++){
-		  let rankid = (avatarId * 100 + m).toString()
-		  let level_up_skill = AvatarRankSkillUp[rankid]
-		  if(level_up_skill){
-			  for(let j = 0; j < level_up_skill.length; j++){
-					let skill_id = level_up_skill[j]['id']
-					let skill_up_num = level_up_skill[j]['num']
-					if(String(skill_id) == String(Behaviorid)){
-						let skilllevel = item.level + skill_up_num
-						_data[i].level = skilllevel
-					}
-			  }
-		  }
-	  }
+      let Behaviorid = item.id.toString().slice(0, 5) + item.id.toString().slice(-1)
+      for (let m = 1; m <= rank; m++) {
+        let rankid = (avatarId * 100 + m).toString()
+        let level_up_skill = AvatarRankSkillUp[rankid]
+        if (level_up_skill) {
+          for (let j = 0; j < level_up_skill.length; j++) {
+            let skill_id = level_up_skill[j]['id']
+            let skill_up_num = level_up_skill[j]['num']
+            if (String(skill_id) == String(Behaviorid)) {
+              let skilllevel = item.level + skill_up_num
+              _data[i].level = skilllevel
+            }
+          }
+        }
+      }
       let pathName = ''
       switch (i) {
         case 0:
@@ -238,11 +250,20 @@ export class Panel extends plugin {
   }
 
   async update (e) {
-    let user = this.e.user_id
+    let user = this.e.user
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
     const messageReg = new RegExp(`^${rulePrefix}(更新面板|面板更新)`)
     let uid = messageText.replace(messageReg, '')
+    if (!uid) {
+      if (ats.length > 0 && !e.atBot) {
+        let { at = '' } = e
+        user = await NoteUser.create(at)
+      }
+      await this.miYoSummerGetUid()
+      uid = user?.getUid('sr') || ""
+    }
+    user = this.e.user_id
     if (!uid) {
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
@@ -379,7 +400,9 @@ export class Panel extends plugin {
           logger.error(error)
           throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         }
-        if (!res) { throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`) }
+        if (!res) {
+          throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
+        }
         // 设置查询时间
         await redis.setEx(timeKey, 360 * 60, Date.now().toString())
         if ('detail' in cardData) throw Error(cardData.detail)
@@ -490,6 +513,7 @@ export class Panel extends plugin {
     return userData
   }
 }
+
 /**
  * 替换老数据
  * @param {Array} oldData 老数据
@@ -553,6 +577,7 @@ function readData (uid) {
     return []
   }
 }
+
 /**
  * @description: 读取JSON文件
  * @param {string} path 路径
