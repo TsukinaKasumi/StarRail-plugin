@@ -14,6 +14,7 @@ import moment from 'moment'
 import {damage as damageCalculator} from '../utils/damage/main.js'
 import {AvatarRankSkillUp} from '../utils/damage/data/data.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
+import cfg from '../../../lib/config/config.js'
 
 // 引入遗器地址数据
 const relicsPathData = readJson('resources/panel/data/relics.json')
@@ -84,7 +85,7 @@ export class Panel extends plugin {
     }
     if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
-    if (!uid) {
+    if (!uid && cfg.package.name != 'yunzai') {
       if (ats.length > 0 && !e.atBot) {
         let { at = '' } = e
         user = await NoteUser.create(at)
@@ -255,7 +256,7 @@ export class Panel extends plugin {
     const messageText = e.msg
     const messageReg = new RegExp(`^${rulePrefix}(更新面板|面板更新)`)
     let uid = messageText.replace(messageReg, '')
-    if (!uid) {
+    if (!uid && cfg.package.name != 'yunzai') {
       if (ats.length > 0 && !e.atBot) {
         let { at = '' } = e
         user = await NoteUser.create(at)
