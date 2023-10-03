@@ -1,16 +1,18 @@
 import fs from 'fs'
+import cfg from '../../../lib/config/config.js'
 
 let SR = {
-  miao: false,
+  miao: true,
   sr: true
 }
 
 /**
  * 是否拦截星铁插件的绑定UID
- * 拦截后默认使用云崽绑定的星铁UID
+ * 拦截后默认使用喵崽绑定的星铁UID
  * false为不拦截、true为拦截
  */
-let intercept = true
+let tof = (cfg.package.name != 'yunzai') ? true : false
+let intercept = tof
 
 export class StarRail extends plugin {
   constructor () {
