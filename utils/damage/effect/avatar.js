@@ -142,8 +142,10 @@ const Avatar = (data, _, attribute_bonus) => {
                     get_let_value(attribute_bonus, 'CriticalChanceBase');
         },
         '1004': () => {
+	    attribute_bonus['DmgRatio'] =
+                0.12 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
             attribute_bonus['AllDamageAddedRatio'] =
-                0.32 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+                0.2 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
         },
         '1003': () => {
             if (data.rank >= 1) {
