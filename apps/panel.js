@@ -86,17 +86,38 @@ export class Panel extends plugin {
     if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
     if (!uid && cfg.package.name != 'yunzai') {
-      if (ats.length > 0 && !e.atBot) {
-        let { at = '' } = e
-        user = await NoteUser.create(at)
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          let { at = '' } = e
+          user = await NoteUser.create(at)
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              let at = ats[i].qq
+              user = await NoteUser.create(at)
+              break
+            }
+          }
+        }
       }
       await this.miYoSummerGetUid()
-      uid = user?.getUid('sr') || ""
+      uid = user?.getUid('sr') || ''
     }
     user = this.e.user_id
     if (!uid) {
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          user = ats[ats.length - 1].qq
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              user = ats[i].qq
+              break
+            }
+          }
+        }
       }
       await this.miYoSummerGetUid()
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -257,17 +278,38 @@ export class Panel extends plugin {
     const messageReg = new RegExp(`^${rulePrefix}(更新面板|面板更新)`)
     let uid = messageText.replace(messageReg, '')
     if (!uid && cfg.package.name != 'yunzai') {
-      if (ats.length > 0 && !e.atBot) {
-        let { at = '' } = e
-        user = await NoteUser.create(at)
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          let { at = '' } = e
+          user = await NoteUser.create(at)
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              let at = ats[i].qq
+              user = await NoteUser.create(at)
+              break
+            }
+          }
+        }
       }
       await this.miYoSummerGetUid()
-      uid = user?.getUid('sr') || ""
+      uid = user?.getUid('sr') || ''
     }
     user = this.e.user_id
     if (!uid) {
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          user = ats[ats.length - 1].qq
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              user = ats[i].qq
+              break
+            }
+          }
+        }
       }
       await this.miYoSummerGetUid()
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
