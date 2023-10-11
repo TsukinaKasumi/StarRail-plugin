@@ -63,8 +63,8 @@ const Weapon = (equipment, Ultra_Use, base_attr, attribute_bonus) => {
                 all_damage_added_ratio +
                     weapon_effect['23014']['Param']['AllDamageAddedRatio'][equipment.rank - 1] *
                         3;
-            let resistance_penetration = get_let_value(attribute_bonus, 'AllResistancePenetration');
-            attribute_bonus['AllResistancePenetration'] =
+            let resistance_penetration = get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            attribute_bonus['AllDamageResistancePenetration'] =
                 resistance_penetration +
                     weapon_effect['23014']['Param']['ResistancePenetration'][equipment.rank - 1];
         },
