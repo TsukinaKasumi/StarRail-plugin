@@ -8,6 +8,7 @@ export function damage (charinfo) {
   let skill_info = skilldict[String(charinfo.avatarId)].skillList
   if (!skill_info) { return null }
   let skills = Object.keys(skill_info)
+  logger.mark('skills：', skills)
   let damage_list = []
   for (let i = 0; i < skills.length; i++) {
     let skill_list = getdamages_num(skills[i], charinfo)

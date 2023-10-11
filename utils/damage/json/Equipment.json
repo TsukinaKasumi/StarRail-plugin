@@ -1729,7 +1729,91 @@
             }
         ]
     },
+    "23014": {
+        "1": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.20000000018626451
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.2300000002142042
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.26000000024214387
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.29000000027008355
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalDamageBase",
+                "Value": {
+                    "Value": 0.3200000002980232
+                }
+            }
+        ]
+    },
     "23015": {
+        "1": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.18000000016763806
+                }
+            }
+        ],
+        "2": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.21000000019557774
+                }
+            }
+        ],
+        "3": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.24000000022351742
+                }
+            }
+        ],
+        "4": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.2700000002514571
+                }
+            }
+        ],
+        "5": [
+            {
+                "PropertyType": "CriticalChanceBase",
+                "Value": {
+                    "Value": 0.3000000002793968
+                }
+            }
+        ]
+    },
+    "23016": {
         "1": [
             {
                 "PropertyType": "CriticalChanceBase",
