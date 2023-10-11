@@ -198,7 +198,7 @@ const Avatar = (data, _, attribute_bonus) => {
             }
             attribute_bonus['UltraDmgAdd'] =
                 0.2 + get_let_value(attribute_bonus, 'UltraDmgAdd');
-            let critical_chance_base = getskilllevelnum(String(data.avatarId), data.behaviorList, 'talent', 'Talent_CD');
+            let critical_chance_base = getskilllevelnum(String(data.avatarId), data.behaviorList, 'talent', 'Talent_CC');
             attribute_bonus['Ultra_CriticalChanceBase'] =
                 get_let_value(attribute_bonus, 'Ultra_CriticalChanceBase') +
                     critical_chance_base;
