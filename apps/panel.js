@@ -144,10 +144,14 @@ export class Panel extends plugin {
       data.charImage = this.getCharImage(data.name, data.avatarId)
 
       // 伤害
-      let damage = damageCalculator(data)
-      if (damage) {
-        data.damages = damage.damage
-        logger.mark('damages：', data.damages.damage)
+      try {
+        let damage = damageCalculator(data)
+        if (damage) {
+          data.damages = damage.damage
+          logger.debug('damages：', data.damages.damage)
+        }
+      } catch (e) {
+        logger.warn('伤害计算出错，不展示伤害')
       }
       logger.debug(`${e.logFnc} 面板图:`, data.charImage)
       let msgId = await runtimeRender(e, '/panel/new_panel.html', data, {
