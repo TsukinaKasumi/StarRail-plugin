@@ -243,6 +243,7 @@ html body .main .head .account_info .small_info .item:nth-last-child(1) {
   margin-right: 0;
 }
 html body .main .head .account_info .small_info .item .value {
+  margin-top: 5px;
   font-size: 1.2em;
 }
 html body .main .head .account_info .small_info .item .title {
