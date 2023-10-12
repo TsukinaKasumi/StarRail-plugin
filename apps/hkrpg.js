@@ -90,6 +90,13 @@ export class Hkrpg extends plugin {
         result.game_uid = uid
         result.nickname = '开拓者'
       }
+      if (
+        result?.phone_background_image_url ===
+        'https://act-webstatic.mihoyo.com/game_record/hkrpg/.png'
+      ) {
+        result.phone_background_image_url =
+          'https://act-webstatic.mihoyo.com/game_record/hkrpg/SpriteOutput/PhoneTheme/Theme/PhoneThemeMain/221000.png'
+      }
       await runtimeRender(e, '/card/card.html', result, {
         scale: 1.4
       })
