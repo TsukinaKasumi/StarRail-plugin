@@ -91,7 +91,7 @@ ul {
             .attribute-item {
                 @extend %common;
                 height: 40px;
-                margin-top: 10px;
+                margin-top: 6.5px;
                 border-radius: 5px;
                 display: flex;
                 align-items: center;
@@ -464,7 +464,8 @@ ul {
   justify-content: center;
   align-items: center;
   #skillTreeCanvas {
-    width: 80%;
+    width: 60%;
+    font-family: 'SR';
   }
 }
 

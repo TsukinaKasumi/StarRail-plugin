@@ -71,7 +71,7 @@ ul {
 }
 .header .right .attribute-box .attribute-item {
   height: 40px;
-  margin-top: 10px;
+  margin-top: 6.5px;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -387,7 +387,8 @@ ul {
   align-items: center;
 }
 .skill_tree #skillTreeCanvas {
-  width: 80%;
+  width: 60%;
+  font-family: "SR";
 }
 
 .damage {
