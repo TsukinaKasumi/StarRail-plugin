@@ -1,6 +1,6 @@
 import moment from 'moment'
 import plugin from '../../../lib/plugins/plugin.js'
-import common from "../../../lib/common/common.js"
+import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GatchaData from '../utils/gatcha/index.js'
@@ -66,7 +66,9 @@ export class Gatcha extends plugin {
       await this.reply('绑定成功，正在获取数据', false)
       console.log('uid', uid)
       await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
-      await this.updateGatcha(this.e)
+      this.updateGatcha(this.e).then(() => {
+        logger.info('绑定抽卡链接任务完成')
+      })
     } catch (error) {
       this.reply('抽卡链接错误，请检查链接重新绑定', false)
     }
@@ -178,4 +180,3 @@ export class Gatcha extends plugin {
     }
   }
 }
-
