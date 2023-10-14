@@ -33,7 +33,7 @@ export class Month extends plugin {
       this.User = new User(this.e)
     }
     let userData = await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`) || this.e.user?.getUid('sr')
     if (userData.game_uid) {
       uid = userData.game_uid
     } else {

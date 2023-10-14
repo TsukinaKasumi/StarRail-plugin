@@ -131,7 +131,7 @@ export class Gatcha extends plugin {
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
-    const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    const uid = await redis.get(`STAR_RAILWAY:UID:${user}`) || this.e.user?.getUid('sr')
     try {
       const typeName = e.msg.replace(/#|\*|＊|星铁|星轨|崩铁|星穹铁道|穹批|跃迁|抽卡|记录|分析/g, '')
       let type = 0
