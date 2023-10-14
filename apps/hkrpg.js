@@ -133,6 +133,7 @@ export class Hkrpg extends plugin {
   }
 
   async getPayLog (e) {
+    let user = this.e.user
     const reg = /(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\d{0,})$/ig
     const command = reg.exec(e.msg)
     let type = command[1]
@@ -161,7 +162,7 @@ export class Hkrpg extends plugin {
         break
     }
     await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
+    let uid = (await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)) || user?.getUid('sr')
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
