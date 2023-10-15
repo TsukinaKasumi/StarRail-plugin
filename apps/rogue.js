@@ -71,7 +71,7 @@ export class Rogue extends plugin {
     }
     const { url, headers } = api.getUrl('srRogue', { deviceFp, schedule_type })
     delete headers['x-rpc-page']
-    logger.mark({ url, headers })
+    logger.debug({ url, headers })
     let res = await fetch(url, {
       headers
     })
@@ -126,7 +126,7 @@ export class Rogue extends plugin {
     }
     const { url, headers } = api.getUrl('srRogueLocust', { deviceFp })
     delete headers['x-rpc-page']
-    logger.mark({ url, headers })
+    logger.debug({ url, headers })
     let res = await fetch(url, {
       headers
     })

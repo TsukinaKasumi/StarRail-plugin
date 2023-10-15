@@ -30,7 +30,7 @@ function get_let_value(let_list, name){
 }
 
 function Seele(data, base_attr, attribute_bonus){
-	logger.mark('希儿天赋量子穿透')
+	logger.debug('希儿天赋量子穿透')
 	attribute_bonus['QuantumResistancePenetration'] = 0.2 + get_let_value(attribute_bonus, 'QuantumResistancePenetration')
 	if(data.rank < 2){
 		attribute_bonus['SpeedAddedRatio'] = 0.25 + get_let_value(attribute_bonus, 'SpeedAddedRatio')
@@ -41,7 +41,7 @@ function Seele(data, base_attr, attribute_bonus){
 	if(data.rank >= 2){
 		attribute_bonus['SpeedAddedRatio'] = 0.5 + get_let_value(attribute_bonus, 'SpeedAddedRatio')
 	}
-	logger.mark('希儿天赋技能增伤')
+	logger.debug('希儿天赋技能增伤')
 	var all_damage_added_ratio = getskilllevelnum(data.avatarId, data.behaviorList, 'talent', 'Talent')
 	attribute_bonus['AllDamageAddedRatio'] = all_damage_added_ratio + get_let_value(attribute_bonus, 'AllDamageAddedRatio')
 	return attribute_bonus
@@ -67,6 +67,6 @@ function getskilllevelnum(avatarId, behaviorList, leveltype, skilltype){
   }else{
 	  var skilllevel = 1
   }
-  logger.mark(leveltype + '技能等级: '+ skilllevel)
+  logger.debug(leveltype + '技能等级: '+ skilllevel)
   return skilldictData[avatarId][skilltype][skilllevel - 1]
 }

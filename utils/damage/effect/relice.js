@@ -128,7 +128,7 @@ const Relic = (relic_set, base_attr, attribute_bonus) => {
             if (!relic_set.set_name.startsWith('2'))
                 return;
             let attack_added_ratio = get_let_value(attribute_bonus, 'AttackAddedRatio');
-			// logger.mark('attack_added_ratio：', attack_added_ratio)
+			// logger.debug('attack_added_ratio：', attack_added_ratio)
             let status_probability = get_let_value(attribute_bonus, 'StatusProbabilityBase');
 			let add_atk = Math.min(0.25000000023283064, status_probability * 0.25);
             attribute_bonus['AttackAddedRatio'] = attack_added_ratio + add_atk

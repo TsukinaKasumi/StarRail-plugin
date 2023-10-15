@@ -417,12 +417,12 @@ export class Panel extends plugin {
     const timeKey = `STAR_RAILWAY:userPanelDataTime:${uid}`
     let previousData = await readData(uid)
     if ((previousData.length < 1 || isForce) && !forceCache) {
-      logger.mark('SR-panelApi强制查询')
+      logger.info('SR-panelApi强制查询')
       await this.e.reply(
         `正在获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`
       )
       try {
-        logger.mark('SR-panelApi开始查询', uid)
+        logger.info('SR-panelApi开始查询', uid)
         let time = await redis.get(timeKey)
         if (time) {
           time = parseInt(time)
@@ -479,7 +479,7 @@ export class Panel extends plugin {
         throw Error(error)
       }
     } else {
-      // logger.mark('SR-panelApi使用缓存')
+      // logger.info('SR-panelApi使用缓存')
       const cardData = previousData
       return cardData
     }
@@ -569,7 +569,7 @@ export class Panel extends plugin {
  */
 async function updateData (oldData, newData) {
   let returnData = oldData
-  // logger.mark('SR-updateData', oldData, newData);
+  // logger.info('SR-updateData', oldData, newData);
   const handle = name => {
     return name === '{nickname}' || name === '{NICKNAME}' ? '开拓者' : name
   }

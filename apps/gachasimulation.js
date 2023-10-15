@@ -146,7 +146,7 @@ export default class Gacha extends plugin {
 
   // 判断是否可以抽卡
   async canGacha () {
-    logger.mark(this.config)
+    logger.debug(this.config)
     // 判断是否为群聊，并且群聊是否在限制名单中
     if (
       this.e.isGroup &&
@@ -279,7 +279,7 @@ export default class Gacha extends plugin {
         charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
         charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png'
       } else {
-        logger.mark('武器出金概率为：' + upProba);
+        logger.debug('武器出金概率为：' + upProba);
         /** 当祈愿获取到5星武器时，有75%的概率为本期UP武器 */
         if (this.gachaData[this.type].isUp5 == true) isBigUP = true
         /** 大保底清零 */

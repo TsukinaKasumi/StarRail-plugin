@@ -179,13 +179,13 @@ export class strategy extends plugin {
       return false
     }
 
-    logger.mark(`${this.e.logFnc} 下载星铁${name}攻略图`)
+    logger.info(`${this.e.logFnc} 下载星铁${name}攻略图`)
 
     if (!await common.downFile(url + this.oss, this.sfPath)) {
       return false
     }
 
-    logger.mark(`${this.e.logFnc} 下载星铁${name}攻略成功`)
+    logger.info(`${this.e.logFnc} 下载星铁${name}攻略成功`)
 
     return true
   }

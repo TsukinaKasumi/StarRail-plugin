@@ -77,7 +77,7 @@ export class Challenge extends plugin {
     // 简单的没出验证码，试一下复杂的
     const { url, headers } = api.getUrl('srChallenge', { deviceFp, schedule_type: scheduleType })
     delete headers['x-rpc-page']
-    // logger.mark({ url, headers })
+    // logger.debug({ url, headers })
     let res = await fetch(url, {
       headers
     })

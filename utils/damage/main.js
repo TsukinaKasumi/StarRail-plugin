@@ -8,7 +8,7 @@ export function damage (charinfo) {
   let skill_info = skilldict[String(charinfo.avatarId)].skillList
   if (!skill_info) { return null }
   let skills = Object.keys(skill_info)
-  logger.mark('skills：', skills)
+  logger.debug('skills：', skills)
   let damage_list = []
   for (let i = 0; i < skills.length; i++) {
     let skill_list = getdamages_num(skills[i], charinfo)
@@ -84,14 +84,14 @@ function getdamages_num (skill_type, data) {
   }
   let Ultra_Use = skilldict[String(data.avatarId)].Ultra_Use
   attribute_bonus = weapon_ability(data.equipment, Ultra_Use, base_attr, attribute_bonus)
-  logger.mark('attribute_bonus：', attribute_bonus)
+  logger.debug('attribute_bonus：', attribute_bonus)
   let relic_sets = data.relic_sets
   if (relic_sets.length > 0) {
     for (let i = 0; i < relic_sets.length; i++) {
       attribute_bonus = relice_ability(relic_sets[i], base_attr, attribute_bonus)
     }
   }
-  logger.mark('attribute_bonus：', attribute_bonus)
+  logger.debug('attribute_bonus：', attribute_bonus)
   let attribute_attrkey = Object.keys(attribute_bonus)
   for (let i = 0; i < attribute_attrkey.length; i++) {
     let attr = attribute_attrkey[i]
@@ -113,7 +113,7 @@ function getdamages_num (skill_type, data) {
     }
   }
   let merged_attr = merge_attribute(base_attr, attribute_bonus)
-  logger.mark('merged_attr：', merged_attr)
+  logger.debug('merged_attr：', merged_attr)
   let skill_list = {}
   let damage = 0
   let damage_qw = 0
@@ -199,33 +199,33 @@ function getdamages_num (skill_type, data) {
       if (attr.search('DmgAdd') != -1) {
         let attr_name = attr.split('DmgAdd')[0]
         if ([skill_type, skill_info[3]].includes(attr_name)) {
-          logger.mark(attr + '对' + attr_name + '有' + merged_attr[attr] + '增伤')
+          logger.debug(attr + '对' + attr_name + '有' + merged_attr[attr] + '增伤')
           injury_area = injury_area + merged_attr[attr]
         }
       }
       if (attr.search('AddedRatio') != -1) {
         let attr_name = attr.split('AddedRatio')[0]
         if ([data.damage_type, 'AllDamage'].includes(attr_name)) {
-          logger.mark(attr + '对' + attr_name + '有' + merged_attr[attr] + '增伤')
+          logger.debug(attr + '对' + attr_name + '有' + merged_attr[attr] + '增伤')
           injury_area = injury_area + merged_attr[attr]
         }
       }
     }
     injury_area = injury_area + 1
-    logger.mark('增伤：', injury_area)
+    logger.debug('增伤：', injury_area)
     let damage_ratio = get_let_value(merged_attr, 'DmgRatio')
     for (let i = 0; i < merged_attrkey.length; i++) {
       let attr = merged_attrkey[i]
       if (attr.search('_DmgRatio') != -1) {
         let attr_name = attr.split('_')[0]
         if ([skill_type, skill_info[3]].includes(attr_name)) {
-          logger.mark(attr + '对' + attr_name + '有' + merged_attr[attr] + '易伤加成')
+          logger.debug(attr + '对' + attr_name + '有' + merged_attr[attr] + '易伤加成')
           damage_ratio = damage_ratio + merged_attr[attr]
         }
       }
     }
     damage_ratio = damage_ratio + 1
-    logger.mark('易伤：', damage_ratio)
+    logger.debug('易伤：', damage_ratio)
     let critical_damage_base = 0.0
     if (skill_type != 'DOT') {
       critical_damage_base = get_let_value(merged_attr, 'CriticalDamageBase')
@@ -234,14 +234,14 @@ function getdamages_num (skill_type, data) {
         if (attr.search('_CriticalDamageBase') != -1) {
           let skill_name = attr.split('_')[0]
           if ([skill_type, skill_info[3]].includes(skill_name)) {
-            logger.mark(attr + '对' + skill_name + '有' + merged_attr[attr] + '爆伤加成')
+            logger.debug(attr + '对' + skill_name + '有' + merged_attr[attr] + '爆伤加成')
             critical_damage_base = critical_damage_base + merged_attr[attr]
           }
         }
       }
     }
     let critical_damage = critical_damage_base + 1
-    logger.mark('爆伤: ', critical_damage)
+    logger.debug('爆伤: ', critical_damage)
     let critical_chance_base = merged_attr.CriticalChanceBase
     for (let i = 0; i < merged_attrkey.length; i++) {
       let attr = merged_attrkey[i]
@@ -296,7 +296,7 @@ function getdamages_num (skill_type, data) {
                     qiwang_damage +
                     damage_add
       damage_qw_z = damage_qw_z + damage_qw
-      logger.mark('第' + String(i) + '段伤害' + damage)
+      logger.debug('第' + String(i) + '段伤害' + damage)
     }
     if (String(data.avatarId) == '1003' && data.rank >= 6) {
       damage_cd_z = damage_cd_z * 1.8
@@ -388,12 +388,12 @@ function get_attribute_bonus (data) {
 			data.avatarId in char_dict &&
             behavior.id in char_dict[data.avatarId] &&
             char_dict[data.avatarId][behavior.id].levels[0].properties[0]) {
-      // logger.mark(char_dict[data.avatarId][behavior.id].levels[0].properties[0])
-      // logger.mark(behavior)
+      // logger.debug(char_dict[data.avatarId][behavior.id].levels[0].properties[0])
+      // logger.debug(behavior)
       let properties_name = char_dict[data.avatarId][behavior.id].levels[0].properties[0].type
-      // logger.mark('properties_name：', properties_name)
+      // logger.debug('properties_name：', properties_name)
       let properties_value = char_dict[data.avatarId][behavior.id].levels[0].properties[0].value
-      // logger.mark('properties_value：', properties_value)
+      // logger.debug('properties_value：', properties_value)
       attribute_bonus[properties_name] =
 				get_let_value(attribute_bonus, properties_name) + properties_value
     }
