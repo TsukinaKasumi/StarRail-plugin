@@ -1,38 +1,83 @@
 @charset "UTF-8";
 .container {
-  background: url(./resources/subject.png) #353434 no-repeat;
   background-size: 100%;
-  height: 406px;
   width: 996px;
   padding: 0;
   position: relative;
+  background-color: rgb(233, 227, 203);
+  padding-bottom: 25px;
+  overflow: hidden;
 }
 
 .other-text {
   color: #a4a4a4;
-}
-.other-text .title {
+  z-index: 999;
+  overflow: hidden;
   position: absolute;
-  left: 63px;
+  width: 100%;
+  height: 100%;
+}
+.other-text .left_banner {
+  width: 150px;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgb(52, 52, 52);
+}
+.other-text .left_banner .left_bar {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  bottom: 50px;
+  width: 0px;
+  border: 27px solid transparent;
+  border-left: 23px solid rgb(118, 118, 118);
+}
+.other-text .left_banner .title {
+  position: relative;
+  margin-left: 63px;
+  margin-right: 35px;
   top: 40px;
   font-size: 40px;
   writing-mode: vertical-lr;
 }
-.other-text .title::before {
+.other-text .left_banner .title::before {
   content: "「";
   position: absolute;
   left: -35px;
   top: -12px;
 }
-.other-text .title::after {
+.other-text .left_banner .title::after {
   content: "」";
   position: absolute;
   bottom: -12px;
   right: -35px;
 }
+.other-text .tg {
+  position: absolute;
+  left: 149px;
+  bottom: -1px;
+  width: 185px;
+  height: 160px;
+  -webkit-clip-path: polygon(0 0, 0% 100%, 100% 100%);
+  clip-path: polygon(0 0, 0% 100%, 100% 100%);
+  background-color: rgb(52, 52, 52);
+}
+.other-text .tgl {
+  width: 320px;
+  height: 1.5px;
+  background-color: rgb(118, 118, 118);
+  position: absolute;
+  transform: rotate(40.5deg);
+  bottom: 100px;
+  left: -25px;
+  opacity: 0.8;
+}
 .other-text .update-service {
   position: absolute;
-  bottom: 20%;
+  bottom: 85px;
   left: 15%;
   transform: translate(-50%, -50%) rotate(40.5deg);
   font-size: 14px;
@@ -50,25 +95,41 @@
 }
 .other-text .update-time {
   position: absolute;
-  bottom: 62px;
-  left: 263px;
-  width: 308px;
-  text-align: center;
+  bottom: 61px;
+  left: 239px;
+  width: 348px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
+  background-color: rgb(52, 52, 52);
+  clip-path: polygon(0 0, calc(100% - 25.5px) 0, 100% 100%, 25.5px 100%);
 }
 .other-text ._copyright {
+  width: 600px;
   position: absolute;
-  bottom: 15px;
-  left: 333px;
+  bottom: -1px;
+  left: 265.5px;
+  background-color: rgb(52, 52, 52);
+  clip-path: polygon(0 0, calc(100% - 70.5px) 0, 100% 100%, 70.5px 100%);
   font-size: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 61px;
 }
 
 .data {
-  position: absolute;
-  width: 785px;
-  height: 300px;
-  left: 182px;
-  top: 14px;
+  position: relative;
+  width: 825px;
+  left: 162px;
+  top: 10px;
+  padding: 0 20px;
+  padding-bottom: 50px;
+  border: 3px dashed #b4921d;
+  min-height: 360px;
+  z-index: 0;
 }
 .data .title {
   height: 50px;
@@ -97,8 +158,6 @@
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  max-height: 210px;
-  overflow: hidden;
 }
 .data .item-list .item {
   width: 80px;
@@ -143,4 +202,6 @@
   border-radius: 3px;
   font-size: 15px;
   text-shadow: 0 0 2px #000;
-}/*# sourceMappingURL=new_card.css.map */
+}
+
+/*# sourceMappingURL=new_card.css.map */

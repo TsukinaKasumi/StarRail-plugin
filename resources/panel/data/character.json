@@ -20821,6 +20821,13 @@
     "element": "物理",
     "path": "虚无"
   },
+  "1112": {
+    "id": "1112",
+    "name": "托帕&账账",
+    "rarity": "5",
+    "element": "火",
+    "path": "巡猎"
+  },
   "1201": {
     "id": "1201",
     "name": "青雀",
@@ -27778,6 +27785,13 @@
     ],
     "character_material": "guide/Nwflower/character_material/1209.png"
   },
+  "1210": {
+    "id": "1210",
+    "name": "桂乃芬",
+    "rarity": "4",
+    "element": "火",
+    "path": "虚无"
+  },
   "1211": {
     "id": "1211",
     "name": "白露",
@@ -28940,6 +28954,13 @@
       "guide/OriginMirror/character_overview/1211.png"
     ],
     "character_material": "guide/Nwflower/character_material/1211.png"
+  },
+  "1212": {
+    "id": "1212",
+    "name": "镜流",
+    "rarity": "5",
+    "element": "冰",
+    "path": "毁灭"
   },
   "1213": {
     "id": "1213",

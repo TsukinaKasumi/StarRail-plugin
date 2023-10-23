@@ -1,6 +1,6 @@
 import moment from 'moment'
 import plugin from '../../../lib/plugins/plugin.js'
-import common from "../../../lib/common/common.js"
+import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GatchaData from '../utils/gatcha/index.js'
@@ -66,7 +66,9 @@ export class Gatcha extends plugin {
       await this.reply('绑定成功，正在获取数据', false)
       console.log('uid', uid)
       await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
-      await this.updateGatcha(this.e)
+      this.updateGatcha(this.e).then(() => {
+        logger.info('绑定抽卡链接任务完成')
+      })
     } catch (error) {
       this.reply('抽卡链接错误，请检查链接重新绑定', false)
     }
@@ -131,7 +133,7 @@ export class Gatcha extends plugin {
     if (ats.length > 0 && !e.atBot) {
       user = ats[0].qq
     }
-    const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    const uid = await redis.get(`STAR_RAILWAY:UID:${user}`) || this.e.user?.getUid('sr')
     try {
       const typeName = e.msg.replace(/#|\*|＊|星铁|星轨|崩铁|星穹铁道|穹批|跃迁|抽卡|记录|分析/g, '')
       let type = 0
@@ -178,4 +180,3 @@ export class Gatcha extends plugin {
     }
   }
 }
-

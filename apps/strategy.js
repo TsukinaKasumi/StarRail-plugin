@@ -72,7 +72,7 @@ export class strategy extends plugin {
     let role = alias.get(roleName)
 
     if (!role) return false
-
+    role = role.replaceAll('•', '·')
     if (group === 0) {
       // eslint-disable-next-line no-unused-vars
       let msg = []
@@ -87,8 +87,7 @@ export class strategy extends plugin {
           msg.push(segment.image(`file://${this.sfPath}`))
         }
       }
-      if (msg.length)
-        await this.reply(await common.makeForwardMsg(this.e, msg))
+      if (msg.length) { await this.reply(await common.makeForwardMsg(this.e, msg)) }
       return
     }
     this.sfPath = `${this.path}/${group}/${role}.jpg`
@@ -117,7 +116,7 @@ export class strategy extends plugin {
       '3——星穹中心\n',
       '4——水云109\n',
       '5——幻仙十六\n',
-      '6——HoYo青枫\n',
+      '6——HoYo青枫\n'
     ])
   }
 
@@ -180,13 +179,13 @@ export class strategy extends plugin {
       return false
     }
 
-    logger.mark(`${this.e.logFnc} 下载星铁${name}攻略图`)
+    logger.info(`${this.e.logFnc} 下载星铁${name}攻略图`)
 
     if (!await common.downFile(url + this.oss, this.sfPath)) {
       return false
     }
 
-    logger.mark(`${this.e.logFnc} 下载星铁${name}攻略成功`)
+    logger.info(`${this.e.logFnc} 下载星铁${name}攻略成功`)
 
     return true
   }

@@ -91,7 +91,7 @@ ul {
             .attribute-item {
                 @extend %common;
                 height: 40px;
-                margin-top: 10px;
+                margin-top: 6.5px;
                 border-radius: 5px;
                 display: flex;
                 align-items: center;
@@ -452,4 +452,73 @@ ul {
 .copyright {
     margin-top: 15px;
     font-size: 16px;
+}
+
+.skill_tree {
+  width: 100%;
+  margin-top: 15px;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid $color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #skillTreeCanvas {
+    width: 60%;
+    font-family: 'SR';
+  }
+}
+
+.damage {
+  width: 100%;
+  margin-top: 15px;
+  max-width: 100%;
+  border: 0.1em solid $color;
+  border-radius: 0.5em;
+  overflow: hidden;
+  flex-shrink: 1;
+  box-sizing: border-box;
+  display: flex;
+  table {
+    font-size: 1.2em;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    th,
+    td {
+      padding: 0.5em;
+      border: 0.1em solid $color;
+      text-align: center;
+      &:nth-child(1) {
+        border-left: none;
+      }
+      &:nth-last-child(1) {
+        border-right: none;
+      }
+    }
+    tbody {
+      tr {
+        &:nth-last-child(1) {
+          td {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+    thead {
+      font-size: 1.1em;
+      background-color: $color;
+      color: #000;
+      tr {
+        &:nth-child(1) {
+          th {
+            border-top: none;
+          }
+        }
+        th {
+          padding: 0.3em;
+        }
+      }
+    }
+  }
 }

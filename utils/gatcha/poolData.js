@@ -79,5 +79,15 @@ export const poolData = [
     poolName: '穷观妙算',
     char5: [ '符玄' ],
     weapon5: [ '她已闭上双眼' ]
+  }, {
+    id: 'ver1.4up',
+    ids: ['2011', '3011'],
+    version: '1.3',
+    half: '上半',
+    from: '2023-10-11 10:00:00',
+    to: '2023-10-27 11:59:59',
+    poolName: '月有薄蚀',
+    char5: [ '镜流' ],
+    weapon5: [ '此身为剑' ]
   }
 ]

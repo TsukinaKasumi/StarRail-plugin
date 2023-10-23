@@ -6,16 +6,33 @@ import runtimeRender from '../common/runtimeRender.js'
 import MysSRApi from '../runtime/MysSRApi.js'
 import panelApi from '../runtime/PanelApi.js'
 import alias from '../utils/alias.js'
-import { getSign } from '../utils/auth.js'
-import { getCk, rulePrefix } from '../utils/common.js'
-import { pluginResources, pluginRoot } from '../utils/path.js'
+import {getSign} from '../utils/auth.js'
+import {getCk, rulePrefix} from '../utils/common.js'
+import {pluginResources, pluginRoot} from '../utils/path.js'
 import setting from '../utils/setting.js'
 import moment from 'moment'
+import {damage as damageCalculator} from '../utils/damage/main.js'
+import {AvatarRankSkillUp} from '../utils/damage/data/data.js'
+import NoteUser from '../../genshin/model/mys/NoteUser.js'
+import cfg from '../../../lib/config/config.js'
 
 // 引入遗器地址数据
 const relicsPathData = readJson('resources/panel/data/relics.json')
 // 引入角色数据
 const charData = readJson('resources/panel/data/character.json')
+// 引入技能树位置
+const skillTreeData = readJson('resources/panel/data/skillTree.json')
+// 技能树背景图
+const skillTreeImgBaseURL = 'panel/resources/skill_tree/'
+const skillTreeImg = {
+  存护: `${skillTreeImgBaseURL}Knight.svg`,
+  智识: `${skillTreeImgBaseURL}Mage.svg`,
+  丰饶: `${skillTreeImgBaseURL}Priest.svg`,
+  巡猎: `${skillTreeImgBaseURL}Rogue.svg`,
+  毁灭: `${skillTreeImgBaseURL}Warrior.svg`,
+  同谐: `${skillTreeImgBaseURL}Shaman.svg`,
+  虚无: `${skillTreeImgBaseURL}Warlock.svg`
+}
 
 export class Panel extends plugin {
   constructor (e) {
@@ -55,7 +72,7 @@ export class Panel extends plugin {
   }
 
   async panel (e) {
-    let user = this.e.user_id
+    let user = this.e.user
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
     let messageReg = new RegExp(`^${rulePrefix}(.+)面板(更新)?`)
@@ -63,12 +80,44 @@ export class Panel extends plugin {
     const charName = matchResult ? matchResult[4] : null
     if (!charName) return await this.plmb(e)
     if (charName === '更新' || matchResult[5]) return false
-    if (charName === '切换' || charName === '设置') return await this.changeApi(e)
+    if (charName === '切换' || charName === '设置') {
+      return await this.changeApi(e)
+    }
     if (charName.includes('参考')) return false
     let uid = messageText.replace(messageReg, '')
+    if (!uid && cfg.package.name != 'yunzai') {
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          let { at = '' } = e
+          user = await NoteUser.create(at)
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              let at = ats[i].qq
+              user = await NoteUser.create(at)
+              break
+            }
+          }
+        }
+      }
+      await this.miYoSummerGetUid()
+      uid = user?.getUid('sr') || ''
+    }
+    user = this.e.user_id
     if (!uid) {
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          user = ats[ats.length - 1].qq
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              user = ats[i].qq
+              break
+            }
+          }
+        }
       }
       await this.miYoSummerGetUid()
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -87,26 +136,34 @@ export class Panel extends plugin {
         data.relics[i].path = relicsPathData[item.id]?.icon
       })
       // 行迹
-      data.behaviorList = this.handleBehaviorList(data.behaviorList)
+      data.skillTreeBkg = skillTreeImg[data.charpath]
+      data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
+      data.skilllist = _.cloneDeep(data.behaviorList)
+      data.behaviorList = this.handleBehaviorList(data.behaviorList, data.avatarId, data.rank)
       // 面板图
       data.charImage = this.getCharImage(data.name, data.avatarId)
 
-      logger.debug(`${e.logFnc} 面板图:`, data.charImage)
-      let msgId = await runtimeRender(
-        e,
-        '/panel/new_panel.html',
-        data,
-        {
-          retType: 'msgId',
-          scale: 1.6
+      // 伤害
+      try {
+        let damage = damageCalculator(data)
+        if (damage) {
+          data.damages = damage.damage
+          logger.debug('damages：', data.damages.damage)
         }
-      )
+      } catch (e) {
+        logger.warn('伤害计算出错，不展示伤害')
+      }
+      logger.debug(`${e.logFnc} 面板图:`, data.charImage)
+      let msgId = await runtimeRender(e, '/panel/new_panel.html', data, {
+        retType: 'msgId',
+        scale: 1.6
+      })
       msgId &&
-        redis.setEx(
-          `STAR_RAILWAY:panelOrigImg:${msgId.message_id}`,
-          60 * 60,
-          data.charImage
-        )
+      redis.setEx(
+        `STAR_RAILWAY:panelOrigImg:${msgId.message_id}`,
+        60 * 60,
+        data.charImage
+      )
     } catch (error) {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
@@ -114,11 +171,26 @@ export class Panel extends plugin {
   }
 
   /** 处理行迹 */
-  handleBehaviorList (data) {
+  handleBehaviorList (data, avatarId, rank) {
     let _data = _.cloneDeep(data)
     _data.splice(5)
     _data.forEach((item, i) => {
       const nameId = item.id.toString().slice(0, 4)
+      let Behaviorid = item.id.toString().slice(0, 5) + item.id.toString().slice(-1)
+      for (let m = 1; m <= rank; m++) {
+        let rankid = (avatarId * 100 + m).toString()
+        let level_up_skill = AvatarRankSkillUp[rankid]
+        if (level_up_skill) {
+          for (let j = 0; j < level_up_skill.length; j++) {
+            let skill_id = level_up_skill[j]['id']
+            let skill_up_num = level_up_skill[j]['num']
+            if (String(skill_id) == String(Behaviorid)) {
+              let skilllevel = item.level + skill_up_num
+              _data[i].level = skilllevel
+            }
+          }
+        }
+      }
       let pathName = ''
       switch (i) {
         case 0:
@@ -142,6 +214,18 @@ export class Panel extends plugin {
     })
     // 去除秘技
     return _data.filter(i => i.type != '秘技')
+  }
+
+  /** 处理技能树 */
+  handleSkillTree (data, charpath) {
+    let _data = _.cloneDeep(data)
+    _data = _data.map(item => {
+      return {
+        ...item,
+        position: skillTreeData[charpath][item.anchor]
+      }
+    })
+    return _data
   }
 
   /** 获取面板图 */
@@ -192,14 +276,44 @@ export class Panel extends plugin {
   }
 
   async update (e) {
-    let user = this.e.user_id
+    let user = this.e.user
     let ats = e.message.filter(m => m.type === 'at')
     const messageText = e.msg
     const messageReg = new RegExp(`^${rulePrefix}(更新面板|面板更新)`)
     let uid = messageText.replace(messageReg, '')
+    if (!uid && cfg.package.name != 'yunzai') {
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          let { at = '' } = e
+          user = await NoteUser.create(at)
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              let at = ats[i].qq
+              user = await NoteUser.create(at)
+              break
+            }
+          }
+        }
+      }
+      await this.miYoSummerGetUid()
+      uid = user?.getUid('sr') || ''
+    }
+    user = this.e.user_id
     if (!uid) {
-      if (ats.length > 0 && !e.atBot) {
-        user = ats[0].qq
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          user = ats[ats.length - 1].qq
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+              ats[i].qq != e.bot.tiny_id) {
+              user = ats[i].qq
+              break
+            }
+          }
+        }
       }
       await this.miYoSummerGetUid()
       uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
@@ -236,7 +350,9 @@ export class Panel extends plugin {
     apiList.forEach((item, i) => {
       msg += `${i + 1}：${item.split('/')[2]}\n`
     })
-    msg += `当前API：\n${defaultSelect}：${apiList[defaultSelect - 1].split('/')[2]}`
+    msg += `当前API：\n${defaultSelect}：${
+      apiList[defaultSelect - 1].split('/')[2]
+    }`
     await e.reply(msg)
   }
 
@@ -301,10 +417,12 @@ export class Panel extends plugin {
     const timeKey = `STAR_RAILWAY:userPanelDataTime:${uid}`
     let previousData = await readData(uid)
     if ((previousData.length < 1 || isForce) && !forceCache) {
-      logger.mark('SR-panelApi强制查询')
-      await this.e.reply(`正在获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`)
+      logger.info('SR-panelApi强制查询')
+      await this.e.reply(
+        `正在获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`
+      )
       try {
-        logger.mark('SR-panelApi开始查询', uid)
+        logger.info('SR-panelApi开始查询', uid)
         let time = await redis.get(timeKey)
         if (time) {
           time = parseInt(time)
@@ -321,7 +439,7 @@ export class Panel extends plugin {
           res = await fetch(api + uid, {
             headers: {
               'x-request-sr': getSign(uid),
-              'library': 'hewang1an'
+              library: 'hewang1an'
             }
           })
           cardData = await res.json()
@@ -329,7 +447,9 @@ export class Panel extends plugin {
           logger.error(error)
           throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         }
-        if (!res) throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
+        if (!res) {
+          throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
+        }
         // 设置查询时间
         await redis.setEx(timeKey, 360 * 60, Date.now().toString())
         if ('detail' in cardData) throw Error(cardData.detail)
@@ -337,7 +457,9 @@ export class Panel extends plugin {
           throw Error(`uid:${uid}未查询到任何数据`)
         }
         if (!cardData.playerDetailInfo.isDisplayAvatarList) {
-          throw Error(`uid:${uid}更新面板失败\n可能是角色展柜未开启或者该用户不存在`)
+          throw Error(
+            `uid:${uid}更新面板失败\n可能是角色展柜未开启或者该用户不存在`
+          )
         }
         const assistRole = cardData.playerDetailInfo.assistAvatar
         const displayRoles = cardData.playerDetailInfo.displayAvatars || []
@@ -357,7 +479,7 @@ export class Panel extends plugin {
         throw Error(error)
       }
     } else {
-      // logger.mark('SR-panelApi使用缓存')
+      // logger.info('SR-panelApi使用缓存')
       const cardData = previousData
       return cardData
     }
@@ -375,12 +497,16 @@ export class Panel extends plugin {
     }
     const api = await panelApi()
     const data = await this.getPanelData(uid, false)
-    const lastUpdateTime = data.find(i => i.is_new && i.lastUpdateTime)?.lastUpdateTime
+    const lastUpdateTime = data.find(
+      i => i.is_new && i.lastUpdateTime
+    )?.lastUpdateTime
     let renderData = {
       api: api.split('/')[2],
       uid,
       data,
-      time: moment(lastUpdateTime).format('YYYY-MM-DD HH:mm:ss dddd') ?? '该页数据为缓存数据，非最新数据'
+      time:
+        moment(lastUpdateTime).format('YYYY-MM-DD HH:mm:ss dddd') ??
+        '该页数据为缓存数据，非最新数据'
     }
     // 渲染数据
     await renderCard(e, renderData)
@@ -434,6 +560,7 @@ export class Panel extends plugin {
     return userData
   }
 }
+
 /**
  * 替换老数据
  * @param {Array} oldData 老数据
@@ -442,8 +569,8 @@ export class Panel extends plugin {
  */
 async function updateData (oldData, newData) {
   let returnData = oldData
-  // logger.mark('SR-updateData', oldData, newData);
-  const handle = (name) => {
+  // logger.info('SR-updateData', oldData, newData);
+  const handle = name => {
     return name === '{nickname}' || name === '{NICKNAME}' ? '开拓者' : name
   }
   oldData.forEach((oldItem, i) => {
@@ -475,7 +602,11 @@ function saveData (uid, data) {
     fs.mkdirSync(dataDir, { recursive: true })
   }
   try {
-    fs.writeFileSync(`${dataDir}/${uid}.json`, JSON.stringify(data, null, '\t'), 'utf-8')
+    fs.writeFileSync(
+      `${dataDir}/${uid}.json`,
+      JSON.stringify(data, null, '\t'),
+      'utf-8'
+    )
     return true
   } catch (err) {
     logger.error('写入失败：', err)
@@ -493,6 +624,7 @@ function readData (uid) {
     return []
   }
 }
+
 /**
  * @description: 读取JSON文件
  * @param {string} path 路径
@@ -517,6 +649,7 @@ async function renderCard (e, data) {
     ...data
   }
   await runtimeRender(e, '/panel/new_card.html', renderData, {
+    escape: false,
     scale: 1.6
   })
 }

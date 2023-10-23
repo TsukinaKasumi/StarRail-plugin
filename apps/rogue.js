@@ -46,7 +46,7 @@ export class Rogue extends plugin {
     }
     let uid = e.msg.match(/\d+/)?.[0]
     await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
+    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
     if (!uid) {
       return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
     }
@@ -74,7 +74,7 @@ export class Rogue extends plugin {
     }
     const { url, headers } = api.getUrl('srRogue', { deviceFp, schedule_type })
     delete headers['x-rpc-page']
-    logger.mark({ url, headers })
+    logger.debug({ url, headers })
     let res = await fetch(url, {
       headers
     })
@@ -131,7 +131,7 @@ export class Rogue extends plugin {
     }
     const { url, headers } = api.getUrl('srRogueLocust', { deviceFp })
     delete headers['x-rpc-page']
-    logger.mark({ url, headers })
+    logger.debug({ url, headers })
     let res = await fetch(url, {
       headers
     })

@@ -30,8 +30,7 @@ ul {
 .header .left img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .header .right {
   flex: 1;
@@ -72,7 +71,7 @@ ul {
 }
 .header .right .attribute-box .attribute-item {
   height: 40px;
-  margin-top: 10px;
+  margin-top: 6.5px;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -375,4 +374,67 @@ ul {
 .copyright {
   margin-top: 15px;
   font-size: 16px;
-}/*# sourceMappingURL=new_panel.css.map */
+}
+
+.skill_tree {
+  width: 100%;
+  margin-top: 15px;
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #fce097;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.skill_tree #skillTreeCanvas {
+  width: 60%;
+  font-family: "SR";
+}
+
+.damage {
+  width: 100%;
+  margin-top: 15px;
+  max-width: 100%;
+  border: 0.1em solid #fce097;
+  border-radius: 0.5em;
+  overflow: hidden;
+  flex-shrink: 1;
+  box-sizing: border-box;
+  display: flex;
+}
+.damage table {
+  font-size: 1.2em;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.damage table th,
+.damage table td {
+  padding: 0.5em;
+  border: 0.1em solid #fce097;
+  text-align: center;
+}
+.damage table th:nth-child(1),
+.damage table td:nth-child(1) {
+  border-left: none;
+}
+.damage table th:nth-last-child(1),
+.damage table td:nth-last-child(1) {
+  border-right: none;
+}
+.damage table tbody tr:nth-last-child(1) td {
+  border-bottom: none;
+}
+.damage table thead {
+  font-size: 1.1em;
+  background-color: #fce097;
+  color: #000;
+}
+.damage table thead tr:nth-child(1) th {
+  border-top: none;
+}
+.damage table thead tr th {
+  padding: 0.3em;
+}
+
+/*# sourceMappingURL=new_panel.css.map */

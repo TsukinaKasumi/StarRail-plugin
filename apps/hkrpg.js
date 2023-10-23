@@ -93,6 +93,13 @@ export class Hkrpg extends plugin {
         result.game_uid = uid
         result.nickname = '开拓者'
       }
+      if (
+        result?.phone_background_image_url ===
+        'https://act-webstatic.mihoyo.com/game_record/hkrpg/.png'
+      ) {
+        result.phone_background_image_url =
+          'https://act-webstatic.mihoyo.com/game_record/hkrpg/SpriteOutput/PhoneTheme/Theme/PhoneThemeMain/221000.png'
+      }
       await runtimeRender(e, '/card/card.html', result, {
         scale: 1.4
       })
@@ -129,6 +136,7 @@ export class Hkrpg extends plugin {
   }
 
   async getPayLog (e) {
+    let user = this.e.user
     const reg = /(星琼|古老梦华|体力|遗器|光锥|充值|武器)记录(\d{0,})$/ig
     const command = reg.exec(e.msg)
     let type = command[1]
@@ -157,7 +165,7 @@ export class Hkrpg extends plugin {
         break
     }
     await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)
+    let uid = (await redis.get(`STAR_RAILWAY:UID:${e.user_id}`)) || user?.getUid('sr')
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
