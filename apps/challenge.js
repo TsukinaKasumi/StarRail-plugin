@@ -27,6 +27,8 @@ export class Challenge extends plugin {
   }
 
   async challenge (e) {
+    this.e.isSr = true
+    this.isSr = true
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -67,31 +69,26 @@ export class Challenge extends plugin {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
     // 先查simple，大概率simple不出验证码，详细才出
-    let simpleRes = await this.simple(api, deviceFp, scheduleType)
-    let simpleChallengeData = await simpleRes.json()
-    await api.checkCode(this.e, simpleChallengeData, 'srNote')
-    if (simpleChallengeData.retcode !== 0) {
+    let simpleRes = await api.getData('srChallengeSimple', { deviceFp, schedule_type: scheduleType })
+    simpleRes = await api.checkCode(this.e, simpleRes, 'srChallengeSimple', { deviceFp, schedule_type: scheduleType })
+    if (simpleRes.retcode !== 0) {
       // 连简单也出验证码，打住
       return false
     }
+    let challengeData = simpleRes
     // 简单的没出验证码，试一下复杂的
-    const { url, headers } = api.getUrl('srChallenge', { deviceFp, schedule_type: scheduleType })
-    delete headers['x-rpc-page']
-    // logger.mark({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
-
-    let challengeData = await res.json()
-    let retcode = Number(challengeData.retcode)
-    if (retcode !== 0) {
-      challengeData = simpleChallengeData
+    let res = await api.getData('srChallenge', { deviceFp, schedule_type: scheduleType })
+    res = await api.checkCode(this.e, res, 'srChallenge', { deviceFp, schedule_type: scheduleType })
+    let retcode = Number(res.retcode)
+    if (retcode === 0) {
+      challengeData = res
+    } else {
+      logger.warn('星铁深渊详细信息出现验证码，仅显示最后一层信息')
     }
     // await api.checkCode(this.e, challengeData, 'srNote')
     // if (challengeData.retcode !== 0) {
     //   return false
     // }
-    logger.warn('星铁深渊详细信息出现验证码，仅显示最后一层信息')
     const data = { ...challengeData.data }
     data.beginTime = this.timeForamt(data.begin_time)
     data.endTime = this.timeForamt(data.end_time)
@@ -114,15 +111,6 @@ export class Challenge extends plugin {
       uid,
       type: scheduleType
     })
-  }
-
-  async simple (api, deviceFp, scheduleType) {
-    const { url, headers } = api.getUrl('srChallengeSimple', { deviceFp, schedule_type: scheduleType })
-    delete headers['x-rpc-page']
-    let res = await fetch(url, {
-      headers
-    })
-    return res
   }
 
   async miYoSummerGetUid () {

@@ -27,6 +27,7 @@ export class Rogue extends plugin {
       ]
     })
     this.User = new User(e)
+
   }
 
   get app2config () {
@@ -34,6 +35,8 @@ export class Rogue extends plugin {
   }
 
   async rogue (e) {
+    this.e.isSr = true
+    this.isSr = true
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -77,7 +80,7 @@ export class Rogue extends plugin {
     })
 
     let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srNote')
+    await api.checkCode(this.e, cardData, 'srNote', { deviceFp, schedule_type })
     if (cardData.retcode !== 0) {
       return false
     }
@@ -94,6 +97,8 @@ export class Rogue extends plugin {
   }
 
   async rogue_locust (e) {
+    this.e.isSr = true
+    this.isSr = true
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -132,7 +137,7 @@ export class Rogue extends plugin {
     })
 
     let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srNote')
+    await api.checkCode(this.e, cardData, 'srNote', { deviceFp})
     if (cardData.retcode !== 0) {
       return false
     }

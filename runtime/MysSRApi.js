@@ -2,95 +2,21 @@ import MysApi from '../../genshin/model/mys/mysApi.js'
 import md5 from 'md5'
 import _ from 'lodash'
 import crypto from 'crypto'
+import SRApiTool from "./SRApiTool.js";
 const DEVICE_ID = randomString(32).toUpperCase()
 const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
   constructor (uid, cookie, option = {}) {
-    super(uid, cookie, option)
+    super(uid, cookie, option, true)
     this.uid = uid
     this.server = 'prod_gf_cn'
+    // this.isSr = true
     // this.server = 'hkrpg_cn'
+    this.apiTool = new SRApiTool(uid, this.server)
   }
 
   getUrl (type, data = {}) {
-    let host, hostRecord, hostPublicData
-    if (['prod_gf_cn'].includes(this.server)) {
-      host = 'https://api-takumi.mihoyo.com/'
-      hostRecord = 'https://api-takumi-record.mihoyo.com/'
-      hostPublicData = 'https://public-data-api.mihoyo.com/'
-    } else {
-      host = 'https://api-os-takumi.mihoyo.com/'
-      hostRecord = 'https://bbs-api-os.mihoyo.com/'
-    }
-    let urlMap = {
-      srCharacterDetail: {
-        url: `${hostRecord}game_record/app/hkrpg/api/avatar/info`,
-        query: `need_wiki=true&role_id=${this.uid}&server=${this.server}`
-      },
-      srUser: {
-        url: `${host}binding/api/getUserGameRolesByCookie`,
-        query: 'game_biz=hkrpg_cn'
-      },
-      srCharacter: {
-        url: `${hostRecord}game_record/app/hkrpg/api/avatar/basic`,
-        query: `rolePageAccessNotAllowed=&role_id=${this.uid}&server=${this.server}`
-      },
-      srNote: {
-        url: `${hostRecord}game_record/app/hkrpg/api/note`,
-        query: `role_id=${this.uid}&server=${this.server}`
-      },
-      srWidget: {
-        url: `${hostRecord}game_record/app/hkrpg/aapi/widget`,
-        dsSalt: 'x6'
-      },
-      srCard: {
-        url: `${hostRecord}game_record/app/hkrpg/api/index`,
-        query: `role_id=${this.uid}&server=${this.server}`
-      },
-      srMonth: {
-        url: `${host}event/srledger/month_info`,
-        query: `uid=${this.uid}&region=${this.server}&month=`
-      },
-      srChallenge: {
-        url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
-        query: `isPrev=&need_all=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
-      },
-      srChallengeSimple: {
-        url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
-        query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
-      },
-      srRogue: {
-        url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
-        query: `need_detail=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
-      },
-      srRogueLocust: {
-        url: `${hostRecord}game_record/app/hkrpg/api/rogue_locust`,
-        query: `need_detail=true&role_id=${this.uid}&server=${this.server}`
-      },
-      srPayAuthKey: {
-        url: `${host}binding/api/genAuthKey`,
-        body: {
-          auth_appid: 'csc',
-          game_biz: 'hkrpg_cn',
-          game_uid: this.uid * 1,
-          region: 'prod_gf_cn'
-        },
-        dsSalt: 'web'
-      },
-      getFp: {
-        url: `${hostPublicData}device-fp/api/getFp`,
-        body: {
-          seed_id: `${generateSeed(16)}`,
-          device_id: this.deviceId,
-          platform: '5',
-          seed_time: new Date().getTime() + '',
-          ext_fields: '{"userAgent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.44.1","browserScreenSize":281520,"maxTouchPoints":5,"isTouchSupported":true,"browserLanguage":"zh-CN","browserPlat":"iPhone","browserTimeZone":"Asia/Shanghai","webGlRender":"Apple GPU","webGlVendor":"Apple Inc.","numOfPlugins":0,"listOfPlugins":"unknown","screenRatio":3,"deviceMemory":"unknown","hardwareConcurrency":"4","cpuClass":"unknown","ifNotTrack":"unknown","ifAdBlock":0,"hasLiedResolution":1,"hasLiedOs":0,"hasLiedBrowser":0}',
-          app_name: 'account_cn',
-          device_fp: '38d7ee834d1e9'
-        },
-        noDs: true
-      }
-    }
+    let urlMap = this.apiTool.getUrlMap(data)
     if (!urlMap[type]) return false
     let { url, query = '', body = '', noDs = false, dsSalt = '' } = urlMap[type]
     if (query) url += `?${query}`
@@ -99,11 +25,14 @@ export default class MysSRApi extends MysApi {
     let headers = this.getHeaders(query, body)
     if (data.deviceFp) {
       headers['x-rpc-device_fp'] = data.deviceFp
+      // 兼容喵崽
+      this._device_fp = { data: { device_fp: data.deviceFp } }
     }
     if (typeof this.cookie == 'string') {
       headers.cookie = this.cookie
     } else {
       let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
+      this.cookie = cookie?.ck
       headers.cookie = cookie?.ck
       this.deviceId = cookie?.device_id
     }
@@ -129,8 +58,8 @@ export default class MysSRApi extends MysApi {
         'x-rpc-app_version': '2.40.1',
         'User-Agent': 'okhttp/4.8.0',
         'x-rpc-client_type': '5',
-        'Referer': 'https://app.mihoyo.com',
-        'Origin': 'https://webstatic.mihoyo.com',
+        Referer: 'https://app.mihoyo.com',
+        Origin: 'https://webstatic.mihoyo.com',
         // Cookie: this.cookies,
         // DS: this.getDS2(),
         'x-rpc-sys_version': '12',
@@ -138,7 +67,7 @@ export default class MysSRApi extends MysApi {
         'x-rpc-device_id': DEVICE_ID,
         'x-rpc-device_name': DEVICE_NAME,
         'x-rpc-device_model': 'Mi 10',
-        'Host': 'api-takumi.mihoyo.com'
+        Host: 'api-takumi.mihoyo.com'
       }
       headers = Object.assign(headers, extra)
     } else {
@@ -215,11 +144,11 @@ export default class MysSRApi extends MysApi {
     return {
       'x-rpc-app_version': client.app_version,
       'x-rpc-client_type': client.client_type,
-      'x-rpc-page': '3.1.3_#/rpg',
+      // 'x-rpc-page': '3.1.3_#/rpg',
       'User-Agent': client.User_Agent,
-      'Referer': client.Referer,
-      'DS': this.getDs(query, body),
-      'Origin': client.Origin
+      Referer: client.Referer,
+      DS: this.getDs(query, body),
+      Origin: client.Origin
     }
   }
 
@@ -227,23 +156,35 @@ export default class MysSRApi extends MysApi {
    * 校验状态码
    * @param e 消息e
    * @param res 请求返回
-   * @param callbackUrl url
+   * @param type 请求类型 如 srNote
+   * @param data 查询请求的数据
    * @returns {Promise<*|boolean>}
    */
-  async checkCode (e, res, callbackUrl) {
+  async checkCode (e, res, type, data) {
     if (!res || !e) {
       this.e.reply('米游社接口请求失败，暂时无法查询')
       return false
     }
     this.e = e
+    this.e.isSr = true
     res.retcode = Number(res.retcode)
     switch (res.retcode) {
       case 0:
         break
-      case 1034:
-        logger.mark(`[米游社sr查询失败][uid:${this.uid}]遇到验证码`)
-        this.e.reply('米游社查询遇到验证码，请稍后再试')
+      case 1034: {
+        let handler = this.e.runtime?.handler || {}
+
+        // 如果有注册的mys.req.err，调用
+        if (handler.has('mys.req.err')) {
+          logger.mark(`[米游社sr查询失败][uid:${this.uid}][qq:${this.userId}] 遇到验证码，尝试调用 Handler mys.req.err`)
+          res = await handler.call('mys.req.err', this.e, { mysApi: this, type, res, data, mysInfo: this }) || res
+        }
+        if (!res || res?.retcode === 1034) {
+          logger.mark(`[米游社查询失败][uid:${this.uid}][qq:${this.userId}] 遇到验证码`)
+          this.e.reply('米游社查询遇到验证码，请稍后再试')
+        }
         break
+      }
       default:
         if (/(登录|login)/i.test(res.message)) {
           logger.mark(`[ck失效][uid:${this.uid}]`)
@@ -276,4 +217,3 @@ export function generateSeed (length = 16) {
   }
   return result
 }
-

@@ -21,12 +21,15 @@ export class Note extends plugin {
         }
       ]
     })
+
   }
 
   async note (e) {
     // const isPro = /pro/.test(e.msg)
     // 20230907 体力默认改用小组件
     const isPro = true
+    this.e.isSr = true
+    this.isSr = true
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
@@ -62,21 +65,25 @@ export class Note extends plugin {
         await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
       }
     }
-    const cardData = await api.getData(isPro ? 'srWidget' : 'srNote', { deviceFp })
-    await api.checkCode(e, cardData)
+    let type = isPro ? 'srWidget' : 'srNote'
+    const cardData = await api.getData(type, { deviceFp })
+    await api.checkCode(e, cardData, type, {})
     if (!cardData || cardData.retcode !== 0) return false
     let data = cardData.data
     data.type = isPro ? 'module' : 'ordinary'
     data.userData = userData
     data.uid = uid
     data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
-    data.ktl_name = this.e.nickname // 名字显示
-    if (this.e.member?.getAvatarUrl) // 头像
+    // 名字显示
+    data.ktl_name = this.e.nickname
+    // 头像
+    if (this.e.member?.getAvatarUrl) {
       data.ktl_avatar = await this.e.member.getAvatarUrl()
-    else if (this.e.friend?.getAvatarUrl)
+    } else if (this.e.friend?.getAvatarUrl) {
       data.ktl_avatar = await this.e.friend.getAvatarUrl()
-    else
+    } else {
       data.ktl_avatar = this.e.bot.avatar
+    }
     data = this.handleData(data)
     logger.debug(data)
     await runtimeRender(this.e, '/note/new_note.html', data, {
@@ -113,9 +120,9 @@ export class Note extends plugin {
     let { game_uid: gameUid } = userData
     await redis.set(key, gameUid)
     await redis.setEx(
-      `STAR_RAILWAY:userData:${gameUid}`,
-      60 * 60,
-      JSON.stringify(userData)
+        `STAR_RAILWAY:userData:${gameUid}`,
+        60 * 60,
+        JSON.stringify(userData)
     )
     return userData
   }
@@ -138,8 +145,8 @@ function getRecoverTimeStr (seconds) {
   const dayDiff = date.getDate() - now.getDate()
   const str = dayDiff === 0 ? '今日' : '明日'
   const timeStr = `${date.getHours().toString().padStart(2, '0')}:${date
-    .getMinutes()
-    .toString()
-    .padStart(2, '0')}`
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}`
   return `<span class="golden">[${str}]</span> ${timeStr}完全恢复`
 }

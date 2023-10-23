@@ -22,9 +22,12 @@ export class Month extends plugin {
       ]
     })
     this.User = new User(e)
+
   }
 
   async month (e) {
+    this.e.isSr = true
+    this.isSr = true
     let user = this.e.user_id
     let ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
