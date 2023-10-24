@@ -30,7 +30,7 @@ export default class MysSRApi extends MysApi {
     }
     if (typeof this.cookie == 'string') {
       headers.cookie = this.cookie
-    } else {
+    } else if (this.cookie) {
       let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
       this.cookie = cookie?.ck
       headers.cookie = cookie?.ck
