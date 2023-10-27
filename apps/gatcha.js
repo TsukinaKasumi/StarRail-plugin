@@ -5,6 +5,7 @@ import { rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GatchaData from '../utils/gatcha/index.js'
 import setting from '../utils/setting.js'
+import GachaLog from '../../genshin/model/gachaLog.js';
 
 export class Gatcha extends plugin {
   constructor (e) {
@@ -14,24 +15,22 @@ export class Gatcha extends plugin {
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
       priority: -114514,
-      rule: [
-        {
-          reg: `^${rulePrefix}抽卡链接(绑定)?$`,
-          fnc: 'bindAuthKey'
-        },
-        {
-          reg: `^${rulePrefix}(角色|光锥|武器|常驻|新手)?(跃迁|抽卡)?(记录|分析|统计)`,
-          fnc: 'gatcha'
-        },
-        {
-          reg: `^${rulePrefix}抽卡帮助$`,
-          fnc: 'gatchahelp'
-        },
-        {
-          reg: `^${rulePrefix}更新(抽卡|跃迁)(记录)?$`,
-          fnc: 'updateGatcha'
-        }
-      ]
+      rule: [{
+        reg: `^${rulePrefix}抽卡链接(绑定)?$`,
+        fnc: 'bindAuthKey'
+      },
+      {
+        reg: `^${rulePrefix}(角色|光锥|武器|常驻|新手)?(跃迁|抽卡)?(记录|分析|统计)`,
+        fnc: 'gatcha'
+      },
+      {
+        reg: `^${rulePrefix}抽卡帮助$`,
+        fnc: 'gatchahelp'
+      },
+      {
+        reg: `^${rulePrefix}更新(抽卡|跃迁)(记录)?$`,
+        fnc: 'updateGatcha'
+      }]
     })
   }
 
@@ -63,14 +62,28 @@ export class Gatcha extends plugin {
       key = key.split('authkey=')[1].split('&')[0]
       let user = this.e.user_id
       await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
-      await this.reply('绑定成功，正在获取数据', false)
+      await this.reply('星铁插件绑定成功，正在获取数据', false)
       console.log('uid', uid)
       await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
       this.updateGatcha(this.e).then(() => {
-        logger.info('绑定抽卡链接任务完成')
+        logger.info('星铁插件绑定抽卡链接任务完成')
       })
     } catch (error) {
-      this.reply('抽卡链接错误，请检查链接重新绑定', false)
+      this.reply('星铁插件：抽卡链接错误，请检查链接重新绑定', false)
+    }
+    try {
+      const newGachalog = new GachaLog(this.e)
+      newGachalog.e = this.e
+      newGachalog.e.msg = this.e.msg
+      newGachalog.e.isSr = true
+      newGachalog.pool =
+          [{ type: 11, typeName: '角色' },
+           { type: 12, typeName: '光锥' },
+           { type: 1, typeName: '常驻' },
+           { type: 2, typeName: '新手' }]
+      await (newGachalog.logUrl())
+    } catch {
+      this.reply('喵喵插件绑定失败', false)
     }
     this.finish('doBindAuthKey')
   }
@@ -83,9 +96,7 @@ export class Gatcha extends plugin {
     }
     const authKey = await redis.get(`STAR_RAILWAY:AUTH_KEY:${user}`)
     if (!authKey) {
-      await this.e.reply(
-        `未绑定抽卡链接，请点击链接查看说明\n${this.appconfig.docs}\n发送[#星铁抽卡链接]绑定`
-      )
+      await this.e.reply(`未绑定抽卡链接，请点击链接查看说明\n${this.appconfig.docs}\n发送[#星铁抽卡链接]绑定`)
       return false
     }
     return authKey
@@ -169,10 +180,7 @@ export class Gatcha extends plugin {
       //   uid
       // })
       await runtimeRender(e, '/gatcha/new.html', {
-        ...stat,
-        uid,
-        type,
-        filterRank: type === 0 ? 5 : 4
+        ...stat, uid, type, filterRank: type === 0 ? 5 : 4
       })
     } catch (err) {
       logger.error(err)
