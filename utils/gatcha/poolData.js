@@ -89,5 +89,15 @@ export const poolData = [
     poolName: '月有薄蚀',
     char5: [ '镜流' ],
     weapon5: [ '此身为剑' ]
+  }, {
+    id: 'ver1.4up',
+    ids: ['2012', '3012'],
+    version: '1.3',
+    half: '下半',
+    from: '2023-10-27 12:00:00',
+    to: '2023-11-14 14:59:59',
+    poolName: '落日条款',
+    char5: [ '托帕&账账' ],
+    weapon5: [ '烦恼着，幸福着' ]
   }
 ]

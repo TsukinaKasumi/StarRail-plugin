@@ -5,6 +5,8 @@ import { rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GatchaData from '../utils/gatcha/index.js'
 import setting from '../utils/setting.js'
+import cfg from '../../../lib/config/config.js'
+import NoteUser from '../../genshin/model/mys/NoteUser.js'
 
 export class Gatcha extends plugin {
   constructor (e) {
@@ -92,13 +94,32 @@ export class Gatcha extends plugin {
   }
 
   async updateGatcha (e) {
-    let user = e.user_id
+    let userId = e.user_id
     const ats = e.message.filter(m => m.type === 'at')
     if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
+      userId = ats[0].qq
+    }
+    let uid, user
+    if (cfg.package.name != 'yunzai') {
+      if (ats.length > 0) {
+        if (!e.atBot) {
+          let { at = '' } = e
+          user = await NoteUser.create(at)
+        } else if (ats.length > 1) {
+          for (let i = ats.length - 1; i >= 0; i--) {
+            if (ats[i].qq != e.bot.uin &&
+                ats[i].qq != e.bot.tiny_id) {
+              let at = ats[i].qq
+              user = await NoteUser.create(at)
+              break
+            }
+          }
+        }
+      }
+      uid = user?.getUid('sr') || ''
     }
 
-    const uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+    uid = uid || await redis.get(`STAR_RAILWAY:UID:${userId}`)
     if (!uid) {
       return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
     }
