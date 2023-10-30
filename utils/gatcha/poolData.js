@@ -47,8 +47,8 @@ export const poolData = [
     from: '2023-07-19 10:30:00',
     to: '2023-08-09 11:59:59',
     poolName: '业途游魂',
-    char5: [ '刃' ],
-    weapon5: [ '到不了的彼岸' ]
+    char5: ['刃'],
+    weapon5: ['到不了的彼岸']
   }, {
     id: 'ver1.2down',
     ids: ['2008', '3008'],
@@ -57,8 +57,8 @@ export const poolData = [
     from: '2023-08-09 12:00:00',
     to: '2023-08-29 14:59:59',
     poolName: '夜将不眠',
-    char5: [ '卡芙卡' ],
-    weapon5: [ '只需等待' ]
+    char5: ['卡芙卡'],
+    weapon5: ['只需等待']
   }, {
     id: 'ver1.3up',
     ids: ['2009', '3009'],
@@ -67,8 +67,8 @@ export const poolData = [
     from: '2023-08-30 10:20:00',
     to: '2023-09-20 11:59:59',
     poolName: '濯世垂虹',
-    char5: [ '丹恒•饮月' ],
-    weapon5: [ '比阳光更明亮的' ]
+    char5: ['丹恒•饮月'],
+    weapon5: ['比阳光更明亮的']
   }, {
     id: 'ver1.3down',
     ids: ['2010', '3010'],
@@ -77,8 +77,8 @@ export const poolData = [
     from: '2023-09-20 12:00:00',
     to: '2023-10-10 14:59:59',
     poolName: '穷观妙算',
-    char5: [ '符玄' ],
-    weapon5: [ '她已闭上双眼' ]
+    char5: ['符玄'],
+    weapon5: ['她已闭上双眼']
   }, {
     id: 'ver1.4up',
     ids: ['2011', '3011'],
@@ -87,17 +87,17 @@ export const poolData = [
     from: '2023-10-11 10:00:00',
     to: '2023-10-27 11:59:59',
     poolName: '月有薄蚀',
-    char5: [ '镜流' ],
-    weapon5: [ '此身为剑' ]
+    char5: ['镜流'],
+    weapon5: ['此身为剑']
   }, {
-    id: 'ver1.4up',
+    id: 'ver1.4down',
     ids: ['2012', '3012'],
     version: '1.3',
     half: '下半',
     from: '2023-10-27 12:00:00',
     to: '2023-11-14 14:59:59',
     poolName: '落日条款',
-    char5: [ '托帕&账账' ],
-    weapon5: [ '烦恼着，幸福着' ]
+    char5: ['托帕&账账'],
+    weapon5: ['烦恼着，幸福着']
   }
 ]
