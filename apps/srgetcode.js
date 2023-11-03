@@ -66,7 +66,7 @@ export class srexchange extends plugin {
     let url = {
       index: 'https://api-takumi.mihoyo.com/event/miyolive/index',
       code: `https://api-takumi-static.mihoyo.com/event/miyolive/refreshCode?version=${this.code_ver}&time=${this.now}`,
-      actId: 'https://bbs-api.mihoyo.com/painter/api/user_instant/list?offset=0&size=20&uid=288909600'
+      actId: 'https://bbs-api.miyoushe.com/apihub/api/home/new?gids=6'
     }
 
     let response
@@ -97,20 +97,18 @@ export class srexchange extends plugin {
       return ''
     }
 
-    for (const p of ret.data.list) {
-      const post = p.post.post
-      if (!post) {
-        continue
-      }
-      let date = new Date(post.created_at * 1000)
-      date.setDate(date.getDate() + 1)
-      this.deadline = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} 12:00:00`
-      let structured_content = post.structured_content
-
-      let result = structured_content.match(/{"link":"https:\/\/webstatic.mihoyo.com\/bbs\/event\/live\/index.html\?act_id=(.*?)\\/)
-      if (result) {
-        return result[1]
-      }
+    const actid_data = ret.data.navigator.find((item) => {
+      return item.name === "前瞻节目";
+    });
+    if (!actid_data) {
+      return ''
     }
+    let date = new Date(actid_data.reddot_online_time * 1000)
+    date.setDate(date.getDate() + 1)
+    this.deadline = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} 12:00:00`
+
+    const actid_path = actid_data.app_path;
+    const actid_url = new URL(actid_path);
+    return actid_url.searchParams.get("act_id");
   }
 }
