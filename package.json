@@ -1,0 +1,15 @@
+{
+  "name": "starrail-plugin",
+  "version": "1.0.0",
+  "author": "hewang1an",
+  "description": "StarRail-plugin",
+  "type": "module",
+  "scripts": {
+  },
+  "devDependencies": {
+    "cheerio": "1.0.0-rc.12"
+  },
+  "pnpm": {
+    "patchedDependencies": {}
+  }
+}
