@@ -1,9 +1,3 @@
-/*
- * @Date: 2023-11-05 21:25:01
- * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
- * @LastEditTime: 2023-11-05 21:48:41
- * @FilePath: \NSQQ\\wsl.localhost\Ubuntu\root\Yunzai\plugins\StarRail-plugin\apps\srgetcode.js
- */
 import plugin from '../../../lib/plugins/plugin.js'
 import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../utils/common.js'
