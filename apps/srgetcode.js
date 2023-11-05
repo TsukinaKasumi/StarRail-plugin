@@ -1,7 +1,15 @@
+/*
+ * @Date: 2023-11-05 21:25:01
+ * @LastEditors: Night-stars-1 nujj1042633805@gmail.com
+ * @LastEditTime: 2023-11-05 21:48:41
+ * @FilePath: \NSQQ\\wsl.localhost\Ubuntu\root\Yunzai\plugins\StarRail-plugin\apps\srgetcode.js
+ */
 import plugin from '../../../lib/plugins/plugin.js'
 import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../utils/common.js'
 import fetch from 'node-fetch'
+import cheerio from 'cheerio'
+
 // import lodash from 'lodash'
 export class srexchange extends plugin {
   constructor (e) {
@@ -21,37 +29,33 @@ export class srexchange extends plugin {
 
   async srgetCode () {
     this.now = parseInt(Date.now() / 1000)
-    let actid = await this.getActId()
-    if (!actid) return false
-    this.actId = actid
-
+    await this.getactId()
     /** index info */
     let index = await this.getData('index')
-    logger.debug(index)
+
     if (!index) return false
     if (index.retcode != 0) {
       return await this.reply(`错误：${index.message}`)
     }
 
-    let { title, code_ver, remain } = index.data.live
-    this.code_ver = code_ver
-    if (remain > 0) {
+    const html = index.data.content.contents?.[0]?.text;
+    // 使用cheerio加载HTML
+    const $ = cheerio.load(html);
+    const elements = $('td[data-colwidth="237"]');
+    const title = index.data.content.title.replace("直播回顾", "");
+    const time_deadline = $('td[data-colwidth="179"]').text();
+    const deadline = time_deadline.match(/(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2})/)[1];
+    const codes = elements.map((index, element) => {
+      return $(element).text();
+    }).get();
+
+    if (codes.length == 0) {
       return await this.reply(`暂无直播兑换码\n${title}`)
-    }
-
-    let code = await this.getData('code')
-    if (!code || !code.data?.code_list) return false
-    let codes = []
-
-    for (let val of code.data.code_list) {
-      if (val.code) {
-        codes.push(val.code)
-      }
     }
 
     let msg = ''
     if (codes.length >= 3) {
-      msg = [`${title}-直播兑换码`, '兑换码存在有效期，请及时兑换哦~', `兑换码过期时间: \n${this.deadline}`, ...codes]
+      msg = [`${title}-直播兑换码`, '兑换码存在有效期，请及时兑换哦~', `兑换码过期时间: \n${deadline}`, ...codes]
       msg = await common.makeForwardMsg(this.e, msg, msg[0])
     } else if (this.e.msg.includes('#')) {
       msg += codes.join('\n')
@@ -64,9 +68,9 @@ export class srexchange extends plugin {
 
   async getData (type) {
     let url = {
-      index: 'https://api-takumi.mihoyo.com/event/miyolive/index',
+      index: `https://api-static.mihoyo.com/common/blackboard/sr_wiki/v1/content/info?app_sn=sr_wiki&content_id=${this.content_id}`,
       code: `https://api-takumi-static.mihoyo.com/event/miyolive/refreshCode?version=${this.code_ver}&time=${this.now}`,
-      actId: 'https://bbs-api.miyoushe.com/apihub/api/home/new?gids=6'
+      actId: 'https://api-static.mihoyo.com/common/blackboard/sr_wiki/v1/home/content/list?app_sn=sr_wiki&channel_id=47'
     }
 
     let response
@@ -90,25 +94,14 @@ export class srexchange extends plugin {
     return res
   }
 
-  async getActId () {
-    // 获取 "act_id"
-    let ret = await this.getData('actId')
-    if (ret.error || ret.retcode !== 0) {
-      return ''
+  async getactId() {
+    const actId = await this.getData('actId');
+    if (!actId) return false;
+    if (actId.retcode != 0) {
+      return await this.reply(`错误：${actId.message}`)
     }
-
-    const actid_data = ret.data.navigator.find((item) => {
-      return item.name === "前瞻节目";
-    });
-    if (!actid_data) {
-      return ''
-    }
-    let date = new Date(actid_data.reddot_online_time * 1000)
-    date.setDate(date.getDate() + 1)
-    this.deadline = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} 12:00:00`
-
-    const actid_path = actid_data.app_path;
-    const actid_url = new URL(actid_path);
-    return actid_url.searchParams.get("act_id");
+    let actID_list = actId.data.list[0].children;
+    actID_list = actID_list.find(item => item.name == '前瞻节目回顾').list;
+    this.content_id = actID_list[0].content_id;
   }
 }
