@@ -15,7 +15,7 @@ export default new class {
     if (roleName) {
       return roleName
     } else {
-      logger.error('[星铁别名]未找到角色')
+      //logger.warn('[星铁别名]未找到角色')
       return false
     }
   }
