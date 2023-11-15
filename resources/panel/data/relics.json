@@ -3408,5 +3408,49 @@
     "main_affix_id": "56",
     "sub_affix_id": "5",
     "icon": "310_1.png"
+  },
+  "63115": {
+    "id": "63115",
+    "set_id": "311",
+    "name": "格拉默的铁骑兵团",
+    "rarity": 5,
+    "type": "NECK",
+    "max_level": 15,
+    "main_affix_id": "55",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/311_0.png"
+  },
+  "63116": {
+    "id": "63116",
+    "set_id": "311",
+    "name": "格拉默的寂静坟碑",
+    "rarity": 5,
+    "type": "OBJECT",
+    "max_level": 15,
+    "main_affix_id": "56",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/311_1.png"
+  },
+  "63125": {
+    "id": "63125",
+    "set_id": "312",
+    "name": "匹诺康尼的堂皇酒店",
+    "rarity": 5,
+    "type": "NECK",
+    "max_level": 15,
+    "main_affix_id": "55",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/312_0.png"
+  },
+  "63126": {
+    "id": "63126",
+    "set_id": "312",
+    "name": "匹诺康尼的逐梦轨道",
+    "rarity": 5,
+    "type": "OBJECT",
+    "max_level": 15,
+    "main_affix_id": "56",
+    "sub_affix_id": "5",
+    "icon": "icon/relic/312_1.png"
   }
 }

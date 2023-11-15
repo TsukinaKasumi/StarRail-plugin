@@ -28969,6 +28969,30 @@
     "element": "虚数",
     "path": "毁灭"
   },
+  "1215": {
+    "id": "1215",
+    "name": "寒鸦",
+    "tag": "hanya",
+    "rarity": 4,
+    "path": "同谐",
+    "element": "物理"
+  },
+  "1217": {
+    "id": "1217",
+    "name": "藿藿",
+    "tag": "huohuo",
+    "rarity": 5,
+    "path": "丰饶",
+    "element": "风"
+  },
+  "1302": {
+    "id": "1302",
+    "name": "银枝",
+    "tag": "argenti",
+    "rarity": 5,
+    "path": "智识",
+    "element": "物理"
+  },
   "8001": {
     "id": "8001",
     "name": "开拓者 (物理)",
