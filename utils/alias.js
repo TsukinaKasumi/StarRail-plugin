@@ -15,7 +15,7 @@ export default new class {
     if (roleName) {
       return roleName
     } else {
-      //logger.warn('[星铁别名]未找到角色')
+      logger.error('[星铁别名]未找到角色')
       return false
     }
   }
@@ -62,4 +62,5 @@ const defAlias = {
   '镜流': ['静流'],
   '托帕&账账': ['托帕','账账','胀胀','帐帐'],
   '桂乃芬': ['奶粉','乃芬','桂奶粉'],
+  '藿藿': ['藿藿','霍霍','嚯嚯','祸祸'],
 }
