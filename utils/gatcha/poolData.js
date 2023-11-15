@@ -82,7 +82,7 @@ export const poolData = [
   }, {
     id: 'ver1.4up',
     ids: ['2011', '3011'],
-    version: '1.3',
+    version: '1.4',
     half: '上半',
     from: '2023-10-11 10:00:00',
     to: '2023-10-27 11:59:59',
@@ -92,12 +92,22 @@ export const poolData = [
   }, {
     id: 'ver1.4down',
     ids: ['2012', '3012'],
-    version: '1.3',
+    version: '1.4',
     half: '下半',
     from: '2023-10-27 12:00:00',
     to: '2023-11-14 14:59:59',
     poolName: '落日条款',
     char5: ['托帕&账账'],
     weapon5: ['烦恼着，幸福着']
+  }, {
+    id: 'ver1.5up',
+    ids: ['2013', '3013'],
+    version: '1.5',
+    half: '上半',
+    from: '2023-11-15 10:00:00',
+    to: '2023-12-06 11:59:59',
+    poolName: '令奉贞凶',
+    char5: ['藿藿'],
+    weapon5: ['惊魂夜']
   }
 ]
