@@ -60,11 +60,36 @@ export class Gatcha extends plugin {
       return false
     }
     try {
-      const uid = await redis.get(`STAR_RAILWAY:UID:${this.e.user_id}`)
+      let userId = e.user_id
+      const ats = e.message.filter(m => m.type === 'at')
+      if (ats.length > 0 && !e.atBot) {
+        userId = ats[0].qq
+      }
+      let uid, user
+      if (cfg.package.name != 'yunzai') {
+        if (ats.length > 0) {
+          if (!e.atBot) {
+            let { at = '' } = e
+            user = await NoteUser.create(at)
+          } else if (ats.length > 1) {
+            for (let i = ats.length - 1; i >= 0; i--) {
+              if (ats[i].qq != e.bot.uin &&
+                  ats[i].qq != e.bot.tiny_id) {
+                let at = ats[i].qq
+                user = await NoteUser.create(at)
+                break
+              }
+            }
+          }
+        } else {
+          user = await NoteUser.create(userId)
+        }
+        uid = user?.getUid('sr') || ''
+      }
+      uid = uid || await redis.get(`STAR_RAILWAY:UID:${this.e.user_id}`)
       let key = this.e.msg.trim()
       key = key.split('authkey=')[1].split('&')[0]
-      let user = this.e.user_id
-      await redis.set(`STAR_RAILWAY:AUTH_KEY:${user}`, key)
+      await redis.set(`STAR_RAILWAY:AUTH_KEY:${userId}`, key)
       await this.reply('绑定成功，正在获取数据', false)
       console.log('uid', uid)
       await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
@@ -115,6 +140,8 @@ export class Gatcha extends plugin {
             }
           }
         }
+      } else {
+        user = await NoteUser.create(userId)
       }
       uid = user?.getUid('sr') || ''
     }
