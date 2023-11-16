@@ -73,6 +73,10 @@ export class strategy extends plugin {
 
     if (!role) return false
     role = role.replaceAll('•', '·')
+    if (role === '托帕&账账') {
+      // 特殊处理托帕名字
+      role = '托帕'
+    }
     if (group === 0) {
       // eslint-disable-next-line no-unused-vars
       let msg = []
