@@ -166,7 +166,7 @@ export class Gatcha extends plugin {
       await e.reply(`正在获取[${uid}]的跃迁数据...`)
       const gatcha = new GatchaData(uid, authKey)
       await gatcha.updateData()
-      const msg = common.makeForwardMsg(e, ['跃迁数据获取成功，你可以使用：', '*跃迁分析\n*角色分析\n*光锥分析\n*常驻分析', '查看具体的跃迁数据'])
+      const msg = await common.makeForwardMsg(e, ['跃迁数据获取成功，你可以使用：', '*跃迁分析\n*角色分析\n*光锥分析\n*常驻分析', '查看具体的跃迁数据'])
       await e.reply(msg)
     } catch (error) {
       console.log(error)
