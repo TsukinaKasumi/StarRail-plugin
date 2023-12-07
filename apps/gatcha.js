@@ -59,6 +59,7 @@ export class Gatcha extends plugin {
       await this.reply('请私聊发送抽卡链接', false, { at: true })
       return false
     }
+    let e = this.e
     try {
       let userId = e.user_id
       const ats = e.message.filter(m => m.type === 'at')
