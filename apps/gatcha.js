@@ -97,7 +97,8 @@ export class Gatcha extends plugin {
         logger.info('绑定抽卡链接任务完成')
       })
     } catch (error) {
-      this.reply('抽卡链接错误，请检查链接重新绑定', false)
+      logger.error(error)
+      this.reply('抽卡链接错误，请检查日志', false)
     }
     this.finish('doBindAuthKey')
   }
