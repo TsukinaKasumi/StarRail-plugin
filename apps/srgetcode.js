@@ -32,16 +32,22 @@ export class srexchange extends plugin {
       return await this.reply(`错误：${index.message}`)
     }
 
-    const html = index.data.content.contents?.[0]?.text;
+    const html = index.data.content.contents?.[0]?.text
     // 使用cheerio加载HTML
-    const $ = cheerio.load(html);
-    const elements = $('td[data-colwidth="237"]');
-    const title = index.data.content.title.replace("直播回顾", "");
-    const time_deadline = $('td[data-colwidth="179"]').text();
-    const deadline = time_deadline.match(/(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2})/)[1];
-    const codes = elements.map((index, element) => {
-      return $(element).text();
-    }).get();
+    const $ = cheerio.load(html)
+    const elements = $('td[data-colwidth="173"]')
+    const title = index.data.content.title.replace('直播回顾', '')
+    let deadline = $('span[style="font-size:13px"]')
+    const dateFormatRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01]) (2[0-3]|[01][0-9]):([0-5][0-9])$/
+    deadline = deadline
+      .map((_, element) => $(element).text())
+      .get()
+      .find(d => dateFormatRegex.test(d))
+    // const deadline = time_deadline.match(/(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2})/)[1];
+    const codes = elements
+      .map((_, element) => $(element).text())
+      .get()
+      .filter(c => c.length === 12)
 
     if (codes.length == 0) {
       return await this.reply(`暂无直播兑换码\n${title}`)
@@ -88,14 +94,14 @@ export class srexchange extends plugin {
     return res
   }
 
-  async getactId() {
-    const actId = await this.getData('actId');
-    if (!actId) return false;
+  async getactId () {
+    const actId = await this.getData('actId')
+    if (!actId) return false
     if (actId.retcode != 0) {
       return await this.reply(`错误：${actId.message}`)
     }
-    let actID_list = actId.data.list[0].children;
-    actID_list = actID_list.find(item => item.name == '前瞻节目回顾').list;
-    this.content_id = actID_list[0].content_id;
+    let actID_list = actId.data.list[0].children
+    actID_list = actID_list.find(item => item.name == '前瞻节目回顾').list
+    this.content_id = actID_list[0].content_id
   }
 }
