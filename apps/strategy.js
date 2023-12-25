@@ -91,19 +91,20 @@ export class strategy extends plugin {
           msg.push(segment.image(`file://${this.sfPath}`))
         }
       }
-      if (msg.length) { await this.reply(await common.makeForwardMsg(this.e, msg)) }
-      return
+      if (msg.length) { await this.reply(await common.makeForwardMsg(this.e, [msg])) }
+      return false
     }
     this.sfPath = `${this.path}/${group}/${role}.jpg`
 
     if (fs.existsSync(this.sfPath) && !isUpdate) {
       await this.e.reply(segment.image(`file://${this.sfPath}`))
-      return
+      return false
     }
 
     if (await this.getImg(role, group)) {
       await this.e.reply(segment.image(`file://${this.sfPath}`))
     }
+    return false
   }
 
   /** #攻略帮助 */
