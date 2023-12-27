@@ -25447,7 +25447,9 @@
     "path_icon": "icon/path/Erudition.png",
     "preview": "image/character_preview/1204.png",
     "portrait": "image/character_portrait/1204.png",
-    "character_overview": ["guide/OriginMirror/character_overview/1204.png"],
+    "character_overview": [
+      "guide/OriginMirror/character_overview/1204.png"
+    ],
     "character_material": ""
   },
   "1205": {
@@ -28969,6 +28971,14 @@
     "element": "虚数",
     "path": "毁灭"
   },
+  "1214": {
+    "id": "1214",
+    "name": "雪衣",
+    "tag": "xueyi",
+    "rarity": 4,
+    "path": "毁灭",
+    "element": "量子"
+  },
   "1215": {
     "id": "1215",
     "name": "寒鸦",
@@ -28992,6 +29002,22 @@
     "rarity": 5,
     "path": "智识",
     "element": "物理"
+  },
+  "1303": {
+    "id": "1303",
+    "name": "阮•梅",
+    "tag": "ruanmei",
+    "rarity": 5,
+    "path": "同谐",
+    "element": "冰"
+  },
+  "1305": {
+    "id": "1305",
+    "name": "真理医生",
+    "tag": "drratio",
+    "rarity": 5,
+    "path": "巡猎",
+    "element": "虚数"
   },
   "8001": {
     "id": "8001",
