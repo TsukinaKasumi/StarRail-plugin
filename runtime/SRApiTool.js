@@ -70,6 +70,14 @@ export default class SRApiTool {
           url: `${hostRecord}game_record/app/hkrpg/api/challenge`,
           query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
         },
+        srChallengeStory: {
+          url: `${hostRecord}game_record/app/hkrpg/api/challenge_story`,
+          query: `isPrev=&need_all=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
+        }, // &type=story
+        srChallengeStorySimple: {
+          url: `${hostRecord}game_record/app/hkrpg/api/challenge_story`,
+          query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
+        },
         srRogue: {
           url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
           query: `need_detail=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`

@@ -62,8 +62,12 @@ export const helpList = [
         desc: '角色卡片(仅支持绑定ck查询)'
       }, {
         icon: 110,
-        title: '*深渊',
+        title: '*忘却',
         desc: '忘却之庭信息'
+      }, {
+        icon: 110,
+        title: '*虚构',
+        desc: '虚构叙事信息'
       }, {
         icon: 91,
         title: '*在线时长',
