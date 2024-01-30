@@ -69,6 +69,10 @@ export const helpList = [
         title: '*虚构',
         desc: '虚构叙事信息'
       }, {
+        icon: 110,
+        title: '*深渊',
+        desc: '当期深渊信息'
+      }, {
         icon: 91,
         title: '*在线时长',
         desc: '根据体力数据统计在线时长'

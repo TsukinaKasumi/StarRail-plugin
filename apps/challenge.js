@@ -18,8 +18,12 @@ export class Challenge extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}(上期|本期)?(深渊|忘却|忘却之庭|混沌|混沌回忆)$`,
+          reg: `^${rulePrefix}(上期|本期)?(深渊)$`,
           fnc: 'challenge'
+        },
+        {
+          reg: `^${rulePrefix}(上期|本期)?(忘却|忘却之庭|混沌|混沌回忆)$`,
+          fnc: 'challengeForgottenHall'
         },
         {
           reg: `^${rulePrefix}(上期|本期)?(虚构|虚构叙事)$`,
@@ -136,12 +140,16 @@ export class Challenge extends plugin {
     })
   }
 
-  async challenge (e) {
+  async challengeForgottenHall (e) {
     await this.queryChallenge(e, false)
   }
 
   async challengeStory (e) {
     await this.queryChallenge(e, true)
+  }
+
+  async challenge (e) {
+    await this.queryChallenge(e, this.isCurrentChallengeStory())
   }
 
   async miYoSummerGetUid () {
@@ -173,6 +181,23 @@ export class Challenge extends plugin {
       hour,
       minute
     }).format(format)
+  }
+
+  isCurrentChallengeStory () {
+    // 获取当前时间
+    let currentTime = new Date();
+
+    // 获取第一期混沌回忆的时间
+    let firstTime = new Date('2023-12-25T04:00:00');
+
+    // 计算时间差距（以毫秒为单位）
+    if (currentTime < firstTime) {
+      logger.error('当前系统时间晚于第一期混沌回忆时间，请检查系统配置！')
+    }
+    let timeDiff = currentTime - firstTime;
+    // 2周（14天）为一个周期
+    let periodNum = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 14))
+    return periodNum % 2 == 1
   }
 
   get app2config () {
