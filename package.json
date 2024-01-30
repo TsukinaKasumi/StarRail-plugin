@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
   },
-  "devDependencies": {
+  "dependencies": {
     "cheerio": "1.0.0-rc.12"
   },
   "pnpm": {
