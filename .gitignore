@@ -10,6 +10,9 @@ data/
 # 忽略temp文件夹
 temp/*
 
+# 忽略node_modules
+node_modules
+
 # 排除攻略456文件夹
 !temp/strategy/
 temp/strategy/*

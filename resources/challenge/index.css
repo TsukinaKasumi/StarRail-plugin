@@ -19,6 +19,11 @@ img.rogue-star {
   height: 60px;
 }
 
+img.rogue-star-small {
+  width: 35px;
+  height: 35px;
+}
+
 .head {
   display: flex;
   justify-content: center;
@@ -109,12 +114,26 @@ img.rogue-star {
   opacity: .85;
 }
 
+.detail-score {
+  font-size: 18px;
+  opacity: .85;
+}
+
+.detail-score span {
+  font: bold;
+}
+
 .detail-body {
   padding: 20px 30px;
   color: #f0eaca;
 }
 
-.detail-node-title {
+.detail-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-node-title, .detail-node-score {
   margin-top: 16px;
 }
 
@@ -172,6 +191,45 @@ img.rogue-star {
   bottom: 4px;
   width: 100%;
   text-align: center;
+}
+
+.detail-buff {
+  margin-top: 14px;
+  display: flex;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.detail-buff-border {
+  border: 2px #ddd solid;
+  background-color: rgb(49, 54, 73);
+  display: flex;
+  /* width: 100%;
+  height: 100%; */
+}
+
+.buff-col {
+  width: 80px;
+}
+
+.buff-icon-container {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+img.buff-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.description-col {
+  flex-grow: 1;
+}
+
+.buff-description {
+  margin: 10px;
 }
 
 .logo {
