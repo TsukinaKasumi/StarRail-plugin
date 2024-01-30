@@ -147,8 +147,9 @@ export class strategy extends plugin {
   async getImg (name, group) {
     group--
     let msyRes = []
+    if(this.collection_id[group]){//添加判断下 不然查询攻略4,5,6时会报错TypeError: Cannot read properties of undefined (reading 'forEach')  不知道这样做对不对 但是不报错就行
     this.collection_id[group].forEach((id) => msyRes.push(this.getData(this.url + id)))
-
+    }
     try {
       msyRes = await Promise.all(msyRes)
     } catch (error) {
