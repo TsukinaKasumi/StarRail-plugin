@@ -23,6 +23,7 @@
 
     <div class="detail-list">
       {{ each data.all_floor_detail floor }}
+      {{ if !floor.is_fast }}
       <div class="detail-item">
         <div class="detail-border">
           <div class="detail-head">
@@ -127,6 +128,7 @@
           </div>
         </div>
       </div>
+      {{ /if }}
       {{ /each }}
     </div>
   </div>
