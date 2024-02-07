@@ -18,15 +18,15 @@ export class Challenge extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}(上期|本期)?(深渊)$`,
+          reg: `^${rulePrefix}(上期|本期)?(深渊)`,
           fnc: 'challenge'
         },
         {
-          reg: `^${rulePrefix}(上期|本期)?(忘却|忘却之庭|混沌|混沌回忆)$`,
+          reg: `^${rulePrefix}(上期|本期)?(忘却|忘却之庭|混沌|混沌回忆)`,
           fnc: 'challengeForgottenHall'
         },
         {
-          reg: `^${rulePrefix}(上期|本期)?(虚构|虚构叙事)$`,
+          reg: `^${rulePrefix}(上期|本期)?(虚构|虚构叙事)`,
           fnc: 'challengeStory'
         }
       ]
@@ -77,7 +77,7 @@ export class Challenge extends plugin {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
     // 先查simple，大概率simple不出验证码，详细才出
-    let simpleRequestType = isStory ? 'srChallengeStorySimple' : 'srChallengeSimple';
+    let simpleRequestType = isStory ? 'srChallengeStorySimple' : 'srChallengeSimple'
     let simpleRes = await api.getData(simpleRequestType, { deviceFp, schedule_type: scheduleType })
     simpleRes = await api.checkCode(this.e, simpleRes, simpleRequestType, { deviceFp, schedule_type: scheduleType })
     if (simpleRes.retcode !== 0) {
@@ -86,7 +86,7 @@ export class Challenge extends plugin {
     }
     let challengeData = simpleRes
     // 简单的没出验证码，试一下复杂的
-    let requestType = isStory ? 'srChallengeStory' : 'srChallenge';
+    let requestType = isStory ? 'srChallengeStory' : 'srChallenge'
     let res = await api.getData(requestType, { deviceFp, schedule_type: scheduleType })
     res = await api.checkCode(this.e, res, requestType, { deviceFp, schedule_type: scheduleType })
     let retcode = Number(res.retcode)
@@ -101,7 +101,7 @@ export class Challenge extends plugin {
     //   return false
     // }
     const data = { ...challengeData.data }
-    
+
     // 忘却之庭和虚构叙事的起止日期要分开处理
     if (isStory) {
       data.beginTime = this.timeFormat(data.groups[0].begin_time)
@@ -125,10 +125,10 @@ export class Challenge extends plugin {
     })
     // 虚构叙事：计算两边节点的总分
     if (isStory) {
-        data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
+      data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
         return {
           ...floor,
-          score: (parseInt(floor.node_1.score) + parseInt(floor.node_2.score)).toString(),
+          score: (parseInt(floor.node_1.score) + parseInt(floor.node_2.score)).toString()
         }
       })
     }
@@ -185,16 +185,16 @@ export class Challenge extends plugin {
 
   isCurrentChallengeStory () {
     // 获取当前时间
-    let currentTime = new Date();
+    let currentTime = new Date()
 
     // 获取第一期混沌回忆的时间
-    let firstTime = new Date('2023-12-25T04:00:00');
+    let firstTime = new Date('2023-12-25T04:00:00')
 
     // 计算时间差距（以毫秒为单位）
     if (currentTime < firstTime) {
       logger.error('当前系统时间晚于第一期混沌回忆时间，请检查系统配置！')
     }
-    let timeDiff = currentTime - firstTime;
+    let timeDiff = currentTime - firstTime
     // 2周（14天）为一个周期
     let periodNum = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 14))
     return periodNum % 2 == 1
