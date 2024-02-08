@@ -171,6 +171,7 @@ export default class MysSRApi extends MysApi {
     switch (res.retcode) {
       case 0:
         break
+      case 10035:
       case 1034: {
         let handler = this.e.runtime?.handler || {}
 
