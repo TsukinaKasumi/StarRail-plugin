@@ -180,7 +180,7 @@ export default class MysSRApi extends MysApi {
           logger.mark(`[米游社sr查询失败][uid:${this.uid}][qq:${this.userId}] 遇到验证码，尝试调用 Handler mys.req.err`)
           res = await handler.call('mys.req.err', this.e, { mysApi: this, type, res, data, mysInfo: this }) || res
         }
-        if (!res || res?.retcode === 1034) {
+        if (!res || res?.retcode === 1034 || res?.retcode === 10035) {
           logger.mark(`[米游社查询失败][uid:${this.uid}][qq:${this.userId}] 遇到验证码`)
           this.e.reply('米游社查询遇到验证码，请稍后再试')
         }
