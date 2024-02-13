@@ -2,8 +2,8 @@ import MysApi from '../../genshin/model/mys/mysApi.js'
 import md5 from 'md5'
 import _ from 'lodash'
 import crypto from 'crypto'
-import SRApiTool from "./SRApiTool.js";
-const DEVICE_ID = randomString(32).toUpperCase()
+import SRApiTool from './SRApiTool.js'
+// const DEVICE_ID = randomString(32).toUpperCase()
 const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
   constructor (uid, cookie, option = {}) {
@@ -13,9 +13,26 @@ export default class MysSRApi extends MysApi {
     // this.isSr = true
     // this.server = 'hkrpg_cn'
     this.apiTool = new SRApiTool(uid, this.server)
+    if (typeof this.cookie != 'string' && this.cookie) {
+      let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
+      this._device = cookie?.device
+    }
   }
 
   getUrl (type, data = {}) {
+    let cookie = ''
+    if (typeof this.cookie == 'string') {
+      cookie = this.cookie
+    } else if (this.cookie) {
+      let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
+      this.cookie = cookie?.ck
+      cookie = cookie?.ck
+      this._device = cookie?.device
+    }
+    if (!this._device) {
+      this._device = crypto.randomUUID()
+    }
+    data.deviceId = this._device
     let urlMap = this.apiTool.getUrlMap(data)
     if (!urlMap[type]) return false
     let { url, query = '', body = '', noDs = false, dsSalt = '' } = urlMap[type]
@@ -28,19 +45,10 @@ export default class MysSRApi extends MysApi {
       // 兼容喵崽
       this._device_fp = { data: { device_fp: data.deviceFp } }
     }
-    if (typeof this.cookie == 'string') {
-      headers.cookie = this.cookie
-    } else if (this.cookie) {
-      let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
-      this.cookie = cookie?.ck
-      headers.cookie = cookie?.ck
-      this.deviceId = cookie?.device_id
-    }
-    if (!this.deviceId) {
-      this.deviceId = crypto.randomUUID()
-    }
-    if (this.deviceId) {
-      headers['x-rpc-device_id'] = this.deviceId
+    headers.cookie = cookie
+
+    if (this._device) {
+      headers['x-rpc-device_id'] = this._device
     }
     switch (dsSalt) {
       case 'web': {
@@ -64,7 +72,7 @@ export default class MysSRApi extends MysApi {
         // DS: this.getDS2(),
         'x-rpc-sys_version': '12',
         'x-rpc-channel': 'mihoyo',
-        'x-rpc-device_id': DEVICE_ID,
+        'x-rpc-device_id': this._device,
         'x-rpc-device_name': DEVICE_NAME,
         'x-rpc-device_model': 'Mi 10',
         Host: 'api-takumi.mihoyo.com'
@@ -75,9 +83,9 @@ export default class MysSRApi extends MysApi {
     }
     if (noDs) {
       delete headers.DS
-      if (this.deviceId) {
+      if (this._device) {
         body = JSON.parse(body)
-        body.device_id = this.deviceId
+        body.device_id = this._device
         body = JSON.stringify(body)
       }
     }

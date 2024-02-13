@@ -27,7 +27,6 @@ export class Rogue extends plugin {
       ]
     })
     this.User = new User(e)
-
   }
 
   get app2config () {
@@ -80,7 +79,7 @@ export class Rogue extends plugin {
     })
 
     let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srNote', { deviceFp, schedule_type })
+    cardData = await api.checkCode(this.e, cardData, 'srRogue', { deviceFp, schedule_type })
     if (cardData.retcode !== 0) {
       return false
     }
@@ -137,7 +136,7 @@ export class Rogue extends plugin {
     })
 
     let cardData = await res.json()
-    await api.checkCode(this.e, cardData, 'srNote', { deviceFp})
+    cardData = await api.checkCode(this.e, cardData, 'srRogueLocust', { deviceFp })
     if (cardData.retcode !== 0) {
       return false
     }
