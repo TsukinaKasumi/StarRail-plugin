@@ -75,6 +75,7 @@ export class Hkrpg extends plugin {
 
       let api = new MysSRApi(uid, ck)
       let cardData = await api.getData('srCard')
+      cardData = await api.checkCode(this.e, cardData, 'srCard')
       let result = cardData?.data
       if (!result) {
         logger.error(cardData)

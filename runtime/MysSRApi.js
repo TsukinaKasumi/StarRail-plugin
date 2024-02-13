@@ -160,7 +160,7 @@ export default class MysSRApi extends MysApi {
    * @param data 查询请求的数据
    * @returns {Promise<*|boolean>}
    */
-  async checkCode (e, res, type, data) {
+  async checkCode (e, res, type, data = {}) {
     if (!res || !e) {
       this.e.reply('米游社接口请求失败，暂时无法查询')
       return false
