@@ -15,7 +15,7 @@ export default class MysSRApi extends MysApi {
     this.apiTool = new SRApiTool(uid, this.server)
     if (typeof this.cookie != 'string' && this.cookie) {
       let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
-      this._device = cookie?.device
+      this._device = cookie?.device_id || cookie?.device
     }
   }
 
