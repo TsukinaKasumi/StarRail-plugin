@@ -14,24 +14,16 @@ export default class MysSRApi extends MysApi {
     // this.server = 'hkrpg_cn'
     this.apiTool = new SRApiTool(uid, this.server)
     if (typeof this.cookie != 'string' && this.cookie) {
-      let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
-      this._device = cookie?.device_id || cookie?.device
-    }
-  }
-
-  getUrl (type, data = {}) {
-    let cookie = ''
-    if (typeof this.cookie == 'string') {
-      cookie = this.cookie
-    } else if (this.cookie) {
-      let cookie = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
-      this.cookie = cookie?.ck
-      cookie = cookie?.ck
-      this._device = cookie?.device
+      let ck = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
+      this._device = ck?.device_id || ck?.device
+      this.cookie = ck.ck
     }
     if (!this._device) {
       this._device = crypto.randomUUID()
     }
+  }
+
+  getUrl (type, data = {}) {
     data.deviceId = this._device
     let urlMap = this.apiTool.getUrlMap(data)
     if (!urlMap[type]) return false
@@ -45,7 +37,7 @@ export default class MysSRApi extends MysApi {
       // 兼容喵崽
       this._device_fp = { data: { device_fp: data.deviceFp } }
     }
-    headers.cookie = cookie
+    headers.cookie = this.cookie
 
     if (this._device) {
       headers['x-rpc-device_id'] = this._device
