@@ -16,7 +16,7 @@ export default class MysSRApi extends MysApi {
     if (typeof this.cookie != 'string' && this.cookie) {
       let ck = this.cookie[Object.keys(this.cookie).filter(k => this.cookie[k].ck)[0]]
       this._device = ck?.device_id || ck?.device
-      this.cookie = ck.ck
+      this.cookie = ck?.ck
     }
     if (!this._device) {
       this._device = crypto.randomUUID()
