@@ -28995,6 +28995,14 @@
     "path": "丰饶",
     "element": "风"
   },
+  "1301": {
+    "id": "1301",
+    "name": "加拉赫",
+    "tag": "gallagher",
+    "rarity": 4,
+    "path": "丰饶",
+    "element": "火"
+  },
   "1302": {
     "id": "1302",
     "name": "银枝",
@@ -29011,6 +29019,14 @@
     "path": "同谐",
     "element": "冰"
   },
+  "1304": {
+    "id": "1304",
+    "name": "砂金",
+    "tag": "aventurine",
+    "rarity": 5,
+    "path": "存护",
+    "element": "虚数"
+  },
   "1305": {
     "id": "1305",
     "name": "真理医生",
@@ -29018,6 +29034,38 @@
     "rarity": 5,
     "path": "巡猎",
     "element": "虚数"
+  },
+  "1306": {
+    "id": "1306",
+    "name": "花火",
+    "tag": "sparkle",
+    "rarity": 5,
+    "path": "同谐",
+    "element": "量子"
+  },
+  "1307": {
+    "id": "1307",
+    "name": "黑天鹅",
+    "tag": "blackswan",
+    "rarity": 5,
+    "path": "虚无",
+    "element": "风"
+  },
+  "1308": {
+    "id": "1308",
+    "name": "黄泉",
+    "tag": "acheron",
+    "rarity": 5,
+    "path": "虚无",
+    "element": "雷"
+  },
+  "1312": {
+    "id": "1312",
+    "name": "米沙",
+    "tag": "misha",
+    "rarity": 4,
+    "path": "冰",
+    "element": "毁灭"
   },
   "8001": {
     "id": "8001",
