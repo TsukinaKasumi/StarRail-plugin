@@ -11,8 +11,8 @@ import NoteUser from '../../genshin/model/mys/NoteUser.js'
 export class Gatcha extends plugin {
   constructor (e) {
     super({
-      name: '星铁plug抽卡分析',
-      dsc: '星铁plug抽卡分析',
+      name: '星铁plugin抽卡分析',
+      dsc: '星穹铁道抽卡分析',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message',
       priority: -114514,
