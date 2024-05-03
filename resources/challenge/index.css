@@ -172,6 +172,44 @@ img.rogue-star-small {
   height: 100%; */
 }
 
+.life1 {
+  background-color: #62a8ea;
+}
+
+.life2 {
+  background-color: #62a8ea;
+}
+
+.life3 {
+  background-color: #45b97c;
+}
+
+.life4 {
+  background-color: #45b97c;
+}
+
+.life5 {
+  background-color: #ff5722;
+}
+
+.life6 {
+  background-color: #ff5722;
+}
+
+.detail-avatar .life {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 100;
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  border-radius: 2px;
+  padding: 0px 3px;
+  border-radius: 3px;
+  font-family: "tttgbnumber";
+}
+
 .detail-avatar img.element {
   position: absolute;
   top: 8px;

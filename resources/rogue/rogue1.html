@@ -75,6 +75,9 @@
             <div class="record-characters-list">
                 <div class="avatar-box">
                     <div class="avatar rarity{{avatar.rarity}}">
+                        {{ if avatar.rank>0 }} 
+                        <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                        {{ /if }}
                         <div>
                             <img class="avatar-img" src="https://uploadstatic.mihoyo.com/darkmatter/hkrpg/prod_gf_cn/item_icon_745c4j/161f78a719a553426823c3c65c354dff.png" />
                         </div>
@@ -89,6 +92,9 @@
                 </div>
                 <div class="avatar-box">
                     <div class="avatar rarity{{avatar.rarity}}">
+                        {{ if avatar.rank>0 }} 
+                        <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                        {{ /if }}
                         <div>
                             <img class="avatar-img" src="https://uploadstatic.mihoyo.com/darkmatter/hkrpg/prod_gf_cn/item_icon_745c4j/161f78a719a553426823c3c65c354dff.png" />
                         </div>

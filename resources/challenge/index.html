@@ -66,6 +66,9 @@
                 {{ each floor.node_1.avatars avatar }}
                 <div class="detail-avatar rank{{ avatar.rarity }}">
                   <div class="detail-avatar-border">
+                    {{ if avatar.rank>0 }} 
+                    <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                    {{ /if }}
                     <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
                     <img class="char" src="{{ pluResPath }}gatcha/images/char/{{ avatar.id }}.png" alt="">
                     <div class="level">等级 {{ avatar.level }}</div>
@@ -103,6 +106,9 @@
                 {{ each floor.node_2.avatars avatar }}
                 <div class="detail-avatar rank{{ avatar.rarity }}">
                   <div class="detail-avatar-border">
+                    {{ if avatar.rank>0 }} 
+                    <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                    {{ /if }}
                     <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
                     <img class="char" src="{{ pluResPath }}gatcha/images/char/{{ avatar.id }}.png" alt="">
                     <div class="level">等级 {{ avatar.level }}</div>
