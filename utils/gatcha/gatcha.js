@@ -30,7 +30,7 @@ export async function getRecords (type = 11, authKey) {
   return result
 }
 
-function getServer(uid) {
+function getServer (uid) {
   switch (String(uid).slice(0, -8)) {
     case '1':
     case '2':
@@ -51,8 +51,8 @@ function getServer(uid) {
 }
 
 function getRecordUrl (type, page, size = 10, authKey = '', endId = 0) {
-  if (['prod_gf_cn', 'prod_qd_cn'].includes(getServer))
+  if (['prod_gf_cn', 'prod_qd_cn'].includes(getServer(uid)))
     return `https://api-takumi.mihoyo.com/common/gacha_record/api/getGachaLog?authkey_ver=1&default_gacha_type=11&lang=zh-cn&authkey=${authKey}&game_biz=hkrpg_cn&page=${page}&size=${size}&gacha_type=${type}&end_id=${endId}`
-  else if (/official/.test(getServer))
+  else if (/official/.test(getServer(uid)))
     return `https://api-os-takumi.mihoyo.com/common/gacha_record/api/getGachaLog?authkey_ver=1&default_gacha_type=11&lang=zh-cn&authkey=${authKey}&game_biz=hkrpg_global&page=${page}&size=${size}&gacha_type=${type}&end_id=${endId}`
 }
