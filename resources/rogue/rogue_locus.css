@@ -232,28 +232,32 @@
     height: 100px;
 }
 
+.life0 {
+  background-color: #606060;
+}
+
 .life1 {
-    background-color: #62a8ea;
+  background-color: #89cb26;
 }
-  
+
 .life2 {
-    background-color: #62a8ea;
+  background-color: #d1949e;
 }
-  
+
 .life3 {
-    background-color: #45b97c;
+  background-color: #1aa1d7;
 }
-  
+
 .life4 {
-    background-color: #45b97c;
+  background-color: #F08080;
 }
-  
+
 .life5 {
-    background-color: #ff5722;
+  background-color: #7B68EE;
 }
-  
+
 .life6 {
-    background-color: #ff5722;
+  background-color: #ff5222;
 }
 
 .avatar .life {
