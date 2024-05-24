@@ -148,12 +148,12 @@ export default class MysSRApi extends MysApi {
       Referer: 'https://webstatic.mihoyo.com/'
     }
     const os = {
-      app_version: '2.9.0',
-      User_Agent: `Mozilla/5.0 (Linux; Android 12; ${this.device}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
+      app_version: '2.55.0',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.55.0',
       client_type: '2',
-      Origin: 'https://webstatic-sea.hoyolab.com',
+      Origin: 'https://act.hoyolab.com',
       X_Requested_With: 'com.mihoyo.hoyolab',
-      Referer: 'https://webstatic-sea.hoyolab.com/'
+      Referer: 'https://act.hoyolab.com/'
     }
     let client
     if (/official/.test(this.server)) {
