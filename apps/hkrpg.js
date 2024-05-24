@@ -57,6 +57,7 @@ export class Hkrpg extends plugin {
       let ats = e.message.filter(m => m.type === 'at')
       if (ats.length > 0 && !e.atBot) {
         user = ats[0].qq
+        e.user_id = user
       }
       let hasPersonalCK = false
       let uid = e.msg.match(/\d+/)?.[0]
