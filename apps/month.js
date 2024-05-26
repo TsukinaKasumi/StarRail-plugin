@@ -36,14 +36,9 @@ export class Month extends plugin {
       this.e.user_id = user
       this.User = new User(this.e)
     }
-    let userData = await this.miYoSummerGetUid()
-    let uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
-    if (userData.game_uid) {
-      uid = userData.game_uid
-    } else {
-      await e.reply('当前使用的ck无星穹铁道角色，如绑定多个ck请尝试切换ck')
-      return false
-    }
+    let uid = e.msg.match(/\d+/)?.[0]
+    await this.miYoSummerGetUid()
+    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
     if (!uid) {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
