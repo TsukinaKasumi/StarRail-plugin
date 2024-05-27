@@ -42,7 +42,14 @@ export class Gatcha extends plugin {
   }
 
   async gatchahelp (e) {
-    await e.reply(`抽卡链接获取教程：${this.appconfig.docs}`)
+    const reply_msg = [
+      'StarRail-Plugin 抽卡链接绑定方法：',
+      '1. 输入【*抽卡链接】，等待 bot 回复【请发送抽卡链接】',
+      '2. 获取抽卡链接',
+      '3. 将获取到的抽卡链接发送给 bot',
+      `抽卡链接获取教程：${this.appconfig.docs}`
+    ].join('\n')
+    await e.reply(reply_msg)
   }
 
   async bindAuthKey (e) {
@@ -173,7 +180,11 @@ export class Gatcha extends plugin {
     } catch (error) {
       console.log(error)
       await redis.set(`STAR_RAILWAY:GATCHA_LASTTIME:${uid}`, '')
-      await e.reply('抽卡链接已过期，请重新获取并绑定')
+      const reply_msg = [
+        '抽卡链接已过期，请重新获取并绑定',
+        '输入【*抽卡帮助】以查看抽卡链接获取方法'
+      ].join('\n')
+      await e.reply(reply_msg)
     }
   }
 
