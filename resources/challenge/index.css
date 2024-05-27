@@ -2,7 +2,7 @@
   padding: 40px 40px 0 40px;
   width: 800px;
   overflow: hidden;
-  background: url('../common/cont/bkg.png') center no-repeat;
+  background: url('../challenge/images/floor_1.aa901da5.png') center no-repeat;
   background-size: cover;
   color: #f0eaca;
   font-family: 'SR', sans-serif;
@@ -50,7 +50,7 @@ img.rogue-star-small {
   margin-top: 10px;
   border-radius: 12px;
   padding: 30px 30px;
-  background: url('../images/rogue-bg.png') no-repeat;
+  background: url('../challenge/images/top_bg_1.ef4dfad4.png') no-repeat;
   background-size: cover;
 }
 
@@ -86,7 +86,7 @@ img.rogue-star-small {
   margin-top: 20px;
   border-top-right-radius: 36px;
   padding: 4px;
-  background: url('../images/rogue-bg.png') no-repeat;
+  background: url('../challenge/images/floor_1.aa901da5.png') no-repeat;
   background-size: cover;
 }
 
