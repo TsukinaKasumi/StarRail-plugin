@@ -9,7 +9,7 @@ export default class MysSRApi extends MysApi {
   constructor (uid, cookie, option = {}) {
     super(uid, cookie, option, true)
     this.uid = uid
-    this.server = 'prod_gf_cn'
+    this.server = this.getServer()
     // this.isSr = true
     // this.server = 'hkrpg_cn'
     this.apiTool = new SRApiTool(uid, this.server)
@@ -21,6 +21,26 @@ export default class MysSRApi extends MysApi {
     if (!this._device) {
       this._device = crypto.randomUUID()
     }
+  }
+
+  getServer() {
+    switch (String(this.uid).slice(0, -8)) {
+      case '1':
+      case '2':
+        return 'prod_gf_cn' // 官服
+      case '5':
+        return 'prod_qd_cn' // B服
+      case '6':
+        return 'prod_official_usa' // 美服
+      case '7':
+        return 'prod_official_euro' // 欧服
+      case '8':
+      case '18':
+        return 'prod_official_asia' // 亚服
+      case '9':
+        return 'prod_official_cht' // 港澳台服
+    }
+    return 'prod_gf_cn'
   }
 
   getUrl (type, data = {}) {
@@ -86,15 +106,15 @@ export default class MysSRApi extends MysApi {
 
   getDs (q = '', b = '') {
     let n = ''
-    if (['prod_gf_cn'].includes(this.server)) {
+    if (['prod_gf_cn', 'prod_qd_cn'].includes(this.server)) {
       n = 'xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs'
-    } else if (['os_usa', 'os_euro', 'os_asia', 'os_cht'].includes(this.server)) {
+    } else if (/official/.test(this.server)) {
       n = 'okr4obncj8bw5a65hbnn5oo6ixjc3l9w'
     }
     let t = Math.round(new Date().getTime() / 1000)
-    let r = Math.floor(Math.random() * 90000 + 10000)
-    let DS = md5(`salt=${n}&t=${t}&r=1${r}&b=${b}&q=${q}`)
-    return `${t},1${r},${DS}`
+    let r = Math.floor(Math.random() * 900000 + 100000)
+    let DS = md5(`salt=${n}&t=${t}&r=${r}&b=${b}&q=${q}`)
+    return `${t},${r},${DS}`
   }
 
   getDS2 () {
@@ -128,15 +148,15 @@ export default class MysSRApi extends MysApi {
       Referer: 'https://webstatic.mihoyo.com/'
     }
     const os = {
-      app_version: '2.9.0',
-      User_Agent: `Mozilla/5.0 (Linux; Android 12; ${this.device}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.73 Mobile Safari/537.36 miHoYoBBSOversea/2.9.0`,
+      app_version: '2.55.0',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.55.0',
       client_type: '2',
-      Origin: 'https://webstatic-sea.hoyolab.com',
+      Origin: 'https://act.hoyolab.com',
       X_Requested_With: 'com.mihoyo.hoyolab',
-      Referer: 'https://webstatic-sea.hoyolab.com'
+      Referer: 'https://act.hoyolab.com/'
     }
     let client
-    if (this.server.startsWith('os')) {
+    if (/official/.test(this.server)) {
       client = os
     } else {
       client = cn

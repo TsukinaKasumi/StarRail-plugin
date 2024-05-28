@@ -193,6 +193,48 @@
     height: 100px;
 }
 
+.life0 {
+  background-color: #606060;
+}
+
+.life1 {
+  background-color: #89cb26;
+}
+
+.life2 {
+  background-color: #d1949e;
+}
+
+.life3 {
+  background-color: #1aa1d7;
+}
+
+.life4 {
+  background-color: #F08080;
+}
+
+.life5 {
+  background-color: #7B68EE;
+}
+
+.life6 {
+  background-color: #ff5222;
+}
+
+.avatar .life {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 101;
+    font-size: 14px;
+    text-align: center;
+    color: #fff;
+    border-radius: 2px;
+    padding: 0px 3px;
+    border-radius: 3px;
+    font-family: "tttgbnumber";
+}
+
 .avatar-img {
     width: 100px;
     position: relative;

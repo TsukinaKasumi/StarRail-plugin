@@ -125,6 +125,7 @@
           {{each record.final_lineup avatar}}
           <div class="avatar-box">
             <div class="avatar rarity{{avatar.rarity}}">
+              <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
               <div>
                 <img class="avatar-img" src="{{avatar.icon}}" />
               </div>
@@ -132,7 +133,7 @@
               <div class="avatar-banner">
                 等级 {{avatar.level}}
               </div>
-              <div class="avatar-element" style="border-color: var(--borderColor-{{avatar.element}});">
+              <div class="avatar-element" style="border-color: var(--borderColor-lightning);">
                 <img src="{{pluResPath}}/common/element/{{avatar.element}}.png" />
               </div>
             </div>
