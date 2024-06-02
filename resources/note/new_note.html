@@ -18,12 +18,6 @@
                 {{uid}}
             </p>
         </div>
-        {{if type == 'module'}}
-        <div class="sign-in">
-            <span class="grey">今日米游社：</span>
-            <span class="is {{has_signed?'golden':'grey'}}">{{has_signed?'已':'未'}}签到</span>
-        </div>
-        {{/if}}
     </header>
     <time>- 统计时间：{{time}} -</time>
     <section class="energy">
@@ -75,9 +69,6 @@
         </div>
     </section>
     <div class="uid">UID：{{uid}}</div>
-    {{if type == 'module'}}
-    <div class="data-source">数据源：小组件（数据可能存在误差）</div>
-    {{/if}}
 </article>
 <footer>
     {{@sys.createdby}}

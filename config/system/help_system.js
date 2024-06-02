@@ -54,7 +54,7 @@ export const helpList = [
         desc: '月度星琼统计'
       }, {
         icon: 95,
-        title: '*体力(pro)',
+        title: '*体力',
         desc: '体力和委托信息'
       }, {
         icon: 75,
