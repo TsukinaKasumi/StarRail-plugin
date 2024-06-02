@@ -38,25 +38,6 @@ article header .info p:nth-child(1) {
   text-overflow: ellipsis;
   max-width: 70%;
 }
-article header .sign-in {
-  position: absolute;
-  bottom: 4px;
-  right: 1px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-}
-article header .sign-in .is {
-  border: 1px solid #9c8d5c;
-  border-radius: 3px;
-  padding: 1px 2px;
-  font-size: 12px;
-  height: 16px;
-  line-height: 14px;
-}
-article header .sign-in .is.grey {
-  border: 1px solid #767676;
-}
 article time {
   display: block;
   margin: 5px 0;
@@ -164,15 +145,12 @@ article section.entrust .item-list .item .progress {
   background: #ac9854;
   height: 5px;
 }
-article .uid, article .data-source {
+article .uid {
   position: absolute;
   bottom: 15px;
   right: 35px;
   color: #767676;
   font-size: 14px;
-}
-article .data-source {
-  left: 40px;
 }
 
 footer {
