@@ -32,7 +32,7 @@ export default class SRApiTool {
         ...(['prod_gf_cn', 'prod_qd_cn'].includes(this.server) ? {
           srUser: {
             url: `${host}binding/api/getUserGameRolesByCookie`,
-            query: 'game_biz=hkrpg_cn'
+            query: `game_biz=hkrpg_cn&region=${this.server}&game_uid=${this.uid}`
           },
           getFp: {
             url: `${hostPublicData}device-fp/api/getFp`,
@@ -50,7 +50,7 @@ export default class SRApiTool {
         } : {
           srUser: {
             url: `${host}binding/api/getUserGameRolesByCookie`,
-            query: 'game_biz=hkrpg_global'
+            query: `game_biz=hkrpg_global&region=${this.server}&game_uid=${this.uid}`
           },
           getFp: {
             url: `${hostPublicData}device-fp/api/getFp`,
@@ -77,10 +77,6 @@ export default class SRApiTool {
         srNote: {
           url: `${hostRecord}game_record/app/hkrpg/api/note`,
           query: `role_id=${this.uid}&server=${this.server}`
-        },
-        srWidget: {
-          url: `${hostRecord}game_record/app/hkrpg/aapi/widget`,
-          dsSalt: 'x6'
         },
         srCard: {
           url: `${hostRecord}game_record/app/hkrpg/api/index`,

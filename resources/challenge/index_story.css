@@ -2,7 +2,7 @@
   padding: 40px 40px 0 40px;
   width: 800px;
   overflow: hidden;
-  background: url('../challenge/images/floor_2.5d63517c.png') center no-repeat;
+  background: url('../challenge/images/bg_2.8d088acd.png') center no-repeat;
   background-size: cover;
   color: #f0eaca;
   font-family: 'SR', sans-serif;
@@ -158,11 +158,11 @@ img.rogue-star-small {
 }
 
 .detail-avatar.rank5 {
-  background-image: url("../images/rank5bg.webp");
+  background-image: url("../challenge/images/character_r_5.99d42eb7.png");
 }
 
 .detail-avatar.rank4 {
-  background-image: url("../images/rank4bg.webp");
+  background-image: url("../challenge/images/character_r_4.24f329b7.png");
 }
 
 .detail-avatar-border {

@@ -67,10 +67,6 @@ export default class MysSRApi extends MysApi {
         headers.DS = this.getDS2()
         break
       }
-      case 'x6': {
-        headers.DS = this.getDsX6(query, body)
-        break
-      }
       default:
     }
     if (type === 'srPayAuthKey') {
@@ -122,20 +118,6 @@ export default class MysSRApi extends MysApi {
     let r = randomString(6)
     let sign = md5(`salt=jEpJb9rRARU2rXDA9qYbZ3selxkuct9a&t=${t}&r=${r}`)
     return `${t},${r},${sign}`
-  }
-
-  async getDsX6 (q = '', b = '') {
-    let salt
-    try {
-      let mysTool = await import('../../xiaoyao-cvs-plugin/model/mys/mysTool.js')
-      salt = mysTool.default.salt2
-    } catch (e) {
-      throw new Error('需要安装逍遥插件使用此功能')
-    }
-    let t = Math.round(new Date().getTime() / 1000)
-    let r = Math.floor(Math.random() * 900000 + 100000)
-    let DS = md5(`salt=${salt}&t=${t}&r=${r}&b=${b}&q=${q}`)
-    return `${t},${r},${DS}`
   }
 
   getHeaders (query = '', body = '') {

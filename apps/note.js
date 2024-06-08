@@ -17,7 +17,7 @@ export class Note extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}体力(pro)?$`,
+          reg: `^${rulePrefix}体力$`,
           fnc: 'note'
         }
       ]
@@ -26,8 +26,6 @@ export class Note extends plugin {
   }
 
   async note (e) {
-    const isPro = /pro/.test(e.msg)
-    // 20230907 体力默认改用小组件
     this.e.isSr = true
     this.isSr = true
     let user = this.e.user_id
@@ -45,7 +43,7 @@ export class Note extends plugin {
       await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
       return false
     }
-    let ck = await getCk(e, isPro)
+    let ck = await getCk(e)
     if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
       await e.reply('尚未绑定cookie, 请发送#cookie帮助查看帮助')
       return false
@@ -62,12 +60,12 @@ export class Note extends plugin {
         await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
       }
     }
-    let type = isPro ? 'srWidget' : 'srNote'
+    let type = 'srNote'
     let cardData = await api.getData(type, { deviceFp })
     cardData = await api.checkCode(e, cardData, type, {})
     if (!cardData || cardData.retcode !== 0) return false
     let data = cardData.data
-    data.type = isPro ? 'module' : 'ordinary'
+    data.type = 'module'
     data.userData = userData
     data.uid = uid
     data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')

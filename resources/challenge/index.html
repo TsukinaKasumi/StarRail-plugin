@@ -1,11 +1,11 @@
 {{extend defaultLayout}}
 
 {{block 'css'}}
-{{ if (isStory) }}
+{{ if isStory }}
 <link rel="stylesheet" href="{{ pluResPath }}challenge/index_story.css">
 {{ else }}
 <link rel="stylesheet" href="{{ pluResPath }}challenge/index.css">
-{{/if }}
+{{ /if }}
 {{/block}}
 
 {{block 'main'}}
