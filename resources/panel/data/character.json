@@ -29067,13 +29067,29 @@
     "path": "同谐",
     "element": "物理"
   },
+  "1310": {
+    "id": "1310",
+    "name": "流萤",
+    "tag": "sam",
+    "rarity": 5,
+    "path": "毁灭",
+    "element": "火"
+  },
   "1312": {
     "id": "1312",
     "name": "米沙",
     "tag": "misha",
     "rarity": 4,
-    "path": "冰",
-    "element": "毁灭"
+    "path": "毁灭",
+    "element": "冰"
+  },
+  "1314": {
+    "id": "1314",
+    "name": "翡翠",
+    "tag": "jade",
+    "rarity": 5,
+    "path": "智识",
+    "element": "量子"
   },
   "1315": {
     "id": "1315",
