@@ -7,7 +7,7 @@ export const gatchaType = {
   12: '光锥跃迁'
 }
 
-export async function getRecords (type = 11, authKey) {
+export async function getRecords (uid, type = 11, authKey) {
   let page = 1
   let data = {
     data: {}
@@ -16,7 +16,7 @@ export async function getRecords (type = 11, authKey) {
   let result = []
   do {
     logger.info(`正在获取${gatchaType[type]}第${page}页`)
-    const url = getRecordUrl(type, page, 20, authKey, endId)
+    const url = getRecordUrl(uid, type, page, 20, authKey, endId)
     const response = await fetch(url)
     data = await response.json()
     result.push(...data.data.list)
@@ -50,7 +50,7 @@ function getServer (uid) {
   return 'prod_gf_cn'
 }
 
-function getRecordUrl (type, page, size = 10, authKey = '', endId = 0) {
+function getRecordUrl (uid, type, page, size = 10, authKey = '', endId = 0) {
   if (['prod_gf_cn', 'prod_qd_cn'].includes(getServer(uid)))
     return `https://api-takumi.mihoyo.com/common/gacha_record/api/getGachaLog?authkey_ver=1&default_gacha_type=11&lang=zh-cn&authkey=${authKey}&game_biz=hkrpg_cn&page=${page}&size=${size}&gacha_type=${type}&end_id=${endId}`
   else if (/official/.test(getServer(uid)))

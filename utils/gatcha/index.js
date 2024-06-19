@@ -17,7 +17,7 @@ export default class GatchaData {
 
   async getData (gatchaType) {
     if (gatchaType === 2) {
-      return await getRecords(2, this.authKey)
+      return await getRecords(this.uid, 2, this.authKey)
     }
     if (gatchaType) {
       const filePath = this.getFilePath(gatchaType)
@@ -209,11 +209,11 @@ export default class GatchaData {
 
   async updateData () {
     if (this.authKey) {
-      const records_1 = this.merge(await this.readJSON(this.getFilePath(1)), await getRecords(1, this.authKey))
+      const records_1 = this.merge(await this.readJSON(this.getFilePath(1)), await getRecords(this.uid, 1, this.authKey))
       await this.writeJSON(this.getFilePath(1), records_1)
-      const records_11 = this.merge(await this.readJSON(this.getFilePath(11)), await getRecords(11, this.authKey))
+      const records_11 = this.merge(await this.readJSON(this.getFilePath(11)), await getRecords(this.uid, 11, this.authKey))
       await this.writeJSON(this.getFilePath(11), records_11)
-      const records_12 = this.merge(await this.readJSON(this.getFilePath(12)), await getRecords(12, this.authKey))
+      const records_12 = this.merge(await this.readJSON(this.getFilePath(12)), await getRecords(this.uid, 12, this.authKey))
       await this.writeJSON(this.getFilePath(12), records_12)
     } else {
       throw new Error('authKey 为空')
