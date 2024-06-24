@@ -35,7 +35,6 @@ export class Note extends plugin {
       this.e.user_id = user
       this.User = new User(this.e)
     }
-    let userData = await this.miYoSummerGetUid()
     let uid = e.msg.match(/\d+/)?.[0]
     await this.miYoSummerGetUid()
     uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
@@ -61,6 +60,9 @@ export class Note extends plugin {
       }
     }
     let type = 'srNote'
+    let userData = await api.getData('srUser')
+    if (!userData?.data || _.isEmpty(userData.data.list)) return false
+    userData = userData?.data?.list[0]
     let cardData = await api.getData(type, { deviceFp })
     cardData = await api.checkCode(e, cardData, type, {})
     if (!cardData || cardData.retcode !== 0) return false
@@ -69,8 +71,6 @@ export class Note extends plugin {
     data.userData = userData
     data.uid = uid
     data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
-    // 名字显示
-    data.ktl_name = this.e.nickname
     // 头像
     if (this.e.member?.getAvatarUrl) {
       data.ktl_avatar = await this.e.member.getAvatarUrl()
