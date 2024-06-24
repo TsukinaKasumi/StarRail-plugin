@@ -2,11 +2,12 @@
 // 参考面板来自@blue菌hehe
 // 强度榜来自@水云109
 // 全角色攻略来自@萧熏儿mua
-// 星琼预估来自@璐璐咔小猪头
+// 星琼预估来自@乌鸦Rabble
 // 深渊攻略来自@栀子0v0
 import plugin from '../../../lib/plugins/plugin.js'
 import { pluginResources } from '../utils/path.js'
 import fs from 'fs'
+import fetch from 'node-fetch'
 import common from '../../../lib/common/common.js'
 import { rulePrefix } from '../utils/common.js'
 import alias from '../utils/alias.js'
@@ -189,10 +190,17 @@ export class srxx extends plugin {
   }
 
   async srEstimate (e) {
-    let msg = [
-      segment.image(`${srrolePath}/yg/星琼预估.png`)
-    ]
-    e.reply(msg)
+    let res
+    res = await (await fetch("https://bbs-api.miyoushe.com/painter/api/user_instant/search/list?keyword=%E5%8F%AF%E8%8E%B7%E5%8F%96%E6%98%9F%E7%90%BC&uid=73779489&size=20&offset=0&sort_type=2")).json()
+    const post = res.data.list[0].post.post
+
+    let promises = []
+    for (let images of post.images)
+      promises.push(segment.image(images))
+
+    await Promise.all(promises)
+
+    await e.reply(await common.makeForwardMsg(e, [[post.subject], promises]))
     return true
   }
 
