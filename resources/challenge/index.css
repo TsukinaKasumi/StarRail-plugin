@@ -78,33 +78,6 @@ img.rogue-star-small {
   padding: 20px 30px;
 }
 
-.boss-node {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-right: 1px #ddd solid;
-  width: 50%;
-}
-
-.boss-info {
-  align-items: left;
-  width: 70%;
-  margin: 10px;
-}
-
-.boss-info > p {
-  margin: 10px;
-}
-
-.boss-image {
-  width: 30%;
-}
-
-img.boss {
-  width: 80px;
-  height: 80px;
-}
-
 .detail-list {
   color: #f0eaca;
 }
@@ -315,18 +288,4 @@ img.buff-icon {
   text-align: center;
   margin-top: 30px;
   padding-bottom: 30px;
-}
-
-.detail-boss-defeated-text {
-  color: rgb(205, 181, 136);
-  text-align: center;
-  background-color: rgb(66, 61, 83);
-  margin: 10px;
-}
-
-.detail-boss-not-defeated-text {
-  color: gray;
-  text-align: center;
-  background-color: rgb(66, 61, 83);
-  margin: 10px;
 }
