@@ -2,10 +2,10 @@
 
 <div align=center> <h1>云崽QQ机器人的《崩坏：星穹铁道》插件</h1> </div>
 <div align=center>
- <img src ="https://img.shields.io/github/issues/hewang1an/StarRail-plugin?logo=github"/>
-<img src ="https://img.shields.io/github/license/hewang1an/StarRail-plugin"/>
-<!-- <img src ="https://img.shields.io/github/v/tag/hewang1an/StarRail-plugin?label=latest%20version&logo=github"/> -->
-<img src ="https://img.shields.io/github/languages/top/hewang1an/StarRail-plugin?logo=github"/>
+ <img src ="https://img.shields.io/github/issues/TsukinaKasumi/StarRail-plugin?logo=github"/>
+<img src ="https://img.shields.io/github/license/TsukinaKasumi/StarRail-plugin"/>
+<!-- <img src ="https://img.shields.io/github/v/tag/TsukinaKasumi/StarRail-plugin?label=latest%20version&logo=github"/> -->
+<img src ="https://img.shields.io/github/languages/top/TsukinaKasumi/StarRail-plugin?logo=github"/>
 </div>
 
 
@@ -34,11 +34,11 @@
 
 gitee
 ```shell
-git clone --depth=1 https://gitee.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
+git clone --depth=1 https://gitee.com/TsukinaKasumi/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
 github
 ```shell
-git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
+git clone --depth=1 https://github.com/TsukinaKasumi/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
 
 安装完成后，发送 `#星铁更新` 即可更新 StarRail-plugin
@@ -71,15 +71,15 @@ git clone --depth=1 https://github.com/hewang1an/StarRail-plugin.git ./plugins/S
 
 感谢以下贡献者对本项目做出的贡献
 
-<a href="https://github.com/hewang1an/StarRail-plugin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=hewang1an/StarRail-plugin" />
+<a href="https://github.com/TsukinaKasumi/StarRail-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=TsukinaKasumi/StarRail-plugin" />
 </a>
 
 ![Alt](https://repobeats.axiom.co/api/embed/1c5c4f4bafef4a5d2c743f72703abad36a01762d.svg "Repobeats analytics image")
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=hewang1an/StarRail-plugin&type=Date)](https://star-history.com/#hewang1an/StarRail-plugin&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=TsukinaKasumi/StarRail-plugin&type=Date)](https://star-history.com/#TsukinaKasumi/StarRail-plugin&Date)
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->

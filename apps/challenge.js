@@ -28,13 +28,17 @@ export class Challenge extends plugin {
         {
           reg: `^${rulePrefix}(上期|本期)?(虚构|虚构叙事)`,
           fnc: 'challengeStory'
+        },
+        {
+          reg: `^${rulePrefix}(上期|本期)?(末日|末日幻影)`,
+          fnc: 'challengeBoss'
         }
       ]
     })
     this.User = new User(e)
   }
 
-  async queryChallenge (e, isStory) {
+  async queryChallenge (e, challengeType) {
     this.e.isSr = true
     this.isSr = true
     let user = this.e.user_id
@@ -77,7 +81,11 @@ export class Challenge extends plugin {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
     // 先查simple，大概率simple不出验证码，详细才出
-    let simpleRequestType = isStory ? 'srChallengeStorySimple' : 'srChallengeSimple'
+    let simpleRequestType = [
+      'srChallengeBossSimple',
+      'srChallengeStorySimple',
+      'srChallengeSimple'
+    ][challengeType]
     let simpleRes = await api.getData(simpleRequestType, { deviceFp, schedule_type: scheduleType })
     simpleRes = await api.checkCode(this.e, simpleRes, simpleRequestType, { deviceFp, schedule_type: scheduleType })
     if (simpleRes.retcode !== 0) {
@@ -86,14 +94,22 @@ export class Challenge extends plugin {
     }
     let challengeData = simpleRes
     // 简单的没出验证码，试一下复杂的
-    let requestType = isStory ? 'srChallengeStory' : 'srChallenge'
+    let requestType = [
+      'srChallengeBoss',
+      'srChallengeStory',
+      'srChallenge'
+    ][challengeType]
     let res = await api.getData(requestType, { deviceFp, schedule_type: scheduleType })
     res = await api.checkCode(this.e, res, requestType, { deviceFp, schedule_type: scheduleType })
     let retcode = Number(res.retcode)
     if (retcode === 0) {
       challengeData = res
     } else {
-      let queryName = isStory ? '虚构叙事' : '忘却之庭'
+      let queryName = [
+        '末日幻影',
+        '虚构叙事',
+        '忘却之庭'
+      ][challengeType]
       logger.warn(`星铁${queryName}详细信息出现验证码，仅显示最后一层信息`)
     }
     // await api.checkCode(this.e, challengeData, 'srNote')
@@ -101,12 +117,14 @@ export class Challenge extends plugin {
     //   return false
     // }
     const data = { ...challengeData.data }
-
-    // 忘却之庭和虚构叙事的起止日期要分开处理
-    if (isStory) {
+    
+    // 起止日期要分开处理
+    if (challengeType != 2) {
+      // 末日幻影、虚构叙事
       data.beginTime = this.timeFormat(data.groups[0].begin_time)
       data.endTime = this.timeFormat(data.groups[0].end_time)
     } else {
+      // 忘却之庭
       data.beginTime = this.timeFormat(data.begin_time)
       data.endTime = this.timeFormat(data.end_time)
     }
@@ -123,8 +141,8 @@ export class Challenge extends plugin {
         }
       }
     })
-    // 虚构叙事：计算两边节点的总分
-    if (isStory) {
+    // 末日幻影、虚构叙事：计算两边节点的总分
+    if (challengeType != 2) {
       data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
         return {
           ...floor,
@@ -135,21 +153,25 @@ export class Challenge extends plugin {
     await runtimeRender(e, '/challenge/index.html', {
       data,
       uid,
-      isStory,
+      challengeType,
       type: scheduleType
     })
   }
 
   async challengeForgottenHall (e) {
-    await this.queryChallenge(e, false)
+    await this.queryChallenge(e, 2)
   }
 
   async challengeStory (e) {
-    await this.queryChallenge(e, true)
+    await this.queryChallenge(e, 1)
+  }
+
+  async challengeBoss (e) {
+    await this.queryChallenge(e, 0)
   }
 
   async challenge (e) {
-    await this.queryChallenge(e, this.isCurrentChallengeStory())
+    await this.queryChallenge(e, this.getCurrentChallengeType())
   }
 
   async miYoSummerGetUid () {
@@ -183,21 +205,24 @@ export class Challenge extends plugin {
     }).format(format)
   }
 
-  isCurrentChallengeStory () {
+  getCurrentChallengeType () {
     // 获取当前时间
     let currentTime = new Date()
 
     // 获取第一期混沌回忆的时间
-    let firstTime = new Date('2023-12-25T04:00:00')
+    let firstTime = new Date('2024-06-19T04:00:00')
 
     // 计算时间差距（以毫秒为单位）
     if (currentTime < firstTime) {
-      logger.error('当前系统时间晚于第一期混沌回忆时间，请检查系统配置！')
+      logger.error('当前系统时间早于第一期末日幻影时间，请检查系统配置！')
     }
     let timeDiff = currentTime - firstTime
     // 2周（14天）为一个周期
     let periodNum = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 14))
-    return periodNum % 2 == 1
+    // 0: 末日
+    // 1: 虚构
+    // 2: 混沌
+    return periodNum % 3
   }
 
   get app2config () {
