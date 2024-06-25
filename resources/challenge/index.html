@@ -146,6 +146,11 @@
                     节点2 <span>{{ floor.node_2.challengeTime }}</span>
                   {{ /if }}
                 </div>
+                <div class="detail-node-score">
+                  {{ if 'score' in floor.node_2 }}
+                    <p>积分： <span>{{ floor.node_2.score }}</span></p>
+                  {{ /if }}
+                </div>
               </div>
               <div class="detail-avatars">
                 {{ each floor.node_2.avatars avatar }}
