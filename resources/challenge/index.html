@@ -1,7 +1,9 @@
 {{extend defaultLayout}}
 
 {{block 'css'}}
-{{ if challengeType == 1 }}
+{{ if challengeType == 0 }}
+<link rel="stylesheet" href="{{ pluResPath }}challenge/index_boss.css">
+{{ else if challengeType == 1 }}
 <link rel="stylesheet" href="{{ pluResPath }}challenge/index_story.css">
 {{ else }}
 <link rel="stylesheet" href="{{ pluResPath }}challenge/index.css">
