@@ -1,7 +1,7 @@
 {{extend defaultLayout}}
 
 {{block 'css'}}
-{{ if isStory }}
+{{ if challengeType == 1 }}
 <link rel="stylesheet" href="{{ pluResPath }}challenge/index_story.css">
 {{ else }}
 <link rel="stylesheet" href="{{ pluResPath }}challenge/index.css">
@@ -10,12 +10,12 @@
 
 {{block 'main'}}
 
-  <h2 class="head" style="margin-bottom: 20px;text-align: center;">UID: {{ uid }} 的{{isStory ? '虚构叙事' : '忘却之庭'}}数据 <span class="tag">{{ type == '1' ? '本期' : '上期' }}</span></h2>
+  <h2 class="head" style="margin-bottom: 20px;text-align: center;">UID: {{ uid }} 的{{ ['末日幻影', '虚构叙事', '忘却之庭'][challengeType] }}数据 <span class="tag">{{ type == '1' ? '本期' : '上期' }}</span></h2>
 
   <div class="body">
     <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
     <div class="summar">
-      <h2>{{isStory ? '虚构叙事' : '混沌回忆'}}挑战回顾</h2>
+      <h2>{{ ['末日幻影', '虚构叙事', '忘却之庭'][challengeType] }}挑战回顾</h2>
       <div class="summar-content">
         <div class="summar-star"><img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ data.star_num }}</div>
         <div class="summar-info">
@@ -23,6 +23,28 @@
           <div style="margin-top: 8px;">战斗次数: {{ data.battle_num }}</div>
         </div>
       </div>
+      {{ if data.groups[0].upper_boss }}
+        <div class="summar-content">
+          <div class="boss-node">
+            <div class="boss-info">
+              <p>节点1</p>  
+              <p>{{ data.groups[0].upper_boss.name_mi18n }}</p>
+            </div>
+            <div class="boss-image">
+              <img class="boss" src="{{ pluResPath }}challenge/boss/{{ data.groups[0].upper_boss.id }}.png" alt="">
+            </div>
+          </div>
+          <div class="boss-node">
+            <div class="boss-info">
+              <p>节点2</p>  
+              <p>{{ data.groups[0].lower_boss.name_mi18n }}</p>
+            </div>
+            <div class="boss-image">
+              <img class="boss" src="{{ pluResPath }}challenge/boss/{{ data.groups[0].lower_boss.id }}.png" alt="">
+            </div>
+          </div>
+        </div>
+      {{ /if }}
     </div>
 
     <div class="detail-list">
@@ -31,10 +53,16 @@
       <div class="detail-item">
         <div class="detail-border">
           <div class="detail-head">
-            <div class="detail-title">
-              <p>{{ floor.name }}</p>
-              <p>使用轮: {{ floor.round_num }}</p>
-            </div>
+            {{ if 'round_num' in floor }}
+              <div class="detail-title">
+                <p>{{ floor.name }}</p>
+                <p>使用轮: {{ floor.round_num }}</p>
+              </div>
+            {{ else }}
+              <div class="detail-title-no-round">
+                <p>{{ floor.name }}</p>
+              </div>
+            {{ /if }}
             {{ if 'score' in floor }}
               <div class="detail-result">
                 <div class="detail-star-small">
@@ -58,7 +86,17 @@
             <div class="detail-node">
               <div class="detail-bar">
                 <div class="detail-node-title">
-                  节点1 <span>{{ floor.node_1.challengeTime }}</span>
+                  {{ if 'boss_defeated' in floor.node_1 }}
+                    节点1
+                    {{ if floor.node_1.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
+                  <p>{{ floor.node_1.challengeTime }}</p>
+                  {{ else }}
+                    节点1 <span>{{ floor.node_1.challengeTime }}</span>
+                  {{ /if }}
                 </div>
                 <div class="detail-node-score">
                   {{ if 'score' in floor.node_1 }}
@@ -96,11 +134,16 @@
             <div class="detail-node">
               <div class="detail-bar">
                 <div class="detail-node-title">
-                  节点2 <span>{{ floor.node_2.challengeTime }}</span>
-                </div>
-                <div class="detail-node-score">
-                  {{ if 'score' in floor.node_2 }}
-                    <p>积分： <span>{{ floor.node_2.score }}</span></p>
+                  {{ if 'boss_defeated' in floor.node_2 }}
+                    节点2
+                    {{ if floor.node_2.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
+                  <p>{{ floor.node_2.challengeTime }}</p>
+                  {{ else }}
+                    节点2 <span>{{ floor.node_2.challengeTime }}</span>
                   {{ /if }}
                 </div>
               </div>
