@@ -60,6 +60,9 @@ export class Note extends plugin {
       }
     }
 
+    let signInfo = await api.getData('sign_info')
+    if (!signInfo) return false
+    signInfo = signInfo?.data
     let userData = await api.getData('srUser')
     if (!userData?.data || _.isEmpty(userData.data.list)) return false
     userData = userData?.data?.list[0]
@@ -80,6 +83,7 @@ export class Note extends plugin {
     logger.debug(data)
     let noteData = {
       ...data,
+      ...signInfo,
       ...userData
     }
     await runtimeRender(this.e, '/note/new_note.html', noteData, {

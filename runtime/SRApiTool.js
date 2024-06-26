@@ -46,6 +46,11 @@ export default class SRApiTool {
               device_fp: '38d7f0fa36179'
             },
             noDs: true
+          },
+          sign_info: {
+            url: `${host}event/luna/info`,
+            query: `lang=zh-cn&act_id=e202304121516551&region=${this.server}&uid=${this.uid}`,
+            dsSalt: 'web'
           }
         } : {
           srUser: {
@@ -64,6 +69,11 @@ export default class SRApiTool {
               device_fp: '38d7f2364db95'
             },
             noDs: true
+          },
+          sign_info: {
+            url: `${host}event/luna/os/info`,
+            query: `lang=zh-cn&act_id=e202303301540311&region=${this.server}&uid=${this.uid}`,
+            dsSalt: 'web'
           }
         }),
         srCharacterDetail: {
