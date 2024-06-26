@@ -11,11 +11,11 @@
         <div class="info">
             <p>
                 <span class="grey">昵称：</span>
-                {{userData.nickname}}
+                {{nickname}}
             </p>
             <p>
                 <span class="grey">UID：</span>
-                {{uid}}
+                {{game_uid}} | {{level}}级
             </p>
         </div>
     </header>
@@ -36,12 +36,10 @@
             {{@ktl_full}} {{@ktl_full_time_str}}
         </div>
     </section>
-    {{if type == 'module'}}
     <section class="other">
         <p>每日实训：<span class="golden">{{current_train_score}}</span>/{{max_train_score}}</p>
         <p>模拟宇宙：<span class="golden">{{current_rogue_score}}</span>/{{max_rogue_score}}</p>
     </section>
-    {{/if}}
     <section class="entrust">
         <div class="title">
             <div>委托状态:</div>
@@ -68,7 +66,7 @@
             {{/each}}
         </div>
     </section>
-    <div class="uid">UID：{{uid}}</div>
+    <div class="uid">UID：{{game_uid}}</div>
 </article>
 <footer>
     {{@sys.createdby}}

@@ -59,17 +59,14 @@ export class Note extends plugin {
         await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
       }
     }
-    let type = 'srNote'
+
     let userData = await api.getData('srUser')
     if (!userData?.data || _.isEmpty(userData.data.list)) return false
     userData = userData?.data?.list[0]
-    let cardData = await api.getData(type, { deviceFp })
-    cardData = await api.checkCode(e, cardData, type, {})
+    let cardData = await api.getData('srNote', { deviceFp })
+    cardData = await api.checkCode(e, cardData, 'srNote', {})
     if (!cardData || cardData.retcode !== 0) return false
     let data = cardData.data
-    data.type = 'module'
-    data.userData = userData
-    data.uid = uid
     data.time = moment().format('YYYY-MM-DD HH:mm:ss dddd')
     // 头像
     if (this.e.member?.getAvatarUrl) {
@@ -81,7 +78,11 @@ export class Note extends plugin {
     }
     data = this.handleData(data)
     logger.debug(data)
-    await runtimeRender(this.e, '/note/new_note.html', data, {
+    let noteData = {
+      ...data,
+      ...userData
+    }
+    await runtimeRender(this.e, '/note/new_note.html', noteData, {
       scale: 1.6
     })
   }
