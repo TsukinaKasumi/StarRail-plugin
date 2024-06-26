@@ -48,6 +48,28 @@ article {
                 max-width: 70%;
             }
         }
+
+        .sign-in {
+            position: absolute;
+            bottom: 4px;
+            right: 1px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+
+            .is {
+                border: 1px solid #9c8d5c;
+                border-radius: 3px;
+                padding: 1px 2px;
+                font-size: 12px;
+                height: 16px;
+                line-height: 14px;
+
+                &.grey {
+                    border: 1px solid #767676;
+                }
+            }
+        }
     }
 
     time {
