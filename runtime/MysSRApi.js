@@ -86,35 +86,6 @@ export default class MysSRApi extends MysApi {
         Host: 'api-takumi.mihoyo.com'
       }
       headers = Object.assign(headers, extra)
-    } else if (type === 'sign_info') {
-      let extra = {
-        ...(['prod_gf_cn', 'prod_qd_cn'].includes(this.server) ? {
-          'x-rpc-app_version': '2.71.1',
-          'x-rpc-client_type': '5',
-          'x-rpc-device_id': this._device,
-          'User-Agent': 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBS/2.71.1',
-          Referer: 'https://act.mihoyo.com/',
-          'X-Requested-With': 'com.mihoyo.hyperion',
-          'x-rpc-platform': 'android',
-          'x-rpc-device_model': 'J9110',
-          'x-rpc-device_name': 'Sony J9110',
-          'x-rpc-channel': 'miyousheluodi',
-          'x-rpc-sys_version': '11'
-        } : {
-          'x-rpc-app_version': '2.55.0',
-          'x-rpc-client_type': '2',
-          'x-rpc-device_id': this._device,
-          'User-Agent': 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.55.0',
-          Referer: 'https://act.hoyolab.com/',
-          'X-Requested-With': 'com.mihoyo.hoyolab',
-          'x-rpc-platform': 'android',
-          'x-rpc-device_model': 'J9110',
-          'x-rpc-device_name': 'Sony J9110',
-          'x-rpc-channel': 'google',
-          'x-rpc-sys_version': '11'
-        })
-      }
-      headers = extra
     } else {
       headers.DS = this.getDs(query, body)
     }
