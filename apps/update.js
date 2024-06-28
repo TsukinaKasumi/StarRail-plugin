@@ -1,14 +1,19 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import common from "../../../lib/common/common.js"
-import { createRequire } from 'module'
 import _ from 'lodash'
-import { Restart } from '../../other/restart.js'
 import fs from 'fs'
 import { rulePrefix } from '../utils/common.js'
+import {exec} from 'child_process'
+
+let Restart = null
+try {
+  Restart = (await import("../../other/restart.js").catch(e => null))?.Restart
+  Restart ||= (await import("../../system/apps/restart.ts")).Restart
+} catch {
+  logger.error(`[StarRail-plugin]未获取到重启js，重启将无法使用`)
+}
 
 const _path = process.cwd()
-const require = createRequire(import.meta.url)
-const { exec, execSync } = require('child_process')
 const resPath = `${_path}/plugins/StarRail-plugin/resources/`
 
 const checkAuth = async function (e) {
