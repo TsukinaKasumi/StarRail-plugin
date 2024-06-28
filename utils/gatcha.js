@@ -56,7 +56,7 @@ const gatchaWeapon = new Map([
 
 const lastTime = [moment('2023-05-17 18:00'), moment('2023-06-06 14:59')]
 
-export async function getRecords (type = 11, authKey) {
+export async function getRecords (uid, type = 11, authKey) {
   let page = 1
   let data = {
     data: {}
@@ -65,7 +65,7 @@ export async function getRecords (type = 11, authKey) {
   let result = []
   do {
     logger.info(`正在获取${gatchaType[type]}第${page}页`)
-    const url = getRecordUrl(type, page, 20, authKey, endId)
+    const url = getRecordUrl(uid, type, page, 20, authKey, endId)
     const response = await fetch(url)
     data = await response.json()
     result.push(...data.data.list)
@@ -79,7 +79,7 @@ export async function getRecords (type = 11, authKey) {
   return result
 }
 
-export async function statistics (authKey) {
+export async function statistics (uid, authKey) {
   const data = {
     mapData: new Map(),
     totalGatchaNum: 0, // 总抽卡数
@@ -94,7 +94,7 @@ export async function statistics (authKey) {
   const getData = async (i) => {
     if (i) {
       const item = { typeName: gatchaType[i], rarityNum: { 5: 0, 4: 0 } }
-      const recordsSrc = await getRecords(i, authKey)
+      const recordsSrc = await getRecords(uid, i, authKey)
       const until = { 5: 0, 4: 0 }
       item.records = _.reduce(recordsSrc.reverse(), (prev, curr, index) => {
         const currTime = moment(curr.time)
@@ -197,7 +197,7 @@ function getServer (uid) {
   return 'prod_gf_cn'
 }
 
-function getRecordUrl (type, page, size = 10, authKey = '', endId = 0) {
+function getRecordUrl (uid, type, page, size = 10, authKey = '', endId = 0) {
   if (['prod_gf_cn', 'prod_qd_cn'].includes(getServer(uid)))
     return `https://api-takumi.mihoyo.com/common/gacha_record/api/getGachaLog?authkey_ver=1&default_gacha_type=11&lang=zh-cn&authkey=${authKey}&game_biz=hkrpg_cn&page=${page}&size=${size}&gacha_type=${type}&end_id=${endId}`
   else if (/official/.test(getServer(uid)))
