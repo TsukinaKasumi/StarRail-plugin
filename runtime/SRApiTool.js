@@ -49,7 +49,7 @@ export default class SRApiTool {
           },
           sign_info: {
             url: `${host}event/luna/info`,
-            query: 'lang=zh-cn&act_id=e202304121516551',
+            query: `lang=zh-cn&act_id=e202304121516551&region=${this.server}&uid=${this.uid}`,
             dsSalt: 'web'
           }
         } : {
