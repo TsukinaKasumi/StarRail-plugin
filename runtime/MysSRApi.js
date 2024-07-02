@@ -211,3 +211,12 @@ export function randomString (length) {
   }
   return randomStr
 }
+
+export function generateSeed (length = 16) {
+  const characters = '0123456789abcdef'
+  let result = ''
+  for (let i = 0; i < length; i++) {
+    result += characters[Math.floor(Math.random() * characters.length)]
+  }
+  return result
+}
