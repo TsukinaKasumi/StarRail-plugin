@@ -1,5 +1,5 @@
 import { generateSeed } from './MysSRApi.js'
-
+import crypto from 'crypto'
 /**
  * derived from miao-yunzai
  */
@@ -14,6 +14,7 @@ export default class SRApiTool {
     this.isSr = true
     this.server = server
     this.game = 'honkaisr'
+    this.uuid = crypto.randomUUID()
   }
 
   getUrlMap = (data = {}) => {
@@ -60,19 +61,20 @@ export default class SRApiTool {
           getFp: {
             url: `${hostPublicData}device-fp/api/getFp`,
             body: {
-              seed_id: `${generateSeed(16)}`,
-              device_id: data.deviceId,
-              platform: '5',
+              seed_id: `${this.uuid}`,
+              device_id: '35315696b7071100',
+              hoyolab_device_id: `${this.uuid}`,
+              platform: '2',
               seed_time: new Date().getTime() + '',
-              ext_fields: `{"userAgent":"Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.55.0","browserScreenSize":"387904","maxTouchPoints":"5","isTouchSupported":"1","browserLanguage":"zh-CN","browserPlat":"Linux aarch64","browserTimeZone":"Asia/Shanghai","webGlRender":"Adreno (TM) 640","webGlVendor":"Qualcomm","numOfPlugins":"0","listOfPlugins":"unknown","screenRatio":"2.625","deviceMemory":"4","hardwareConcurrency":"8","cpuClass":"unknown","ifNotTrack":"unknown","ifAdBlock":"0","hasLiedLanguage":"0","hasLiedResolution":"1","hasLiedOs":"0","hasLiedBrowser":"0","canvas":"${generateSeed(64)}","webDriver":"0","colorDepth":"24","pixelRatio":"2.625","packageName":"unknown","packageVersion":"2.27.0","webgl":"${generateSeed(64)}"}`,
-              app_name: 'hkrpg_global',
-              device_fp: '38d7f2364db95'
+              ext_fields: `{"proxyStatus":1,"isRoot":1,"romCapacity":"512","deviceName":"Xperia 1","productName":"J9110","romRemain":"483","hostname":"BuildHost","screenSize":"1096x2434","isTablet":0,"model":"J9110","brand":"Sony","hardware":"qcom","deviceType":"J9110","devId":"REL","serialNumber":"unknown","sdCapacity":107433,"buildTime":"1633631032000","buildUser":"BuildUser","simState":1,"ramRemain":"98076","appUpdateTimeDiff":1716545162858,"deviceInfo":"Sony\/J9110\/J9110:11\/55.2.A.4.332\/055002A004033203408384484:user\/release-keys","buildType":"user","sdkVersion":"30","ui_mode":"UI_MODE_TYPE_NORMAL","isMockLocation":0,"cpuType":"arm64-v8a","isAirMode":0,"ringMode":2,"app_set_id":"${this.uuid}","chargeStatus":1,"manufacturer":"Sony","emulatorStatus":0,"appMemory":"512","adid":"${this.uuid}","osVersion":"11","vendor":"unknown","accelerometer":"-0.9233304x7.574181x6.472585","sdRemain":97931,"buildTags":"release-keys","packageName":"com.mihoyo.hoyolab","networkType":"WiFi","debugStatus":1,"ramCapacity":"107433","magnetometer":"-9.075001x-27.300001x-3.3000002","display":"55.2.A.4.332","appInstallTimeDiff":1716489549794,"packageVersion":"","gyroscope":"0.027029991x-0.04459185x0.032222193","batteryStatus":45,"hasKeyboard":0,"board":"msmnile"}`,
+              app_name: 'bbs_oversea',
+              device_fp: '38d7f2352506c'
             },
             noDs: true
           },
           sign_info: {
             url: `${host}event/luna/os/info`,
-            query: `lang=zh-cn&act_id=e202303301540311&region=${this.server}&uid=${this.uid}`,
+            query: 'lang=zh-cn&act_id=e202303301540311',
             dsSalt: 'web'
           }
         }),
