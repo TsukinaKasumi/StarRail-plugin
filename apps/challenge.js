@@ -210,7 +210,7 @@ export class Challenge extends plugin {
     let currentTime = new Date()
 
     // 获取第一期混沌回忆的时间
-    let firstTime = new Date('2024-06-19T04:00:00')
+    let firstTime = new Date('2024-06-24T04:00:00')
 
     // 计算时间差距（以毫秒为单位）
     if (currentTime < firstTime) {
