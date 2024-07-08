@@ -33,7 +33,7 @@
               <p>{{ data.groups[0].upper_boss.name_mi18n }}</p>
             </div>
             <div class="boss-image">
-              <img class="boss" src="{{ pluResPath }}challenge/boss/{{ data.groups[0].upper_boss.id }}.png" alt="">
+              <img class="boss" src="{{ data.groups[0].upper_boss.icon }}" alt="">
             </div>
           </div>
           <div class="boss-node">
@@ -42,7 +42,7 @@
               <p>{{ data.groups[0].lower_boss.name_mi18n }}</p>
             </div>
             <div class="boss-image">
-              <img class="boss" src="{{ pluResPath }}challenge/boss/{{ data.groups[0].lower_boss.id }}.png" alt="">
+              <img class="boss" src="{{ data.groups[0].lower_boss.icon }}" alt="">
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@
                   <div class="detail-buff-border">
                     <div class="buff-col">
                       <div class="buff-icon-container">
-                        <img class="buff-icon" src="{{ pluResPath }}challenge/buff/{{ floor.node_1.buff.id }}.png" alt="">
+                        <img class="buff-icon" src="{{ floor.node_1.buff.icon }}" alt="">
                       </div>
                     </div>
                     <div class="description-col">
@@ -171,7 +171,7 @@
                   <div class="detail-buff-border">
                     <div class="buff-col">
                       <div class="buff-icon-container">
-                        <img class="buff-icon" src="{{ pluResPath }}challenge/buff/{{ floor.node_2.buff.id }}.png" alt="">
+                        <img class="buff-icon" src="{{ floor.node_2.buff.icon }}" alt="">
                       </div>
                     </div>
                     <div class="description-col">
