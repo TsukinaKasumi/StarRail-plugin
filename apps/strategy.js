@@ -122,7 +122,7 @@ export class strategy extends plugin {
       '示例: *希儿攻略2',
       '',
       '攻略来源:'
-    ] + this.source.map((element, index) => `${index + 1}: ${element}`)
+    ].concat(this.source.map((element, index) => `${index + 1}: ${element}`))
     await this.e.reply(reply_msg.join('\n'))
   }
 
