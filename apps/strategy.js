@@ -6,8 +6,6 @@ import plugin from '../../../lib/plugins/plugin.js'
 import alias from '../utils/alias.js'
 import { rulePrefix } from '../utils/common.js'
 import setting from '../utils/setting.js'
-// 最大攻略数量
-let maxNum = 6
 
 export class strategy extends plugin {
   constructor () {
@@ -18,7 +16,7 @@ export class strategy extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}?(更新)?\\S+攻略([0-${maxNum}])?$`,
+          reg: `^${rulePrefix}?(更新)?\\S+攻略(\\d+|all)?$`,
           fnc: 'strategy'
         },
         {
@@ -26,7 +24,7 @@ export class strategy extends plugin {
           fnc: 'strategy_help'
         },
         {
-          reg: `^${rulePrefix}设置默认攻略([0-${maxNum}])?$`,
+          reg: `^${rulePrefix}设置默认攻略(\\d+)?$`,
           fnc: 'strategy_setting'
         }
       ]
@@ -46,6 +44,9 @@ export class strategy extends plugin {
 
     this.source = ['初始镜像', '小橙子阿', '星穹中心']
 
+    // 最大攻略数量
+    this.maxNum = this.source.length
+
     this.oss = '?x-oss-process=image//resize,s_1200/quality,q_90/auto-orient,0/interlace,1/format,jpg'
   }
 
@@ -55,7 +56,7 @@ export class strategy extends plugin {
       fs.mkdirSync(this.path, { recursive: true })
     }
     /** 初始化子目录 */
-    for (let subId of [1, 2, 3]) {
+    for (let subId of _.range(1, this.maxNum+1)) {
       let path = this.path + '/' + subId
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path)
@@ -65,11 +66,15 @@ export class strategy extends plugin {
 
   /** #心海攻略 */
   async strategy () {
-    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略([0-${maxNum}])?$`)
+    let reg = new RegExp(`^${rulePrefix}?(更新)?(\\S+)攻略(\\d+|all)?$`)
     let [, , , , isUpdate, roleName,
       group = setting.getConfig('mys')?.defaultSource
     ] = this.e.msg.match(reg)
     let role = alias.get(roleName)
+
+    if (group == 'all') {
+      group = 0
+    }
 
     if (!role) return false
     role = role.replaceAll('•', '·')
@@ -81,7 +86,7 @@ export class strategy extends plugin {
       // eslint-disable-next-line no-unused-vars
       let msg = []
       // eslint-disable-next-line no-unused-vars
-      for (let i = 1; i <= maxNum; i++) {
+      for (let i = 1; i <= this.maxNum; i++) {
         this.sfPath = `${this.path}/${i}/${role}.jpg`
         if (fs.existsSync(this.sfPath) && !isUpdate) {
           msg.push(segment.image(`file://${this.sfPath}`))
@@ -109,34 +114,30 @@ export class strategy extends plugin {
 
   /** #攻略帮助 */
   async strategy_help () {
-    await this.e.reply([
-      '星铁攻略帮助:\n',
-      '*希儿攻略[0123456]\n',
-      '*更新希儿攻略[0123456]\n',
-      '*设置默认攻略[0123456]\n',
-      '示例: *希儿攻略2\n',
-      '\n攻略来源:\n',
-      '1——初始镜像\n',
-      '2——小橙子阿\n',
-      '3——星穹中心\n',
-      '4——水云109\n',
-      '5——幻仙十六\n',
-      '6——HoYo青枫\n'
-    ])
+    reply_msg = [
+      '星铁攻略帮助:',
+      '*希儿攻略+攻略id',
+      '*更新希儿攻略+攻略id',
+      '*设置默认攻略+攻略id',
+      '示例: *希儿攻略2',
+      '',
+      '攻略来源:'
+    ] + this.source.map((element, index) => `${index + 1}: ${element}`)
+    await this.e.reply(reply_msg.join('\n'))
   }
 
   /** #设置默认攻略1 */
   async strategy_setting () {
-    let newREG = new RegExp('设置默认攻略([0-' + maxNum + '])?$', 'g')
+    let newREG = new RegExp('设置默认攻略([0-' + this.maxNum + '])?$', 'g')
     let match = newREG.exec(this.e.msg)
     let set = './plugins/StarRail-plugin/config/mys.yaml'
     let config = fs.readFileSync(set, 'utf8')
     let num = Number(match[1])
     if (isNaN(num)) {
-      await this.e.reply(`星铁默认攻略设置方式为: \n*设置默认攻略[0123456] \n 请增加数字0-${maxNum}其中一个`)
+      await this.e.reply(`星铁默认攻略设置方式为: \n*设置默认攻略[0123456] \n 请增加数字0-${this.maxNum}其中一个`)
       return
     }
-    newREG = new RegExp('defaultSource: [0-' + maxNum + ']', 'g')
+    newREG = new RegExp('defaultSource: [0-' + this.maxNum + ']', 'g')
     config = config.replace(newREG, 'defaultSource: ' + num)
     fs.writeFileSync(set, config, 'utf8')
 
