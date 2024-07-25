@@ -114,7 +114,7 @@ export class strategy extends plugin {
 
   /** #攻略帮助 */
   async strategy_help () {
-    reply_msg = [
+    let reply_msg = [
       '星铁攻略帮助:',
       '*希儿攻略+攻略id',
       '*更新希儿攻略+攻略id',
