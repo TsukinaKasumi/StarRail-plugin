@@ -133,11 +133,15 @@ export class Challenge extends plugin {
         ...floor,
         node_1: {
           ...floor.node_1,
-          challengeTime: this.timeFormat(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
+          ...(floor.node_1.challenge_time && {
+            challengeTime: this.timeFormat(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
+          }) // 快速通关就没有 challenge_time 这个属性
         },
         node_2: {
           ...floor.node_2,
-          challengeTime: this.timeFormat(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
+          ...(floor.node_2.challenge_time && {
+            challengeTime: this.timeFormat(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
+          })
         }
       }
     })
