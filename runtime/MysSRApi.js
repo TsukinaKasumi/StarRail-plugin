@@ -173,24 +173,35 @@ export default class MysSRApi extends MysApi {
     switch (res.retcode) {
       case 0:
         break
+      case 10102:
+        if (res.message === 'Data is not public for the user') {
+          this.e.reply(`\nUID:${this.uid}，米游社数据未公开`, false, { at: this.userId })
+        } else {
+          this.e.reply(`UID:${this.uid}，请先去米游社绑定角色`)
+        }
+        break
+      case 10041:
+      case 5003:
+        this.e.reply(`UID:${this.uid}，米游社账号异常，暂时无法查询`)
+        break
       case 10035:
       case 1034: {
         let handler = this.e.runtime?.handler || {}
 
         // 如果有注册的mys.req.err，调用
         if (handler.has('mys.req.err')) {
-          logger.mark(`[米游社sr查询失败][uid:${this.uid}][qq:${this.userId}] 遇到验证码，尝试调用 Handler mys.req.err`)
+          logger.mark(`[米游社sr查询失败][UID:${this.uid}][qq:${this.userId}] 遇到验证码，尝试调用 Handler mys.req.err`)
           res = await handler.call('mys.req.err', this.e, { mysApi: this, type, res, data, mysInfo: this }) || res
         }
         if (!res || res?.retcode === 1034 || res?.retcode === 10035) {
-          logger.mark(`[米游社查询失败][uid:${this.uid}][qq:${this.userId}] 遇到验证码`)
+          logger.mark(`[米游社查询失败][UID:${this.uid}][qq:${this.userId}] 遇到验证码`)
           this.e.reply('米游社查询遇到验证码，请稍后再试')
         }
         break
       }
       default:
         if (/(登录|login)/i.test(res.message)) {
-          logger.mark(`[ck失效][uid:${this.uid}]`)
+          logger.mark(`[ck失效][UID:${this.uid}]`)
           this.e.reply(`UID:${this.uid}，米游社cookie已失效`)
         } else {
           this.e.reply(`米游社接口报错，暂时无法查询：${res.message || 'error'}`)
@@ -198,7 +209,7 @@ export default class MysSRApi extends MysApi {
         break
     }
     if (res.retcode !== 0) {
-      logger.mark(`[米游社sr接口报错]${JSON.stringify(res)}，uid：${this.uid}`)
+      logger.mark(`[米游社sr接口报错]${JSON.stringify(res)}，UID：${this.uid}`)
     }
     return res
   }
