@@ -34,7 +34,7 @@
 
 gitee
 ```shell
-git clone --depth=1 https://gitee.com/TsukinaKasumi/StarRail-plugin.git ./plugins/StarRail-plugin
+git clone --depth=1 https://gitee.com/hewang1an/StarRail-plugin.git ./plugins/StarRail-plugin
 ```
 github
 ```shell
