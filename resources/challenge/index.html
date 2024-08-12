@@ -17,10 +17,8 @@
   <div class="body">
     {{ if data.currentType == challengeType }}
     <span class="golden">NEW</span><img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
-    <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
-    {{ else }}
-    <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
     {{ /if }}
+    <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
     <div class="summar">
       <h2>{{ ['末日幻影', '虚构叙事', '忘却之庭'][challengeType] }}挑战回顾</h2>
       <div class="summar-content">
