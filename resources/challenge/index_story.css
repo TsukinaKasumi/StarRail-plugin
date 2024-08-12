@@ -42,6 +42,10 @@ img.rogue-star-small {
   margin-top: 20px;
 }
 
+.body span.golden {
+  color: #f3ca87;
+}
+
 .count {
   color: #aaa;
 }
