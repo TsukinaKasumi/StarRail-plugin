@@ -22,6 +22,10 @@ export class Challenge extends plugin {
           fnc: 'challenge'
         },
         {
+          reg: `^${rulePrefix}(最新|当期)(深渊)`,
+          fnc: 'challengeCurrent'
+        },
+        {
           reg: `^${rulePrefix}(上期|本期)?(忘却|忘却之庭|混沌|混沌回忆)`,
           fnc: 'challengeForgottenHall'
         },
@@ -117,7 +121,9 @@ export class Challenge extends plugin {
     //   return false
     // }
     const data = { ...challengeData.data }
-    
+
+    // 最新更新的深渊
+    data.currentType = this.getCurrentChallengeType()
     // 起止日期要分开处理
     if (challengeType != 2) {
       // 末日幻影、虚构叙事
@@ -175,6 +181,11 @@ export class Challenge extends plugin {
   }
 
   async challenge (e) {
+    for (let types of [0, 1, 2])
+      await this.queryChallenge(e, types)
+  }
+
+  async challengeCurrent (e) {
     await this.queryChallenge(e, this.getCurrentChallengeType())
   }
 

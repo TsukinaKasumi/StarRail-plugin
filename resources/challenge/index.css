@@ -19,6 +19,11 @@ img.rogue-star {
   height: 60px;
 }
 
+img.rogue-star-small {
+  width: 35px;
+  height: 35px;
+}
+
 .head {
   display: flex;
   justify-content: center;
@@ -35,6 +40,10 @@ img.rogue-star {
 
 .body {
   margin-top: 20px;
+}
+
+.body span.golden {
+  color: #f3ca87;
 }
 
 .count {
