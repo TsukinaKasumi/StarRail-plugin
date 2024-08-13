@@ -42,8 +42,20 @@ img.rogue-star-small {
   margin-top: 20px;
 }
 
-.body span.golden {
+.body .time-container {
+  display: flex;
+  justify-content: space-between; /* 左右对齐 */
+  padding: 10px;
+}
+
+.body div.golden {
   color: #f3ca87;
+  font-style: italic;
+}
+
+div.red {
+  color: #fc3c49;
+  font-style: italic;
 }
 
 .count {
