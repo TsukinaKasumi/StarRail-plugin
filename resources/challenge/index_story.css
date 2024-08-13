@@ -24,6 +24,16 @@ img.rogue-star-small {
   height: 35px;
 }
 
+img.golden-clock {
+  width: 35px;
+  height: 35px;
+}
+
+img.red-clock {
+  width: 35px;
+  height: 35px;
+}
+
 .head {
   display: flex;
   justify-content: center;
@@ -51,11 +61,13 @@ img.rogue-star-small {
 .body div.golden {
   color: #f3ca87;
   font-style: italic;
+  font-size: 35px;
 }
 
-div.red {
+.body div.red {
   color: #fc3c49;
   font-style: italic;
+  font-size: 35px;
 }
 
 .count {

@@ -16,12 +16,14 @@
 
   <div class="body">
     <div class="time-container">
-      <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
       {{ if data.currentType == challengeType }}
+      <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }} <img class="golden-clock" src="{{ pluResPath }}common/cont/golden-clock.png" /></div>
       <div class="golden">NEW!</div>
-      {{ /if }}
-      {{ if data.currentType == (challengeType + 2) % 3 }}
+      {{ else if data.currentType == (challengeType + 2) % 3 }}
+      <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }} <img class="red-clock" src="{{ pluResPath }}common/cont/red-clock.png" /></div>
       <div class="red">EXPIRING⚠</div>
+      {{ else }}
+      <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
       {{ /if }}
     </div>
     <div class="summar">
