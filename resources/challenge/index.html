@@ -15,10 +15,15 @@
   <h2 class="head" style="margin-bottom: 20px;text-align: center;">UID: {{ uid }} 的{{ ['末日幻影', '虚构叙事', '忘却之庭'][challengeType] }}数据 <span class="tag">{{ type == '1' ? '本期' : '上期' }}</span></h2>
 
   <div class="body">
-    {{ if data.currentType == challengeType }}
-    <span class="golden">NEW</span><img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
-    {{ /if }}
-    <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
+    <div class="time-container">
+      <div class="count">统计周期: {{ data.beginTime }}-{{ data.endTime }}</div>
+      {{ if data.currentType == challengeType }}
+      <div class="golden">NEW!</div>
+      {{ /if }}
+      {{ if data.currentType == (challengeType + 2) % 3 }}
+      <div class="red">EXPIRING⚠</div>
+      {{ /if }}
+    </div>
     <div class="summar">
       <h2>{{ ['末日幻影', '虚构叙事', '忘却之庭'][challengeType] }}挑战回顾</h2>
       <div class="summar-content">
