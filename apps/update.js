@@ -184,15 +184,15 @@ export class Update extends plugin {
 
     let logAll
     try {
-      logAll = await execSync(cm, { encoding: 'utf-8' })
+      logAll = await this.execSync(cm, { encoding: 'utf-8' })
     } catch (error) {
       logger.error(error.toString())
       this.reply(error.toString())
     }
 
-    if (!logAll) return false
+    if (!logAll.stdout) return false
 
-    logAll = logAll.split('\n')
+    logAll = logAll.stdout.split('\n')
 
     let log = []
     for (let str of logAll) {
@@ -221,8 +221,8 @@ export class Update extends plugin {
   async getcommitId (plugin = '') {
     let cm = `git -C ./plugins/${plugin}/ rev-parse --short HEAD`
 
-    let commitId = await execSync(cm, { encoding: 'utf-8' })
-    commitId = _.trim(commitId)
+    let commitId = await this.execSync(cm, { encoding: 'utf-8' })
+    commitId = _.trim(commitId.stdout)
 
     return commitId
   }
@@ -237,8 +237,8 @@ export class Update extends plugin {
 
     let time = ''
     try {
-      time = await execSync(cm, { encoding: 'utf-8' })
-      time = _.trim(time)
+      time = await this.execSync(cm, { encoding: 'utf-8' })
+      time = _.trim(time.stdout)
     } catch (error) {
       logger.error(error.toString())
       time = '获取时间失败'
@@ -308,9 +308,9 @@ export class Update extends plugin {
    * 检查git是否安装
    * @returns
    */
-  async checkGit () {
-    let ret = await execSync('git --version', { encoding: 'utf-8' })
-    if (!ret || !ret.includes('git version')) {
+  async checkGit() {
+    let ret = await this.execSync('git --version', { encoding: 'utf-8' })
+    if (!ret.stdout || !ret.stdout.includes('git version')) {
       await this.reply('请先安装git')
       return false
     }
