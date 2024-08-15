@@ -38,6 +38,7 @@ img.red-clock {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 60px;
 }
 
 .head .tag {
@@ -45,7 +46,7 @@ img.red-clock {
   padding: 0 6px;
   border: 2px solid #f0eaca;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 40px;
 }
 
 .body {
@@ -56,18 +57,66 @@ img.red-clock {
   width: 800px;
 }
 
+#left .summar {
+  margin-top: 10px;
+  border-radius: 12px;
+  padding: 30px 30px;
+  background: url('../challenge/images/top_bg_1.ef4dfad4.png') no-repeat;
+  background-size: cover;
+}
+
+#left .detail-item {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../challenge/images/floor_1.aa901da5.png') no-repeat;
+  background-size: cover;
+}
+
 #center {
   width: 800px;
   position: absolute;
-  top: 90px;
+  top: 120px;
   left: 872px;
+}
+
+#center .summar {
+  margin-top: 10px;
+  border-radius: 12px;
+  padding: 30px 30px;
+  background: url('../challenge/images/top_bg_3.32f46b6a.png') no-repeat;
+  background-size: cover;
+}
+
+#center .detail-item {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../challenge/images/floor_3.73c272d4.png') no-repeat;
+  background-size: cover;
 }
 
 #right {
   width: 800px;
   position: absolute;
-  top: 90px;
+  top: 120px;
   left: 1708px;
+}
+
+#right .summar {
+  margin-top: 10px;
+  border-radius: 12px;
+  padding: 30px 30px;
+  background: url('../challenge/images/top_bg_2.4b303ec9.png') no-repeat;
+  background-size: cover;
+}
+
+#right .detail-item {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../challenge/images/floor_2.5d63517c.png') no-repeat;
+  background-size: cover;
 }
 
 .body .time-container {
@@ -90,14 +139,6 @@ img.red-clock {
 
 .count {
   color: #aaa;
-}
-
-.summar {
-  margin-top: 10px;
-  border-radius: 12px;
-  padding: 30px 30px;
-  background: url('../challenge/images/top_bg_1.ef4dfad4.png') no-repeat;
-  background-size: cover;
 }
 
 .summar h2 {
@@ -153,14 +194,6 @@ img.boss {
 
 .detail-list {
   color: #f0eaca;
-}
-
-.detail-item {
-  margin-top: 20px;
-  border-top-right-radius: 36px;
-  padding: 4px;
-  background: url('../challenge/images/floor_1.aa901da5.png') no-repeat;
-  background-size: cover;
 }
 
 .detail-border {
@@ -350,7 +383,7 @@ img.buff-icon {
 }
 
 .logo {
-  font-size: 24px;
+  font-size: 60px;
   font-family: 'tttgbnumber';
   /* color: #f0eaca; */
   text-align: center;
