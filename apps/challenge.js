@@ -186,16 +186,12 @@ export class Challenge extends plugin {
     await runtimeRender(e, '/challenge/index.html', res)
   }
 
-  async challengeAll (e) {      
-    let resHall = await this.queryChallenge(e, 2)
-    let resStory = await this.queryChallenge(e, 1)
-    let resBoss = await this.queryChallenge(e, 0)
-    return { hall: resHall, story: resStory, boss: resBoss }
-  }
-
   async challenge (e) {
     await e.reply('正在获取全部深渊数据，请稍后……')
-    let res = await this.challengeAll(e)
+    let hall = await this.queryChallenge(e, 2)
+    let story = await this.queryChallenge(e, 1)
+    let boss = await this.queryChallenge(e, 0)
+    let res = { hall, story, boss }
     await runtimeRender(e, '/challenge/index_all.html', res)
   }
 
