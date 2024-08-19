@@ -18,23 +18,23 @@ export class Challenge extends plugin {
       priority: setting.getConfig('gachaHelp').noteFlag ? 5 : 500,
       rule: [
         {
-          reg: `^${rulePrefix}(上期|本期)?(深渊)`,
+          reg: `^${rulePrefix}(上期|本期)?(简易)?(深渊)`,
           fnc: 'challenge'
         },
         {
-          reg: `^${rulePrefix}(最新|当期)(深渊)`,
+          reg: `^${rulePrefix}(最新|当期)(简易)?(深渊)`,
           fnc: 'challengeCurrent'
         },
         {
-          reg: `^${rulePrefix}(上期|本期)?(忘却|忘却之庭|混沌|混沌回忆)`,
+          reg: `^${rulePrefix}(上期|本期)?(简易)?(忘却|忘却之庭|混沌|混沌回忆)`,
           fnc: 'challengeForgottenHall'
         },
         {
-          reg: `^${rulePrefix}(上期|本期)?(虚构|虚构叙事)`,
+          reg: `^${rulePrefix}(上期|本期)?(简易)?(虚构|虚构叙事)`,
           fnc: 'challengeStory'
         },
         {
-          reg: `^${rulePrefix}(上期|本期)?(末日|末日幻影)`,
+          reg: `^${rulePrefix}(上期|本期)?(简易)?(末日|末日幻影)`,
           fnc: 'challengeBoss'
         }
       ]
@@ -52,6 +52,7 @@ export class Challenge extends plugin {
       this.e.user_id = user
       this.User = new User(this.e)
     }
+    const simple = this.e.msg.match('简易')
 
     let uid = e.msg.match(/\d+/)?.[0]
     await this.miYoSummerGetUid()
@@ -84,6 +85,7 @@ export class Challenge extends plugin {
     if (deviceFp) {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
+    let challengeData, res, retcode
     // 先查simple，大概率simple不出验证码，详细才出
     let simpleRequestType = [
       'srChallengeBossSimple',
@@ -96,19 +98,23 @@ export class Challenge extends plugin {
       // 连简单也出验证码，打住
       return false
     }
-    let challengeData = simpleRes
     // 简单的没出验证码，试一下复杂的
-    let requestType = [
-      'srChallengeBoss',
-      'srChallengeStory',
-      'srChallenge'
-    ][challengeType]
-    let res = await api.getData(requestType, { deviceFp, schedule_type: scheduleType })
-    res = await api.checkCode(this.e, res, requestType, { deviceFp, schedule_type: scheduleType })
-    let retcode = Number(res.retcode)
-    if (retcode === 0) {
+    if (!simple) {
+      let requestType = [
+        'srChallengeBoss',
+        'srChallengeStory',
+        'srChallenge'
+      ][challengeType]
+      res = await api.getData(requestType, { deviceFp, schedule_type: scheduleType })
+      res = await api.checkCode(this.e, res, requestType, { deviceFp, schedule_type: scheduleType })
+      retcode = Number(res.retcode)
+    }
+    if (simple) {
+      challengeData = simpleRes
+    } else if (retcode === 0) {
       challengeData = res
     } else {
+      challengeData = simpleRes
       let queryName = [
         '末日幻影',
         '虚构叙事',
