@@ -9,7 +9,7 @@
   <h2 class="head" style="margin-bottom: 20px;text-align: center;">UID: {{ hall.uid }} 的全部深渊数据 <span class="tag">{{ hall.type == '1' ? '本期' : '上期' }}</span></h2>
 
   <div class="body">
-    <div id="left">
+    <div class="left">
       <div class="time-container">
         {{ if hall.data.currentType == hall.challengeType }}
         <div class="count">统计周期: {{ hall.data.beginTime }}-{{ hall.data.endTime }} <img class="golden-clock" src="{{ pluResPath }}common/cont/golden-clock.png" /></div>
@@ -94,7 +94,7 @@
         {{ /each }}
       </div>
     </div>
-    <div id="center">
+    <div class="center">
       <div class="time-container">
         {{ if boss.data.currentType == boss.challengeType }}
         <div class="count">统计周期: {{ boss.data.beginTime }}-{{ boss.data.endTime }} <img class="golden-clock" src="{{ pluResPath }}common/cont/golden-clock.png" /></div>
@@ -245,7 +245,7 @@
         {{ /each }}
       </div>
     </div>
-    <div id="right">
+    <div class="right">
       <div class="time-container">
         {{ if story.data.currentType == story.challengeType }}
         <div class="count">统计周期: {{ story.data.beginTime }}-{{ story.data.endTime }} <img class="golden-clock" src="{{ pluResPath }}common/cont/golden-clock.png" /></div>

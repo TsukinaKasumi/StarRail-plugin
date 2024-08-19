@@ -1,6 +1,6 @@
 .container {
   padding: 40px 40px 0 40px;
-  width: 2544px;
+  width: 2496px;
   overflow: hidden;
   background: url('../challenge/images/pc_bg.46428ec0.png') center no-repeat;
   background-size: cover;
@@ -53,11 +53,14 @@ img.red-clock {
   margin-top: 20px;
 }
 
-#left {
+.left, .center, .right {
+  float: left;
   width: 800px;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
-#left .summar {
+.left .summar {
   margin-top: 10px;
   border-radius: 12px;
   padding: 30px 30px;
@@ -65,7 +68,7 @@ img.red-clock {
   background-size: cover;
 }
 
-#left .detail-item {
+.left .detail-item {
   margin-top: 20px;
   border-top-right-radius: 36px;
   padding: 4px;
@@ -73,14 +76,7 @@ img.red-clock {
   background-size: cover;
 }
 
-#center {
-  width: 800px;
-  position: absolute;
-  top: 126px;
-  left: 872px;
-}
-
-#center .summar {
+.center .summar {
   margin-top: 10px;
   border-radius: 12px;
   padding: 30px 30px;
@@ -88,7 +84,7 @@ img.red-clock {
   background-size: cover;
 }
 
-#center .detail-item {
+.center .detail-item {
   margin-top: 20px;
   border-top-right-radius: 36px;
   padding: 4px;
@@ -96,14 +92,7 @@ img.red-clock {
   background-size: cover;
 }
 
-#right {
-  width: 800px;
-  position: absolute;
-  top: 126px;
-  left: 1708px;
-}
-
-#right .summar {
+.right .summar {
   margin-top: 10px;
   border-radius: 12px;
   padding: 30px 30px;
@@ -111,7 +100,7 @@ img.red-clock {
   background-size: cover;
 }
 
-#right .detail-item {
+.right .detail-item {
   margin-top: 20px;
   border-top-right-radius: 36px;
   padding: 4px;
@@ -383,6 +372,7 @@ img.buff-icon {
 }
 
 .logo {
+  clear: both;
   font-size: 60px;
   font-family: 'tttgbnumber';
   /* color: #f0eaca; */
