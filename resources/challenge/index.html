@@ -129,7 +129,7 @@
                 {{ /each }}
               </div>
               <div class="detail-buff">
-                {{ if 'buff' in floor.node_1 }}
+                {{ if floor.node_1?.buff }}
                   <div class="detail-buff-border">
                     <div class="buff-col">
                       <div class="buff-icon-container">
@@ -177,7 +177,7 @@
                 {{ /each }}
               </div>
               <div class="detail-buff">
-                {{ if 'buff' in floor.node_2 }}
+                {{ if floor.node_2?.buff }}
                   <div class="detail-buff-border">
                     <div class="buff-col">
                       <div class="buff-icon-container">
