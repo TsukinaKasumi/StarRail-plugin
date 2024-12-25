@@ -27,7 +27,7 @@ export class StarRail extends plugin {
           fnc: 'update'
         },
         {
-          reg: '^#星铁(?!插件)(?!更新)(.+)面板$',
+          reg: '^#星铁(?!插件)(?!米游社)(?!更新)(.+)面板$',
           fnc: 'StarRail'
         },
         {

@@ -44,7 +44,7 @@ export class Panel extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}(.+)面板(更新)?(.*)`,
+          reg: `^${rulePrefix}(?!米游社)(.+)面板(更新)?(.*)`,
           fnc: 'panel'
         },
         {
