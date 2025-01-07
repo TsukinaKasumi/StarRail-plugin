@@ -1,10 +1,6 @@
 import fs from 'fs'
 import cfg from '../../../lib/config/config.js'
-
-let SR = {
-  miao: true,
-  sr: true
-}
+import setting from '../utils/setting.js'
 
 /**
  * 是否拦截星铁插件的绑定UID
@@ -38,8 +34,17 @@ export class StarRail extends plugin {
     })
   }
 
+  getLatestConfig () {
+    return setting.getConfig('MiaoOrStarrail')
+  }
+
+  setLatestConfig (config) {
+    return setting.setConfig('MiaoOrStarrail', config)
+  }
+
   /** 更新全部面板 */
   async update () {
+    const SR = this.getLatestConfig()
     if (SR.miao) {
       ((await import("../../miao-plugin/apps/profile/ProfileList.js")).default).refresh(this.e)
     }
@@ -54,6 +59,7 @@ export class StarRail extends plugin {
 
   /** 查看角色详细面板 */
   async StarRail () {
+    const SR = this.getLatestConfig()
     if (SR.miao) {
       ((await import("../../miao-plugin/apps/profile/ProfileDetail.js")).default).detail(this.e)
     }
@@ -73,34 +79,26 @@ export class StarRail extends plugin {
     }
     const fileurl = import.meta.url
     const sr_name = fileurl.substring(fileurl.lastIndexOf('/') + 1).split('?')[0]
-    const _path = process.cwd() + "/plugins"
-    let cfg = fs.readFileSync(_path + `/StarRail-plugin/apps/${sr_name}`, 'utf8')
+    let SR = this.getLatestConfig()
     const msg = e.msg
     if (/喵喵/.test(msg)) {
-      if (/开启/.test(msg) && !SR.miao) {
+      if (/开启/.test(msg)) {
         SR.miao = true
-        cfg = cfg.replace('miao: false', 'miao: true')
-      } else if (/关闭/.test(msg) && SR.miao) {
+      } else if (/关闭/.test(msg)) {
         SR.miao = false
-        cfg = cfg.replace('miao: true', 'miao: false')
       }
     } else if (/星铁/.test(msg)) {
-      if (!fs.existsSync(_path + "/StarRail-plugin")) {
-        return e.reply("....死开，你有这个插件？")
-      }
-      if (/开启/.test(msg) && !SR.sr) {
+      if (/开启/.test(msg)) {
         SR.sr = true
-        cfg = cfg.replace('sr: false', 'sr: true')
-      } else if (/关闭/.test(msg) && SR.sr) {
+      } else if (/关闭/.test(msg)) {
         SR.sr = false
-        cfg = cfg.replace('sr: true', 'sr: false')
       }
     }
-    await fs.promises.writeFile(_path + `/StarRail-plugin/apps/${sr_name}`, cfg, 'utf8')
+    this.setLatestConfig(SR)
 
-    const miao = `喵喵：${SR.miao === true ? "开启" : "关闭"}`
-    const sr_ = `星铁：${SR.sr === true ? "开启" : "关闭"}`
-    e.reply(`当前状态：\n${miao}\n${sr_}`)
+    const miao_state = `喵喵：${SR.miao === true ? "开启" : "关闭"}`
+    const sr_state = `星铁：${SR.sr === true ? "开启" : "关闭"}`
+    e.reply(`当前状态：\n${miao_state}\n${sr_state}`)
   }
 }
 
