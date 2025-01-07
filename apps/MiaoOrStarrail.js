@@ -39,7 +39,7 @@ export class StarRail extends plugin {
   }
 
   setLatestConfig (config) {
-    return setting.getConfig('MiaoOrStarrail', config)
+    return setting.setConfig('MiaoOrStarrail', config)
   }
 
   /** 更新全部面板 */
