@@ -291,8 +291,8 @@ export default class Gacha extends plugin {
         weaponLifeName = 'weaponlife/' + this.weaponLife[tmpName] + '.png'
       }
     } else {
-      // 一半半概率歪到武器或者角色，但如果池子是武器池的话，必须是武器！！！！
-      if (lodash.random(1, 100) <= 50 && this.type != 'up-weapon') {
+      // 如果是角色池，一定是角色，但如果池子是武器池的话，必须是武器，一半概率歪到武器或者角色！！！！
+      if (this.type == 'up-char' || (lodash.random(1, 100) <= 50 && this.type != 'up-weapon')) {
         if (this.type != 'normal') this.gachaData[this.type].isUp5 = true;
         const chars = gachaInfo.gachaPool.normal.char;
         tmpName = lodash.sample(chars);
