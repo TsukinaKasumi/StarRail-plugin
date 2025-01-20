@@ -195,9 +195,11 @@ export class Challenge extends plugin {
       return false
     }
     let hall = await this.queryChallenge(e, 2, true, uid, ck)
+    if (!hall) return false
     let story = await this.queryChallenge(e, 1, true, uid, ck)
+    if (!story) return false
     let boss = await this.queryChallenge(e, 0, true, uid, ck)
-    if (!hall || !story || !boss) return false
+    if (!boss) return false
     let res = { hall, story, boss }
     await runtimeRender(e, '/challenge/index_all.html', res)
   }
