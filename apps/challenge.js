@@ -42,34 +42,14 @@ export class Challenge extends plugin {
     this.User = new User(e)
   }
 
-  async queryChallenge (e, challengeType) {
+  async queryChallenge (e, challengeType, all, uid, ck) {
     this.e.isSr = true
     this.isSr = true
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
     const simple = this.e.msg.match('简易')
 
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
-    if (!uid) {
-      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
-      return false
-    }
-
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-    if (!ck) {
-      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
-      return false
+    if (all !== true) {
+      uid = await this.userUid(e)
+      ck = await this.userCk(e)
     }
 
     let scheduleType = '1'
@@ -78,6 +58,13 @@ export class Challenge extends plugin {
     }
 
     let api = new MysSRApi(uid, ck)
+    if (all !== true) {
+      let userData = await api.getData('srUser')
+      if (!userData?.data || _.isEmpty(userData.data.list)) {
+        await e.reply('无法查询星铁深渊信息，请确认绑定的cookie是否有效')
+        return false
+      }
+    }
     let sdk = api.getUrl('getFp')
     let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
     fpRes = await fpRes.json()
@@ -85,20 +72,8 @@ export class Challenge extends plugin {
     if (deviceFp) {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
-    let challengeData, res, retcode
-    // 先查simple，大概率simple不出验证码，详细才出
-    let simpleRequestType = [
-      'srChallengeBossSimple',
-      'srChallengeStorySimple',
-      'srChallengeSimple'
-    ][challengeType]
-    let simpleRes = await api.getData(simpleRequestType, { deviceFp, schedule_type: scheduleType })
-    simpleRes = await api.checkCode(this.e, simpleRes, simpleRequestType, { deviceFp, schedule_type: scheduleType })
-    if (simpleRes.retcode !== 0) {
-      // 连简单也出验证码，打住
-      return false
-    }
-    // 简单的没出验证码，试一下复杂的
+    let challengeData, res, simpleRes
+    // 先查详细的
     if (!simple) {
       let requestType = [
         'srChallengeBoss',
@@ -107,12 +82,26 @@ export class Challenge extends plugin {
       ][challengeType]
       res = await api.getData(requestType, { deviceFp, schedule_type: scheduleType })
       res = await api.checkCode(this.e, res, requestType, { deviceFp, schedule_type: scheduleType })
-      retcode = Number(res.retcode)
     }
-    if (simple) {
-      challengeData = simpleRes
-    } else if (retcode === 0) {
+    if (simple || res.retcode !== 0) {
+      // 详细的出验证码了，查简单的
+      let simpleRequestType = [
+        'srChallengeBossSimple',
+        'srChallengeStorySimple',
+        'srChallengeSimple'
+      ][challengeType]
+      simpleRes = await api.getData(simpleRequestType, { deviceFp, schedule_type: scheduleType })
+      simpleRes = await api.checkCode(this.e, simpleRes, simpleRequestType, { deviceFp, schedule_type: scheduleType })
+      // 连简单的也出验证码，打住
+      if (simpleRes.retcode !== 0) {
+        await e.reply('星铁深渊信息出现验证码，无法查询')
+        return false
+      }
+    }
+    if (!simple && res.retcode === 0) {
       challengeData = res
+    } else if (simple && simpleRes.retcode === 0) {
+      challengeData = simpleRes
     } else {
       challengeData = simpleRes
       let queryName = [
@@ -177,26 +166,38 @@ export class Challenge extends plugin {
   async challengeForgottenHall (e) {
     await e.reply('正在获取忘却之庭数据，请稍后……')
     let res = await this.queryChallenge(e, 2)
+    if (!res) return false
     await runtimeRender(e, '/challenge/index.html', res)
   }
 
   async challengeStory (e) {
     await e.reply('正在获取虚构叙事数据，请稍后……')
     let res = await this.queryChallenge(e, 1)
+    if (!res) return false
     await runtimeRender(e, '/challenge/index.html', res)
   }
 
   async challengeBoss (e) {
     await e.reply('正在获取末日幻影数据，请稍后……')
     let res = await this.queryChallenge(e, 0)
+    if (!res) return false
     await runtimeRender(e, '/challenge/index.html', res)
   }
 
   async challenge (e) {
     await e.reply('正在获取全部深渊数据，请稍后……')
-    let hall = await this.queryChallenge(e, 2)
-    let story = await this.queryChallenge(e, 1)
-    let boss = await this.queryChallenge(e, 0)
+    let uid = await this.userUid(e)
+    let ck = await this.userCk(e)
+    let api = new MysSRApi(uid, ck)
+    let userData = await api.getData('srUser')
+    if (!userData?.data || _.isEmpty(userData.data.list)) {
+      await e.reply('无法查询星铁深渊信息，请确认绑定的cookie是否有效')
+      return false
+    }
+    let hall = await this.queryChallenge(e, 2, true, uid, ck)
+    let story = await this.queryChallenge(e, 1, true, uid, ck)
+    let boss = await this.queryChallenge(e, 0, true, uid, ck)
+    if (!hall || !story || !boss) return false
     let res = { hall, story, boss }
     await runtimeRender(e, '/challenge/index_all.html', res)
   }
@@ -204,6 +205,7 @@ export class Challenge extends plugin {
   async challengeCurrent (e) {
     await e.reply('正在获取最新深渊数据，请稍后……')
     let res = await this.queryChallenge(e, this.getCurrentChallengeType())
+    if (!res) return false
     await runtimeRender(e, '/challenge/index.html', res)
   }
 
@@ -256,6 +258,39 @@ export class Challenge extends plugin {
     // 1: 虚构
     // 2: 混沌
     return periodNum % 3
+  }
+
+  async userUid (e) {
+    let user = this.e.user_id
+    let ats = e.message.filter(m => m.type === 'at')
+    if (ats.length > 0 && !e.atBot) {
+      user = ats[0].qq
+      this.e.user_id = user
+      this.User = new User(this.e)
+    }
+    let uid = e.msg.match(/\d+/)?.[0]
+    await this.miYoSummerGetUid()
+    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
+    if (!uid) {
+      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
+      return false
+    }
+
+    return uid
+  }
+
+  async userCk (e) {
+    let ck = await getCk(e)
+    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
+      ck = ckArr[0]
+    }
+    if (!ck) {
+      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
+      return false
+    }
+
+    return ck
   }
 
   get app2config () {
