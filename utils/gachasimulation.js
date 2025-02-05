@@ -1,8 +1,8 @@
 export default {
   gachaPool: {
     'up-char': {
-      five: '忘归人',
-      four: ['米沙', '驭空', '加拉赫'],
+      five: '阿格莱雅',
+      four: ['停云', '寒鸦', '素裳'],
     },
     'up-weapon': {
       five: '惊魂夜',
