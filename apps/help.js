@@ -14,7 +14,7 @@ export class help extends plugin {
 			priority: 100,
 			rule: [
 				{
-					reg: `^${rulePrefix}帮助$`,
+					reg: `^${rulePrefix}(帮助|help)$`,
 					fnc: 'help'
 				},
 			]
