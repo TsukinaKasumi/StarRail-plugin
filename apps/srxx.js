@@ -2,7 +2,7 @@
 // 参考面板来自@blue菌hehe
 // 强度榜来自@水云109
 // 全角色攻略来自@萧熏儿mua
-// 星琼预估来自@弃剑不负你
+// 星琼预估来自@祈鸢ya
 // 深渊攻略来自@栀子0v0
 import plugin from '../../../lib/plugins/plugin.js'
 import { pluginResources } from '../utils/path.js'
@@ -190,7 +190,7 @@ export class srxx extends plugin {
   }
 
   async srEstimate (e) {
-    const res = await (await fetch("https://bbs-api.miyoushe.com/painter/api/user_instant/search/list?keyword=%E5%8F%AF%E8%8E%B7%E5%8F%96%E6%98%9F%E7%90%BC&uid=286192908&size=20&offset=0&sort_type=2")).json()
+    const res = await (await fetch("https://bbs-api.miyoushe.com/painter/api/user_instant/search/list?keyword=%E6%98%9F%E7%90%BC%E7%BB%9F%E8%AE%A1&uid=137101761&size=20&offset=0&sort_type=2")).json()
     const post = res.data.list[0].post.post
 
     let promises = []
