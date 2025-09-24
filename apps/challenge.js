@@ -212,7 +212,7 @@ export class Challenge extends plugin {
     if (!res) return false
     // 三路深渊的逻辑还不太一样，这里单独渲染
     // index_peak
-    await runtimeRender(e, '/challenge/indexPeak.html', res)
+    await runtimeRender(e, '/challenge/index_peak.html', res)
   }
 
   async challenge (e) {
