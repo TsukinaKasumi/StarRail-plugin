@@ -36,6 +36,10 @@ export class Challenge extends plugin {
         {
           reg: `^${rulePrefix}(上期|本期)?(简易)?(末日|末日幻影)`,
           fnc: 'challengeBoss'
+        },
+        {
+          reg: `^${rulePrefix}(上期|本期)?(简易)?(异乡|异相|异向|仲裁|异相仲裁)`,
+          fnc: 'challengePeak'
         }
       ]
     })
@@ -71,7 +75,8 @@ export class Challenge extends plugin {
       let requestType = [
         'srChallengeBoss',
         'srChallengeStory',
-        'srChallenge'
+        'srChallenge',
+        'srChallengePeak'
       ][challengeType]
       res = await api.getData(requestType, { deviceFp, schedule_type: scheduleType })
       res = await api.checkCode(this.e, res, requestType, { deviceFp, schedule_type: scheduleType })
@@ -81,7 +86,8 @@ export class Challenge extends plugin {
       let simpleRequestType = [
         'srChallengeBossSimple',
         'srChallengeStorySimple',
-        'srChallengeSimple'
+        'srChallengeSimple',
+        'srChallengePeakSimple'
       ][challengeType]
       simpleRes = await api.getData(simpleRequestType, { deviceFp, schedule_type: scheduleType })
       simpleRes = await api.checkCode(this.e, simpleRes, simpleRequestType, { deviceFp, schedule_type: scheduleType })
@@ -97,7 +103,8 @@ export class Challenge extends plugin {
       let queryName = [
         '末日幻影',
         '虚构叙事',
-        '忘却之庭'
+        '忘却之庭',
+        '异相仲裁'
       ][challengeType]
       logger.warn(`星铁${queryName}详细信息出现验证码，仅显示最后一层信息`)
     }
@@ -110,34 +117,59 @@ export class Challenge extends plugin {
     // 最新更新的深渊
     data.currentType = this.getCurrentChallengeType()
     // 起止日期要分开处理
-    if (challengeType != 2) {
+    if ([0, 1].includes(challengeType)) {
       // 末日幻影、虚构叙事
       data.beginTime = this.timeFormat(data.groups[0].begin_time)
       data.endTime = this.timeFormat(data.groups[0].end_time)
-    } else {
+    } else if (challengeType == 2) {
       // 忘却之庭
       data.beginTime = this.timeFormat(data.begin_time)
       data.endTime = this.timeFormat(data.end_time)
+    } else {
+      data.beginTime = this.timeFormat(data.challenge_peak_records[0].group.begin_time)
+      data.endTime = this.timeFormat(data.challenge_peak_records[0].group.end_time)
     }
-    data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
-      return {
-        ...floor,
-        node_1: {
-          ...floor.node_1,
-          ...(floor.node_1.challenge_time && {
-            challengeTime: this.timeFormat(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
-          }) // 快速通关就没有 challenge_time 这个属性
-        },
-        node_2: {
-          ...floor.node_2,
-          ...(floor.node_2.challenge_time && {
-            challengeTime: this.timeFormat(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
-          })
+    if (challengeType != 3) {
+      data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
+        return {
+          ...floor,
+          node_1: {
+            ...floor.node_1,
+            ...(floor.node_1.challenge_time && {
+              challengeTime: this.timeFormat(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
+            }) // 快速通关就没有 challenge_time 这个属性
+          },
+          node_2: {
+            ...floor.node_2,
+            ...(floor.node_2.challenge_time && {
+              challengeTime: this.timeFormat(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
+            })
+          }
         }
+      })
+    } else {
+      // 异相仲裁
+      // 王棋
+      if (data.challenge_peak_records[0].boss_record) {
+        data.challenge_peak_records[0].boss_record.challengeTime =
+          this.timeFormat(data.challenge_peak_records[0].boss_record.challenge_time, 'YYYY.MM.DD HH:mm')
       }
-    })
+      
+      // 骑士
+      data.challenge_peak_records[0].mob_records = 
+        _.map(data.challenge_peak_records[0].mob_records, (record) => {
+          return {
+            ...record,
+            ...(record.challenge_time && {
+              challengeTime: this.timeFormat(record.challenge_time, 'YYYY.MM.DD HH:mm')
+            })
+          }
+        })
+      
+      // TODO: 如果打了部分骑士关卡（e.g., 只打了第三关），mob_records 会长什么样？
+    }
     // 末日幻影、虚构叙事：计算两边节点的总分
-    if (challengeType != 2) {
+    if ([0, 1].includes(challengeType)) {
       data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
         return {
           ...floor,
@@ -174,6 +206,15 @@ export class Challenge extends plugin {
     await runtimeRender(e, '/challenge/index.html', res)
   }
 
+  async challengePeak (e) {
+    await e.reply('正在获取异相仲裁数据，请稍后……')
+    let res = await this.queryChallenge(e, 3)
+    if (!res) return false
+    // 三路深渊的逻辑还不太一样，这里单独渲染
+    // index_peak
+    await runtimeRender(e, '/challenge/indexPeak.html', res)
+  }
+
   async challenge (e) {
     await e.reply('正在获取全部深渊数据，请稍后……')
     let uid = await this.userUid(e)
@@ -184,6 +225,7 @@ export class Challenge extends plugin {
     if (!story) return false
     let boss = await this.queryChallenge(e, 0, true, uid, ck)
     if (!boss) return false
+    // TODO: 要不要把（没星琼奖励的）异相仲裁也加进来？
     let res = { hall, story, boss }
     await runtimeRender(e, '/challenge/index_all.html', res)
   }
