@@ -74,6 +74,10 @@ export const helpList = [
         desc: '末日幻影信息'
       }, {
         icon: 110,
+        title: '*(上期|本期)?(简易)?异相',
+        desc: '异相仲裁信息'
+      }, {
+        icon: 110,
         title: '*(上期|本期)?(简易)?深渊',
         desc: '全部深渊信息'
       }, {

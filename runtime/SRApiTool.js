@@ -122,6 +122,14 @@ export default class SRApiTool {
           url: `${hostRecord}game_record/app/hkrpg/api/challenge_boss`,
           query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
         },
+        srChallengePeak: {
+          url: `${hostRecord}game_record/app/hkrpg/api/challenge_peak`,
+          query: `isPrev=&need_all=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
+        },
+        srChallengePeakSimple: {
+          url: `${hostRecord}game_record/app/hkrpg/api/challenge_peak`,
+          query: `role_id=${this.uid}&schedule_type=${data.schedule_type || '1'}&server=${this.server}`
+        },
         srRogue: {
           url: `${hostRecord}game_record/app/hkrpg/api/rogue`,
           query: `need_detail=true&role_id=${this.uid}&schedule_type=${data.schedule_type || '3'}&server=${this.server}`
