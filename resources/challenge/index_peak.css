@@ -2,7 +2,7 @@
   padding: 40px 40px 0 40px;
   width: 800px;
   overflow: hidden;
-  background: url('../challenge/images/bg_1.bc4384de.png') center no-repeat;
+  background: url('../challenge/images/block_bg.b669cdc3.png') center no-repeat;
   background-size: cover;
   color: #f0eaca;
   font-family: 'SR', sans-serif;
@@ -73,7 +73,7 @@ img.red-clock {
   margin-top: 10px;
   border-radius: 12px;
   padding: 30px 30px;
-  background: url('../challenge/images/top_bg_1.ef4dfad4.png') no-repeat;
+  background: url('../challenge/images/block_bg.b669cdc3.png') no-repeat;
   background-size: cover;
 }
 
@@ -87,14 +87,6 @@ img.red-clock {
   margin-top: 20px;
   border: 1px #ddd solid;
   color: #f0eaca;
-}
-
-.summar-star {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-right: 1px #ddd solid;
-  width: 25%;
 }
 
 .summar-info {
@@ -161,6 +153,26 @@ img.rogue-star-small {
   padding-left: 20px;
 }
 
+.detail-list {
+  color: #f0eaca;
+}
+
+.detail-bossitem {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../challenge/images/normal_boss_bg.047e5b19.png') no-repeat;
+  background-size: cover;
+}
+
+.detail-item {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../challenge/images/xsg_bg.962ba3e3.png') no-repeat;
+  background-size: cover;
+}
+
 .detail-boss-defeated-text {
   color: rgb(205, 181, 136);
   text-align: center;
@@ -180,62 +192,6 @@ img.rogue-star-small {
   width: 100%;
   padding: 10px;
   z-index: 10;
-}
-
-.detail-list {
-  color: #f0eaca;
-}
-
-.detail-item {
-  margin-top: 20px;
-  border-top-right-radius: 36px;
-  padding: 4px;
-  background: url('../challenge/images/floor_1.aa901da5.png') no-repeat;
-  background-size: cover;
-}
-
-.detail-border {
-  border: 2px #ddd solid;
-  border-top-right-radius: 36px;
-}
-
-.detail-head {
-  display: flex;
-  justify-content: space-between;
-  border-top-right-radius: 36px;
-  padding: 20px 30px;
-  background-color: rgba(0, 0, 0, .4);
-}
-
-.detail-title {
-  color: #f0eaca;
-  font-size: 24px;
-}
-
-.detail-title p:last-of-type {
-  margin-top: 8px;
-  font-size: 18px;
-  opacity: .85;
-}
-
-.detail-body {
-  padding: 20px 30px;
-  color: #f0eaca;
-}
-
-.detail-bar {
-  display: flex;
-  justify-content: space-between;
-}
-
-.detail-node-title {
-  margin-top: 16px;
-  align-self: flex-end;
-}
-
-.detail-node-title span {
-  opacity: .85;
-  font-size: 16px;
 }
 
 .detail-avatars {
