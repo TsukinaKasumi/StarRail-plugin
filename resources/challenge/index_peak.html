@@ -102,36 +102,42 @@
             <div class="boss-title"> {{ mob_info.name }}: {{ mob_info.monster_name }}</div>
             <div class="boss-node">
               {{set mob_record = record.mob_records?.[mob_index]}}
-              <div class="boss-info">
-                {{ if mob_record?.has_challenge_record }}
-                  <div> 使用轮次 <span class="count"> {{mob_record.round_num}} </span>
-                  <span class="boss-star-container">
-                    <span class="detail-boss-defeated-text">已通关</span>
-                  </span>
-                  </div>
-                  <% for (var i = 0; i < mob_record.star_num; i++){ %>
-                    <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
-                  <% } %>
-                {{ else }}
-                  <div class="detail-boss-not-defeated-text">未通关</div>
-                {{ /if }}
-              </div>
-              {{ if mob_record?.has_challenge_record }}
-                <div class="boss-record">
-                  <div class="count boss-time">{{mob_record.challengeTime}}</div>
-                  <div class="detail-avatars">
-                    {{ each mob_record.avatars avatar }}
-                    <div class="detail-avatar rank{{ avatar.rarity }}">
-                      <div class="detail-avatar-border">
-                        <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
-                        <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
-                        <img class="char" src="{{ avatar.icon }}" alt="">
-                        <div class="level">等级 {{ avatar.level }}</div>
-                      </div>
-                    </div>
-                    {{ /each }}
-                  </div>
+              {{ if mob_record?.is_fast }}
+                <div class="boss-info">
+                  <div class="detail-boss-defeated-text">快速通关</div>
                 </div>
+              {{ else }}
+                <div class="boss-info">
+                  {{ if mob_record?.has_challenge_record }}
+                    <div> 使用轮次 <span class="count"> {{mob_record.round_num}} </span>
+                      <span class="boss-star-container">
+                        <span class="detail-boss-defeated-text">已通关</span>
+                      </span>
+                    </div>
+                    <% for (var i = 0; i < mob_record.star_num; i++){ %>
+                      <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                    <% } %>
+                  {{ else }}
+                    <div class="detail-boss-not-defeated-text">未通关</div>
+                  {{ /if }}
+                </div>
+                {{ if mob_record?.has_challenge_record }}
+                  <div class="boss-record">
+                    <div class="count boss-time">{{mob_record.challengeTime}}</div>
+                    <div class="detail-avatars">
+                      {{ each mob_record.avatars avatar }}
+                      <div class="detail-avatar rank{{ avatar.rarity }}">
+                        <div class="detail-avatar-border">
+                          <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                          <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
+                          <img class="char" src="{{ avatar.icon }}" alt="">
+                          <div class="level">等级 {{ avatar.level }}</div>
+                        </div>
+                      </div>
+                      {{ /each }}
+                    </div>
+                  </div>
+                {{ /if }}
               {{ /if }}
               <div class="boss-image">
                 <img class="boss" src="{{ mob_info.monster_icon }}" alt="">
