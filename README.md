@@ -1,13 +1,14 @@
-![logo](https://user-images.githubusercontent.com/21212372/235622221-7c5a5721-784b-4a31-9b24-60c88663548f.png)
-
-<div align=center> <h1>云崽QQ机器人的《崩坏：星穹铁道》插件</h1> </div>
 <div align=center>
- <img src ="https://img.shields.io/github/issues/TsukinaKasumi/StarRail-plugin?logo=github"/>
+ <picture>
+    <source srcset="https://github.com/user-attachments/assets/4eb7d786-ad19-4f2c-9f1d-e36bf6d61555" type="image/avif" />
+    <img src="https://user-images.githubusercontent.com/21212372/235622221-7c5a5721-784b-4a31-9b24-60c88663548f.png" />
+</picture>
+<h1>云崽QQ机器人的《崩坏：星穹铁道》插件</h1>
+<img src ="https://img.shields.io/github/issues/TsukinaKasumi/StarRail-plugin?logo=github"/>
 <img src ="https://img.shields.io/github/license/TsukinaKasumi/StarRail-plugin"/>
 <!-- <img src ="https://img.shields.io/github/v/tag/TsukinaKasumi/StarRail-plugin?label=latest%20version&logo=github"/> -->
 <img src ="https://img.shields.io/github/languages/top/TsukinaKasumi/StarRail-plugin?logo=github"/>
 </div>
-
 
 ### 交流群
 
@@ -15,16 +16,12 @@
 
 ### 使用说明
 
-`StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板、体力以及米游社所拥有的的一切有关星轨的功能
+`StarRail-plugin`为查询崩坏：星穹铁道基本信息的插件，包括角色面板、体力以及米游社所拥有的的一切有关星轨的功能，有相关的建议和问题可以在issues中提出，欢迎PR。
 
 具体功能可在安装插件后 通过 `#星铁帮助` 查看详细指令
 
 ### 如果觉得插件对你有帮助的话请点一个star！这是对我们最大的支持和动力！
 ---
-星穹铁道插件
-
-支持米游社相关的基本功能
-有相关的建议和问题可以在issues中提出，欢迎PR。
 
 ### 安装方法
 
