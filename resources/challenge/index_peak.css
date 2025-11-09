@@ -157,11 +157,19 @@ img.rogue-star-small {
   color: #f0eaca;
 }
 
-.detail-bossitem {
+.detail-normalitem {
   margin-top: 20px;
   border-top-right-radius: 36px;
   padding: 4px;
   background: url('../challenge/images/normal_boss_bg.047e5b19.png') no-repeat;
+  background-size: cover;
+}
+
+.detail-hellitem {
+  margin-top: 20px;
+  border-top-right-radius: 36px;
+  padding: 4px;
+  background: url('../challenge/images/hell_boss_bg.ca675173.png') no-repeat;
   background-size: cover;
 }
 
