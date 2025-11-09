@@ -57,8 +57,11 @@ export class Challenge extends plugin {
     }
 
     let scheduleType = '1'
-    if (e.msg.indexOf('上期') > -1) {
+    if (this.e.msg.match('上期')) {
       scheduleType = '2'
+    }
+    if (this.e.msg.match('上期') && challengeType == 3) {
+      scheduleType = '3'
     }
 
     let api = new MysSRApi(uid, ck)
@@ -126,8 +129,9 @@ export class Challenge extends plugin {
       data.beginTime = this.timeFormat(data.begin_time)
       data.endTime = this.timeFormat(data.end_time)
     } else {
-      data.beginTime = this.timeFormat(data.challenge_peak_records[0].group.begin_time)
-      data.endTime = this.timeFormat(data.challenge_peak_records[0].group.end_time)
+      data.peak_records = this.e.msg.match('上期') ? data.challenge_peak_records[1] : data.challenge_peak_records[0]
+      data.beginTime = this.timeFormat(data.peak_records.group.begin_time)
+      data.endTime = this.timeFormat(data.peak_records.group.end_time)
     }
     if (challengeType != 3) {
       data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
