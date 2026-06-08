@@ -352,9 +352,7 @@ export class Rogue extends plugin {
     let indexStr = e.msg.match(/(一|二|三)/)?.[0]
     let index = indexMap[indexStr] || 1
 
-    // mys 接口疑似有 bug，目前本期的差分宇宙信息在“上期”里面
-    // 这里先将错就错，之后如果接口修复，需要调整这里的逻辑
-    let period = e.msg.match(/上期|上周/) ? 'cur_week_detail' : 'last_week_detail'
+    let period = e.msg.match(/上期|上周/) ? 'last_week_detail' : 'cur_week_detail'
     let periodName = e.msg.match(/上期|上周/) ? '上期' : '本期'
 
     let api = new MysSRApi(uid, ck)
