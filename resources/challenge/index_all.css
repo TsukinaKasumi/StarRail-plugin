@@ -15,8 +15,8 @@
 }
 
 img.rogue-star {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
 }
 
 img.rogue-star-small {
@@ -144,10 +144,17 @@ img.red-clock {
 
 .summar-star {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-right: 1px #ddd solid;
   width: 25%;
+}
+
+.summar-star-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .summar-info {
@@ -155,16 +162,22 @@ img.red-clock {
 }
 
 .boss-node {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   border-right: 1px #ddd solid;
-  width: 50%;
+  flex: 1;
+  min-height: 100px;
+}
+
+.boss-node:last-of-type {
+  border-right: none;
+}
+
+.boss-node3 {
+  background: url('../challenge/images/boss_node3_bg.923d912f.png') no-repeat;
+  background-size: cover;
 }
 
 .boss-info {
-  align-items: left;
-  width: 70%;
   margin: 10px;
 }
 
@@ -172,13 +185,21 @@ img.red-clock {
   margin: 10px;
 }
 
+.boss-info > p:first-of-type {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .boss-image {
-  width: 30%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 img.boss {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
+  transform: translate(10px, -10px);
 }
 
 .detail-list {
@@ -229,8 +250,15 @@ img.boss {
   justify-content: space-between;
 }
 
-.detail-node-title, .detail-node-score {
+.detail-node {
   margin-top: 16px;
+}
+
+.detail-node:first-child {
+  margin-top: 0;
+}
+
+.detail-node-title, .detail-node-score {
   align-self: flex-end;
 }
 
@@ -393,4 +421,16 @@ img.buff-icon {
   text-align: center;
   background-color: rgb(66, 61, 83);
   margin: 10px;
+}
+
+.detail-bar-node3 {
+  background: url('../challenge/images/memory_node3_time_bg.ccb847b8.png') no-repeat;
+  background-size: cover;
+}
+
+img.node3-crown {
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
+  vertical-align: middle;
 }

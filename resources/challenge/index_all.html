@@ -24,7 +24,16 @@
       <div class="summar">
         <h2>忘却之庭挑战回顾</h2>
         <div class="summar-content">
-          <div class="summar-star"><img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ hall.data.star_num }}</div>
+          <div class="summar-star">
+            <div class="summar-star-row">
+              <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ hall.data.star_num }}
+            </div>
+            {{ if hall.data.extra_star_num > 0 }}
+            <div class="summar-star-row">
+              <img class="rogue-star" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />X {{ hall.data.extra_star_num }}
+            </div>
+            {{ /if }}
+          </div>
           <div class="summar-info">
             <div>最深抵达: {{ hall.data.max_floor }}</div>
             <div style="margin-top: 8px;">战斗次数: {{ hall.data.battle_num }}</div>
@@ -43,9 +52,16 @@
                   <p>使用轮: {{ floor.round_num }}</p>
                 </div>
                 <div class="detail-star">
-                  <% for (var i = 0; i < floor.star_num; i++){ %>
-                    <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />
-                  <% } %>
+                  {{ if floor.is_tierce }}
+                    <% for (var i = 0; i < 3; i++){ %>
+                      <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                    <% } %>
+                    <img class="rogue-star" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                  {{ else }}
+                    <% for (var i = 0; i < floor.star_num; i++){ %>
+                      <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                    <% } %>
+                  {{ /if }}
                 </div>
             </div>
             <div class="detail-body">
@@ -87,6 +103,28 @@
                   {{ /each }}
                 </div>
               </div>
+              {{ if floor.node_3 }}
+              <div class="detail-node detail-node3">
+                <div class="detail-bar detail-bar-node3">
+                  <div class="detail-node-title">
+                    <img class="node3-crown" src="{{ pluResPath }}challenge/images/node3_crown.png" />
+                    节点3 <span>{{ floor.node_3.challengeTime }}</span>
+                  </div>
+                </div>
+                <div class="detail-avatars">
+                  {{ each floor.node_3.avatars avatar }}
+                  <div class="detail-avatar rank{{ avatar.rarity }}">
+                    <div class="detail-avatar-border">
+                      <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                      <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
+                      <img class="char" src="{{ avatar.icon }}" alt="">
+                      <div class="level">等级 {{ avatar.level }}</div>
+                    </div>
+                  </div>
+                  {{ /each }}
+                </div>
+              </div>
+              {{ /if }}
             </div>
           </div>
         </div>
@@ -109,12 +147,22 @@
       <div class="summar">
         <h2>末日幻影挑战回顾</h2>
         <div class="summar-content">
-          <div class="summar-star"><img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ boss.data.star_num }}</div>
+          <div class="summar-star">
+            <div class="summar-star-row">
+              <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ boss.data.star_num }}
+            </div>
+            {{ if boss.data.extra_star_num > 0 }}
+            <div class="summar-star-row">
+              <img class="rogue-star" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />X {{ boss.data.extra_star_num }}
+            </div>
+            {{ /if }}
+          </div>
           <div class="summar-info">
             <div>最深抵达: {{ boss.data.max_floor }}</div>
             <div style="margin-top: 8px;">战斗次数: {{ boss.data.battle_num }}</div>
           </div>
         </div>
+          {{ if boss.data.groups[0].upper_boss }}
           <div class="summar-content">
             <div class="boss-node">
               <div class="boss-info">
@@ -134,7 +182,19 @@
                 <img class="boss" src="{{ boss.data.groups[0].lower_boss.icon }}" alt="">
               </div>
             </div>
+            {{ if boss.data.groups[0].tierce_boss }}
+            <div class="boss-node boss-node3">
+              <div class="boss-info">
+                <p>节点3</p>  
+                <p>{{ boss.data.groups[0].tierce_boss.name_mi18n }}</p>
+              </div>
+              <div class="boss-image">
+                <img class="boss" src="{{ boss.data.groups[0].tierce_boss.icon }}" alt="">
+              </div>
+            </div>
+            {{ /if }}
           </div>
+          {{ /if }}
       </div>
   
       <div class="detail-list">
@@ -148,9 +208,16 @@
                 </div>
                 <div class="detail-result">
                   <div class="detail-star-small">
-                    <% for (var i = 0; i < floor.star_num; i++){ %>
-                      <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
-                    <% } %>
+                    {{ if floor.is_tierce }}
+                      <% for (var i = 0; i < 3; i++){ %>
+                        <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                      <% } %>
+                      <img class="rogue-star-small" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                    {{ else }}
+                      <% for (var i = 0; i < floor.star_num; i++){ %>
+                        <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                      <% } %>
+                    {{ /if }}
                   </div>
                   <div class="detail-score">
                       <p>总分： <span>{{ floor.score }}</span></p>
@@ -242,6 +309,51 @@
                 </div>
                 {{ /if }}
               </div>
+              {{ if floor.node_3 }}
+              <div class="detail-node detail-node3">
+                <div class="detail-bar detail-bar-node3">
+                  <div class="detail-node-title">
+                    <img class="node3-crown" src="{{ pluResPath }}challenge/images/node3_crown.png" />
+                    节点3
+                    {{ if floor.node_3.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
+                    <p>{{ floor.node_3.challengeTime }}</p>
+                  </div>
+                  <div class="detail-node-score">
+                      <p>积分： <span>{{ floor.node_3.score }}</span></p>
+                  </div>
+                </div>
+                <div class="detail-avatars">
+                  {{ each floor.node_3.avatars avatar }}
+                  <div class="detail-avatar rank{{ avatar.rarity }}">
+                    <div class="detail-avatar-border">
+                      <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                      <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
+                      <img class="char" src="{{ avatar.icon }}" alt="">
+                      <div class="level">等级 {{ avatar.level }}</div>
+                    </div>
+                  </div>
+                  {{ /each }}
+                </div>
+                {{ if floor.node_3?.buff }}
+                <div class="detail-buff">
+                    <div class="detail-buff-border">
+                      <div class="buff-col">
+                        <div class="buff-icon-container">
+                          <img class="buff-icon" src="{{ floor.node_3.buff.icon }}" alt="">
+                        </div>
+                      </div>
+                      <div class="description-col">
+                        <div class="buff-description">{{ floor.node_3.buff.name_mi18n }}：<span>{{ floor.node_3.buff.desc_mi18n }}</span></div>
+                      </div>
+                    </div>
+                </div>
+                {{ /if }}
+              </div>
+              {{ /if }}
             </div>
           </div>
         </div>
@@ -264,7 +376,16 @@
       <div class="summar">
         <h2>虚构叙事挑战回顾</h2>
         <div class="summar-content">
-          <div class="summar-star"><img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ story.data.star_num }}</div>
+          <div class="summar-star">
+            <div class="summar-star-row">
+              <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />X {{ story.data.star_num }}
+            </div>
+            {{ if story.data.extra_star_num > 0 }}
+            <div class="summar-star-row">
+              <img class="rogue-star" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />X {{ story.data.extra_star_num }}
+            </div>
+            {{ /if }}
+          </div>
           <div class="summar-info">
             <div>最深抵达: {{ story.data.max_floor }}</div>
             <div style="margin-top: 8px;">战斗次数: {{ story.data.battle_num }}</div>
@@ -284,9 +405,16 @@
                 </div>
                 <div class="detail-result">
                   <div class="detail-star-small">
-                    <% for (var i = 0; i < floor.star_num; i++){ %>
-                      <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
-                    <% } %>
+                    {{ if floor.is_tierce }}
+                      <% for (var i = 0; i < 3; i++){ %>
+                        <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                      <% } %>
+                      <img class="rogue-star-small" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                    {{ else }}
+                      <% for (var i = 0; i < floor.star_num; i++){ %>
+                        <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
+                      <% } %>
+                    {{ /if }}
                   </div>
                   <div class="detail-score">
                       <p>总分： <span>{{ floor.score }}</span></p>
@@ -366,6 +494,51 @@
                 </div>
                 {{ /if }}
               </div>
+              {{ if floor.node_3 }}
+              <div class="detail-node detail-node3">
+                <div class="detail-bar detail-bar-node3">
+                  <div class="detail-node-title">
+                    <img class="node3-crown" src="{{ pluResPath }}challenge/images/node3_crown.png" />
+                    节点3
+                    {{ if floor.node_3.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
+                    <p>{{ floor.node_3.challengeTime }}</p>
+                  </div>
+                  <div class="detail-node-score">
+                      <p>积分： <span>{{ floor.node_3.score }}</span></p>
+                  </div>
+                </div>
+                <div class="detail-avatars">
+                  {{ each floor.node_3.avatars avatar }}
+                  <div class="detail-avatar rank{{ avatar.rarity }}">
+                    <div class="detail-avatar-border">
+                      <span class="life life{{ avatar.rank }}">{{ avatar.rank }}魂</span>
+                      <img class="element" src="{{ pluResPath }}common/element/{{ avatar.element.toLowerCase() }}.png" alt="">
+                      <img class="char" src="{{ avatar.icon }}" alt="">
+                      <div class="level">等级 {{ avatar.level }}</div>
+                    </div>
+                  </div>
+                  {{ /each }}
+                </div>
+                {{ if floor.node_3?.buff }}
+                <div class="detail-buff">
+                    <div class="detail-buff-border">
+                      <div class="buff-col">
+                        <div class="buff-icon-container">
+                          <img class="buff-icon" src="{{ floor.node_3.buff.icon }}" alt="">
+                        </div>
+                      </div>
+                      <div class="description-col">
+                        <div class="buff-description">{{ floor.node_3.buff.name_mi18n }}：<span>{{ floor.node_3.buff.desc_mi18n }}</span></div>
+                      </div>
+                    </div>
+                </div>
+                {{ /if }}
+              </div>
+              {{ /if }}
             </div>
           </div>
         </div>
