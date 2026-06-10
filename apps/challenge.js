@@ -119,6 +119,16 @@ export class Challenge extends plugin {
     // }
     const data = { ...challengeData.data }
 
+    // 根据 scheduleType 选择对应的 group（末日幻影/虚构叙事的 groups 包含本期和上期）
+    if (data.groups && data.groups.length > 1) {
+      const activeGroup = scheduleType === '1'
+        ? data.groups.find(g => g.status === 'New')
+        : data.groups.find(g => g.status === 'End')
+      if (activeGroup) {
+        data.groups = [activeGroup]
+      }
+    }
+
     if (recent && challengeType == 3) return {
       data,
       uid,
@@ -156,7 +166,15 @@ export class Challenge extends plugin {
             ...(floor.node_2.challenge_time && {
               challengeTime: this.timeFormat(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
             })
-          }
+          },
+          ...(floor.node_3 && {
+            node_3: {
+              ...floor.node_3,
+              ...(floor.node_3.challenge_time && {
+                challengeTime: this.timeFormat(floor.node_3.challenge_time, 'YYYY.MM.DD HH:mm')
+              })
+            }
+          })
         }
       })
     } else {
@@ -180,12 +198,16 @@ export class Challenge extends plugin {
       
       // TODO: 如果打了部分骑士关卡（e.g., 只打了第三关），mob_records 会长什么样？
     }
-    // 末日幻影、虚构叙事：计算两边节点的总分
+    // 末日幻影、虚构叙事：计算两边（或三边）节点的总分
     if ([0, 1].includes(challengeType)) {
       data.all_floor_detail = _.map(data.all_floor_detail, (floor) => {
+        let totalScore = parseInt(floor.node_1.score) + parseInt(floor.node_2.score)
+        if (floor.node_3 && floor.is_tierce) {
+          totalScore += parseInt(floor.node_3.score)
+        }
         return {
           ...floor,
-          score: (parseInt(floor.node_1.score) + parseInt(floor.node_2.score)).toString()
+          score: totalScore.toString()
         }
       })
     }
