@@ -228,16 +228,16 @@
               <div class="detail-node">
                 <div class="detail-bar">
                   <div class="detail-node-title">
-                      节点1
-                      {{ if floor.node_1.boss_defeated }}
-                        <span class="detail-boss-defeated-text">已击败首领</span>
-                      {{ else }}
-                        <span class="detail-boss-not-defeated-text">未击败首领</span>
-                      {{ /if }}
+                    节点1
+                    {{ if floor.node_1.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
                     <p>{{ floor.node_1.challengeTime }}</p>
                   </div>
                   <div class="detail-node-score">
-                      <p>积分： <span>{{ floor.node_1.score }}</span></p>
+                    <p>积分： <span>{{ floor.node_1.score }}</span></p>
                   </div>
                 </div>
                 <div class="detail-avatars">
@@ -270,16 +270,16 @@
               <div class="detail-node">
                 <div class="detail-bar">
                   <div class="detail-node-title">
-                      节点2
-                      {{ if floor.node_2.boss_defeated }}
-                        <span class="detail-boss-defeated-text">已击败首领</span>
-                      {{ else }}
-                        <span class="detail-boss-not-defeated-text">未击败首领</span>
-                      {{ /if }}
+                    节点2
+                    {{ if floor.node_2.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
                     <p>{{ floor.node_2.challengeTime }}</p>
                   </div>
                   <div class="detail-node-score">
-                      <p>积分： <span>{{ floor.node_2.score }}</span></p>
+                    <p>积分： <span>{{ floor.node_2.score }}</span></p>
                   </div>
                 </div>
                 <div class="detail-avatars">
@@ -323,7 +323,7 @@
                     <p>{{ floor.node_3.challengeTime }}</p>
                   </div>
                   <div class="detail-node-score">
-                      <p>积分： <span>{{ floor.node_3.score }}</span></p>
+                    <p>积分： <span>{{ floor.node_3.score }}</span></p>
                   </div>
                 </div>
                 <div class="detail-avatars">
@@ -499,13 +499,7 @@
                 <div class="detail-bar detail-bar-node3">
                   <div class="detail-node-title">
                     <img class="node3-crown" src="{{ pluResPath }}challenge/images/node3_crown.png" />
-                    节点3
-                    {{ if floor.node_3.boss_defeated }}
-                      <span class="detail-boss-defeated-text">已击败首领</span>
-                    {{ else }}
-                      <span class="detail-boss-not-defeated-text">未击败首领</span>
-                    {{ /if }}
-                    <p>{{ floor.node_3.challengeTime }}</p>
+                    节点3 <span>{{ floor.node_3.challengeTime }}</span>
                   </div>
                   <div class="detail-node-score">
                       <p>积分： <span>{{ floor.node_3.score }}</span></p>

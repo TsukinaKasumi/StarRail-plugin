@@ -132,7 +132,7 @@
                     {{ else }}
                       <span class="detail-boss-not-defeated-text">未击败首领</span>
                     {{ /if }}
-                  <p>{{ floor.node_1.challengeTime }}</p>
+                    <p>{{ floor.node_1.challengeTime }}</p>
                   {{ else }}
                     节点1 <span>{{ floor.node_1.challengeTime }}</span>
                   {{ /if }}
@@ -180,7 +180,7 @@
                     {{ else }}
                       <span class="detail-boss-not-defeated-text">未击败首领</span>
                     {{ /if }}
-                  <p>{{ floor.node_2.challengeTime }}</p>
+                    <p>{{ floor.node_2.challengeTime }}</p>
                   {{ else }}
                     节点2 <span>{{ floor.node_2.challengeTime }}</span>
                   {{ /if }}
@@ -223,13 +223,17 @@
               <div class="detail-bar detail-bar-node3">
                 <div class="detail-node-title">
                   <img class="node3-crown" src="{{ pluResPath }}challenge/images/node3_crown.png" />
-                  节点3
-                  {{ if floor.node_3.boss_defeated }}
-                    <span class="detail-boss-defeated-text">已击败首领</span>
+                  {{ if 'boss_defeated' in floor.node_3 }}
+                    节点3
+                    {{ if floor.node_3.boss_defeated }}
+                      <span class="detail-boss-defeated-text">已击败首领</span>
+                    {{ else }}
+                      <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    {{ /if }}
+                    <p>{{ floor.node_3.challengeTime }}</p>
                   {{ else }}
-                    <span class="detail-boss-not-defeated-text">未击败首领</span>
+                    节点3 <span>{{ floor.node_3.challengeTime }}</span>
                   {{ /if }}
-                  <p>{{ floor.node_3.challengeTime }}</p>
                 </div>
                 <div class="detail-node-score">
                   {{ if 'score' in floor.node_3 }}
