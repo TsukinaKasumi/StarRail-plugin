@@ -3,6 +3,7 @@ import md5 from 'md5'
 import _ from 'lodash'
 import crypto from 'crypto'
 import SRApiTool from './SRApiTool.js'
+import getDeviceFp from './getDeviceFp.js'
 // const DEVICE_ID = randomString(32).toUpperCase()
 const DEVICE_NAME = randomString(_.random(1, 10))
 export default class MysSRApi extends MysApi {
@@ -25,9 +26,6 @@ export default class MysSRApi extends MysApi {
 
   getServer() {
     switch (String(this.uid).slice(0, -8)) {
-      case '1':
-      case '2':
-        return 'prod_gf_cn' // 官服
       case '5':
         return 'prod_qd_cn' // B服
       case '6':
@@ -40,11 +38,10 @@ export default class MysSRApi extends MysApi {
       case '9':
         return 'prod_official_cht' // 港澳台服
     }
-    return 'prod_gf_cn'
+    return 'prod_gf_cn' // 官服
   }
 
   getUrl (type, data = {}) {
-    data.deviceId = this._device
     let urlMap = this.apiTool.getUrlMap(data)
     if (!urlMap[type]) return false
     let { url, query = '', body = '', noDs = false, dsSalt = '' } = urlMap[type]
@@ -52,14 +49,57 @@ export default class MysSRApi extends MysApi {
     if (body) body = JSON.stringify(body)
 
     let headers = this.getHeaders(query, body)
+    // 如果有设备指纹，写入设备指纹
     if (data.deviceFp) {
       headers['x-rpc-device_fp'] = data.deviceFp
       // 兼容喵崽
       this._device_fp = { data: { device_fp: data.deviceFp } }
     }
-    headers.cookie = this.cookie
 
-    if (this._device) {
+    // 如果有设备ID，写入设备ID（传入的，这里是绑定设备方法1中的设备ID）
+    if (data.deviceId) headers['x-rpc-device_id'] = data.deviceId
+
+    // 如果有绑定设备信息，写入绑定设备信息，否则写入默认设备信息
+    if (data?.deviceInfo && data?.modelName && data?.osVersion) {
+      const osVersion = data.osVersion
+      const modelName = data.modelName
+      const deviceBrand = data.deviceInfo?.split('/')[0]
+      const deviceDisplay = data.deviceInfo?.split('/')[3]
+      try {
+        headers['x-rpc-device_name'] = `${deviceBrand} ${modelName}`
+        headers['x-rpc-device_model'] = modelName
+        headers['x-rpc-csm_source'] = 'myself'
+        // 国际服不需要绑定设备，故写入的'User-Agent'为国服
+        headers['User-Agent'] = `Mozilla/5.0 (Linux; Android ${osVersion}; ${modelName} Build/${deviceDisplay}; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBS/2.73.1`
+      } catch (error) {
+        logger.error(`[starrail]设备信息解析失败：${error.message}`)
+      }
+    } else {
+      try {
+        headers['x-rpc-device_name'] = 'Sony XQ-BC52'
+        headers['x-rpc-device_model'] = 'XQ-BC52'
+        headers['x-rpc-csm_source'] = 'myself'
+      } catch (error) {
+        logger.error(`[starrail]设备信息解析失败：${error.message}`)
+      }
+    }
+
+    if (type == 'deviceLogin' || type == 'saveDevice') {
+      try {
+        headers['x-rpc-sys_version'] = '12'
+        headers['x-rpc-client_type'] = '2'
+        headers['x-rpc-channel'] = 'miyousheluodi'
+        headers['x-rpc-csm_source'] = 'home'
+        headers['Host'] = 'bbs-api.miyoushe.com'
+        headers['User-Agent'] = 'okhttp/4.9.3'
+        headers['Referer'] = 'https://app.mihoyo.com/'
+        headers['DS'] = this.getDS2()
+      } catch (error) {
+        logger.error(`[starrail]设备信息解析失败：${error.message}`)
+      }
+    }
+
+    if (!data.deviceId) {
       headers['x-rpc-device_id'] = this._device
     }
     switch (dsSalt) {
@@ -71,18 +111,16 @@ export default class MysSRApi extends MysApi {
     }
     if (type === 'srPayAuthKey') {
       let extra = {
-        'x-rpc-app_version': '2.40.1',
-        'User-Agent': 'okhttp/4.8.0',
-        'x-rpc-client_type': '5',
-        Referer: 'https://app.mihoyo.com',
-        Origin: 'https://webstatic.mihoyo.com',
-        // Cookie: this.cookies,
-        // DS: this.getDS2(),
+        'x-rpc-app_version': '2.73.1',
+        'User-Agent': 'okhttp/4.9.3',
+        'x-rpc-client_type': '2',
+        Referer: 'https://act.mihoyo.com/',
+        Origin: 'https://act.mihoyo.com',
         'x-rpc-sys_version': '12',
-        'x-rpc-channel': 'mihoyo',
+        'x-rpc-channel': 'miyousheluodi',
         'x-rpc-device_id': this._device,
-        'x-rpc-device_name': DEVICE_NAME,
-        'x-rpc-device_model': 'Mi 10',
+        'x-rpc-device_name': 'XQ-BC52',
+        'x-rpc-device_model': 'Sony XQ-BC52',
         Host: 'api-takumi.mihoyo.com'
       }
       headers = Object.assign(headers, extra)
@@ -98,6 +136,109 @@ export default class MysSRApi extends MysApi {
       }
     }
     return { url, headers, body }
+  }
+
+
+  async getData(type, data = { headers: {} }, cached = false) {
+    const uid = this.uid
+    const ck = this.cookie
+    let ltuid = ck.match(/ltuid=(\d+)/)
+    ltuid = ltuid[1]
+    if (ltuid) {
+      let bindInfo = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:BIND`)
+      if (bindInfo) {
+        try {
+          bindInfo = JSON.parse(bindInfo)
+          data = {
+            ...data,
+            productName: bindInfo?.deviceProduct,
+            deviceType: bindInfo?.deviceName,
+            modelName: bindInfo?.deviceModel,
+            oaid: bindInfo?.oaid,
+            osVersion: bindInfo?.androidVersion,
+            deviceInfo: bindInfo?.deviceFingerprint,
+            board: bindInfo?.deviceBoard
+          }
+        } catch (error) {
+          bindInfo = null
+        }
+      }
+      const { deviceFp } = await getDeviceFp.Fp(uid, ck)
+      if (deviceFp) {
+        data.deviceFp = deviceFp
+        data.headers['x-rpc-device_fp'] = deviceFp
+      }
+      const device_id = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:ID`)
+      if (device_id) {
+        data.deviceId = device_id
+        data.headers['x-rpc-device_id'] = device_id
+      }
+    }
+    if (!this._device_fp && !data?.Getfp && !data?.headers?.['x-rpc-device_fp']) {
+      this._device_fp = await this.getData('getFp', {
+        ...data,
+        Getfp: true
+      })
+    }
+    if (type === 'getFp' && !data?.Getfp) return this._device_fp
+
+    let { url, headers, body } = this.getUrl(type, data)
+
+    if (!url) return false
+
+    let cacheKey = this.cacheKey(type, data)
+    let cahce = await redis.get(cacheKey)
+    if (cahce) return JSON.parse(cahce)
+
+    headers.Cookie = ck
+
+    if (data.headers) {
+      headers = { ...headers, ...data.headers }
+    }
+
+    if (type !== 'getFp' && !headers['x-rpc-device_fp'] && this._device_fp.data?.device_fp) {
+      headers['x-rpc-device_fp'] = this._device_fp.data.device_fp
+    }
+
+    let param = {
+      headers,
+      agent: await this.getAgent(),
+      timeout: 10000
+    }
+    if (body) {
+      param.method = 'post'
+      param.body = body
+    } else {
+      param.method = 'get'
+    }
+    let response = {}
+    let start = Date.now()
+    try {
+      response = await fetch(url, param)
+    } catch (error) {
+      logger.error(error.toString())
+      return false
+    }
+
+    if (!response.ok) {
+      logger.error(`[米游社接口][${type}][${this.uid}] ${response.status} ${response.statusText}`)
+      return false
+    }
+    if (this.option.log) {
+      logger.mark(`[米游社接口][${type}][${this.uid}] ${Date.now() - start}ms`)
+    }
+    const res = await response.json()
+
+    if (!res) {
+      logger.mark('mys接口没有返回')
+      return false
+    }
+
+    res.api = type
+
+    if (cached) this.cache(res, cacheKey)
+
+    return res
   }
 
   getDs (q = '', b = '') {
@@ -116,22 +257,22 @@ export default class MysSRApi extends MysApi {
   getDS2 () {
     let t = Math.round(new Date().getTime() / 1000)
     let r = randomString(6)
-    let sign = md5(`salt=jEpJb9rRARU2rXDA9qYbZ3selxkuct9a&t=${t}&r=${r}`)
+    let sign = md5(`salt=WGtruoQrwczmsjLOPXzJLnaAYycsLavx&t=${t}&r=${r}`)
     return `${t},${r},${sign}`
   }
 
   getHeaders (query = '', body = '') {
     const cn = {
-      app_version: '2.44.1',
-      User_Agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBS/2.44.1',
+      app_version: '2.73.1',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 13; XQ-BC52 Build/61.2.A.0.472A; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBS/2.73.1',
       client_type: '5',
       Origin: 'https://webstatic.mihoyo.com',
       X_Requested_With: 'com.mihoyo.hyperion',
       Referer: 'https://webstatic.mihoyo.com/'
     }
     const os = {
-      app_version: '2.55.0',
-      User_Agent: 'Mozilla/5.0 (Linux; Android 11; J9110 Build/55.2.A.4.332; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/124.0.6367.179 Mobile Safari/537.36 miHoYoBBSOversea/2.55.0',
+      app_version: '2.57.1',
+      User_Agent: 'Mozilla/5.0 (Linux; Android 13; XQ-BC52 Build/61.2.A.0.472A; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.5563.116 Mobile Safari/537.36 miHoYoBBSOversea/2.57.1',
       client_type: '2',
       Origin: 'https://act.hoyolab.com',
       X_Requested_With: 'com.mihoyo.hoyolab',
