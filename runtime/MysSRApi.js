@@ -166,12 +166,10 @@ export default class MysSRApi extends MysApi {
       const { deviceFp } = await getDeviceFp.Fp(uid, ck)
       if (deviceFp) {
         data.deviceFp = deviceFp
-        data.headers['x-rpc-device_fp'] = deviceFp
       }
       const device_id = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:ID`)
       if (device_id) {
         data.deviceId = device_id
-        data.headers['x-rpc-device_id'] = device_id
       }
     }
     if (!this._device_fp && !data?.Getfp && !data?.headers?.['x-rpc-device_fp']) {
