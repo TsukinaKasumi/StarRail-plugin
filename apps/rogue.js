@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { getCk, rulePrefix } from '../utils/common.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GsCfg from '../../genshin/model/gsCfg.js'
+import MysInfo from '../../genshin/model/mys/mysInfo.js'
 
 export class Rogue extends plugin {
   constructor (e) {
@@ -60,28 +61,10 @@ export class Rogue extends plugin {
   async rogue (e) {
     this.e.isSr = true
     this.isSr = true
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
-    if (!uid) {
-      return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-    }
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-    if (!ck) {
-      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
-      return false
-    }
+
+    let uid = await this.userUid(e)
+    let ck = await this.userCk(e, uid)
+
     let api = new MysSRApi(uid, ck)
     let schedule_type = '1'
     if (e.msg.indexOf('上期') > -1) {
@@ -122,28 +105,10 @@ export class Rogue extends plugin {
   async rogue_locust (e) {
     this.e.isSr = true
     this.isSr = true
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`))
-    if (!uid) {
-      return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-    }
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-    if (!ck) {
-      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
-      return false
-    }
+
+    let uid = await this.userUid(e)
+    let ck = await this.userCk(e, uid)
+
     let api = new MysSRApi(uid, ck)
     let sdk = api.getUrl('getFp')
     let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
@@ -188,28 +153,10 @@ export class Rogue extends plugin {
   async rogue_tourn (e) {
     this.e.isSr = true
     this.isSr = true
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
-    if (!uid) {
-      return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-    }
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-    if (!ck) {
-      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
-      return false
-    }
+
+    let uid = await this.userUid(e)
+    let ck = await this.userCk(e, uid)
+
     let api = new MysSRApi(uid, ck)
     let sdk = api.getUrl('getFp')
     let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
@@ -245,28 +192,9 @@ export class Rogue extends plugin {
   async rogue_tourn_normal (e) {
     this.e.isSr = true
     this.isSr = true
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
-    if (!uid) {
-      return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-    }
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-    if (!ck) {
-      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
-      return false
-    }
+
+    let uid = await this.userUid(e)
+    let ck = await this.userCk(e, uid)
 
     let indexMap = { 一: 1, 二: 2, 三: 3 }
     let indexStr = e.msg.match(/(一|二|三)$/)?.[0]
@@ -325,28 +253,9 @@ export class Rogue extends plugin {
   async rogue_tourn_week (e) {
     this.e.isSr = true
     this.isSr = true
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
-    if (!uid) {
-      return e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
-    }
-    let ck = await getCk(e)
-    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
-      let ckArr = GsCfg.getConfig('mys', 'pubCk') || []
-      ck = ckArr[0]
-    }
-    if (!ck) {
-      await e.reply(`尚未绑定Cookie,${this.app2config.docs}`)
-      return false
-    }
+
+    let uid = await this.userUid(e)
+    let ck = await this.userCk(e, uid)
 
     let indexMap = { 一: 1, 二: 2, 三: 3 }
     let indexStr = e.msg.match(/(一|二|三)/)?.[0]
@@ -417,23 +326,25 @@ export class Rogue extends plugin {
 
   }
 
-  async miYoSummerGetUid () {
-    let key = `STAR_RAILWAY:UID:${this.e.user_id}`
-    let ck = await getCk(this.e)
-    if (!ck) return false
-    // if (await redis.get(key)) return false
-    // todo check ck
-    let api = new MysSRApi('', ck)
-    let userData = await api.getData('srUser')
-    if (!userData?.data || _.isEmpty(userData.data.list)) return false
-    userData = userData.data.list[0]
-    let { game_uid: gameUid } = userData
-    await redis.set(key, gameUid)
-    await redis.setEx(
-        `STAR_RAILWAY:userData:${gameUid}`,
-        60 * 60,
-        JSON.stringify(userData)
-    )
-    return userData
+  async userUid (e) {
+    let uid = e.msg.match(/\d+/)?.[0] || await MysInfo.getUid(e, false)
+    if (!uid) {
+      await e.reply('找不到uid，请：#刷新ck 或者：#扫码登录', true)
+      return false
+    }
+
+    return uid
+  }
+
+  async userCk (e, uid) {
+    let game = e.game
+    let ck = await MysInfo.checkUidBing(uid, game)
+    ck = ck.ck
+    if (!ck) {
+      await e.reply(`uid:${uid}当前尚未绑定Cookie，${this.app2config.docs}`)
+      return false
+    }
+
+    return ck
   }
 }
