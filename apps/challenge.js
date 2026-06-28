@@ -67,13 +67,10 @@ export class Challenge extends plugin {
     }
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
+
     let challengeData, res, simpleRes
     // 先查详细的
     if (!simple) {

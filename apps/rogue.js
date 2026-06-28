@@ -71,26 +71,16 @@ export class Rogue extends plugin {
       schedule_type = '2'
     }
 
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
-    const { url, headers } = api.getUrl('srRogue', { deviceFp, schedule_type })
-    delete headers['x-rpc-page']
-    logger.debug({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
 
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srRogue', { deviceFp, schedule_type })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srRogue', { deviceFp, schedule_type })
+    res = await api.checkCode(this.e, res, 'srRogue', { deviceFp, schedule_type })
+    if (res.retcode !== 0) {
       return false
     }
-    let data = Object.assign(cardData.data, { uid })
+    let data = Object.assign(res.data, { uid })
     if (schedule_type === '1') {
       // 懒得改了
       data.last_record = data.current_record
@@ -110,26 +100,16 @@ export class Rogue extends plugin {
     let ck = await this.userCk(e, uid)
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
-    const { url, headers } = api.getUrl('srRogueLocust', { deviceFp })
-    delete headers['x-rpc-page']
-    logger.debug({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
 
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srRogueLocust', { deviceFp })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srRogueLocust', { deviceFp })
+    res = await api.checkCode(this.e, res, 'srRogueLocust', { deviceFp })
+    if (res.retcode !== 0) {
       return false
     }
-    let data = Object.assign(cardData.data, { uid })
+    let data = Object.assign(res.data, { uid })
     await runtimeRender(e, '/rogue/rogue_locust.html', data, {
       scale: 1.4
     })
@@ -158,26 +138,16 @@ export class Rogue extends plugin {
     let ck = await this.userCk(e, uid)
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
-    const { url, headers } = api.getUrl('srRogueTourn', { deviceFp })
-    delete headers['x-rpc-page']
-    logger.debug({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
 
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srRogueTourn', { deviceFp })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srRogueTourn', { deviceFp })
+    res = await api.checkCode(this.e, res, 'srRogueTourn', { deviceFp })
+    if (res.retcode !== 0) {
       return false
     }
-    let data = Object.assign(cardData.data, { uid })
+    let data = Object.assign(res.data, { uid })
     
     // 格式化时间
     if (data.normal_detail?.records && data.normal_detail.records.length > 0) {
@@ -201,27 +171,17 @@ export class Rogue extends plugin {
     let index = indexMap[indexStr] || 1
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
-    const { url, headers } = api.getUrl('srRogueTourn', { deviceFp })
-    delete headers['x-rpc-page']
-    logger.debug({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
 
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srRogueTourn', { deviceFp })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srRogueTourn', { deviceFp })
+    res = await api.checkCode(this.e, res, 'srRogueTourn', { deviceFp })
+    if (res.retcode !== 0) {
       return false
     }
 
-    let data = cardData.data
+    let data = res.data
     if (!data.normal_detail?.records || data.normal_detail.records.length < index) {
       return e.reply(`未找到差分宇宙·常规演算第${index}条记录：${periodName}共有${weekDetail.records.length || 0}条记录`)
     }
@@ -265,27 +225,17 @@ export class Rogue extends plugin {
     let periodName = e.msg.match(/上期|上周/) ? '上期' : '本期'
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
-    const { url, headers } = api.getUrl('srRogueTourn', { deviceFp })
-    delete headers['x-rpc-page']
-    logger.debug({ url, headers })
-    let res = await fetch(url, {
-      headers
-    })
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
 
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srRogueTourn', { deviceFp })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srRogueTourn', { deviceFp })
+    res = await api.checkCode(this.e, res, 'srRogueTourn', { deviceFp })
+    if (res.retcode !== 0) {
       return false
     }
 
-    let data = cardData.data
+    let data = res.data
     let weekDetail = data[period]
     if (!weekDetail || !weekDetail.records || weekDetail.records.length < index) {
       return e.reply(`未找到差分宇宙·周期演算${periodName}第${index}条记录：${periodName}共有${weekDetail.records.length || 0}条记录`)
