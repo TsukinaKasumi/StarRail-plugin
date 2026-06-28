@@ -41,24 +41,17 @@ export class GridFight extends plugin {
     let ck = await this.userCk(e, uid)
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
-    if (deviceFp) {
-      await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
-    }
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
 
-    const { url, headers } = api.getUrl('srGridFight', { deviceFp })
-    delete headers['x-rpc-page']
-    let res = await fetch(url, { headers })
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srGridFight', { deviceFp })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srGridFight', { deviceFp })
+    res = await api.checkCode(this.e, res, 'srGridFight', { deviceFp })
+    if (res.retcode !== 0) {
       return false
     }
 
-    let data = Object.assign(cardData.data, { uid })
+    let data = Object.assign(res.data, { uid })
 
     await runtimeRender(e, '/gridFight/gridFight.html', data, {
       scale: 1.4
@@ -77,24 +70,20 @@ export class GridFight extends plugin {
     let index = indexMap[indexStr] || 1
 
     let api = new MysSRApi(uid, ck)
-    let sdk = api.getUrl('getFp')
-    let fpRes = await fetch(sdk.url, { headers: sdk.headers, method: 'POST', body: sdk.body })
-    fpRes = await fpRes.json()
-    let deviceFp = fpRes?.data?.device_fp
+    let deviceFp = await api.getData('getFp')
+    if (deviceFp?.retcode !== 0) return false
+    deviceFp = deviceFp?.data?.device_fp
     if (deviceFp) {
       await redis.set(`STARRAIL:DEVICE_FP:${uid}`, deviceFp, { EX: 86400 * 7 })
     }
 
-    const { url, headers } = api.getUrl('srGridFight', { deviceFp })
-    delete headers['x-rpc-page']
-    let res = await fetch(url, { headers })
-    let cardData = await res.json()
-    cardData = await api.checkCode(this.e, cardData, 'srGridFight', { deviceFp })
-    if (cardData.retcode !== 0) {
+    let res = await api.getData('srGridFight', { deviceFp })
+    res = await api.checkCode(this.e, res, 'srGridFight', { deviceFp })
+    if (res.retcode !== 0) {
       return false
     }
 
-    let data = cardData.data
+    let data = res.data
     if (!data.grid_fight_archive_list || data.grid_fight_archive_list.length < index) {
       return e.reply(`未找到货币战争第${index}条记录`)
     }
@@ -106,12 +95,12 @@ export class GridFight extends plugin {
     if (record.lineup.damage_list) {
       // Create a map for quick lookup
       let entityMap = {}
-      record.lineup.front_roles.forEach(r => { entityMap[r.avatar_id] = r })
-      record.lineup.back_roles.forEach(r => { entityMap[r.avatar_id] = r })
+      record.lineup.front_roles.forEach(r => { entityMap[r.role_id] = r })
+      record.lineup.back_roles.forEach(r => { entityMap[r.role_id] = r })
       record.lineup.trait_list.forEach(t => { entityMap[t.trait_id] = t })
 
       damageData = record.lineup.damage_list.map(d => {
-        let entity = entityMap[d.id] || {}
+        let entity = entityMap[d.id]
         return {
           id: d.id,
           damage: parseFloat(d.damage),
