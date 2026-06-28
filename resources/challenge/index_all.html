@@ -53,10 +53,12 @@
                 </div>
                 <div class="detail-star">
                   {{ if floor.is_tierce }}
-                    <% for (var i = 0; i < 3; i++){ %>
+                    <% for (var i = 0; i < (floor.star_num - floor.extra_star_num); i++){ %>
                       <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />
                     <% } %>
-                    <img class="rogue-star" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                    {{ if floor.extra_star_num == 1 }}
+                      <img class="rogue-star" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                    {{ /if }}
                   {{ else }}
                     <% for (var i = 0; i < floor.star_num; i++){ %>
                       <img class="rogue-star" src="{{ pluResPath }}common/cont/rogue-star.png" />
@@ -209,10 +211,12 @@
                 <div class="detail-result">
                   <div class="detail-star-small">
                     {{ if floor.is_tierce }}
-                      <% for (var i = 0; i < 3; i++){ %>
+                      <% for (var i = 0; i < (floor.star_num - floor.extra_star_num); i++){ %>
                         <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
                       <% } %>
-                      <img class="rogue-star-small" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                      {{ if floor.extra_star_num == 1 }}
+                        <img class="rogue-star-small" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                      {{ /if }}
                     {{ else }}
                       <% for (var i = 0; i < floor.star_num; i++){ %>
                         <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
@@ -406,10 +410,12 @@
                 <div class="detail-result">
                   <div class="detail-star-small">
                     {{ if floor.is_tierce }}
-                      <% for (var i = 0; i < 3; i++){ %>
+                      <% for (var i = 0; i < (floor.star_num - floor.extra_star_num); i++){ %>
                         <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />
                       <% } %>
-                      <img class="rogue-star-small" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                      {{ if floor.extra_star_num == 1 }}
+                        <img class="rogue-star-small" src="{{ pluResPath }}challenge/images/abyss_star.f89de036.png" />
+                      {{ /if }}
                     {{ else }}
                       <% for (var i = 0; i < floor.star_num; i++){ %>
                         <img class="rogue-star-small" src="{{ pluResPath }}common/cont/rogue-star.png" />

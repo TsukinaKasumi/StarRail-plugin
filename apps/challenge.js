@@ -158,20 +158,20 @@ export class Challenge extends plugin {
           ...floor,
           node_1: {
             ...floor.node_1,
-            ...(floor.node_1.challenge_time && {
+            ...(/challenge_time/.test(floor.node_1) && {
               challengeTime: this.timeFormat(floor.node_1.challenge_time, 'YYYY.MM.DD HH:mm')
             }) // 快速通关就没有 challenge_time 这个属性
           },
           node_2: {
             ...floor.node_2,
-            ...(floor.node_2.challenge_time && {
+            ...(/challenge_time/.test(floor.node_2) && {
               challengeTime: this.timeFormat(floor.node_2.challenge_time, 'YYYY.MM.DD HH:mm')
             })
           },
           ...(floor.node_3 && {
             node_3: {
               ...floor.node_3,
-              ...(floor.node_3.challenge_time && {
+              ...(/challenge_time/.test(floor.node_3) && {
                 challengeTime: this.timeFormat(floor.node_3.challenge_time, 'YYYY.MM.DD HH:mm')
               })
             }
@@ -191,7 +191,7 @@ export class Challenge extends plugin {
         _.map(data.peak_records.mob_records, (record) => {
           return {
             ...record,
-            ...(record.challenge_time && {
+            ...(/challenge_time/.test(record) && {
               challengeTime: this.timeFormat(record.challenge_time, 'YYYY.MM.DD HH:mm')
             })
           }
@@ -239,7 +239,7 @@ export class Challenge extends plugin {
       _.map(data.mob_records, (record) => {
         return {
           ...record,
-          ...(record.challenge_time && {
+          ...(/challenge_time/.test(record) && {
             challengeTime: this.timeFormat(record.challenge_time, 'YYYY.MM.DD HH:mm')
           })
         }
@@ -366,18 +366,9 @@ export class Challenge extends plugin {
   }
 
   async userUid (e) {
-    let user = this.e.user_id
-    let ats = e.message.filter(m => m.type === 'at')
-    if (ats.length > 0 && !e.atBot) {
-      user = ats[0].qq
-      this.e.user_id = user
-      this.User = new User(this.e)
-    }
-    let uid = e.msg.match(/\d+/)?.[0]
-    await this.miYoSummerGetUid()
-    uid = uid || (await redis.get(`STAR_RAILWAY:UID:${user}`)) || this.e.user?.getUid('sr')
+    let uid = e.msg.match(/\d+/)?.[0] || await MysInfo.getUid(e, false)
     if (!uid) {
-      await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
+      await e.reply('找不到uid，请：#刷新ck 或者：#扫码登录', true)
       return false
     }
 
