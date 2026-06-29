@@ -148,12 +148,23 @@ export class Rogue extends plugin {
       return false
     }
     let data = Object.assign(res.data, { uid })
-    
+
+    let title = {
+      0: '',
+      1: 'I',
+      2: 'II',
+      3: 'III',
+      4: 'IV',
+      5: 'V'
+    }
+    if (data.basic.weekly_record_brief.common_info_v2.id) {
+      data.basic.weekly_record_brief.title = title[data.basic.weekly_record_brief.common_info_v2.id]
+    }
     // 格式化时间
     if (data.normal_detail?.records && data.normal_detail.records.length > 0) {
       data.normal_detail.records[0].format_finish_time = this.formatTime(data.normal_detail.records[0].finish_time)
     }
-    
+
     await runtimeRender(e, '/rogue/rogueTourn.html', data, {
       scale: 1.4
     })

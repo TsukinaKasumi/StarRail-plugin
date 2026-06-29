@@ -109,7 +109,11 @@
             </div>
             <div class="weekly-difficulty">
                 <div class="weekly-difficulty-title">本期最新通关难度</div>
-                <div class="weekly-difficulty-value">{{basic.weekly_record_brief.title || '暂无战绩'}}</div>
+                {{ if basic.weekly_record_brief.title }}
+                    <div class="weekly-difficulty-stars">{{basic.weekly_record_brief.title}}</div>
+                {{ else }}
+                    <div class="weekly-difficulty-value">{{'暂无战绩'}}</div>
+                {{ /if }}
             </div>
         </div>
     </div>
