@@ -362,3 +362,8 @@
     color: #fdfdfd;
     font-size: 16px;
 }
+.weekly-difficulty-stars {
+    color: #ecd381;
+    font-size: 20px;
+    font-weight: bold;
+}
