@@ -79,7 +79,7 @@ git clone --depth=1 https://github.com/TsukinaKasumi/StarRail-plugin.git ./plugi
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=TsukinaKasumi/StarRail-plugin&type=Date)](https://star-history.com/#TsukinaKasumi/StarRail-plugin&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=TsukinaKasumi/StarRail-plugin&type=Date)](https://star-history.dera.page/#TsukinaKasumi/StarRail-plugin&Date)
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
