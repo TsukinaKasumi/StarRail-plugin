@@ -359,6 +359,11 @@ export class Challenge extends plugin {
       logger.error('当前系统时间早于第一期末日幻影时间，请检查系统配置！')
     }
     let timeDiff = currentTime - firstTime
+    // 2026 年 8-10 月三个深渊各有一期缩短为 5 周（末日 08.31-10.05、虚构 09.14-10.19、忘却 09.28-11.02），
+    // 自 2026-10-05 末日提前更新起，轮换整体比 14 天网格早 7 天，之后恢复 6 周循环
+    if (currentTime >= new Date('2026-10-05T04:00:00')) {
+      timeDiff += 7 * 24 * 60 * 60 * 1000
+    }
     // 2周（14天）为一个周期
     let periodNum = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 14))
     // 0: 末日
