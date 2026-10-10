@@ -101,7 +101,7 @@
             1.840000000372529, 1.920000000372529, 2.000000000372529
         ],
         "Maze": [20],
-        "Ultra_Use": [130],
+        "Ultra_Use": [110],
         "skillList": {
             "Normal": ["attack", "普攻", 1, "Normal"],
             "BPSkill": ["attack", "战技", 1, "BPSkill"],
@@ -246,7 +246,7 @@
             1.694000000372529, 1.792000000372529, 1.890000000372529
         ],
         "Maze": [20],
-        "Ultra_Use": [110],
+        "Ultra_Use": [120],
         "skillList": {
             "Normal": ["attack", "普攻", 1, "Normal"],
             "BPSkill": ["attack", "战技", 1, "BPSkill"],
@@ -307,7 +307,7 @@
             1.265000000372529, 1.320000000372529, 1.375000000372529
         ],
         "Maze": [20],
-        "Ultra_Use": [110],
+        "Ultra_Use": [130],
         "skillList": {
             "Normal": ["attack", "普攻", 1, "Normal"],
             "Normal1": ["attack", "无间剑树", 1, "Normal1"],
@@ -407,7 +407,7 @@
             0.3450000008568168, 0.3600000008940697, 0.3750000008940697
         ],
         "Maze": [20],
-        "Ultra_Use": [120],
+        "Ultra_Use": [140],
         "skillList": {
             "Normal": ["attack", "普攻", 1, "Normal"],
             "BPSkill": ["attack", "战技", 1, "BPSkill"],
@@ -618,7 +618,7 @@
             0.287500000707805, 0.30000000086613, 0.31250000093132
         ],
         "Maze": [20],
-        "Ultra_Use": [140],
+        "Ultra_Use": [130],
         "skillList": {
             "Normal": ["attack", "普攻", 1, "Normal"],
             "Talent": ["attack", "账账", 1, "Talent"],

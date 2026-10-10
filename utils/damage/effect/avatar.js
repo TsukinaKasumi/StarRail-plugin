@@ -323,8 +323,10 @@ const Avatar = (data, base_attr, attribute_bonus) => {
         },
         '1112': () => {
             if (data.rank >= 1) {
+                // E1「未来市场」：【被执行】使敌方受到的追加攻击暴伤提高 25%，最多叠 2 层（满层 50%）
+                // 按单层 25% 口径（与 miao 一致；满层为情景项不计）
                 attribute_bonus['Talent_CriticalDamageBase'] =
-                    0.5 + get_let_value(attribute_bonus, 'Talent_CriticalDamageBase');
+                    0.25 + get_let_value(attribute_bonus, 'Talent_CriticalDamageBase');
             }
             if (data.rank >= 6) {
                 attribute_bonus['Talent1_FireResistancePenetration'] =
