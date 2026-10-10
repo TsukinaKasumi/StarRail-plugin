@@ -12,7 +12,16 @@ import {pluginResources, pluginRoot} from '../utils/path.js'
 import setting from '../utils/setting.js'
 import moment from 'moment'
 import {damage as damageCalculator} from '../utils/damage/main.js'
-import {AvatarRankSkillUp} from '../utils/damage/data/data.js'
+import {
+  AvatarRankSkillUp,
+  char_dict,
+  skilldict,
+  relicsetskill,
+  equipment_dict
+} from '../utils/damage/data/data.js'
+import {avatar_ability} from '../utils/damage/effect/avatar.js'
+import {weapon_ability} from '../utils/damage/effect/weapon.js'
+import {relice_ability} from '../utils/damage/effect/relice.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
 import cfg from '../../../lib/config/config.js'
 
@@ -150,6 +159,18 @@ export class Panel extends plugin {
         if (damage) {
           data.damages = damage.damage
           logger.debug('damages：', data.damages.damage)
+          // 欢愉度行：伤害计算可用（SkillData 已收录该角色）才计算展示；
+          // 未收录角色 damage() 返回 null，不设置 joy，模板即不渲染该行
+          // （优雅降级：不报错、不显示无意义的 0%）
+          try {
+            let joy = getJoyValue(data)
+            // 欢愉命途角色展示该行（数值可为 0%）；非欢愉命途仅在确有欢愉词条时展示
+            if (data.charpath === '欢愉' || joy > 0) {
+              data.joy = joy
+            }
+          } catch (err) {
+            logger.warn('欢愉度计算出错，不展示欢愉度', err)
+          }
         }
       } catch (e) {
         logger.warn('伤害计算出错，不展示伤害')
@@ -676,6 +697,81 @@ function readJson (file, root = pluginRoot) {
     }
   }
   return {}
+}
+
+/**
+ * @description: 计算欢愉度合计（百分点，即模板展示的 % 数值）
+ * @param {object} data 面板角色数据（与传入 damageCalculator 的同一对象）
+ * @return {number} 引擎口径的 joy/joyPlus/joyPct 三键之和
+ */
+function getJoyValue (data) {
+  // 伤害引擎 utils/damage/main.js 的 damage() 只返回伤害列表，不暴露内部的
+  // attribute_bonus；这里按引擎同一聚合链复算欢愉键合计（欢愉伤害分支消费的
+  // 即该合计）：遗器词条/行迹/光锥基础属性/套装常驻词条 → 角色钩子 → 光锥
+  // 钩子 → 套装钩子。特效钩子与数据字典直接复用 utils/damage 的导出，与引擎
+  // 同源，钩子数据更新无需同步本函数；聚合口径需与 main.js 的
+  // get_attribute_bonus / getdamages_num 保持同步，引擎若直接暴露该值，
+  // 此处应改为直接取用。
+  // 基础属性（引擎 get_base_attr 口径：基础攻防生速 + 基础双暴 5%/50%）
+  let base_attr = {
+    hp: data.properties.hpBase,
+    attack: data.properties.attackBase,
+    defence: data.properties.defenseBase,
+    CriticalChanceBase: 0.05,
+    CriticalDamageBase: 0.5,
+    speed: data.properties.speedBase
+  }
+  let attribute_bonus = {}
+  let addBonus = (name, value) => {
+    attribute_bonus[name] = (attribute_bonus[name] || 0) + value
+  }
+  // 遗器主/副词条
+  data.relics.forEach(relic => {
+    addBonus(relic.main_affix_tag, relic.main_affix_value)
+    relic.sub_affix_id.forEach(sub => {
+      addBonus(sub.tag, sub.value)
+    })
+  })
+  // 行迹节点常驻属性（level 1 且 character.json 收录该节点时）
+  data.skillTree.forEach(behavior => {
+    if (behavior.level == 1 &&
+      data.avatarId in char_dict &&
+      behavior.id in char_dict[data.avatarId] &&
+      char_dict[data.avatarId][behavior.id].levels[0].properties[0]) {
+      let properties = char_dict[data.avatarId][behavior.id].levels[0].properties[0]
+      addBonus(properties.type, properties.value)
+    }
+  })
+  // 光锥基础属性（未知光锥降级为空）
+  if (data.equipment.id) {
+    let equipattr = (equipment_dict[data.equipment.id] || {})[data.equipment.rank] || []
+    equipattr.forEach(attr => {
+      addBonus(attr.PropertyType, attr.Value.Value)
+    })
+  }
+  // 遗器套装常驻词条（未知套装降级跳过）
+  if (data.relic_sets) {
+    data.relic_sets.forEach(relic_set => {
+      let set_num = relic_set.set_name.split('件套')[0]
+      let set_skill = relicsetskill[relic_set.set_id] &&
+        relicsetskill[relic_set.set_id][set_num]
+      if (set_skill && set_skill.Property) {
+        addBonus(set_skill.Property, set_skill.Value)
+      }
+    })
+  }
+  // 特效钩子链（与引擎 getdamages_num 同顺序：角色 → 光锥 → 套装）
+  attribute_bonus = avatar_ability(data, base_attr, attribute_bonus)
+  attribute_bonus = weapon_ability(data.equipment,
+    skilldict[String(data.avatarId)].Ultra_Use, base_attr, attribute_bonus)
+  if (data.relic_sets && data.relic_sets.length > 0) {
+    data.relic_sets.forEach(relic_set => {
+      attribute_bonus = relice_ability(relic_set, base_attr, attribute_bonus)
+    })
+  }
+  return (attribute_bonus.joy || 0) +
+    (attribute_bonus.joyPlus || 0) +
+    (attribute_bonus.joyPct || 0)
 }
 
 async function renderCard (e, data) {

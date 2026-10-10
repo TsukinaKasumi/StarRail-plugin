@@ -6,7 +6,7 @@
 
 {{block 'main'}}
 {{set iconPath = pluResPath + 'panel/resources/icon/value'}}
-<div class="header">
+<div class="header"{{if joy !== undefined}} style="height: 623.5px"{{/if}}>
     <div class="left">
         <img src="{{pluResPath}}{{charImage}}">
     </div>
@@ -162,7 +162,19 @@
                     {{MathPro.floor10(properties[damage_type.toLowerCase() + 'Added']*100,-1)}}%
                 </div>
                 {{/if}}
-            </div>
+            </div>{{if joy !== undefined}}
+            <!-- 欢愉度行（欢愉命途角色或确有欢愉词条时由 apps/panel.js 计算 joy 后展示，
+                 数值为引擎欢愉伤害分支消费的 joy/joyPlus/joyPct 合计；增笑/笑点为纯战斗
+                 增益不展示）。此行使属性区达 12 行，header 已按 577 + 46.5 = 623.5px 加高 -->
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconJoy.png">
+                </div>
+                <div class="name">欢愉度</div>
+                <div class="value">
+                    {{MathPro.floor10(joy,-1)}}%
+                </div>
+            </div>{{/if}}
         </div>
     </div>
 </div>
