@@ -19,7 +19,7 @@ export const SYNC_TYPES = [1, 11, 12, 21, 22]
 
 /** 不同步的类型及原因（用于命令回复说明） */
 export const SKIPPED_TYPES = {
-  2: '新手池记录本插件不落盘（分析时实时从 API 获取），已跳过'
+  2: 'StarRail-plugin 不落盘新手池记录（分析时实时从 API 获取），已跳过'
 }
 
 /**

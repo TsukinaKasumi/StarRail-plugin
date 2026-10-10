@@ -101,7 +101,7 @@ export class GatchaSync extends plugin {
       const found = findSrJsonQQ(srRoot, uid)
       if (found) {
         srQQ = found
-        sourceNotes.push(`srJson 数据实际来源：data/srJson/${found}/${uidStr}（${targetQQ} 名下无此 UID 的数据）`)
+        sourceNotes.push(`miao-plugin 侧数据实际来源：data/srJson/${found}/${uidStr}（${targetQQ} 名下无此 UID 的数据）`)
       }
     }
     const srDirExisted = fs.existsSync(path.join(srRoot, srQQ, uidStr))
@@ -141,7 +141,7 @@ export class GatchaSync extends plugin {
           changes.push(`导出 +${result.addedRemoteCount}`)
         }
         const changeText = changes.length > 0 ? changes.join('，') : '无变化'
-        lines.push(`◆ ${name}(${type})：srJson ${result.remoteCount} 条 / 插件 ${result.localCount} 条，${changeText}`)
+        lines.push(`◆ ${name}(${type})：miao-plugin 插件 ${result.remoteCount} 条 / StarRail-plugin 插件 ${result.localCount} 条，${changeText}`)
       }
     } catch (err) {
       logger.error(err)
@@ -157,12 +157,12 @@ export class GatchaSync extends plugin {
       } catch (err) {
         count = -1
       }
-      lines.push(`◆ ${gatchaType[2]}(2)：srJson ${count >= 0 ? `${count} 条` : '有记录'}，${SKIPPED_TYPES[2]}`)
+      lines.push(`◆ ${gatchaType[2]}(2)：miao-plugin 插件 ${count >= 0 ? `${count} 条` : '有记录'}，${SKIPPED_TYPES[2]}`)
     }
 
     if (lines.length === 0) {
       return await e.reply([
-        `两侧均未找到 UID ${uidStr} 的本地抽卡记录（srJson 与插件侧均为空）。`,
+        `两侧均未找到 UID ${uidStr} 的本地抽卡记录（miao-plugin 与 StarRail-plugin 侧均为空）。`,
         '可先发送【*更新抽卡记录】拉取，或在 TRSS 侧用【#星铁抽卡记录】更新后再同步。'
       ].join('\n'))
     }
@@ -174,19 +174,19 @@ export class GatchaSync extends plugin {
     } else {
       const totals = []
       if (importTotal > 0) {
-        totals.push(`导入 ${importTotal} 条 → 插件`)
+        totals.push(`导入 ${importTotal} 条 → StarRail-plugin`)
       }
       if (exportTotal > 0) {
-        totals.push(`导出 ${exportTotal} 条 → srJson`)
+        totals.push(`导出 ${exportTotal} 条 → miao-plugin`)
       }
       replyMsg.push(`本次${totals.join('，')}`)
     }
 
     if (backups.length > 0) {
-      replyMsg.push(`已备份 srJson 原文件（同目录）：${backups.join('、')}`)
+      replyMsg.push(`已备份 miao-plugin 侧原文件（data/srJson 同目录）：${backups.join('、')}`)
     }
     if (exportTotal > 0 && !srDirExisted) {
-      replyMsg.push(`srJson 侧原无此 UID 数据，已在 data/srJson/${srQQ}/${uidStr}/ 新建记录文件`)
+      replyMsg.push(`miao-plugin 侧原无此 UID 数据，已在 data/srJson/${srQQ}/${uidStr}/ 新建记录文件`)
     }
     replyMsg.push('提示：miao/TRSS 侧统计需重新触发（重新查询）后才会包含新写入的记录')
     if (hasCollab) {
@@ -219,7 +219,7 @@ export class GatchaSync extends plugin {
       .map((type) => `${gatchaType[type]} ${recordsByType[type].length} 条`)
     const total = Object.values(recordsByType).reduce((sum, list) => sum + list.length, 0)
     if (total === 0) {
-      return await e.reply(`本地暂无 UID ${uid} 的抽卡记录，请先发送【*更新抽卡记录】拉取，或【*同步抽卡记录】从 srJson 导入`)
+      return await e.reply(`本地暂无 UID ${uid} 的抽卡记录，请先发送【*更新抽卡记录】拉取，或【*同步抽卡记录】从 miao-plugin 导入`)
     }
 
     const { uigf } = buildUigfV4(recordsByType, uid, getPluginVersion())
