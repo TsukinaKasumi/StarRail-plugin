@@ -569,6 +569,44 @@ async function genImages (miao, srr) {
     dest: path.join(P.panelWeapon, `${id}.png`)
   })))
 
+  // 5.5 面板：技能图标（panel/resources/skill，命名 {avatarId}_{后缀}.png 与 panel.js handleBehaviorList 一致）
+  //     StarRailRes icon/skill/ 与面板命名完全一致；后缀集合与既有素材相同（9 个/角色）。
+  //     强化角色(2xxx) StarRailRes 无 → 复制原角色同名图标占位（有更好图源后可替换）。
+  //     忆灵技/忆灵天赋/欢愉技图标（_me/_mt/_xe/_xe2）StarRailRes 暂无收录，本阶段不涉及
+  //     （面板模板对缺失图标有 onerror 兜底）。
+  const skillSuffixes = ['basic_atk', 'skill', 'ultimate', 'talent', 'technique', 'rank1', 'rank2', 'rank4', 'rank6']
+  const skillDir = path.join(ROOT, 'resources/panel/resources/skill')
+  let skillDl = 0, skillSkip = 0, skillCp = 0, skillFail = 0
+  const proCharMap = { 2004: '1004', 2005: '1005', 2006: '1006', 2102: '1102', 2205: '1205', 2212: '1212', 2217: '1217', 2306: '1306', 2307: '1307', 2310: '1310' }
+  for (const id of [...charIds, ...Object.keys(proCharMap)]) {
+    for (const suf of skillSuffixes) {
+      const dest = path.join(skillDir, `${id}_${suf}.png`)
+      if (fs.existsSync(dest)) { skillSkip++; continue }
+      const origId = proCharMap[id]
+      if (origId) {
+        // 强化角色：复制原角色图标占位
+        const src = path.join(skillDir, `${origId}_${suf}.png`)
+        if (fs.existsSync(src)) {
+          fs.copyFileSync(src, dest)
+          skillCp++
+        } else {
+          skillFail++
+          summary.failures.push(`[images/skill] ${id}_${suf}.png 占位复制失败：源 ${origId}_${suf}.png 不存在`)
+        }
+      } else {
+        try {
+          await downloadImage(`${SRR_BASE}icon/skill/${id}_${suf}.png`, dest)
+          skillDl++
+        } catch (err) {
+          skillFail++
+          summary.failures.push(`[images/skill] ${id}_${suf}.png 下载失败：${err.message}`)
+        }
+      }
+    }
+  }
+  summary.categories.push(`images/skill: 下载 ${skillDl} / 跳过 ${skillSkip} / Pro占位复制 ${skillCp} / 失败 ${skillFail}`)
+  log(`images/skill 完成：下载 ${skillDl}，跳过 ${skillSkip}，Pro 占位复制 ${skillCp}，失败 ${skillFail}`)
+
   // 6. 模拟抽卡：命途图（weaponlife）—— 记忆/欢愉 由仓库内现成 BgPaths* 素材复制改名
   //    （BgPaths* 与现有 7 张中文命途图同为 612x612 RGBA 白色剪影素材，风格一致）
   const wl = path.join(P.gachaSimImages, 'weaponlife')
