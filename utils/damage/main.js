@@ -1,7 +1,7 @@
 import { weapon_ability } from './effect/weapon.js'
 import { avatar_ability } from './effect/avatar.js'
 import { relice_ability } from './effect/relice.js'
-import { char_dict, skilldict, relicsetskill, equipment_dict } from './data/data.js'
+import { char_dict, skilldict, relicsetskill, equipment_dict, elationBaseDmg } from './data/data.js'
 export function damage (charinfo) {
   if (!(String(charinfo.avatarId) in skilldict)) { return null }
   if (!('skillTree' in charinfo)) { return null }
@@ -50,6 +50,11 @@ function getdamages_num (skill_type, data) {
         skill_multiplier = skill_multiplier + 0.3
       }
     }
+  } else if (skill_type == 'Xe' || skill_type == 'Xe2') {
+    // 欢愉技（xe）/强化欢愉技（xe2）：倍率数组按欢愉技等级取
+    // 等级从 behaviorList 中按技能 ID 匹配（欢愉技 ID 规律：角色ID x 1000 + 420，强化欢愉技 +421）
+    skill_multiplier = getskilllevelnum(String(data.avatarId), data.behaviorList,
+      skill_type == 'Xe2' ? 'xe2' : 'xe', skill_info[3])
   } else {
     if (String(data.avatarId) == '1107') {
       let skill_multiplier_1 = getskilllevelnum(String(data.avatarId), data.behaviorList, 'talent', skill_info[3])
@@ -305,6 +310,118 @@ function getdamages_num (skill_type, data) {
     skill_list.name = skill_info[1]
     skill_list.damage = damage_cd_z
     skill_list.damage_qw = damage_qw_z
+  } else if (skill_info[0] == 'elation') {
+    // 欢愉伤害分支（skillList 条目第 0 位为 'elation'，如 ['elation','欢愉技',1,'Xe']）
+    // 欢愉伤害不吃攻击力、不吃常规增伤区（DmgAdd/AddedRatio），结构类似击破伤害：
+    // 欢愉基础伤害(角色等级) × 技能倍率 × (1+欢愉度%) × (1+增笑%) × 笑点系数
+    //   × 暴击区 × 防御区 × 抗性区 × 0.9 × (1+易伤%)
+    // 笑点系数 = 1 + 5P/(P+240)，P = 计入笑点
+    let elation_base = elationBaseDmg[data.level - 1] || 0
+    // 欢愉度：joy/joyPlus/joyPct（单位 %），增笑：merrymakes（单位 %），笑点：punchline（点数）
+    let joy_num = 1 + (get_let_value(merged_attr, 'joy') +
+            get_let_value(merged_attr, 'joyPlus') +
+            get_let_value(merged_attr, 'joyPct')) / 100
+    let merrymakes_num = 1 + get_let_value(merged_attr, 'merrymakes') / 100
+    let punchline_num = get_let_value(merged_attr, 'punchline')
+    let punchline_cals = 1 + punchline_num * 5 / (punchline_num + 240)
+    logger.debug('欢愉：欢愉度区', joy_num, '增笑区', merrymakes_num, '笑点系数', punchline_cals)
+    // 抗性区（与普攻路径一致：按属性/AllDamage 匹配的无视抗性）
+    let enemy_status_resistance = 0.0
+    let merged_attrkey = Object.keys(merged_attr)
+    for (let i = 0; i < merged_attrkey.length; i++) {
+      let attr = merged_attrkey[i]
+      if (attr.search('ResistancePenetration') != -1) {
+        let attr_name = attr.replace('ResistancePenetration', '')
+        if ([data.damage_type, 'AllDamage'].includes(attr_name)) {
+          enemy_status_resistance = enemy_status_resistance + merged_attr[attr]
+        }
+        if (attr_name.search('_') != -1) {
+          let skill_name = attr_name.split('_')[0]
+          let skillattr_name = attr_name.split('_')[1]
+          if ([skill_type, skill_info[3]].includes(skill_name) && [data.damage_type, 'AllDamage'].includes(skillattr_name)) {
+            enemy_status_resistance =
+                            enemy_status_resistance + merged_attr[attr]
+          }
+        }
+      }
+    }
+    let resistance_area = 1.0 - (0 - enemy_status_resistance)
+    // 防御区：引擎通用无视防御 ignore_defence + 欢愉无视防御 xeIgnore（单位 %），合计不超过 100%
+    let elation_ignore_defence = get_let_value(merged_attr, 'ignore_defence') +
+            get_let_value(merged_attr, 'xeIgnore') / 100
+    elation_ignore_defence = Math.min(1, elation_ignore_defence)
+    let enemy_defence = (data.level * 10 + 200) * (1 - elation_ignore_defence)
+    let defence_multiplier = (data.level * 10 + 200) / (data.level * 10 + 200 + enemy_defence)
+    // 易伤区：复用引擎 DmgRatio/_DmgRatio 键，并叠加欢愉易伤 xeEnemydmg（单位 %）
+    let damage_ratio = get_let_value(merged_attr, 'DmgRatio')
+    for (let i = 0; i < merged_attrkey.length; i++) {
+      let attr = merged_attrkey[i]
+      if (attr.search('_DmgRatio') != -1) {
+        let attr_name = attr.split('_')[0]
+        if ([skill_type, skill_info[3]].includes(attr_name)) {
+          logger.debug(attr + '对' + attr_name + '有' + merged_attr[attr] + '易伤加成')
+          damage_ratio = damage_ratio + merged_attr[attr]
+        }
+      }
+    }
+    damage_ratio = damage_ratio + 1 + get_let_value(merged_attr, 'xeEnemydmg') / 100
+    logger.debug('易伤：', damage_ratio)
+    // 暴击区（复用引擎暴击键，支持 Xe_CriticalDamageBase/Xe_CriticalChance 等技能位加成）
+    let critical_damage_base = get_let_value(merged_attr, 'CriticalDamageBase')
+    for (let i = 0; i < merged_attrkey.length; i++) {
+      let attr = merged_attrkey[i]
+      if (attr.search('_CriticalDamageBase') != -1) {
+        let skill_name = attr.split('_')[0]
+        if ([skill_type, skill_info[3]].includes(skill_name)) {
+          logger.debug(attr + '对' + skill_name + '有' + merged_attr[attr] + '爆伤加成')
+          critical_damage_base = critical_damage_base + merged_attr[attr]
+        }
+      }
+    }
+    let critical_damage = critical_damage_base + 1
+    logger.debug('爆伤: ', critical_damage)
+    let critical_chance_base = merged_attr.CriticalChanceBase
+    for (let i = 0; i < merged_attrkey.length; i++) {
+      let attr = merged_attrkey[i]
+      if (attr.search('_CriticalChance') != -1) {
+        let skill_name = attr.split('_')[0]
+        if ([skill_type, skill_info[3]].includes(skill_name)) {
+          critical_chance_base = critical_chance_base + merged_attr[attr]
+        }
+      }
+    }
+    critical_chance_base = Math.min(1, critical_chance_base)
+    let qiwang_damage = critical_chance_base * critical_damage_base + 1
+    // 韧性未击破通用减伤 0.9（与普攻路径一致）
+    let damage_reduction = 0.9
+    skill_multiplier = skill_multiplier / skill_info[2]
+    for (let i = 1; i <= skill_info[2]; i++) {
+      damage =
+                elation_base *
+                    skill_multiplier *
+                    joy_num *
+                    merrymakes_num *
+                    punchline_cals *
+                    damage_ratio *
+                    defence_multiplier *
+                    resistance_area *
+                    damage_reduction *
+                    critical_damage
+      damage_cd_z = damage_cd_z + damage
+      damage_qw =
+                elation_base *
+                    skill_multiplier *
+                    joy_num *
+                    merrymakes_num *
+                    punchline_cals *
+                    damage_ratio *
+                    defence_multiplier *
+                    resistance_area *
+                    damage_reduction *
+                    qiwang_damage
+      damage_qw_z = damage_qw_z + damage_qw
+      logger.debug('第' + String(i) + '段欢愉伤害' + damage)
+    }
   }
   let damages = {
     title: skill_info[1],
@@ -437,6 +554,17 @@ function getskilllevelnum (avatarId, skills, leveltype, skilltype) {
     skilllevel = skills[2].level
   } else if (leveltype == 'talent') {
     skilllevel = skills[3].level
+  } else if (leveltype == 'xe' || leveltype == 'xe2') {
+    // 欢愉技等级：behaviorList 中按技能 ID 匹配
+    // 欢愉技 ID 规律：角色ID x 1000 + 420（如 星·欢愉 8010 -> 8010420、火花 1501 -> 1501420），
+    // 强化欢愉技为 角色ID x 1000 + 421（如 砂金•戏浪 1513421），即 ID 末三位 420/421
+    let xe_suffix = leveltype == 'xe' ? '420' : '421'
+    for (let i = 0; i < skills.length; i++) {
+      if (String(skills[i].id).endsWith(xe_suffix)) {
+        skilllevel = skills[i].level
+        break
+      }
+    }
   }
   return skilldict[avatarId][skilltype][skilllevel - 1]
 }
