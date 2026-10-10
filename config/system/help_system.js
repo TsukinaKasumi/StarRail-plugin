@@ -70,8 +70,16 @@ export const helpList = [
         desc: '更新本地抽卡记录'
       }, {
         icon: 97,
-        title: '*跃迁分析(角色|光锥|常驻)',
+        title: '*跃迁分析(角色|光锥|常驻|联动)',
         desc: '抽卡分析默认为总览'
+      }, {
+        icon: 97,
+        title: '*同步抽卡记录',
+        desc: '与miao/TRSS抽卡记录双向同步'
+      }, {
+        icon: 97,
+        title: '*导出记录(json)',
+        desc: '导出UIGF v4抽卡记录文件'
       }
     ]
   },
@@ -145,7 +153,7 @@ export const helpList = [
         desc: '星铁全角色攻略'
       }, {
         icon: 100,
-        title: '*抽卡(角色|常驻|光锥)',
+        title: '*抽卡(角色|常驻|光锥|联动)',
         desc: '模拟星穹铁道抽卡'
       }, {
         icon: 96,
