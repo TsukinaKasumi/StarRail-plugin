@@ -80,6 +80,22 @@ export const helpList = [
         icon: 97,
         title: '*导出记录(json)',
         desc: '导出UIGF v4抽卡记录文件'
+      }, {
+        icon: 98,
+        title: '*星琼/充值记录',
+        desc: '米游社充值与获取记录'
+      }, {
+        icon: 66,
+        title: '*面板列表',
+        desc: '查看已有面板的角色列表'
+      }, {
+        icon: 66,
+        title: '*原图',
+        desc: '回复面板图片获取原图'
+      }, {
+        icon: 78,
+        title: '*设置xx别名',
+        desc: '角色别名，可用别名查询面板'
       }
     ]
   },
@@ -172,6 +188,10 @@ export const helpList = [
         title: '*强度榜',
         desc: '星铁角色强度榜(仅供参考)'
       }, {
+        icon: 111,
+        title: '*xx配队',
+        desc: '角色配队推荐(仅供参考)'
+      }, {
         icon: 99,
         title: '*收益曲线',
         desc: '星铁各属性收益曲线(仅供参考)'
@@ -200,6 +220,10 @@ export const helpList = [
       icon: 85,
       title: '*切换面板(1 | 2 | 3)',
       desc: '切换面板服务'
+      }, {
+        icon: 85,
+        title: '*API列表',
+        desc: '查看面板API列表'
     }, {
       icon: 85,
       title: '*(强制)图像更新(github)',
