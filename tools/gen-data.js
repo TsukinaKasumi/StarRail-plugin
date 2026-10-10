@@ -12,8 +12,9 @@
  *      - resources/meta-sr/info/index.js         poolNameSr（跃迁名）/ poolDetailSr（1.0→当前 全量卡池时间线）
  *   2. StarRailRes 在线仓库（https://github.com/Mar-7th/StarRailRes）
  *      - index_new/cn/characters.json / light_cones.json  索引（英文命途/元素枚举、星级、图标路径）
- *      - icon/avatar/{id}.png                    角色头像（128x128，方形）
- *      - image/character_portrait/{id}.png       角色立绘（2048x2048）
+ *      - icon/character/{id}.png                  角色头像（256x256，方形，抽卡分析头像用）
+ *      - image/character_preview/{id}.png         角色半身像（376x512，模拟抽卡立绘用）
+ *      - image/character_portrait/{id}.png        角色立绘（2048x2048，面板立绘用）
  *      - icon/light_cone/{id}.png                光锥图标（128x128，实际路径以索引 icon 字段为准）
  *   3. tools/collab-pools.json                   联动卡池补充条目（miao 不收录联动池）
  *   4. （可选校验源）BWiki SMW API api.php?action=ask —— 仅人工抽查时使用，
@@ -530,12 +531,11 @@ async function genImages (miao, srr) {
   // 光锥图标路径以索引 icon 字段为准（icon/light_cone/{id}.png）
   const lcIcon = (id) => srr.lightCones[id]?.icon || `icon/light_cone/${id}.png`
 
-  // 1. 模拟抽卡：角色头像（char_image，char2charid 全部 ID，dev 白板除外）
-  //    注意：StarRailRes icon/avatar 为 128x128 方形头像，低于现有素材（~440x250 半身像），
-  //    模板 .char-img 使用 object-fit:cover 可正常裁切显示，如需更高清可换 image/character_portrait 源。
+  // 1. 模拟抽卡：角色立绘（char_image，char2charid 全部 ID，dev 白板除外）
+  //    StarRailRes image/character_preview 为 376x512 半身像，与仓库现有素材（~380x460 半身像）同族。
   await fillImages('gachasimulation/char_image', [...charIds, DEV_CHAR_ID].map((id) => ({
     id,
-    url: `${SRR_BASE}icon/avatar/${id}.png`,
+    url: `${SRR_BASE}image/character_preview/${id}.png`,
     dest: path.join(P.gachaSimImages, 'char_image', `${id}.png`),
     permanentSkip: id === DEV_CHAR_ID ? 'dev 白板角色，StarRailRes 无此图片（模拟池也不会抽出）' : undefined
   })))
@@ -548,9 +548,10 @@ async function genImages (miao, srr) {
   })))
 
   // 3. 抽卡分析：角色头像（gatcha/images/char，含开拓者 8001-8010）
+  //    现有素材为 256x256 方形头像，icon/character 同规格。
   await fillImages('gatcha/images/char', charIds.map((id) => ({
     id,
-    url: `${SRR_BASE}icon/avatar/${id}.png`,
+    url: `${SRR_BASE}icon/character/${id}.png`,
     dest: path.join(P.gatchaChar, `${id}.png`)
   })))
 

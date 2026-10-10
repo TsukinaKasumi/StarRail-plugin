@@ -34,7 +34,7 @@ node tools/gen-data.js --only=images      # 各类图片补缺（幂等，可反
 | appdata | `resources/gachasimulation/resources/appdata/char2charid.json`<br>`chardamagetype.json`<br>`equipment.json`<br>`equipment2life.json` | 角色名→ID、ID→英文元素、光锥名→ID、光锥名→中文命途（值域随 miao 扩至 9 命途，含记忆/欢愉）。保留 `dev_测试用白板:9100`（chardamagetype 同步保留 `9100:Physical`）；旧文件中的 `dev_测试白板:29000` 不再生成（miao 无此条目，模拟池也不引用） |
 | pooldata | `utils/gatcha/poolData.js` | miao `poolDetailSr` 全量常规池（按开池时间排序）+ `collab-pools.json` 联动池（固定置数组末尾：`getPool()` 取首个日期命中条目，联动池 to 为远期哨兵，若按时间插入会拦截其后所有常规记录的归组；消费联动记录需结合条目 `gachaType` 字段）。旧条目的 `ids` 字段（米游社 gacha_id）不再生成——消费端 `getPool()`/`stat()` 只按 `from/to` 日期区间匹配，从未读取该字段 |
 | paneldata | `resources/panel/data/character.json`（合并）<br>`resources/baseData/characters.json`<br>`resources/baseData/light_cones.json` | panel 表旧条目原样保留、新条目按现有最新形状（`id/name/rarity/element/path` 最小字段）追加；baseData 两表直接采用 StarRailRes 索引（英文命途/元素枚举、数字星级） |
-| images | `resources/gachasimulation/resources/images/char_image/{id}.png` ← `icon/avatar/{id}.png`<br>`.../images/weapon/{id}.png` ← 索引 icon 字段（`icon/light_cone/{id}.png`）<br>`.../images/weaponlife/记忆.png`、`欢愉.png` ← 复制仓内 `BgPathsMemory.png`、`BgPathsJoy.png`<br>`resources/gatcha/images/char/{id}.png` ← `icon/avatar/{id}.png`（含开拓者 8001-8010）<br>`resources/panel/resources/char_image/{id}.png` ← `image/character_portrait/{id}.png`<br>`resources/panel/resources/weapon/{id}.png` ← 索引 icon 字段 | 各目录按现有素材规格选源：panel 立绘为 2048x2048（character_portrait 同规格）、panel 光锥 128x128（索引图标同规格）、gatcha 头像 256x256 方形（icon/avatar 为 128x128 同形低清版） |
+| images | `resources/gachasimulation/resources/images/char_image/{id}.png` ← `image/character_preview/{id}.png`（376x512 半身像）<br>`.../images/weapon/{id}.png` ← 索引 icon 字段（`icon/light_cone/{id}.png`）<br>`.../images/weaponlife/记忆.png`、`欢愉.png` ← 复制仓内 `BgPathsMemory.png`、`BgPathsJoy.png`<br>`resources/gatcha/images/char/{id}.png` ← `icon/character/{id}.png`（256x256，含开拓者 8001-8010）<br>`resources/panel/resources/char_image/{id}.png` ← `image/character_portrait/{id}.png`<br>`resources/panel/resources/weapon/{id}.png` ← 索引 icon 字段 | 各目录按现有素材规格选源：panel 立绘为 2048x2048（character_portrait 同规格）、panel 光锥 128x128（索引图标同规格）、gatcha 头像 256x256 方形（icon/character 同规格）、模拟抽卡立绘为半身像（character_preview 376x512，与既有素材同族） |
 | —（不生成） | `resources/panel/data/skillTree.json` | 记忆/欢愉行迹坐标无数据来源，保持 7 命途不动 |
 
 ## 数据源
@@ -46,7 +46,7 @@ node tools/gen-data.js --only=images      # 各类图片补缺（幂等，可反
    - **本脚本只读 miao-plugin，绝不写入。**
 2. **StarRailRes（在线，`Mar-7th/StarRailRes` master 分支）**
    - 索引：`index_new/cn/characters.json`、`index_new/cn/light_cones.json`（英文命途/元素枚举、数字星级、图标路径）；
-   - 图片：`icon/avatar/{id}.png`（128x128）、`image/character_portrait/{id}.png`（2048x2048）、光锥以索引 `icon` 字段为准（`icon/light_cone/{id}.png`，注意**没有** `light_cones` 复数目录）。
+   - 图片：`icon/character/{id}.png`（256x256 头像）、`image/character_preview/{id}.png`（376x512 半身像）、`image/character_portrait/{id}.png`（2048x2048 立绘）、光锥以索引 `icon` 字段为准（`icon/light_cone/{id}.png`，注意**没有** `light_cones` 复数目录）。
 3. **BWiki SMW（可选人工校验源，不在脚本内调用）**
    - `https://wiki.biligame.com/sr/api.php?action=ask&...` 可结构化查询卡池/角色数据，用于人工抽查生成结果；
    - 注意 EdgeOne 安全防护会拦截高频抓取：如需批量校验务必串行并加间隔，HTML 页面路由已被拦截，仅 API 可用。
@@ -68,6 +68,6 @@ node tools/gen-data.js --only=images      # 各类图片补缺（幂等，可反
 - **联动池四星 UP**：官方未公布，`char4`/`weapon4` 留空数组；模拟抽卡侧如需四星请用全量四星池兜底。
 - **panel character.json 新条目**：`apps/panel.js` 仅消费 `.path` 字段（第 134 行 `charData[data.avatarId].path`），故新条目采用最小字段形状（`id/name/rarity/element/path`），与文件中较新的既有条目一致，**不含 eidolons/skills 占位结构**。若后续面板功能需要星魂/技能数据，应另行接 miao `meta-sr/character/{name}/data.json`。
 - **baseData 两表**：直接采用 StarRailRes 索引，条目不含旧文件中的 `guide_*` 字段（上游索引已移除该系列字段，代码未消费）。注意 `utils/gatcha/index.js` 的 `getItemTotalNum` 目前只剔除开拓者 8001-8004，而新数据含 8005-8010，持有率分母需在代码侧同步修正（属后续代码 commit 范围）。
-- **模拟抽卡角色图分辨率**：StarRailRes `icon/avatar` 为 128x128 方形头像，低于目录内既有素材（约 440x250 半身像）；模板 `.char-img` 为 `object-fit: cover`，可正常裁切显示，但放大后清晰度有限。如需更高清可将 `gen-images` 中该目录的源切换为 `image/character_portrait`（2048x2048）后删除补缺文件重跑。
+- **模拟抽卡角色立绘源**：已采用 `image/character_preview`（376x512 半身像，与目录既有半身像素材同族）；模板 `.char-img` 为 `object-fit: cover` 裁切显示。
 - **weaponlife 记忆/欢愉**：复用仓库内已有 `BgPathsMemory.png`/`BgPathsJoy.png` 改名。经核对与现有 7 张中文命途图同为 612x612 RGBA 白色剪影素材（透明度轮廓一致），风格一致；`BgPathsExplore.png` 未接线，保持不动。
 - **skillTree.json 不动**：记忆/欢愉行迹坐标无可靠数据来源，面板对这两命途角色的行迹渲染需另行处理（见调研文档 §9.3.3）。
