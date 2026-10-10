@@ -25,10 +25,48 @@ function panelDefence(base_attr, attribute_bonus) {
     return get_let_value(attribute_bonus, 'DefenceDelta') +
         base_attr.defence * (get_let_value(attribute_bonus, 'DefenceAddedRatio') + 1);
 }
+function panelHp(base_attr, attribute_bonus) {
+    return get_let_value(attribute_bonus, 'HPDelta') +
+        base_attr.hp * (get_let_value(attribute_bonus, 'HPAddedRatio') + 1);
+}
+// 常规技能位等级（behaviorList 前四项：普攻/战技/终结技/天赋）
+function stdLevel(data, idx) {
+    return data.behaviorList && data.behaviorList[idx] ? data.behaviorList[idx].level : 1;
+}
+// 忆灵技/忆灵天赋等级：behaviorList 按 pointId 末三位 301/302 匹配（与 main.js 引擎同口径）
+function memoSkillLevel(data, suffix) {
+    const list = data.behaviorList || [];
+    for (let i = 0; i < list.length; i++) {
+        if (String(list[i].id).endsWith(suffix)) {
+            return list[i].level;
+        }
+    }
+    return 1;
+}
+// 倍率数组按等级取值（越界收敛末位，与引擎 getskilllevelnum 一致）
+function levelValue(list, level) {
+    if (!list || list.length === 0) {
+        return 0;
+    }
+    return list[Math.min(level, list.length) - 1];
+}
+/* 生命倍率转攻击注入：引擎 attack 分支仅支持攻击力倍率（生命倍率仅 1205/1208 硬编码），
+ * 记忆命途生命倍率角色以 AttackDelta 把最终攻击补齐为生命值口径（merged attack = hp 注入值）。
+ * 钩子时点遗器词条/行迹/光锥基础属性已并入；光锥与套装特效若再提供攻击加成会引入近似偏差（引擎架构限制）。 */
+function injectHpAsAttack(base_attr, attribute_bonus, hpValue) {
+    const attack = panelAttack(base_attr, attribute_bonus);
+    attribute_bonus['AttackDelta'] =
+        get_let_value(attribute_bonus, 'AttackDelta') + (hpValue - attack);
+}
 // 火花终结技基础倍率缓存（终结技倍率含 0.6×欢愉度的动态部分，每次按面板重算）
 let HuoXuaUltraBase = null;
 // 爻光欢愉技基础倍率缓存（6魂倍率 ×2，按命途切换，需可回退）
 let YaoGuangXeBase = null;
+// 昔涟倍率基线缓存（强化普攻/忆灵技倍率含战技结界真实伤害系数与弹射段，按面板/命途每次重算）
+let XiLianNormalBase = null;
+let XiLianMeBase = null;
+// 知更鸟•晴歌忆灵技基线缓存（6魂倍率 ×2，按命途切换）
+let QingGeMeBase = null;
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -48,6 +86,23 @@ function trailblazerElation(data, base_attr, attribute_bonus) {
         // 6魂：施放欢愉技时暴击伤害+100%
         attribute_bonus['CriticalDamageBase'] =
             1 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+    }
+}
+// 穹·记忆/星·记忆（开拓者·记忆，两者数据完全相同；miao 无 calc.js，按官方技能表直译）
+function trailblazerMemory(data, base_attr, attribute_bonus) {
+    const dict = skilldict[String(data.avatarId)];
+    // 忆灵天赋-伙伴！一起！：全队暴击伤害提高 = 迷迷暴击伤害×比例 + 额外值（迷迷属性继承开拓者）
+    const mtLevel = memoSkillLevel(data, '302');
+    const cdmg = get_let_value(base_attr, 'CriticalDamageBase') +
+        get_let_value(attribute_bonus, 'CriticalDamageBase');
+    attribute_bonus['CriticalDamageBase'] =
+        cdmg * levelValue(dict.Mt_CritDmg, mtLevel) +
+        levelValue(dict.Mt_CritDmgExtra, mtLevel) +
+        get_let_value(attribute_bonus, 'CriticalDamageBase');
+    if (data.rank >= 6) {
+        // 6魂：终结技暴击率固定 100%（引擎暴击率上限 min(1,·)，注入 1 即饱和）
+        attribute_bonus['Ultra_CriticalChance'] =
+            1 + get_let_value(attribute_bonus, 'Ultra_CriticalChance');
     }
 }
 const Avatar = (data, base_attr, attribute_bonus) => {
@@ -477,6 +532,147 @@ const Avatar = (data, base_attr, attribute_bonus) => {
         '8010': () => {
             // 星·欢愉
             trailblazerElation(data, base_attr, attribute_bonus);
+        },
+        // ==================== 记忆命途（3.x+）角色 ====================
+        // buff 数值与转化公式一律对照 miao-plugin 各角色 calc.js；
+        // 生命倍率行经 injectHpAsAttack 注入（引擎 attack 分支不支持生命倍率的架构内近似，见函数注释）
+        '1402': () => {
+            // 阿格莱雅（全部伤害行为攻击力倍率）
+            // 行迹-短视之惩：至高之姿下攻击力提高 = 速度×(1+终结技每层速度提高×层数)×720% +
+            //   (速度×35% + 忆灵天赋每层速度提高×层数)×360%；层数 4 魂前 6 层、4 魂起 7 层
+            const num = data.rank > 3 ? 7 : 6;
+            const speed = panelSpeed(base_attr, attribute_bonus);
+            const qRate = levelValue(skilldict['1402'].Q_SpeedUp, stdLevel(data, 2));
+            const mtSpeed = levelValue(skilldict['1402'].Mt_SpeedUp, memoSkillLevel(data, '302'));
+            const atkPlus = speed * (1 + qRate * num) * 7.2 +
+                (speed * 0.35 + mtSpeed * num) * 3.6;
+            attribute_bonus['AttackDelta'] =
+                atkPlus + get_let_value(attribute_bonus, 'AttackDelta');
+            if (data.rank >= 1) {
+                // 1魂：间隙织线敌人受到的伤害提高 15%（易伤）
+                attribute_bonus['DmgRatio'] =
+                    0.15 + get_let_value(attribute_bonus, 'DmgRatio');
+            }
+            if (data.rank >= 2) {
+                // 2魂：无视 42% 防御力（14%×3 层满）
+                attribute_bonus['ignore_defence'] =
+                    0.42 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：雷属性抗性穿透 +20%；速度档连携攻击伤害提高 60%（miao calc.js 按满档计）
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+                attribute_bonus['NormalDmgAdd'] =
+                    0.6 + get_let_value(attribute_bonus, 'NormalDmgAdd');
+            }
+        },
+        '1407': () => {
+            // 遐蝶（全部伤害行为生命上限倍率 → 注入生命为攻击基数）
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 天赋：我方损失生命值叠加伤害提高（miao calc.js 按 3 层满计）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(skilldict['1407'].Talent, stdLevel(data, 3)) * 3 +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 终结技：境界使敌方全体全属性抗性降低（按全属性穿透计）
+            attribute_bonus['AllDamageResistancePenetration'] =
+                levelValue(skilldict['1407'].Ultra, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            // 忆灵天赋-震彻寂壤的怒啸：死龙被召唤时我方全体伤害提高 10%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.1 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            if (data.rank >= 6) {
+                // 6魂：量子属性抗性穿透 +20%
+                attribute_bonus['QuantumResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'QuantumResistancePenetration');
+            }
+        },
+        '1415': () => {
+            // 昔涟（全部伤害行为生命上限倍率 → 注入）
+            // 忆灵天赋-等待，在所有的过去：昔涟与德谬歌生命上限提高（先加，注入按提高后生命计）
+            attribute_bonus['HPAddedRatio'] =
+                levelValue(skilldict['1415'].Mt, memoSkillLevel(data, '302')) +
+                get_let_value(attribute_bonus, 'HPAddedRatio');
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 天赋：我方全体造成的伤害提高
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(skilldict['1415'].Talent, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 终结技-往昔的涟漪：暴击率提高
+            attribute_bonus['CriticalChanceBase'] =
+                levelValue(skilldict['1415'].Ultra, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'CriticalChanceBase');
+            // 行迹-三相的因果：速度≥180 全队伤害 +20%，冰抗穿透每超 1 点 +2%（最多计 60 点超出）
+            const speed = panelSpeed(base_attr, attribute_bonus);
+            if (speed >= 180) {
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+                attribute_bonus['IceResistancePenetration'] =
+                    Math.min(speed - 180, 60) * 2 / 100 +
+                    get_let_value(attribute_bonus, 'IceResistancePenetration');
+            }
+            if (data.rank >= 6) {
+                // 6魂：真我触发后敌方全体防御力降低 20%
+                attribute_bonus['ignore_defence'] =
+                    0.2 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            // 战技结界真实伤害：全部伤害行倍率 ×(1+真实伤害比例[+2魂 4 层×6%])；
+            // 忆灵技 = 花与箭基础 + 弹射段数×弹射倍率（队友 3 段；1魂真我 +12 段；4魂每段 +144%）
+            // ——均与命途/技能等级相关，改写倍率数组（基线缓存、可回退不累积）
+            if (!XiLianNormalBase) {
+                XiLianNormalBase = [...skilldict['1415'].Normal];
+                XiLianMeBase = [...skilldict['1415'].Me_Base];
+            }
+            const fieldRate = levelValue(skilldict['1415'].BPSkill, stdLevel(data, 1)) +
+                (data.rank >= 2 ? 0.24 : 0);
+            const bounces = 3 + (data.rank >= 1 ? 12 : 0);
+            const e4Bonus = data.rank >= 4 ? 1.44 : 0;
+            skilldict['1415'].Normal = XiLianNormalBase.map(v => v * (1 + fieldRate));
+            skilldict['1415'].Me = XiLianMeBase.map((v, i) =>
+                (v + bounces * (skilldict['1415'].Me_Bounce[i] + e4Bonus)) * (1 + fieldRate));
+        },
+        '1512': () => {
+            // 知更鸟•晴歌（唯一伤害行 = 忆灵攻击，基数为「晴空乐手」生命上限 = 自身 70%）
+            // 气氛值：2魂前 44 点，2魂起 70 点
+            const atmosphere = data.rank >= 2 ? 70 : 44;
+            const mtLevel = memoSkillLevel(data, '302');
+            // 行迹-重构谐乐：暴击率 +50%
+            attribute_bonus['CriticalChanceBase'] =
+                0.5 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            // 忆灵天赋-Fever：造成的伤害提高 = 基础 + 气氛值×系数
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(skilldict['1512'].Mt_DmgUp1, mtLevel) +
+                atmosphere * levelValue(skilldict['1512'].Mt_DmgUp2, mtLevel) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 忆灵天赋：「晴空乐手」在场敌方全体受到的伤害提高（按 3 名成员档）
+            attribute_bonus['DmgRatio'] =
+                levelValue(skilldict['1512'].Mt_EnemyDmg, mtLevel) +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            // 天赋：结界内无视防御 = 天赋表 + 气氛值×0.5%
+            attribute_bonus['ignore_defence'] =
+                levelValue(skilldict['1512'].Talent, stdLevel(data, 3)) + atmosphere * 0.005 +
+                get_let_value(attribute_bonus, 'ignore_defence');
+            if (data.rank >= 2) {
+                // 2魂：全属性抗性穿透 +18%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.18 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+            injectHpAsAttack(base_attr, attribute_bonus,
+                panelHp(base_attr, attribute_bonus) * 0.7);
+            // 6魂：忆灵技倍率提高原倍率的 100%（×2）——动态改写，基线缓存可回退
+            if (!QingGeMeBase) {
+                QingGeMeBase = [...skilldict['1512'].Me];
+            }
+            skilldict['1512'].Me = data.rank >= 6
+                ? QingGeMeBase.map(v => v * 2)
+                : QingGeMeBase;
+        },
+        '8007': () => {
+            // 穹·记忆（miao 无 calc.js，按官方技能表直译；与星·记忆数据完全相同）
+            trailblazerMemory(data, base_attr, attribute_bonus);
+        },
+        '8008': () => {
+            // 星·记忆
+            trailblazerMemory(data, base_attr, attribute_bonus);
         },
     };
     String(data.avatarId) in avatarGetter &&
