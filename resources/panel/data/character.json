@@ -29365,6 +29365,76 @@
     "element": "量子",
     "path": "欢愉"
   },
+  "2004": {
+    "id": "2004",
+    "name": "瓦尔特Pro",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "虚无"
+  },
+  "2005": {
+    "id": "2005",
+    "name": "卡芙卡Pro",
+    "rarity": "5",
+    "element": "雷",
+    "path": "虚无"
+  },
+  "2006": {
+    "id": "2006",
+    "name": "银狼Pro",
+    "rarity": "5",
+    "element": "量子",
+    "path": "虚无"
+  },
+  "2102": {
+    "id": "2102",
+    "name": "希儿Pro",
+    "rarity": "5",
+    "element": "量子",
+    "path": "巡猎"
+  },
+  "2205": {
+    "id": "2205",
+    "name": "刃Pro",
+    "rarity": "5",
+    "element": "风",
+    "path": "毁灭"
+  },
+  "2212": {
+    "id": "2212",
+    "name": "镜流Pro",
+    "rarity": "5",
+    "element": "冰",
+    "path": "毁灭"
+  },
+  "2217": {
+    "id": "2217",
+    "name": "藿藿Pro",
+    "rarity": "5",
+    "element": "风",
+    "path": "丰饶"
+  },
+  "2306": {
+    "id": "2306",
+    "name": "花火Pro",
+    "rarity": "5",
+    "element": "量子",
+    "path": "同谐"
+  },
+  "2307": {
+    "id": "2307",
+    "name": "黑天鹅Pro",
+    "rarity": "5",
+    "element": "风",
+    "path": "虚无"
+  },
+  "2310": {
+    "id": "2310",
+    "name": "流萤Pro",
+    "rarity": "5",
+    "element": "火",
+    "path": "毁灭"
+  },
   "8001": {
     "id": "8001",
     "name": "开拓者 (物理)",
