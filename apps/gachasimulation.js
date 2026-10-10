@@ -210,7 +210,7 @@ export default class Gacha extends plugin {
         prob = 590 + (this.gachaData[this.type].num5 - 74) * 530
       } else if (this.gachaData[this.type].num5 >= 60) {
         /** 60抽之后逐渐增加概率 */
-        prob = 60 + (this.gachaData[this.type].num5 - 50) * 40
+        prob = 60 + (this.gachaData[this.type].num5 - 60) * 40
       }
     } else if (this.type === 'up-weapon') {
       prob = 80;
