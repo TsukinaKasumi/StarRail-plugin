@@ -150,6 +150,14 @@ export function weaponRarityById (id) {
   return 5
 }
 
+// 遗器 ID -> 稀有度（HSR 编号规律：3xxxx=2星、4xxxx=3星、5xxxx=4星、6xxxx=5星，
+// 本插件 relics.json 未收录的新遗器兜底用，与已收录 454 条全量核对一致）
+export function relicRarityById (id) {
+  const first = Number(String(id).charAt(0))
+  if (first >= 3 && first <= 6) return first - 1
+  return 5
+}
+
 // 光锥稀有度 -> 模板 rarity 字符串（末 7 位需为 Rarity{3|4|5}，
 // 模板取 star/LightCore_{rarity.slice(-7)}.png）
 export function weaponRarityStr (star) {

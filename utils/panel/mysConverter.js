@@ -25,7 +25,7 @@ import {
   propertyTypeToAffix, propertyTypeToMiaoAttr, elemToDamageType,
   damageTypeToAddedKey, anchorBySlot, mainSlotType, mainSlotIcon,
   mainSlotMaxLevel, extraSlotType, extraSlotIcon, starData,
-  weaponRarityById, weaponRarityStr
+  weaponRarityById, weaponRarityStr, relicRarityById
 } from './affixData.js'
 
 // 米游社 remake -> 主技能槽位（普攻=001、战技=002、终结技=003、天赋=004、秘技=007）
@@ -154,7 +154,9 @@ function buildRelics (list) {
   if (!Array.isArray(list)) return []
   return list.filter(r => r && r.id != null && r.pos).map(relic => {
     const meta = getRelicMeta(relic.id)
-    const rarity = Number(relic.rarity) || Number(meta && meta.rarity) || 5
+    // 稀有度：米游社返回优先，其次本插件 relics.json，新遗器按 ID 首位推导
+    const rarity = Number(relic.rarity) || Number(meta && meta.rarity) ||
+      relicRarityById(relic.id)
     const level = Math.min(15, Number(relic.level) || 0)
     // 主词条：查表重建数值（base + step × 强化等级，与游戏公式一致）
     const mainType = Number(relic.main_property && relic.main_property.property_type)
@@ -188,7 +190,7 @@ function buildRelics (list) {
     return {
       id: relic.id,
       level,
-      name: (meta && meta.name) || relic.name || '',
+      name: (meta && meta.name) || relic.name || `遗器${relic.id}`,
       max_level: (meta && meta.max_level) || rarity * 3,
       main_affix_tag: (mainAffix && mainAffix.tag) || '',
       main_affix_name: (mainAffix && mainAffix.name) || '',
@@ -215,8 +217,8 @@ function parseMysValue (value, affix) {
   return num
 }
 
-/** 遗器列表 -> relic_sets（按套装计数，4 件套优先于 2 件套） */
-function buildRelicSets (relics) {
+/** 遗器列表 -> relic_sets（按套装计数，4 件套优先于 2 件套；miaoSync 复用） */
+export function buildRelicSets (relics) {
   const counts = {}
   for (const relic of relics) {
     const meta = getRelicMeta(relic.id)

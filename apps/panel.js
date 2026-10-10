@@ -24,6 +24,7 @@ import {weapon_ability} from '../utils/damage/effect/weapon.js'
 import {relice_ability} from '../utils/damage/effect/relice.js'
 import {detectAndRemapAvatar} from '../utils/panel/enhanced.js'
 import {convertMysAvatarList} from '../utils/panel/mysConverter.js'
+import {getMiaoProfileTime, importMiaoPlayerData} from '../utils/panel/miaoSync.js'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
 import cfg from '../../../lib/config/config.js'
@@ -410,6 +411,8 @@ export class Panel extends plugin {
       }
       // 渲染数据
       await renderCard(e, renderData)
+      // 顺带说明数据来源（米游社直连路径的回复已在 mysUpdate 内注明）
+      await e.reply(`本次面板数据来源：${api.split('/')[2]}（三方面板服务）`)
       // await e.reply( '更新面板数据成功' );
       return false
     } catch (error) {
@@ -662,6 +665,31 @@ export class Panel extends plugin {
         throw Error(error)
       }
     } else {
+      // miao-plugin 面板数据按时间戳同步（只读 miao 数据文件，绝不回写）：
+      // miao 侧 _profile 比本地缓存最新更新时间新时整包导入合并。
+      // 本地文件转换不触发 60s 频控（频控只约束网络拉取）
+      try {
+        const miaoTime = getMiaoProfileTime(uid)
+        if (miaoTime > 0) {
+          const maxLocal = previousData.length
+            ? Math.max(...previousData.map(
+              item => Number(item && item.lastUpdateTime) || 0
+            ))
+            : 0
+          if (miaoTime > maxLocal) {
+            const imported = importMiaoPlayerData(uid)
+            if (imported && imported.length > 0) {
+              previousData = await updateData(previousData, imported, miaoTime)
+              saveData(uid, previousData)
+              logger.info(
+                `SR-panelApi miao数据同步：uid${uid} 导入 ${imported.length} 名角色`
+              )
+            }
+          }
+        }
+      } catch (err) {
+        logger.warn('SR-panelApi miao数据同步失败，使用本地缓存', err)
+      }
       // logger.info('SR-panelApi使用缓存')
       const cardData = previousData
       return cardData
@@ -748,9 +776,11 @@ export class Panel extends plugin {
  * 替换老数据
  * @param {Array} oldData 老数据
  * @param {Array} newData 新数据
+ * @param {number} time 新数据条目的 lastUpdateTime（默认当前时间；
+ *   miao 数据同步传 miao 侧 _profile 时间戳）
  * @returns {Promise} 使用 try catch 捕获错误
  */
-async function updateData (oldData, newData) {
+async function updateData (oldData, newData, time = Date.now()) {
   let returnData = oldData
   // logger.info('SR-updateData', oldData, newData);
   const handle = name => {
@@ -768,7 +798,7 @@ async function updateData (oldData, newData) {
     newData[i].relics = newItem.relics || []
     newData[i].behaviorList = newItem.behaviorList || []
     // 最后更新时间
-    newData[i].lastUpdateTime = Date.now()
+    newData[i].lastUpdateTime = time
     returnData = returnData.filter(
       oldItem => oldItem.avatarId != newItem.avatarId
     )
