@@ -23,6 +23,8 @@ import {avatar_ability} from '../utils/damage/effect/avatar.js'
 import {weapon_ability} from '../utils/damage/effect/weapon.js'
 import {relice_ability} from '../utils/damage/effect/relice.js'
 import {detectAndRemapAvatar} from '../utils/panel/enhanced.js'
+import {convertMysAvatarList} from '../utils/panel/mysConverter.js'
+import GsCfg from '../../genshin/model/gsCfg.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
 import cfg from '../../../lib/config/config.js'
 
@@ -60,6 +62,12 @@ export class Panel extends plugin {
         {
           reg: `^${rulePrefix}面板(列表)?$`,
           fnc: 'plmb'
+        },
+        {
+          // 米游社直连更新：仅收 * / ＊ 前缀（#星铁米游社更新面板 是 miao-plugin
+          // 的既有命令，不使用 rulePrefix 抢占）
+          reg: '^(\\*|＊)(米游社|mys)(更新面板|面板更新)(\\d{9,10})?$',
+          fnc: 'mysUpdate'
         },
         {
           reg: `^${rulePrefix}(更新面板|面板更新)(.*)`,
@@ -406,6 +414,107 @@ export class Panel extends plugin {
       return false
     } catch (error) {
       logger.error('SR-panelApi', error)
+      return await e.reply(error.message)
+    }
+  }
+
+  /**
+   * 米游社直连更新面板（*米游社更新面板）
+   * 三方面板源（avocado/lulu/sr.roki）不可达时的直连兜底路径：
+   * CK 鉴权调用 srCharacterDetail（只读的角色详情接口）→ mysConverter 转换
+   * → updateData 合并缓存 → 渲染更新卡片
+   */
+  async mysUpdate (e) {
+    let uid = e.msg.match(/\d{9,10}/)?.[0] || ''
+    let user = this.e.user_id
+    const ats = e.message.filter(m => m.type === 'at')
+    if (!uid) {
+      if (ats.length > 0 && !e.atBot) {
+        user = ats[ats.length - 1].qq
+      } else if (ats.length > 1) {
+        for (let i = ats.length - 1; i >= 0; i--) {
+          if (ats[i].qq != e.bot.uin && ats[i].qq != e.bot.tiny_id) {
+            user = ats[i].qq
+            break
+          }
+        }
+      }
+      if (cfg.package.name != 'yunzai') {
+        try {
+          const noteUser = await NoteUser.create(user)
+          uid = noteUser?.getUid('sr') || ''
+        } catch (err) {
+          logger.debug('SR-panelApi mysUpdate NoteUser 取 uid 失败', err)
+        }
+      }
+      if (!uid) {
+        await this.miYoSummerGetUid()
+        uid = await redis.get(`STAR_RAILWAY:UID:${user}`)
+      }
+    }
+    if (!uid) {
+      return await e.reply('尚未绑定uid,请发送#星铁绑定uid进行绑定')
+    }
+    // 国际服 uid 走海外域与国服 CK 不互通，明确提示回退三方面板源
+    const serverPrefix = String(uid).slice(0, -8)
+    if (['6', '7', '8', '9', '18'].includes(serverPrefix)) {
+      return await e.reply(
+        `UID:${uid} 为国际服uid，暂不支持米游社直连更新\n可尝试发送*更新面板（三方面板服务）`
+      )
+    }
+    // CK：个人 CK 优先，无则回退公共 CK
+    let ck = await getCk(e)
+    if (!ck || Object.keys(ck).filter(k => ck[k].ck).length === 0) {
+      const ckArr = GsCfg.getConfig('mys', 'pubCk') || []
+      ck = ckArr[0]
+    }
+    if (!ck || !ck.ck) {
+      return await e.reply(
+        '暂无可用米游社Cookie，无法使用米游社直连更新\n可尝试发送*更新面板（三方面板服务）'
+      )
+    }
+    // 频控：与三方面板更新共用每 uid 60s 限制（仅约束网络拉取）
+    const timeKey = `STAR_RAILWAY:userPanelDataTime:${uid}`
+    const lastTime = await redis.get(timeKey)
+    if (lastTime) {
+      const leftTime = Date.now() - parseInt(lastTime)
+      if (leftTime < 1 * 60 * 1000) {
+        const seconds = Math.ceil((1 * 60 * 1000 - leftTime) / 1000)
+        return await e.reply(`查询过于频繁，请${seconds}秒后重试~`)
+      }
+    }
+    await e.reply(
+      `正在通过米游社直连获取uid${uid}面板数据中~\n可能需要一段时间，请耐心等待`
+    )
+    try {
+      const api = new MysSRApi(uid, ck)
+      let res = await api.getData('srCharacterDetail')
+      res = await api.checkCode(e, res, 'srCharacterDetail')
+      if (!res || Number(res.retcode) !== 0) {
+        // checkCode 已按返回码回复具体原因
+        return false
+      }
+      const avatarList = res?.data?.avatar_list
+      if (!Array.isArray(avatarList) || avatarList.length === 0) {
+        throw Error(
+          `UID:${uid}米游社直连更新失败\n未获取到角色数据，可能是米游社数据未公开或该uid不存在`
+        )
+      }
+      await redis.setEx(timeKey, 360 * 60, Date.now().toString())
+      const previousData = await readData(uid)
+      const characters = convertMysAvatarList(avatarList)
+      const data = await updateData(previousData, characters)
+      saveData(uid, data)
+      // 渲染数据（数据来源注明为米游社直连）
+      await renderCard(e, {
+        api: '米游社直连',
+        uid,
+        data,
+        type: 'update'
+      })
+      return false
+    } catch (error) {
+      logger.error('SR-panelApi-mys', error)
       return await e.reply(error.message)
     }
   }
