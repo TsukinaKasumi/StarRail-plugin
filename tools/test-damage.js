@@ -1,5 +1,5 @@
 /**
- * StarRail-plugin 伤害引擎回归 + 欢愉（elation）冒烟测试
+ * StarRail-plugin 伤害引擎回归 + 欢愉（elation）/ 忆灵（me/mt）冒烟测试
  *
  * 独立 dev 脚本：零 bot 依赖、不注册任何命令、不被 apps 加载器扫描。
  * 直接构造合成面板数据（charinfo，形状同 apps/panel.js 缓存的第三方 API 数据），
@@ -7,7 +7,7 @@
  *
  * 用法：
  *   node tools/test-damage.js --save   仅生成 1.3 现有角色回归基线（写入系统临时目录；引擎改动前跑一次）
- *   node tools/test-damage.js         回归（有基线则逐字段比对）+ 欢愉公式冒烟（手算对照）
+ *   node tools/test-damage.js         回归（有基线则逐字段比对）+ 欢愉/忆灵公式冒烟（手算对照）
  *
  * 说明：
  * - 引擎的 json 数据以 process.cwd()/plugins/<插件名> 定位（utils/path.js），
@@ -464,19 +464,152 @@ function runElationSmoke () {
   }
 }
 
+/* ========== 四、忆灵技/忆灵天赋（me/mt）冒烟 ========== */
+
+// 忆灵倍率数组与技能位注入：W3-E 落地记忆命途角色时等价于在 SkillData.json 写入以下条目
+//   "Me":  [0.55, 0.66, 0.77, 0.88, 0.99, 1.1, 1.21],  // 取自阿格莱雅「刺纹之陷」表 1（7 级）
+//   "Mt":  [0.5, 0.6, 0.7],                            // 合成短数组（3 级），用于验证越界收敛
+//   "skillList": {
+//     ..., "Me": ["attack", "忆灵技", 1, "Me"], "Mt": ["attack", "忆灵天赋", 2, "Mt"]
+//   }
+// 忆灵技/忆灵天赋走常规攻击力伤害分支（skillList 第 0 位 'attack'），仅倍率数组与等级来源不同；
+// 等级从 behaviorList 中按技能 ID 匹配（忆灵技 ID 规律：角色ID x 1000 + 301，忆灵天赋 +302）。
+// 此处向内存中的 skilldict 注入，用于验证引擎通路（不改动 json 文件）。
+function injectMe () {
+  skilldict['1102'].Me = [0.55, 0.66, 0.77, 0.88, 0.99, 1.1, 1.21]
+  skilldict['1102'].Mt = [0.5, 0.6, 0.7]
+  skilldict['1102'].skillList.Me = ['attack', '忆灵技', 1, 'Me']
+  skilldict['1102'].skillList.Mt = ['attack', '忆灵天赋', 2, 'Mt']
+}
+
+// 冒烟用 1102（希儿）合成输入：rank 0、无光锥、无套装、无行迹
+// behaviorList 追加忆灵技/忆灵天赋条目（ID 规律：角色ID x 1000 + 301 / +302）
+function memoChar (meLevel, mtLevel) {
+  const behaviorList = [6, 10, 10, 9, 1].map((lv, i) => ({
+    id: 1102 * 1000 + i + 1,
+    level: lv
+  }))
+  if (meLevel) {
+    behaviorList.push({ id: 1102 * 1000 + 301, level: meLevel })
+  }
+  if (mtLevel) {
+    behaviorList.push({ id: 1102 * 1000 + 302, level: mtLevel })
+  }
+  return {
+    avatarId: 1102,
+    name: '希儿(忆灵冒烟)',
+    level: 80,
+    rank: 0,
+    damage_type: 'Quantum',
+    properties: { hpBase: 1280.7, attackBase: 640.3, defenseBase: 485.1, speedBase: 102.5 },
+    relics: [],
+    equipment: { id: 0, rank: 1 },
+    relic_sets: [],
+    skillTree: [],
+    behaviorList
+  }
+}
+
+// 1102 裸面板各乘区（me/mt 与普攻共用）：
+//   攻击力   = 640.3（无遗器/光锥加成）
+//   增伤区   = 1 + 0.75（avatar 1102 钩子：AllDamageAddedRatio = 天赋 9 级倍率 0.75）= 1.75
+//   易伤区   = 1
+//   防御区   = 1000/(1000+1000) = 0.5（Lv80，无无视防御）
+//   抗性区   = 1 + 0.2（avatar 1102 钩子：量子无视抗性 0.2）= 1.2
+//   减伤区   = 0.9
+//   暴击区   = 暴击 1+0.5=1.5；期望 1+0.05x0.5=1.025（基础 5%/50%）
+//   速度区   = avatar 1102 钩子 SpeedAddedRatio +0.25（rank<2），不影响伤害
+function runMemoSmoke () {
+  injectMe()
+
+  // ---- 用例 D：忆灵技（Me，等级 5 -> 倍率 0.99，1 段）----
+  // 暴击伤害 = 640.3 x 0.99 x 1.75 x 0.5 x 1.2 x 0.9 x 1.5
+  //          = 633.897 -> 1109.31975 -> 554.659875 -> 665.59185 -> 599.032665 -> 898.5489975
+  // 期望伤害 = 599.032665 x 1.025 = 614.008481625
+  const caseD = damage(memoChar(5))
+  const meD = findSkill(caseD, '忆灵技')
+  if (!meD) {
+    fail('用例 D：未找到忆灵技条目（me 技能位未生效）')
+  } else {
+    closeTo(meD.value.critical, 898.5489975, '用例 D 忆灵技暴击伤害')
+    closeTo(meD.value.expect, 614.008481625, '用例 D 忆灵技期望伤害')
+  }
+
+  // ---- 用例 D2：behaviorList 无忆灵技条目时回落默认 1 级（倍率 0.55）----
+  // 暴击伤害 = 640.3 x 0.55 x 1.75 x 0.5 x 1.2 x 0.9 x 1.5 = 499.1938875
+  // 期望伤害 = 332.795925 x 1.025 = 341.115823125
+  const caseD2 = damage(memoChar(0, 0))
+  const meD2 = findSkill(caseD2, '忆灵技')
+  if (!meD2) {
+    fail('用例 D2：未找到忆灵技条目')
+  } else {
+    closeTo(meD2.value.critical, 499.1938875, '用例 D2 忆灵技默认 1 级暴击伤害')
+    closeTo(meD2.value.expect, 341.115823125, '用例 D2 忆灵技默认 1 级期望伤害')
+  }
+
+  // ---- 用例 E：忆灵天赋（Mt，等级 6 超出 3 级数组 -> 收敛末位 0.7，2 段）----
+  // 每段倍率 = 0.7/2 = 0.35
+  // 每段暴击 = 640.3 x 0.35 x 1.75 x 0.5 x 1.2 x 0.9 x 1.5
+  //          = 224.105 -> 392.18375 -> 196.091875 -> 235.31025 -> 211.779225 -> 317.6688375
+  // 总暴击（2 段） = 635.337675；总期望 = 211.779225 x 1.025 x 2 = 434.14741125
+  const caseE = damage(memoChar(5, 6))
+  const mtE = findSkill(caseE, '忆灵天赋')
+  if (!mtE) {
+    fail('用例 E：未找到忆灵天赋条目（mt 技能位未生效）')
+  } else {
+    closeTo(mtE.value.critical, 635.337675, '用例 E 忆灵天赋暴击伤害（2 段合计，等级越界收敛）')
+    closeTo(mtE.value.expect, 434.14741125, '用例 E 忆灵天赋期望伤害（2 段合计，等级越界收敛）')
+  }
+
+  // ---- 用例 F：忆灵技等级 8（模拟星魂加等级后超出 7 级数组 -> 收敛末位 1.21）----
+  // 暴击伤害 = 640.3 x 1.21 x 1.75 x 0.5 x 1.2 x 0.9 x 1.5
+  //          = 774.763 -> 1355.83525 -> 677.917625 -> 813.50115 -> 732.151035 -> 1098.2265525
+  // 期望伤害 = 732.151035 x 1.025 = 750.454810875
+  const caseF = damage(memoChar(8))
+  const meF = findSkill(caseF, '忆灵技')
+  if (!meF) {
+    fail('用例 F：未找到忆灵技条目')
+  } else {
+    closeTo(meF.value.critical, 1098.2265525, '用例 F 忆灵技等级越界收敛暴击伤害')
+    closeTo(meF.value.expect, 750.454810875, '用例 F 忆灵技等级越界收敛期望伤害')
+  }
+
+  // ---- 旧路径零影响验证：追加忆灵条目不改变普攻/战技/终结技输出 ----
+  // 忆灵技/忆灵天赋条目（301/302）追加在 behaviorList 末尾，旧技能按前 4 项索引取等级，不受影响。
+  const withMemo = damage(memoChar(5, 6))
+  const withoutMemo = damage(memoChar(0, 0))
+  let invariant = true
+  for (const title of ['普攻', '战技', '终结技']) {
+    const a = findSkill(withMemo, title)
+    const b = findSkill(withoutMemo, title)
+    if (!a || !b) {
+      fail(`忆灵旧路径零影响：缺少 ${title} 条目`)
+      invariant = false
+    } else if (JSON.stringify(a) !== JSON.stringify(b)) {
+      fail(`忆灵旧路径零影响：${title} 输出被忆灵条目改变\n         带: ${JSON.stringify(a)}\n         去: ${JSON.stringify(b)}`)
+      invariant = false
+    }
+  }
+  if (invariant) {
+    pass('忆灵旧路径零影响：普攻/战技/终结技输出在有无忆灵条目时逐字段一致')
+  }
+}
+
 /* ========== 入口 ========== */
 
 const saveMode = process.argv.includes('--save')
 console.log(`StarRail-plugin 伤害引擎测试（cwd: ${process.cwd()}）`)
 if (saveMode) {
-  console.log('\n[1/1] 生成回归基线（仅现有 1.3 角色，不含欢愉冒烟）')
+  console.log('\n[1/1] 生成回归基线（仅现有 1.3 角色，不含欢愉/忆灵冒烟）')
   saveBaseline(runRegression())
 } else {
-  console.log('\n[1/2] 回归：现有 1.3 角色')
+  console.log('\n[1/3] 回归：现有 1.3 角色')
   const results = runRegression()
   compareBaseline(results)
-  console.log('\n[2/2] 欢愉（elation）冒烟：手算对照')
+  console.log('\n[2/3] 欢愉（elation）冒烟：手算对照')
   runElationSmoke()
+  console.log('\n[3/3] 忆灵技/忆灵天赋（me/mt）冒烟：手算对照')
+  runMemoSmoke()
 }
 
 console.log('')

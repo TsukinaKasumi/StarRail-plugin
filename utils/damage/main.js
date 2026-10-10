@@ -55,6 +55,12 @@ function getdamages_num (skill_type, data) {
     // 等级从 behaviorList 中按技能 ID 匹配（欢愉技 ID 规律：角色ID x 1000 + 420，强化欢愉技 +421）
     skill_multiplier = getskilllevelnum(String(data.avatarId), data.behaviorList,
       skill_type == 'Xe2' ? 'xe2' : 'xe', skill_info[3])
+  } else if (skill_type == 'Me' || skill_type == 'Mt') {
+    // 忆灵技（me）/忆灵天赋（mt）：常规攻击力伤害的额外技能槽（skillList 第 0 位为 'attack'，
+    // 如 ['attack','忆灵技',1,'Me']），伤害公式与普攻/战技一致，仅倍率数组与等级来源不同
+    // 等级从 behaviorList 中按技能 ID 匹配（忆灵技 ID 规律：角色ID x 1000 + 301，忆灵天赋 +302）
+    skill_multiplier = getskilllevelnum(String(data.avatarId), data.behaviorList,
+      skill_type == 'Me' ? 'me' : 'mt', skill_info[3])
   } else {
     if (String(data.avatarId) == '1107') {
       let skill_multiplier_1 = getskilllevelnum(String(data.avatarId), data.behaviorList, 'talent', skill_info[3])
@@ -565,6 +571,24 @@ function getskilllevelnum (avatarId, skills, leveltype, skilltype) {
         break
       }
     }
+  } else if (leveltype == 'me' || leveltype == 'mt') {
+    // 忆灵技/忆灵天赋等级：behaviorList 中按技能 ID 匹配
+    // 忆灵技 ID 规律：角色ID x 1000 + 301（如 阿格莱雅 1402 -> 1402301、遐蝶 1407 -> 1407301），
+    // 忆灵天赋为 角色ID x 1000 + 302（如 昔涟 1415 -> 1415302），即 ID 末三位 301/302
+    let me_suffix = leveltype == 'me' ? '301' : '302'
+    for (let i = 0; i < skills.length; i++) {
+      if (String(skills[i].id).endsWith(me_suffix)) {
+        skilllevel = skills[i].level
+        break
+      }
+    }
   }
-  return skilldict[avatarId][skilltype][skilllevel - 1]
+  // 越界保护：技能等级超出倍率数组长度时收敛到数组末位
+  // （如忆灵天赋倍率数组较短、星魂加成后的等级超出数组，避免取到 undefined 产生 NaN；
+  //   倍率数组本身不存在时维持原有报错行为，不吞掉上游数据缺陷）
+  let multiplier_list = skilldict[avatarId][skilltype]
+  if (multiplier_list && multiplier_list.length > 0) {
+    skilllevel = Math.min(skilllevel, multiplier_list.length)
+  }
+  return multiplier_list[skilllevel - 1]
 }
