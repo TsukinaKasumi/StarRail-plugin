@@ -274,8 +274,8 @@ export default class Gacha extends plugin {
         if (this.gachaData[this.type].isUp5 == true) isBigUP = true
         /** 大保底清零 */
         this.gachaData[this.type].isUp5 = false
-        /** 抽取up */
-        tmpName = gachaInfo.gachaPool['up-char'].five
+        /** 抽取up（一池多五星UP，等概率从中抽取） */
+        tmpName = lodash.sample(gachaInfo.gachaPool['up-char'].five)
         charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
         charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png'
       } else {
@@ -284,8 +284,8 @@ export default class Gacha extends plugin {
         if (this.gachaData[this.type].isUp5 == true) isBigUP = true
         /** 大保底清零 */
         this.gachaData[this.type].isUp5 = false
-        /** 抽取up */
-        tmpName = gachaInfo.gachaPool['up-weapon'].five
+        /** 抽取up（一池多五星UP，等概率从中抽取） */
+        tmpName = lodash.sample(gachaInfo.gachaPool['up-weapon'].five)
         type = 2
         fileName = 'weapon/' + this.weaponJson[tmpName] + '.png'
         weaponLifeName = 'weaponlife/' + this.weaponLife[tmpName] + '.png'

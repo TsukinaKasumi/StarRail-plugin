@@ -1,11 +1,12 @@
 export default {
   gachaPool: {
+    /** 当期五星 UP（3.2 起铭心之萃/真意之汇集合池一池多 UP，统一用数组表示） */
     'up-char': {
-      five: '阿格莱雅',
+      five: ['阿格莱雅'],
       four: ['停云', '寒鸦', '素裳'],
     },
     'up-weapon': {
-      five: '惊魂夜',
+      five: ['惊魂夜'],
       four: ['同一种心情', '点个关注吧！', '宇宙市场趋势'],
     },
     normal: {
