@@ -42423,6 +42423,4560 @@
             "icon": "icon/property/IconImaginaryAddedRatio.png"
         }
     },
+    "1501": {
+        "1501001": {
+            "id": "1501001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1501_basic_atk.png"
+        },
+        "1501002": {
+            "id": "1501002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1501_skill.png"
+        },
+        "1501003": {
+            "id": "1501003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1501_ultimate.png"
+        },
+        "1501004": {
+            "id": "1501004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1501_talent.png"
+        },
+        "1501007": {
+            "id": "1501007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1501_technique.png"
+        },
+        "1501101": {
+            "id": "1501101",
+            "name": "甜蜜！笑点签售会",
+            "max_level": 1,
+            "desc": "若火花攻击力高于<nobr>2000</nobr>点，每超过<nobr>100</nobr>点攻击力可使自身欢愉度提高<nobr>5%</nobr>，最多提高<nobr>80%</nobr>。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1501_skilltree1.png"
+        },
+        "1501102": {
+            "id": "1501102",
+            "name": "炫目！人设万花筒",
+            "max_level": 1,
+            "desc": "队伍中「欢愉」命途角色数量等于1/2/3或以上时，火花施放终结技额外获得<nobr>2</nobr>/<nobr>4</nobr>/<nobr>8</nobr>个<u>笑点</u>及<nobr>1</nobr>/<nobr>1</nobr>/<nobr>4</nobr>个【爆点】。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1501_skilltree2.png"
+        },
+        "1501103": {
+            "id": "1501103",
+            "name": "沸腾！真伪调色盘",
+            "max_level": 1,
+            "desc": "当前每拥有1个<u>笑点</u>，使我方全体暴击伤害提高<nobr>8%</nobr>，最多提高<nobr>80%</nobr>。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 140000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1501_skilltree3.png"
+        },
+        "1501201": {
+            "id": "1501201",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "116001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1501202": {
+            "id": "1501202",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "116001",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1501203": {
+            "id": "1501203",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1501204": {
+            "id": "1501204",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamageBase.png"
+        },
+        "1501205": {
+            "id": "1501205",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 18000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1501206": {
+            "id": "1501206",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1501207": {
+            "id": "1501207",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1501208": {
+            "id": "1501208",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 120000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamageBase.png"
+        },
+        "1501209": {
+            "id": "1501209",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1501210": {
+            "id": "1501210",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 8
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        }
+    },
+    "1502": {
+        "1502001": {
+            "id": "1502001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1502_basic_atk.png"
+        },
+        "1502002": {
+            "id": "1502002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1502_skill.png"
+        },
+        "1502003": {
+            "id": "1502003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1502_ultimate.png"
+        },
+        "1502004": {
+            "id": "1502004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1502_talent.png"
+        },
+        "1502007": {
+            "id": "1502007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1502_technique.png"
+        },
+        "1502101": {
+            "id": "1502101",
+            "name": "开屏有礼",
+            "max_level": 1,
+            "desc": "爻光的速度大于等于<nobr>120</nobr>时，使自身欢愉度提高<nobr>30%</nobr>，之后每超过<nobr>1</nobr>点速度使自身欢愉度提高<nobr>1%</nobr>，最多计入<nobr>200</nobr>点超出的速度。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1502_skilltree1.png"
+        },
+        "1502102": {
+            "id": "1502102",
+            "name": "神闲意满",
+            "max_level": 1,
+            "desc": "自身暴击伤害提高<nobr>60%</nobr>，施放欢愉技后，为我方恢复<nobr>1</nobr>个战技点。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1502_skilltree2.png"
+        },
+        "1502103": {
+            "id": "1502103",
+            "name": "鸿运鳞集",
+            "max_level": 1,
+            "desc": "爻光获得【<u>好活当赏</u>】时，使其持续时间增加<nobr>1</nobr>回合。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 140000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1502_skilltree3.png"
+        },
+        "1502201": {
+            "id": "1502201",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "116001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1502202": {
+            "id": "1502202",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 2
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "116001",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1502203": {
+            "id": "1502203",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1502204": {
+            "id": "1502204",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1502205": {
+            "id": "1502205",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 18000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1502206": {
+            "id": "1502206",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 3
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1502207": {
+            "id": "1502207",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1502208": {
+            "id": "1502208",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 120000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1502209": {
+            "id": "1502209",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1502210": {
+            "id": "1502210",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        }
+    },
+    "1503": {
+        "1503001": {
+            "id": "1503001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1503_basic_atk.png"
+        },
+        "1503002": {
+            "id": "1503002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1503_skill.png"
+        },
+        "1503003": {
+            "id": "1503003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1503_ultimate.png"
+        },
+        "1503004": {
+            "id": "1503004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1503_talent.png"
+        },
+        "1503007": {
+            "id": "1503007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1503_technique.png"
+        },
+        "1503101": {
+            "id": "1503101",
+            "name": "洞察万物",
+            "max_level": 1,
+            "desc": "真珠的防御力大于等于2400时，使自身欢愉度提高32%，之后每超过100点防御力使自身欢愉度提高3%，最多计入3600点超出的防御力。真珠获得等同于自身欢愉度20%的治疗量加成。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110509",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1503_skilltree1.png"
+        },
+        "1503102": {
+            "id": "1503102",
+            "name": "感知容差",
+            "max_level": 1,
+            "desc": "持有【好活当赏】时，我方全体目标的效果抵抗提高50%。我方目标回合开始时，真珠获得5点【好活当赏】，最多获得50点【好活当赏】，真珠回合开始时重置可获得【好活当赏】数量。施放强化普攻和战技时，解除我方全体目标的1个负面效果。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110509",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1503_skilltree2.png"
+        },
+        "1503103": {
+            "id": "1503103",
+            "name": "艺术壁垒",
+            "max_level": 1,
+            "desc": "进入战斗和施放终结技后，若【美学底本】为「欢愉」命途角色，使其下一次施放终结技时，为真珠固定恢复90点能量。该效果无法叠加。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 140000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "110509",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1503_skilltree3.png"
+        },
+        "1503201": {
+            "id": "1503201",
+            "name": "防御强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.05
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "116001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefenceAddedRatio.png"
+        },
+        "1503202": {
+            "id": "1503202",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 2
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "116001",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1503203": {
+            "id": "1503203",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistanceBase.png"
+        },
+        "1503204": {
+            "id": "1503204",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1503205": {
+            "id": "1503205",
+            "name": "防御强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.075
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 18000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefenceAddedRatio.png"
+        },
+        "1503206": {
+            "id": "1503206",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 3
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1503207": {
+            "id": "1503207",
+            "name": "效果抵抗强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "StatusResistanceBase",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconStatusResistanceBase.png"
+        },
+        "1503208": {
+            "id": "1503208",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 120000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1503209": {
+            "id": "1503209",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1503210": {
+            "id": "1503210",
+            "name": "防御强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "DefenceAddedRatio",
+                            "value": 0.1
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconDefenceAddedRatio.png"
+        }
+    },
+    "1505": {
+        "1505001": {
+            "id": "1505001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1505_basic_atk.png"
+        },
+        "1505002": {
+            "id": "1505002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1505_skill.png"
+        },
+        "1505003": {
+            "id": "1505003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1505_ultimate.png"
+        },
+        "1505004": {
+            "id": "1505004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1505_talent.png"
+        },
+        "1505007": {
+            "id": "1505007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1505_technique.png"
+        },
+        "1505101": {
+            "id": "1505101",
+            "name": "瞰众乐",
+            "max_level": 1,
+            "desc": "绯英的暴击率提高<nobr>30%</nobr>，当场上敌方目标数量等于3或以上/2/1时，终结技的弹射次数增加<nobr>1</nobr>/<nobr>2</nobr>/<nobr>4</nobr>次。当欢愉技的参演编号小于绯英的队友获得【好活当赏】时，绯英会将其中的<nobr>50%</nobr>变成自身的【好活当赏】。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1505_skilltree1.png"
+        },
+        "1505102": {
+            "id": "1505102",
+            "name": "行裁断",
+            "max_level": 1,
+            "desc": "【狐狸老师】施放攻击时会额外对目标施加易伤，使其受到的伤害提高<nobr>12%</nobr>，持续<nobr>3</nobr>回合。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1505_skilltree2.png"
+        },
+        "1505103": {
+            "id": "1505103",
+            "name": "开不败",
+            "max_level": 1,
+            "desc": "队友持有的【好活当赏】结束时，绯英会将其中的<nobr>50%</nobr>转化为自身的【好活当赏】。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 140000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1505_skilltree3.png"
+        },
+        "1505201": {
+            "id": "1505201",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "116001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1505202": {
+            "id": "1505202",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "116001",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1505203": {
+            "id": "1505203",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1505204": {
+            "id": "1505204",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 2
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1505205": {
+            "id": "1505205",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 18000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1505206": {
+            "id": "1505206",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1505207": {
+            "id": "1505207",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1505208": {
+            "id": "1505208",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 3
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 120000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1505209": {
+            "id": "1505209",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 8
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1505210": {
+            "id": "1505210",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        }
+    },
+    "1506": {
+        "1506001": {
+            "id": "1506001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1506_basic_atk.png"
+        },
+        "1506002": {
+            "id": "1506002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1506_skill.png"
+        },
+        "1506003": {
+            "id": "1506003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1506_ultimate.png"
+        },
+        "1506004": {
+            "id": "1506004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1506_talent.png"
+        },
+        "1506007": {
+            "id": "1506007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1506_technique.png"
+        },
+        "1506101": {
+            "id": "1506101",
+            "name": "假结局速通攻略",
+            "max_level": 1,
+            "desc": "速度大于等于<nobr>160</nobr>时，使自身欢愉度提高<nobr>50%</nobr>，之后每超过<nobr>1</nobr>点速度使自身欢愉度提高<nobr>2%</nobr>，最多计入<nobr>100</nobr>点超出的速度。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1506_skilltree1.png"
+        },
+        "1506102": {
+            "id": "1506102",
+            "name": "真结局解锁条件",
+            "max_level": 1,
+            "desc": "若施放欢愉技计入的笑点大于等于<nobr>20</nobr>个，额外获得<nobr>20</nobr>点【隐藏分】（若大于等于<nobr>40</nobr>个，再额外获得<nobr>20</nobr>点）。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1506_skilltree2.png"
+        },
+        "1506103": {
+            "id": "1506103",
+            "name": "隐藏关卡全成就",
+            "max_level": 1,
+            "desc": "进入【无敌玩家】状态后，获得<nobr>20</nobr>点【隐藏分】。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 140000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1506_skilltree3.png"
+        },
+        "1506201": {
+            "id": "1506201",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "116001",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1506202": {
+            "id": "1506202",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 2
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "116001",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1506203": {
+            "id": "1506203",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1506204": {
+            "id": "1506204",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1506205": {
+            "id": "1506205",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 18000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "116002",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1506206": {
+            "id": "1506206",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 3
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1506207": {
+            "id": "1506207",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1506208": {
+            "id": "1506208",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 120000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "116003",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1506209": {
+            "id": "1506209",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1506210": {
+            "id": "1506210",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "116003",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        }
+    },
+    "1513": {
+        "1513001": {
+            "id": "1513001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1513_basic_atk.png"
+        },
+        "1513002": {
+            "id": "1513002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1513_skill.png"
+        },
+        "1513003": {
+            "id": "1513003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1513_ultimate.png"
+        },
+        "1513004": {
+            "id": "1513004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1513_talent.png"
+        },
+        "1513007": {
+            "id": "1513007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/1513_technique.png"
+        },
+        "1513101": {
+            "id": "1513101",
+            "name": "极乐派对",
+            "max_level": 1,
+            "desc": "速度大于等于<nobr>140</nobr>时，使自身欢愉度提高<nobr>30%</nobr>，之后每超过<nobr>1</nobr>点速度使自身欢愉度额外提高<nobr>1%</nobr>，最多计入<nobr>200</nobr>点超出的速度。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110509",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1513_skilltree1.png"
+        },
+        "1513102": {
+            "id": "1513102",
+            "name": "纵享惊涛",
+            "max_level": 1,
+            "desc": "战斗开始时若队伍中存在砂金•戏浪以外的其他「欢愉」命途角色，砂金•戏浪在场时，我方全体欢愉度提高<nobr>20%</nobr>，砂金•戏浪额外提高<nobr>80%</nobr>。<br />战斗开始时若队伍中只存在砂金•戏浪1名「欢愉」命途角色，砂金•戏浪施放欢愉技造成伤害时，被视为发动了<u>追加攻击</u>。队友施放攻击后，砂金•戏浪获得<nobr>2</nobr>点【<u>好活当赏</u>】和<nobr>1</nobr>个<u>笑点</u>，并使阿哈速度提高<nobr>25</nobr>，速度提高效果持续到阿哈时刻结束。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 20000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110509",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1513_skilltree2.png"
+        },
+        "1513103": {
+            "id": "1513103",
+            "name": "旧梦淘金",
+            "max_level": 1,
+            "desc": "暴击伤害提高<nobr>48%</nobr>。队友施放普攻、战技、<u>追加攻击</u>或终结技后，使我方全体暴击伤害提高<nobr>48%</nobr>，持续<nobr>3</nobr>回合，并使砂金•戏浪额外获得<nobr>2</nobr>点【热意】，该效果最多触发<nobr>6</nobr>次，砂金•戏浪施放战技时重置可触发次数。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 140000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "110509",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/1513_skilltree3.png"
+        },
+        "1513201": {
+            "id": "1513201",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 2000
+                        },
+                        {
+                            "id": "114011",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1513202": {
+            "id": "1513202",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 2
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 5000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "114011",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1513203": {
+            "id": "1513203",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "114012",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1513204": {
+            "id": "1513204",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 10000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "114012",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1513205": {
+            "id": "1513205",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 18000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "114012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1513206": {
+            "id": "1513206",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 3
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "114013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1513207": {
+            "id": "1513207",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 45000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 3
+                        },
+                        {
+                            "id": "114013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "1513208": {
+            "id": "1513208",
+            "name": "欢愉度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "joy",
+                            "value": 6
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 120000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "114013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconJoy.png"
+        },
+        "1513209": {
+            "id": "1513209",
+            "name": "速度强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "SpeedDelta",
+                            "value": 4
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "114013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconSpeedDelta.png"
+        },
+        "1513210": {
+            "id": "1513210",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 160000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 8
+                        },
+                        {
+                            "id": "114013",
+                            "num": 8
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        }
+    },
     "8001": {
         "8001001": {
             "id": "8001001",
@@ -47419,6 +51973,1524 @@
                 }
             ],
             "icon": "icon/property/IconDefence.png"
+        }
+    },
+    "8009": {
+        "8009001": {
+            "id": "8009001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8009_basic_atk.png"
+        },
+        "8009002": {
+            "id": "8009002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8009_skill.png"
+        },
+        "8009003": {
+            "id": "8009003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8009_ultimate.png"
+        },
+        "8009004": {
+            "id": "8009004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8009_talent.png"
+        },
+        "8009007": {
+            "id": "8009007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8009_technique.png"
+        },
+        "8009101": {
+            "id": "8009101",
+            "name": "快哉快哉",
+            "max_level": 1,
+            "desc": "若开拓者的攻击力高于1000点，每超过200点攻击力可使自身欢愉度提高<nobr>$3[f1]%</nobr>，最多提高<nobr>$4[f1]%</nobr>。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/8009_skilltree1.png"
+        },
+        "8009102": {
+            "id": "8009102",
+            "name": "跟你爆了",
+            "max_level": 1,
+            "desc": "自身暴击率提高15%。施放终结技后，为我方恢复1个战技点。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/8009_skilltree2.png"
+        },
+        "8009103": {
+            "id": "8009103",
+            "name": "阿哈咬它！",
+            "max_level": 1,
+            "desc": "我方目标施放欢愉技后，开拓者下一次施放战技时额外获得2点【好活当赏】。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 112000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/8009_skilltree3.png"
+        },
+        "8009201": {
+            "id": "8009201",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 1600
+                        },
+                        {
+                            "id": "111011",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8009202": {
+            "id": "8009202",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 1
+                        },
+                        {
+                            "id": "111011",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "8009203": {
+            "id": "8009203",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8009204": {
+            "id": "8009204",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamageBase.png"
+        },
+        "8009205": {
+            "id": "8009205",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 14400
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8009206": {
+            "id": "8009206",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 2
+                        },
+                        {
+                            "id": "111013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "8009207": {
+            "id": "8009207",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 2
+                        },
+                        {
+                            "id": "111013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8009208": {
+            "id": "8009208",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 96000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "111013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamageBase.png"
+        },
+        "8009209": {
+            "id": "8009209",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 6
+                        },
+                        {
+                            "id": "111013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "8009210": {
+            "id": "8009210",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 6
+                        },
+                        {
+                            "id": "111013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        }
+    },
+    "8010": {
+        "8010001": {
+            "id": "8010001",
+            "name": "",
+            "max_level": 6,
+            "desc": "",
+            "params": [],
+            "anchor": "Point01",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8010_basic_atk.png"
+        },
+        "8010002": {
+            "id": "8010002",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point02",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8010_skill.png"
+        },
+        "8010003": {
+            "id": "8010003",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point03",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8010_ultimate.png"
+        },
+        "8010004": {
+            "id": "8010004",
+            "name": "",
+            "max_level": 10,
+            "desc": "",
+            "params": [],
+            "anchor": "Point04",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 1,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 3,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 4,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 5,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                },
+                {
+                    "promotion": 6,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8010_talent.png"
+        },
+        "8010007": {
+            "id": "8010007",
+            "name": "",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point05",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 0,
+                    "properties": [],
+                    "materials": []
+                }
+            ],
+            "icon": "icon/skill/8010_technique.png"
+        },
+        "8010101": {
+            "id": "8010101",
+            "name": "快哉快哉",
+            "max_level": 1,
+            "desc": "若开拓者的攻击力高于1000点，每超过200点攻击力可使自身欢愉度提高<nobr>$3[f1]%</nobr>，最多提高<nobr>$4[f1]%</nobr>。",
+            "params": [],
+            "anchor": "Point06",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 2
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/8010_skilltree1.png"
+        },
+        "8010102": {
+            "id": "8010102",
+            "name": "跟你爆了",
+            "max_level": 1,
+            "desc": "自身暴击率提高15%。施放终结技后，为我方恢复1个战技点。",
+            "params": [],
+            "anchor": "Point07",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 16000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/8010_skilltree2.png"
+        },
+        "8010103": {
+            "id": "8010103",
+            "name": "阿哈咬它！",
+            "max_level": 1,
+            "desc": "我方目标施放欢愉技后，开拓者下一次施放战技时额外获得2点【好活当赏】。",
+            "params": [],
+            "anchor": "Point08",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 2,
+                    "level": 0,
+                    "properties": [],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 112000
+                        },
+                        {
+                            "id": "241",
+                            "num": 1
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "110508",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/skill/8010_skilltree3.png"
+        },
+        "8010201": {
+            "id": "8010201",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point09",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 1600
+                        },
+                        {
+                            "id": "111011",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8010202": {
+            "id": "8010202",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point10",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.027000000000000003
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 4000
+                        },
+                        {
+                            "id": "110261",
+                            "num": 1
+                        },
+                        {
+                            "id": "111011",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "8010203": {
+            "id": "8010203",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point11",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8010204": {
+            "id": "8010204",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point12",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 8000
+                        },
+                        {
+                            "id": "110262",
+                            "num": 3
+                        },
+                        {
+                            "id": "111012",
+                            "num": 1
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamageBase.png"
+        },
+        "8010205": {
+            "id": "8010205",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point13",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 14400
+                        },
+                        {
+                            "id": "110262",
+                            "num": 4
+                        },
+                        {
+                            "id": "111012",
+                            "num": 3
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8010206": {
+            "id": "8010206",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point14",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.04
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 2
+                        },
+                        {
+                            "id": "111013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "8010207": {
+            "id": "8010207",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point15",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.06
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 36000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 2
+                        },
+                        {
+                            "id": "111013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
+        },
+        "8010208": {
+            "id": "8010208",
+            "name": "暴击伤害强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point16",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalDamageBase",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 96000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 5
+                        },
+                        {
+                            "id": "111013",
+                            "num": 2
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalDamageBase.png"
+        },
+        "8010209": {
+            "id": "8010209",
+            "name": "暴击率强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point17",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "CriticalChanceBase",
+                            "value": 0.053
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 6
+                        },
+                        {
+                            "id": "111013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconCriticalChanceBase.png"
+        },
+        "8010210": {
+            "id": "8010210",
+            "name": "攻击强化",
+            "max_level": 1,
+            "desc": "",
+            "params": [],
+            "anchor": "Point18",
+            "pre_points": [],
+            "level_up_skills": [],
+            "levels": [
+                {
+                    "promotion": 0,
+                    "level": 1,
+                    "properties": [
+                        {
+                            "type": "AttackAddedRatio",
+                            "value": 0.08
+                        }
+                    ],
+                    "materials": [
+                        {
+                            "id": "2",
+                            "num": 128000
+                        },
+                        {
+                            "id": "110263",
+                            "num": 6
+                        },
+                        {
+                            "id": "111013",
+                            "num": 6
+                        }
+                    ]
+                }
+            ],
+            "icon": "icon/property/IconAttackAddedRatio.png"
         }
     }
 }
