@@ -22,6 +22,7 @@ import {
 import {avatar_ability} from '../utils/damage/effect/avatar.js'
 import {weapon_ability} from '../utils/damage/effect/weapon.js'
 import {relice_ability} from '../utils/damage/effect/relice.js'
+import {detectAndRemapAvatar} from '../utils/panel/enhanced.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
 import cfg from '../../../lib/config/config.js'
 
@@ -140,7 +141,9 @@ export class Panel extends plugin {
       let data = await this.getCharData(charName, uid, e)
       data.uid = uid
       data.api = api.split('/')[2]
-      data.charpath = charData[data.avatarId].path
+      // 强化形态（2xxx）等静态数据未收录的角色降级渲染（charpath 为 undefined 时
+      // 模板跳过命途文字与行迹画布，伤害计算同样按未收录降级），不中断整个面板查询
+      data.charpath = charData[data.avatarId]?.path
       data.relics.forEach((item, i) => {
         data.relics[i].path = relicsPathData[item.id]?.icon
       })
@@ -298,6 +301,16 @@ export class Panel extends plugin {
     _.forIn(leadId, (v, k) => {
       if (v.includes(avatarId)) name = k
     })
+    // 强化形态（2xxx）暂无专属立绘资源，回退到原始形态（'2'+ID[1:] -> '1'+ID[1:]）
+    // 的默认头像图，避免图片 404
+    if (
+      String(avatarId).startsWith('2') &&
+      !fs.existsSync(
+        `${pluginResources}/panel/resources/char_image/${avatarId}.png`
+      )
+    ) {
+      avatarId = String(avatarId).replace(/^2/, '1')
+    }
     this.config = setting.getConfig('PanelSetting')
     // 判断是否为群聊，并且群聊是否在限制名单中
     if (
@@ -529,6 +542,10 @@ export class Panel extends plugin {
         } else {
           characters = [assistRole, ...displayRoles]
         }
+        // 强化形态检测与重映射：白名单角色若 point_id 带 '1'+avatarId 前缀
+        // （如刃 1205 的 11205003），重映射 avatarId -> 2xxx 并重写 point_id 前缀，
+        // 否则强化角色的技能等级/行迹解析全部失效（仅处理新入库数据，不追溯旧缓存）
+        characters = characters.map(item => detectAndRemapAvatar(item))
         const chars = await updateData(previousData, characters)
         saveData(uid, chars)
         return chars
