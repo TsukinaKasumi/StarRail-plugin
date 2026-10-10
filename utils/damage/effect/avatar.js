@@ -50,6 +50,8 @@ function levelValue(list, level) {
     }
     return list[Math.min(level, list.length) - 1];
 }
+// 消除浮点噪声后回写倍率数组（与 SkillData 数据精度一致）
+const round10 = v => Math.round(v * 1e10) / 1e10;
 /* 生命倍率转攻击注入：引擎 attack 分支仅支持攻击力倍率（生命倍率仅 1205/1208 硬编码），
  * 记忆命途生命倍率角色以 AttackDelta 把最终攻击补齐为生命值口径（merged attack = hp 注入值）。
  * 钩子时点遗器词条/行迹/光锥基础属性已并入；光锥与套装特效若再提供攻击加成会引入近似偏差（引擎架构限制）。 */
@@ -67,6 +69,12 @@ let XiLianNormalBase = null;
 let XiLianMeBase = null;
 // 知更鸟•晴歌忆灵技基线缓存（6魂倍率 ×2，按命途切换）
 let QingGeMeBase = null;
+// 强化角色（Pro 形态）倍率基线缓存（命魂/面板驱动的动态改写，按次重算、可回退不累积）
+let WeltProBase = null;
+let KafkaProBase = null;
+let WolfProBase = null;
+let BladeProBase = null;
+let FireflyProBase = null;
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -673,6 +681,244 @@ const Avatar = (data, base_attr, attribute_bonus) => {
         '8008': () => {
             // 星·记忆
             trailblazerMemory(data, base_attr, attribute_bonus);
+        },
+        // ==================== 强化角色（Pro 形态，2xxx） ====================
+        // buff 数值与倍率组合一律对照 miao-plugin 各角色 calc.js；情景参数取 miao defParams 代表值
+        '2004': () => {
+            // 瓦尔特Pro
+            // 行迹-惩戒：我方攻击【失重】目标伤害+10%，最多 10 层（miao calc.js 按 10 层满计 +100%）
+            attribute_bonus['AllDamageAddedRatio'] =
+                1 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-裁决：效果命中 > 40% 每超 10% 攻击力+20%，最多 80%
+            const effPct = get_let_value(attribute_bonus, 'StatusProbabilityBase') * 100;
+            if (effPct > 40) {
+                attribute_bonus['AttackAddedRatio'] =
+                    Math.min(Math.ceil((effPct - 40) / 10) * 0.2, 0.8) +
+                    get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+            // 天赋：【失重】目标防御力降低 40%（按无视防御计）
+            attribute_bonus['ignore_defence'] =
+                0.4 + get_let_value(attribute_bonus, 'ignore_defence');
+            if (data.rank >= 4) {
+                // 4魂：【失重】目标全属性抗性降低 30%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.3 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+            if (data.rank >= 6) {
+                // 6魂：对减速目标暴击率+30%、暴击伤害+60%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.3 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+                attribute_bonus['CriticalDamageBase'] =
+                    0.6 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            // 1魂：战技/终结技击中【失重】目标额外造成终结技倍率 40% 的附加伤害
+            //（战技行 +q×0.4、终结技行 ×1.4，按命途切换，基线缓存可回退不累积）
+            if (!WeltProBase) {
+                WeltProBase = {
+                    BPSkill: [...skilldict['2004'].BPSkill],
+                    Ultra: [...skilldict['2004'].Ultra]
+                };
+            }
+            if (data.rank >= 1) {
+                const q = levelValue(WeltProBase.Ultra, stdLevel(data, 2));
+                skilldict['2004'].BPSkill = WeltProBase.BPSkill.map(v => round10(v + q * 0.4));
+                skilldict['2004'].Ultra = WeltProBase.Ultra.map(v => round10(v * 1.4));
+            } else {
+                skilldict['2004'].BPSkill = [...WeltProBase.BPSkill];
+                skilldict['2004'].Ultra = [...WeltProBase.Ultra];
+            }
+        },
+        '2005': () => {
+            // 卡芙卡Pro（行组合对照 miao calc.js：战技引爆 = 战技直伤 + DOT×引爆比例；
+            // 终结技引爆 = 终结技直伤 + DOT×比例。直伤与 DOT 的暴击口径差异为引擎架构限制，见提交说明）
+            const d = skilldict['2005'];
+            // 6魂：触电伤害倍率提高 156%（并入 DOT 基数）
+            const dotPlus = data.rank >= 6 ? 1.56 : 0;
+            if (!KafkaProBase) {
+                KafkaProBase = {
+                    BPSkill: [...d.BPSkill],
+                    Ultra: [...d.Ultra]
+                };
+            }
+            // DOT 基数 = 终结技触电表（按终结技等级）+ 6魂加成
+            const dotBase = levelValue(d.Q_Dot, stdLevel(data, 2)) + dotPlus;
+            // 战技引爆行 = 战技直伤（主+相邻×2，基线）+ DOT×(单体引爆比例 + 相邻引爆比例×2)（按战技等级）
+            const eLv = stdLevel(data, 1);
+            const detoRatio = levelValue(d.E_DotMain, eLv) + levelValue(d.E_DotAdj, eLv) * 2;
+            d.BPSkill = KafkaProBase.BPSkill.map(v => round10(v + dotBase * detoRatio));
+            // 终结技引爆行 = 基线（直伤 + DOT×比例）+ 6魂×引爆比例（同按终结技等级档）
+            d.Ultra = KafkaProBase.Ultra.map((v, i) => round10(v + dotPlus * d.Q_DotRatio[i]));
+            if (data.rank >= 1) {
+                // 1魂：目标受到的持续伤害+30%（易伤）——miao 仅作用于 DOT 行，经技能位键只注入两个引爆行
+                attribute_bonus['BPSkill_DmgRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'BPSkill_DmgRatio');
+                attribute_bonus['Ultra_DmgRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'Ultra_DmgRatio');
+            }
+            if (data.rank >= 2) {
+                // 2魂：我方全体持续伤害+33%——引擎无 DOT 专属增伤键，近似注入两个引爆行（直伤部分被同乘，偏差见提交说明）
+                attribute_bonus['BPSkill_DmgAdd'] =
+                    0.33 + get_let_value(attribute_bonus, 'BPSkill_DmgAdd');
+                attribute_bonus['Ultra_DmgAdd'] =
+                    0.33 + get_let_value(attribute_bonus, 'Ultra_DmgAdd');
+            }
+        },
+        '2006': () => {
+            // 银狼Pro
+            const d = skilldict['2006'];
+            // 天赋-缺陷：防御力降低（按天赋等级表）+ 终结技：群体防御力降低（按终结技等级表）→ 无视防御
+            attribute_bonus['ignore_defence'] =
+                levelValue(d.Talent_Def, stdLevel(data, 3)) +
+                levelValue(d.Q_DefDown, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'ignore_defence');
+            // 战技：添加弱点对应抗性-20% + 全属性抗性降低（按战技等级表）
+            attribute_bonus['AllDamageResistancePenetration'] =
+                0.2 + levelValue(d.E_ResDown, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            // 行迹-旁注：每 10% 效果命中攻击力+10%，最高 50%
+            const effPct = get_let_value(attribute_bonus, 'StatusProbabilityBase') * 100;
+            attribute_bonus['AttackAddedRatio'] =
+                Math.min(Math.floor(effPct / 10) * 10, 50) / 100 +
+                get_let_value(attribute_bonus, 'AttackAddedRatio');
+            if (data.rank >= 2) {
+                // 2魂：敌人受到的伤害+20%（易伤）
+                attribute_bonus['DmgRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'DmgRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：造成伤害提高（负面 buff 层数×20%，miao defParams debuffCount=5 → +100%）
+                attribute_bonus['AllDamageAddedRatio'] =
+                    1 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 4魂：终结技倍率提高 min(负面层数,5)×20% ×3 目标（debuffCount=5 → 倍率+3.0，基线缓存可回退）
+            if (!WolfProBase) {
+                WolfProBase = [...d.Ultra];
+            }
+            d.Ultra = data.rank >= 4
+                ? WolfProBase.map(v => round10(v + 3))
+                : [...WolfProBase];
+        },
+        '2102': () => {
+            // 希儿Pro（战技/2魂速度加成不影响伤害、6魂乱蝶真实伤害为命魂专属展示行，均不入钩子）
+            const d = skilldict['2102'];
+            // 天赋-增幅状态：造成的伤害提高（按天赋等级表）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.T_DmgUp, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-夜行：消灭敌人伤害+50%，最多 3 层（miao calc.js 按 3 层满计）
+            attribute_bonus['AllDamageAddedRatio'] =
+                1.5 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-割裂：量子属性抗性穿透+25%
+            attribute_bonus['QuantumResistancePenetration'] =
+                0.25 + get_let_value(attribute_bonus, 'QuantumResistancePenetration');
+            if (data.rank >= 1) {
+                // 1魂：对生命 ≤80% 敌人暴击率+15%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.15 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+        },
+        '2205': () => {
+            // 刃Pro（生命倍率角色 → 注入生命为攻击基数）
+            const d = skilldict['2205'];
+            if (data.rank >= 4) {
+                // 4魂：生命上限提高（2 层×20%，miao defParams c4stacks=2）——先加，注入按提高后生命计
+                attribute_bonus['HPAddedRatio'] =
+                    0.4 + get_let_value(attribute_bonus, 'HPAddedRatio');
+            }
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 战技-地狱变：造成的伤害提高（按战技等级表，miao defParams ebuff 默认处于状态）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.E_DmgUp, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-坏劫隳亡：天赋追加攻击伤害提高 20%
+            attribute_bonus['TalentDmgAdd'] =
+                0.2 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            if (data.rank >= 2) {
+                // 2魂：地狱变状态下暴击率+15%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.15 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            // 1魂：强化普攻/终结技额外伤害 = 终结技「累计已损生命」倍率×150%×已损 90%（lostHp=0.9）
+            // 6魂：追加攻击伤害值提高 50%×3 目标（生命口径 → 倍率 +1.5）；均按命途切换、基线缓存
+            if (!BladeProBase) {
+                BladeProBase = {
+                    Normal: [...d.Normal],
+                    Ultra: [...d.Ultra],
+                    Talent: [...d.Talent]
+                };
+            }
+            const lostHpAdd = data.rank >= 1
+                ? levelValue(d.Q_LostHp, stdLevel(data, 2)) * 1.5 * 0.9
+                : 0;
+            d.Normal = BladeProBase.Normal.map(v => round10(v + lostHpAdd));
+            d.Ultra = BladeProBase.Ultra.map(v => round10(v + lostHpAdd));
+            d.Talent = data.rank >= 6
+                ? BladeProBase.Talent.map(v => round10(v + 1.5))
+                : [...BladeProBase.Talent];
+        },
+        '2212': () => {
+            // 镜流Pro（生命倍率角色 → 注入；miao defParams 默认转魄状态、月色 5 层）
+            const d = skilldict['2212'];
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 行迹-死境：转魄状态下终结技伤害+20%
+            attribute_bonus['UltraDmgAdd'] =
+                0.2 + get_let_value(attribute_bonus, 'UltraDmgAdd');
+            // 天赋-转魄：暴击率提高（按天赋等级表）；【月色】5 层：暴击伤害 +5×每层暴伤表
+            attribute_bonus['CriticalChanceBase'] =
+                levelValue(d.T_Cpct, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'CriticalChanceBase');
+            attribute_bonus['CriticalDamageBase'] =
+                5 * levelValue(d.T_Cdmg, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            if (data.rank >= 1) {
+                // 1魂：施放终结技或强化战技时暴击伤害+36%
+                attribute_bonus['CriticalDamageBase'] =
+                    0.36 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 4) {
+                // 4魂：转魄下【月色】每层额外暴击伤害+20%（5 层）
+                attribute_bonus['CriticalDamageBase'] =
+                    1 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 6) {
+                // 6魂：转魄状态下冰属性抗性穿透+30%
+                attribute_bonus['IceResistancePenetration'] =
+                    0.3 + get_let_value(attribute_bonus, 'IceResistancePenetration');
+            }
+        },
+        '2217': () => {
+            // 藿藿Pro（丰饶治疗型：战技/天赋为治疗行，引擎 attack 分支不支持治疗，
+            // 仅收录普攻伤害行；终结技为队友充能+攻击增益，增益对象非自身，不入钩子）
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+        },
+        '2310': () => {
+            // 流萤Pro（miao defParams 默认「完全燃烧」状态；超击破行引擎不支持，见提交说明）
+            const d = skilldict['2310'];
+            // 击破特攻（%）：遗器词条/行迹小节点/光锥基础属性（钩子时点已并入，
+            // BreakDamageAddedRatioBase 以小数存储）+ 行迹-α模组偏时迸发「完全燃烧」+25%
+            let stance = get_let_value(attribute_bonus, 'BreakDamageAddedRatioBase') * 100 + 25;
+            // 行迹-γ模组过载核心：攻击力 ≥1800 每超 10 点击破特攻+0.8%
+            const atk = panelAttack(base_attr, attribute_bonus);
+            if (atk >= 1800) {
+                stance += Math.floor((atk - 1800) / 10) * 0.8;
+            }
+            // 强化战技主目标倍率 + min(击破特攻×0.2, 72)%（官方最多计入 360% 击破特攻，
+            // 按面板重算，基线缓存；光锥/套装特效若再提供击破特攻存在近似偏差，引擎架构限制）
+            if (!FireflyProBase) {
+                FireflyProBase = [...d.BPSkill];
+            }
+            d.BPSkill = FireflyProBase.map(v =>
+                round10(v + Math.min(stance * 0.2, 72) / 100));
+            if (data.rank >= 1) {
+                // 1魂：释放强化战技时无视目标 15% 防御
+                attribute_bonus['ignore_defence'] =
+                    0.15 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：终结技状态下火属性抗性穿透+20%
+                attribute_bonus['FireResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'FireResistancePenetration');
+            }
         },
     };
     String(data.avatarId) in avatarGetter &&
