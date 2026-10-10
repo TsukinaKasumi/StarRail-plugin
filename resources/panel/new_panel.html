@@ -220,7 +220,7 @@
     <div class="hr"></div>
     {{/if}}
     <div class="talent">
-        {{each behaviorList behavior i}}
+        {{each behaviorList behavior i}}{{if 5 > i}}
         <div class="item">
             <div class="img">
                 <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
@@ -228,8 +228,20 @@
             <div class="level">{{behavior.level}}</div>
             <div class="type">{{behavior.type}}</div>
         </div>
-        {{/each}}
+        {{/if}}{{/each}}
     </div>
+    {{if behaviorList.length > 5}}<div class="extra-skill-box">
+        <!-- 占位原型：忆灵技/忆灵天赋/欢愉技暂以 10px 绿框展示，位置待确认后调整 -->
+        {{each behaviorList behavior i}}{{if i > 4}}
+        <div class="item">
+            <div class="img">
+                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="" onerror="this.style.visibility='hidden'">
+            </div>
+            <div class="level">{{behavior.level}}</div>
+            <div class="type">{{behavior.path.indexOf('_xe2')>-1?'强化欢愉技':behavior.path.indexOf('_xe')>-1?'欢愉技':behavior.path.indexOf('_me')>-1?'忆灵技':behavior.path.indexOf('_mt')>-1?'忆灵天赋':'扩展技能'}}</div>
+        </div>
+        {{/if}}{{/each}}
+    </div>{{/if}}
 </div>
 <div class="other-info">
     <div class="uid">UID：{{uid}}</div>
