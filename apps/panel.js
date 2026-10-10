@@ -135,7 +135,8 @@ export class Panel extends plugin {
       data.relics.forEach((item, i) => {
         data.relics[i].path = relicsPathData[item.id]?.icon
       })
-      // 行迹
+      // 行迹（记忆/欢愉等新命途暂无背景图与坐标数据：skillTreeBkg 为 undefined、
+      // handleSkillTree 降级返回不带坐标的列表，模板按 skillTreeBkg 跳过行迹渲染）
       data.skillTreeBkg = skillTreeImg[data.charpath]
       data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
       data.skilllist = _.cloneDeep(data.behaviorList)
@@ -174,9 +175,21 @@ export class Panel extends plugin {
   handleBehaviorList (data, avatarId, rank) {
     let _data = _.cloneDeep(data)
     _data.splice(5)
+    // 保留忆灵技/忆灵天赋（pointId 末三位 301/302）与欢愉技（420/421）条目：
+    // 这些技能等级由伤害引擎按 pointId 末三位解析，前 5 项截断会导致等级回落默认值
+    _.cloneDeep(data).slice(5).forEach((item) => {
+      if (['301', '302', '420', '421'].includes(item.id.toString().slice(-3))) {
+        _data.push(item)
+      }
+    })
     _data.forEach((item, i) => {
       const nameId = item.id.toString().slice(0, 4)
-      let Behaviorid = item.id.toString().slice(0, 5) + item.id.toString().slice(-1)
+      // 星魂技能升级条目的 id 形如 角色IDx100+技能槽位（基础技能槽 001-009）；
+      // 忆灵/欢愉技能位（301/302/420/421）没有两位压缩形态，直接用完整 pointId 匹配
+      const slot = Number(item.id.toString().slice(-3))
+      let Behaviorid = slot > 99
+        ? item.id.toString()
+        : (avatarId * 100 + slot).toString()
       for (let m = 1; m <= rank; m++) {
         let rankid = (avatarId * 100 + m).toString()
         let level_up_skill = AvatarRankSkillUp[rankid]
@@ -209,6 +222,19 @@ export class Panel extends plugin {
           pathName = 'technique'
           break
       }
+      // 第 5 项之后仅保留的新命途扩展技能位：按 pointId 末三位取图标名
+      // （面板图标资源后续按 <角色ID>_me.png / _mt.png / _xe.png / _xe2.png 补充）
+      if (i > 4) {
+        const extraPathName = {
+          '301': 'me',
+          '302': 'mt',
+          '420': 'xe',
+          '421': 'xe2'
+        }[item.id.toString().slice(-3)]
+        if (extraPathName) {
+          pathName = extraPathName
+        }
+      }
       const filePath = nameId + '_' + pathName + '.png'
       _data[i].path = filePath
     })
@@ -219,6 +245,16 @@ export class Panel extends plugin {
   /** 处理技能树 */
   handleSkillTree (data, charpath) {
     let _data = _.cloneDeep(data)
+    // 记忆/欢愉等新命途暂无行迹坐标数据（skillTree.json 仅覆盖 7 命途）：
+    // 降级返回不带坐标的列表，配合 skillTreeBkg 缺失时模板跳过行迹渲染，不抛错
+    if (!skillTreeData[charpath]) {
+      return _data.map(item => {
+        return {
+          ...item,
+          position: null
+        }
+      })
+    }
     _data = _data.map(item => {
       return {
         ...item,

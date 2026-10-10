@@ -259,9 +259,11 @@
     </div>
     {{/each}}
 </div>
+{{if skillTreeBkg}}
 <div class="skill_tree">
   <canvas id="skillTreeCanvas" width="1000" height="1000"></canvas>
 </div>
+{{/if}}
 {{if damages}}
 <div class="damage">
   <table>
@@ -343,6 +345,11 @@ const dom = document.querySelector('.skill_tree');
       skillTree.forEach( async ( skill ) => {
         const promiseTemp = new Promise( ( resolve ) => {
           const position = skill.position;
+          // 无坐标的行迹节点（新命途降级数据）跳过绘制，避免 undefined 取下标报错
+          if ( !position ) {
+            resolve( false );
+            return;
+          }
           const x = position[ 0 ];
           const y = position[ 1 ];
           let [ width, height ] = [ 0, 0 ];
