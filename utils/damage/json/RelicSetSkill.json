@@ -86,6 +86,27 @@
         },
         "4": {}
     },
+    "129": {
+        "2": {
+            "Property": "CriticalDamageBase",
+            "Value": 0.16
+        },
+        "4": {}
+    },
+    "130": {
+        "2": {
+            "Property": "SpeedAddedRatio",
+            "Value": 0.06
+        },
+        "4": {}
+    },
+    "133": {
+        "2": {
+            "Property": "SpeedAddedRatio",
+            "Value": 0.06
+        },
+        "4": {}
+    },
     "301": {
         "2": {
             "Property": "AttackAddedRatio",
@@ -159,5 +180,11 @@
             "Value": 0.060000000055879354
         },
         "4": {}
+    },
+    "325": {
+        "2": {
+            "Property": "joy",
+            "Value": 8
+        }
     }
 }

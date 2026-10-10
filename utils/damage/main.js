@@ -522,7 +522,8 @@ function get_attribute_bonus (data) {
     }
   })
   if (data.equipment.id) {
-    let equipattr = equipment_dict[data.equipment.id][data.equipment.rank]
+    // 未知光锥 ID（如后续版本新增）降级为无基础属性，不中断伤害计算
+    let equipattr = (equipment_dict[data.equipment.id] || {})[data.equipment.rank] || []
     for (let i = 0; i < equipattr.length; i++) {
       let properties_name = equipattr[i].PropertyType
       let properties_value = equipattr[i].Value.Value
@@ -534,9 +535,12 @@ function get_attribute_bonus (data) {
   if (relic_sets) {
     for (let i = 0; i < relic_sets.length; i++) {
       let set_num = relic_sets[i].set_name.split('件套')[0]
-      if (relicsetskill[relic_sets[i].set_id][set_num].Property) {
-        let properties_name = relicsetskill[relic_sets[i].set_id][set_num].Property
-        let properties_value = relicsetskill[relic_sets[i].set_id][set_num].Value
+      // 未知套装 ID（如后续版本新增）降级跳过常驻词条，不中断伤害计算
+      let set_skill = relicsetskill[relic_sets[i].set_id] &&
+                relicsetskill[relic_sets[i].set_id][set_num]
+      if (set_skill && set_skill.Property) {
+        let properties_name = set_skill.Property
+        let properties_value = set_skill.Value
         attribute_bonus[properties_name] = get_let_value(attribute_bonus, properties_name) + properties_value
       }
     }

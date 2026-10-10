@@ -350,6 +350,105 @@ const Weapon = (equipment, Ultra_Use, base_attr, attribute_bonus) => {
                 attack_added_ratio +
                     weapon_effect['20007']['Param']['AttackAddedRatio'][equipment.rank - 1];
         },
+        // ===== 欢愉光锥（数值来源 miao-plugin resources/meta-sr/weapon/欢愉/calc.js）=====
+        // 欢愉键口径：joy/joyPct/xeIgnore/xeEnemydmg 存百分点数值（36 = 36%），punchline 存点数；
+        // 常规词条（暴击/攻击/速度等）存小数。触发型特效按面板计算惯例视为已触发（与既有光锥钩子一致）。
+        '20023': () => {
+            // 嗤笑：阿哈时刻期间欢愉度提高（视为常驻）
+            let joy = get_let_value(attribute_bonus, 'joy');
+            attribute_bonus['joy'] =
+                joy + weapon_effect['20023']['Param']['joy'][equipment.rank - 1];
+        },
+        '20024': () => {
+            // 残泪：拥有的笑点大于等于 10 时暴击伤害提高（视为常驻）
+            let critical_damage_base = get_let_value(attribute_bonus, 'CriticalDamageBase');
+            attribute_bonus['CriticalDamageBase'] =
+                critical_damage_base +
+                    weapon_effect['20024']['Param']['CriticalDamageBase'][equipment.rank - 1];
+        },
+        '21064': () => {
+            // 菇菇嘎嘎历险记：欢愉度提高 + 施放欢愉技时敌方全体受到的欢愉伤害提高（视为已触发）
+            let joy = get_let_value(attribute_bonus, 'joy');
+            attribute_bonus['joy'] =
+                joy + weapon_effect['21064']['Param']['joy'][equipment.rank - 1];
+            let xe_enemydmg = get_let_value(attribute_bonus, 'xeEnemydmg');
+            attribute_bonus['xeEnemydmg'] =
+                xe_enemydmg +
+                    weapon_effect['21064']['Param']['xeEnemydmg'][equipment.rank - 1];
+        },
+        '21066': () => {
+            // 放个短假：欢愉度提高 + 施放欢愉技期间无视目标防御力（仅欢愉伤害路径消费 xeIgnore，视为常驻）
+            let joy_pct = get_let_value(attribute_bonus, 'joyPct');
+            attribute_bonus['joyPct'] =
+                joy_pct + weapon_effect['21066']['Param']['joyPct'][equipment.rank - 1];
+            let xe_ignore = get_let_value(attribute_bonus, 'xeIgnore');
+            attribute_bonus['xeIgnore'] =
+                xe_ignore + weapon_effect['21066']['Param']['xeIgnore'][equipment.rank - 1];
+        },
+        '22007': () => {
+            // 未来，有我们一起：施放终结技后我方全体欢愉度提高（视为已触发）
+            let joy = get_let_value(attribute_bonus, 'joy');
+            attribute_bonus['joy'] =
+                joy + weapon_effect['22007']['Param']['joy'][equipment.rank - 1];
+        },
+        '23053': () => {
+            // 花花世界迷人眼：每消耗 1 战技点欢愉伤害无视 5-9% 防御（按满 4 层计算），
+            // 持有【推流】时全队欢愉度提高（视为已触发）；常驻暴击伤害在 Equipment.json
+            let xe_ignore = get_let_value(attribute_bonus, 'xeIgnore');
+            attribute_bonus['xeIgnore'] =
+                xe_ignore +
+                    weapon_effect['23053']['Param']['xeIgnore'][equipment.rank - 1] * 4;
+            let joy = get_let_value(attribute_bonus, 'joy');
+            attribute_bonus['joy'] =
+                joy + weapon_effect['23053']['Param']['joy'][equipment.rank - 1];
+        },
+        '23054': () => {
+            // 当她决定看见：持有【上上签】时我方全体暴击率/暴击伤害提高（视为已触发）；
+            // 常驻速度在 Equipment.json；能量恢复效率不影响伤害不入模型
+            let critical_chance_base = get_let_value(attribute_bonus, 'CriticalChanceBase');
+            attribute_bonus['CriticalChanceBase'] =
+                critical_chance_base +
+                    weapon_effect['23054']['Param']['CriticalChanceBase'][equipment.rank - 1];
+            let critical_damage_base = get_let_value(attribute_bonus, 'CriticalDamageBase');
+            attribute_bonus['CriticalDamageBase'] =
+                critical_damage_base +
+                    weapon_effect['23054']['Param']['CriticalDamageBase'][equipment.rank - 1];
+        },
+        '23055': () => {
+            // 献给明日的色彩：施放欢愉技时敌方全体受到的伤害提高（视为已触发，通用易伤 DmgRatio）；
+            // 常驻防御力在 Equipment.json
+            let damage_ratio = get_let_value(attribute_bonus, 'DmgRatio');
+            attribute_bonus['DmgRatio'] =
+                damage_ratio + weapon_effect['23055']['Param']['DmgRatio'][equipment.rank - 1];
+        },
+        '23057': () => {
+            // 欢迎来到银河城：欢愉伤害无视目标防御力（常驻，走 xeIgnore）+
+            // 对自身单体施放终结技时获得笑点（视为已触发）；常驻速度在 Equipment.json
+            let xe_ignore = get_let_value(attribute_bonus, 'xeIgnore');
+            attribute_bonus['xeIgnore'] =
+                xe_ignore + weapon_effect['23057']['Param']['xeIgnore'][equipment.rank - 1];
+            let punchline = get_let_value(attribute_bonus, 'punchline');
+            attribute_bonus['punchline'] =
+                punchline + weapon_effect['23057']['Param']['punchline'][equipment.rank - 1];
+        },
+        '23058': () => {
+            // 邂逅于下一个花季：施放欢愉技时敌方目标受到的伤害提高（视为已触发，通用易伤 DmgRatio）；
+            // 常驻暴击伤害/能量恢复效率在 Equipment.json
+            let damage_ratio = get_let_value(attribute_bonus, 'DmgRatio');
+            attribute_bonus['DmgRatio'] =
+                damage_ratio + weapon_effect['23058']['Param']['DmgRatio'][equipment.rank - 1];
+        },
+        '23064': () => {
+            // 向浪花掷下盛夏：【风口】速度提高 + 【潮流】欢愉度提高（均视为已触发）；
+            // 常驻暴击率在 Equipment.json
+            let speed_added_ratio = get_let_value(attribute_bonus, 'SpeedAddedRatio');
+            attribute_bonus['SpeedAddedRatio'] =
+                speed_added_ratio +
+                    weapon_effect['23064']['Param']['SpeedAddedRatio'][equipment.rank - 1];
+            let joy_pct = get_let_value(attribute_bonus, 'joyPct');
+            attribute_bonus['joyPct'] =
+                joy_pct + weapon_effect['23064']['Param']['joyPct'][equipment.rank - 1];
+        },
     };
     equipment.id in weaponGetter && weaponGetter[equipment.id]();
     return attribute_bonus;

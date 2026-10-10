@@ -595,21 +595,148 @@ function runMemoSmoke () {
   }
 }
 
+/* ========== 五、欢愉光锥/遗器套装增益冒烟 ========== */
+
+// 增益用合成输入：1102 希儿 + 注入的欢愉技（Xe 等级 3 -> 倍率 1.68，1 段），rank 0、无行迹。
+// 光锥/套装数值来源：miao-plugin weapon/欢愉/calc.js 与 artifact/calc.js（engine 侧 json 与钩子同口径）。
+function gearChar ({ relics = [], equipment = { id: 0, rank: 1 }, relic_sets = [] } = {}) {
+  const behaviorList = [6, 10, 10, 9, 1].map((lv, i) => ({
+    id: 1102 * 1000 + i + 1,
+    level: lv
+  }))
+  behaviorList.push({ id: 1102 * 1000 + 420, level: 3 })
+  return {
+    avatarId: 1102,
+    name: '希儿(增益冒烟)',
+    level: 80,
+    rank: 0,
+    damage_type: 'Quantum',
+    properties: { hpBase: 1280.7, attackBase: 640.3, defenseBase: 485.1, speedBase: 102.5 },
+    relics,
+    equipment,
+    relic_sets,
+    skillTree: [],
+    behaviorList
+  }
+}
+
+function runGearSmoke () {
+  injectXe()
+  // 各用例共用乘区（同欢愉冒烟用例 A）：欢愉基础伤害 7535.11，倍率 1.68，
+  // 抗性区 1.2（avatar 1102 钩子），减伤区 0.9，基础暴击 5%/50%
+
+  // ---- 用例 G：花花世界迷人眼（23053，叠影 5）----
+  // Equipment.json 常驻：暴击伤害 +0.80 -> 爆伤 0.5+0.8=1.3
+  // 钩子：每消耗 1 战技点无视防御 9%（满 4 层 = 36%）+ 推流全队欢愉度 +36%
+  // 手算：欢愉度区 = 1.36；防御区 = 1000/(1000+1000x0.64) = 1000/1640；
+  //       暴击 = 1+1.3 = 2.3；期望 = 1+0.05x1.3 = 1.065
+  const caseG = damage(gearChar({ equipment: { id: 23053, rank: 5 } }))
+  const xeG = findSkill(caseG, '欢愉技')
+  if (!xeG) {
+    fail('用例 G：未找到欢愉技条目')
+  } else {
+    closeTo(xeG.value.critical, 7535.11 * 1.68 * 1.36 * (1000 / 1640) * 1.2 * 0.9 * 2.3, '用例 G 花花世界迷人眼暴击伤害（joy+36%/无视防御 36%/爆伤+80%）')
+    closeTo(xeG.value.expect, 7535.11 * 1.68 * 1.36 * (1000 / 1640) * 1.2 * 0.9 * 1.065, '用例 G 花花世界迷人眼期望伤害')
+  }
+
+  // ---- 用例 H：零号关卡朋克洛德 2 件套（325）+ 欢愉度副词条 36 ----
+  // RelicSetSkill.json 常驻：joy +8；副词条 joy +36 -> 合计 44（>=40、<80 -> 钩子暴击伤害 +0.20）
+  // 手算：欢愉度区 = 1.44；爆伤 = 0.5+0.2 = 0.7 -> 暴击 1.7；期望 = 1+0.05x0.7 = 1.035
+  const joyRelicH = {
+    id: 61013,
+    main_affix_tag: 'HPDelta',
+    main_affix_value: 705.6,
+    sub_affix_id: [{ tag: 'joy', value: 36 }]
+  }
+  const caseH = damage(gearChar({ relics: [joyRelicH], relic_sets: [{ set_id: '325', set_name: '2件套' }] }))
+  const xeH = findSkill(caseH, '欢愉技')
+  if (!xeH) {
+    fail('用例 H：未找到欢愉技条目')
+  } else {
+    closeTo(xeH.value.critical, 7535.11 * 1.68 * 1.44 * 0.5 * 1.2 * 0.9 * 1.7, '用例 H 零号关卡朋克洛德 2 件套暴击伤害（joy 8+36=44 -> 爆伤+20%）')
+    closeTo(xeH.value.expect, 7535.11 * 1.68 * 1.44 * 0.5 * 1.2 * 0.9 * 1.035, '用例 H 零号关卡朋克洛德 2 件套期望伤害')
+  }
+
+  // ---- 用例 I：闪耀功勋的魔法少女 4 件套（129）----
+  // 4 件套钩子：欢愉伤害无视 10% + 每累计 5 点笑点额外 1%（满 10 层）= xeIgnore +20
+  // 手算：防御区 = 1000/(1000+1000x0.8) = 1000/1800（= 用例 A 防御区 0.5 x 10/9）
+  const caseI = damage(gearChar({ relic_sets: [{ set_id: '129', set_name: '4件套' }] }))
+  const xeI = findSkill(caseI, '欢愉技')
+  if (!xeI) {
+    fail('用例 I：未找到欢愉技条目')
+  } else {
+    closeTo(xeI.value.critical, 7535.11 * 1.68 * (1000 / 1800) * 1.2 * 0.9 * 1.5, '用例 I 魔法少女 4 件套暴击伤害（xeIgnore+20）')
+    closeTo(xeI.value.critical, 10253.777688 * 10 / 9, '用例 I 与用例 A 的比值校验（防御区 0.5 -> 10/18）')
+  }
+
+  // ---- 用例 J：应天涉远的卜者 4 件套（130）----
+  // 4 件套钩子：速度 102.5x(1+0.25[avatar 1102 钩子]) = 128.125 >= 120 -> 暴击率 +0.10；全队欢愉度 +10
+  // （引擎既有 4 件套口径：RelicSetSkill 的 "2" 词条不与 "4" 同时读取，故速度不吃本套装 2 件套 6%）
+  // 手算：欢愉度区 = 1.10；暴击率 = 0.05+0.10 = 0.15 -> 暴击 1.5；期望 = 1+0.15x0.5 = 1.075
+  const caseJ = damage(gearChar({ relic_sets: [{ set_id: '130', set_name: '4件套' }] }))
+  const xeJ = findSkill(caseJ, '欢愉技')
+  if (!xeJ) {
+    fail('用例 J：未找到欢愉技条目')
+  } else {
+    closeTo(xeJ.value.critical, 7535.11 * 1.68 * 1.10 * 0.5 * 1.2 * 0.9 * 1.5, '用例 J 卜者 4 件套暴击伤害（速度档 120 -> 暴击率+10%/joy+10）')
+    closeTo(xeJ.value.expect, 7535.11 * 1.68 * 1.10 * 0.5 * 1.2 * 0.9 * 1.075, '用例 J 卜者 4 件套期望伤害')
+  }
+
+  // ---- 用例 K：邂逅于下一个花季（23058，叠影 1）----
+  // Equipment.json 常驻：暴击伤害 +0.60、能量恢复效率 +0.10（不影响伤害）；
+  // 钩子：施放欢愉技时敌方受到的伤害提高 15%（通用易伤 DmgRatio +0.15）
+  // 手算：易伤区 = 1+0.15 = 1.15；爆伤 = 0.5+0.6 = 1.1 -> 暴击 2.1；期望 = 1+0.05x1.1 = 1.055
+  const caseK = damage(gearChar({ equipment: { id: 23058, rank: 1 } }))
+  const xeK = findSkill(caseK, '欢愉技')
+  if (!xeK) {
+    fail('用例 K：未找到欢愉技条目')
+  } else {
+    closeTo(xeK.value.critical, 7535.11 * 1.68 * 1.15 * 0.5 * 1.2 * 0.9 * 2.1, '用例 K 邂逅于下一个花季暴击伤害（爆伤+60%/易伤+15%）')
+    closeTo(xeK.value.expect, 7535.11 * 1.68 * 1.15 * 0.5 * 1.2 * 0.9 * 1.055, '用例 K 邂逅于下一个花季期望伤害')
+  }
+
+  // ---- 用例 L：菇菇嘎嘎历险记（21064，叠影 5）----
+  // 钩子：欢愉度 +20 + 施放欢愉技时敌方全体受到的欢愉伤害提高 10%（xeEnemydmg +10）
+  // 手算：欢愉度区 = 1.20；欢愉易伤 = 1+10/100 = 1.1
+  const caseL = damage(gearChar({ equipment: { id: 21064, rank: 5 } }))
+  const xeL = findSkill(caseL, '欢愉技')
+  if (!xeL) {
+    fail('用例 L：未找到欢愉技条目')
+  } else {
+    closeTo(xeL.value.critical, 7535.11 * 1.68 * 1.20 * 1.1 * 0.5 * 1.2 * 0.9 * 1.5, '用例 L 菇菇嘎嘎历险记暴击伤害（joy+20/xeEnemydmg+10）')
+  }
+
+  // ---- 用例 M：新补光锥走旧攻击路径（Equipment.json 补全防崩溃）----
+  // 金血铭刻的时代（23058 同批补入的 23048，叠影 1）：常驻攻击力 +0.64，无特效钩子
+  // 普攻 6 级（倍率 1.0）手算：攻击力 = 640.3x1.64；增伤区 1.75（avatar 1102 钩子）；
+  //   暴击 = 640.3x1.64x1.0x1.75x0.5x1.2x0.9x1.5 = 1488.50541
+  const caseM = damage(gearChar({ equipment: { id: 23048, rank: 1 } }))
+  const normalM = findSkill(caseM, '普攻')
+  if (!normalM) {
+    fail('用例 M：未找到普攻条目（Equipment.json 补全后旧路径异常）')
+  } else {
+    closeTo(normalM.value.critical, 640.3 * 1.64 * 1.75 * 0.5 * 1.2 * 0.9 * 1.5, '用例 M 新补光锥（23048 攻击力+64%）普攻暴击伤害')
+    closeTo(normalM.value.expect, 640.3 * 1.64 * 1.75 * 0.5 * 1.2 * 0.9 * 1.025, '用例 M 新补光锥普攻期望伤害')
+  }
+}
+
 /* ========== 入口 ========== */
 
 const saveMode = process.argv.includes('--save')
 console.log(`StarRail-plugin 伤害引擎测试（cwd: ${process.cwd()}）`)
 if (saveMode) {
-  console.log('\n[1/1] 生成回归基线（仅现有 1.3 角色，不含欢愉/忆灵冒烟）')
+  console.log('\n[1/1] 生成回归基线（仅现有 1.3 角色，不含欢愉/忆灵/光锥遗器冒烟）')
   saveBaseline(runRegression())
 } else {
-  console.log('\n[1/3] 回归：现有 1.3 角色')
+  console.log('\n[1/4] 回归：现有 1.3 角色')
   const results = runRegression()
   compareBaseline(results)
-  console.log('\n[2/3] 欢愉（elation）冒烟：手算对照')
+  console.log('\n[2/4] 欢愉（elation）冒烟：手算对照')
   runElationSmoke()
-  console.log('\n[3/3] 忆灵技/忆灵天赋（me/mt）冒烟：手算对照')
+  console.log('\n[3/4] 忆灵技/忆灵天赋（me/mt）冒烟：手算对照')
   runMemoSmoke()
+  console.log('\n[4/4] 欢愉光锥/遗器套装增益冒烟：手算对照')
+  runGearSmoke()
 }
 
 console.log('')
