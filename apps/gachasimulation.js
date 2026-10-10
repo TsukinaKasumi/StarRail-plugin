@@ -22,8 +22,8 @@ export default class Gacha extends plugin {
       priority: -114514,
       rule: [
         {
-          /** 命令正则匹配 */
-          reg: `^${rulePrefix}(抽卡|十连)(角色|光锥|常驻)?$`,
+          /** 命令正则匹配（联动角色/联动光锥须排在 联动/角色/光锥 之前，否则长词被短词抢先匹配） */
+          reg: `^${rulePrefix}(抽卡|十连)(角色|光锥|常驻|联动角色|联动光锥|联动)?$`,
           /** 执行方法 */
           fnc: 'main'
         }
@@ -71,7 +71,10 @@ export default class Gacha extends plugin {
   // 获取抽卡类型
   async getGachaType () {
     let type = 'up-char'
-    if (this.e.msg.includes('角色')) {
+    /** 「联动」判定需在前：联动角色/联动光锥 同时含有 角色/光锥 字样 */
+    if (this.e.msg.includes('联动')) {
+      type = this.e.msg.includes('光锥') ? 'collab-weapon' : 'collab-char'
+    } else if (this.e.msg.includes('角色')) {
       type = 'up-char'
     } else if (this.e.msg.includes('光锥')) {
       type = 'up-weapon'
@@ -97,43 +100,39 @@ export default class Gacha extends plugin {
     let key = this.getKey()
     let data = await redis.get(key)
     let today = moment().format('YYYY-MM-DD')
+    const newPoolData = () => ({
+      isUp5: false,
+      isUp4: false,
+      num4: 0,
+      num5: 0,
+      today: {
+        stars: []
+      }
+    })
     const defaultData = {
       time: today,
-      'up-char': {
-        isUp5: false,
-        isUp4: false,
-        num4: 0,
-        num5: 0,
-        today: {
-          stars: []
-        }
-      },
-      'up-weapon': {
-        isUp5: false,
-        isUp4: false,
-        num4: 0,
-        num5: 0,
-        today: {
-          stars: []
-        }
-      },
-      normal: {
-        isUp5: false,
-        isUp4: false,
-        num4: 0,
-        num5: 0,
-        today: {
-          stars: []
-        }
-      }
+      'up-char': newPoolData(),
+      'up-weapon': newPoolData(),
+      normal: newPoolData(),
+      'collab-char': newPoolData(),
+      'collab-weapon': newPoolData()
     }
     if (data) {
       data = JSON.parse(data)
+      /** 旧存档补全缺失的池（新增联动池后老用户存档无 collab key，直接取值会 TypeError） */
+      for (const poolKey of Object.keys(defaultData)) {
+        if (poolKey != 'time' && !data[poolKey]) {
+          data[poolKey] = newPoolData()
+        }
+      }
       if (data.time != today) {
         data.time = today
-        data['up-char'].today.stars = []
-        data['up-weapon'].today.stars = []
-        data.normal.today.stars = []
+        /** 跨天只清今日记录，不清保底计数 */
+        for (const poolKey of Object.keys(defaultData)) {
+          if (poolKey != 'time') {
+            data[poolKey].today.stars = []
+          }
+        }
         await redis.setEx(key, 3600 * 24 * 14, JSON.stringify(data))
       }
       this.gachaData = data
@@ -197,10 +196,10 @@ export default class Gacha extends plugin {
     this.gachaData = gachaData
   }
 
-  // 概率计算
+  // 概率计算（联动池保底结构与对应常规池相同：角色联动 60/74/90、光锥联动 80/62/80）
   async probability () {
     let prob = 0
-    if (this.type === 'up-char' || this.type === 'normal') {
+    if (['up-char', 'normal', 'collab-char'].includes(this.type)) {
       prob = 60
       /** 保底 */
       if (this.gachaData[this.type].num5 >= 90) {
@@ -212,7 +211,7 @@ export default class Gacha extends plugin {
         /** 60抽之后逐渐增加概率 */
         prob = 60 + (this.gachaData[this.type].num5 - 60) * 40
       }
-    } else if (this.type === 'up-weapon') {
+    } else if (['up-weapon', 'collab-weapon'].includes(this.type)) {
       prob = 80;
       /** 80次都没中五星 */
       if (this.gachaData[this.type].num5 >= 80) {
@@ -250,9 +249,9 @@ export default class Gacha extends plugin {
     this.gachaData[this.type].num5 = 0
     /** 四星保底数 +1 */
     this.gachaData[this.type].num4++
-    /** 五星中 up 的概率 */
+    /** 五星中 up 的概率（联动池同对应常规池：角色 50%、光锥 75%） */
     let upProba = 50;
-    if (this.type == 'up-weapon') upProba = 75;
+    if (this.type == 'up-weapon' || this.type == 'collab-weapon') upProba = 75;
     /** 抽中物品属性 */
     let type = 1
     let weaponLifeName = ''
@@ -269,13 +268,13 @@ export default class Gacha extends plugin {
 
     let tmpName = ''
     if (lodash.random(1, 100) <= upProba) {
-      if (this.type == 'up-char') {
+      if (this.type == 'up-char' || this.type == 'collab-char') {
         /** 当祈愿获取到5星角色时，有50%的概率为本期UP角色 */
         if (this.gachaData[this.type].isUp5 == true) isBigUP = true
         /** 大保底清零 */
         this.gachaData[this.type].isUp5 = false
         /** 抽取up（一池多五星UP，等概率从中抽取） */
-        tmpName = lodash.sample(gachaInfo.gachaPool['up-char'].five)
+        tmpName = lodash.sample(gachaInfo.gachaPool[this.type].five)
         charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
         charImageName = 'char_image/' + this.charToCharID[tmpName] + '.png'
       } else {
@@ -285,14 +284,20 @@ export default class Gacha extends plugin {
         /** 大保底清零 */
         this.gachaData[this.type].isUp5 = false
         /** 抽取up（一池多五星UP，等概率从中抽取） */
-        tmpName = lodash.sample(gachaInfo.gachaPool['up-weapon'].five)
+        tmpName = lodash.sample(gachaInfo.gachaPool[this.type].five)
         type = 2
         fileName = 'weapon/' + this.weaponJson[tmpName] + '.png'
         weaponLifeName = 'weaponlife/' + this.weaponLife[tmpName] + '.png'
       }
     } else {
-      // 如果是角色池，一定是角色，但如果池子是武器池的话，必须是武器，一半概率歪到武器或者角色！！！！
-      if (this.type == 'up-char' || (lodash.random(1, 100) <= 50 && this.type != 'up-weapon')) {
+      // 角色池（含角色联动）歪时必出常驻角色，武器池（含光锥联动）歪时必出常驻光锥，常驻池一半概率角色/光锥
+      if (
+        this.type == 'up-char' ||
+        this.type == 'collab-char' ||
+        (lodash.random(1, 100) <= 50 &&
+          this.type != 'up-weapon' &&
+          this.type != 'collab-weapon')
+      ) {
         if (this.type != 'normal') this.gachaData[this.type].isUp5 = true;
         const chars = gachaInfo.gachaPool.normal.char;
         tmpName = lodash.sample(chars);
@@ -353,7 +358,8 @@ export default class Gacha extends plugin {
       this.gachaData[this.type].isUp4 = false
       tmpUp = 100
     }
-    if (this.type == 'normal') tmpUp = 0
+    /** 常驻池/联动池无四星UP（真实联动池四星UP机制未证实，四星走全量池） */
+    if (!['up-char', 'up-weapon'].includes(this.type)) tmpUp = 0
     let charDamageType = ''
     let charImageName = ''
     let tmpName = ''
@@ -375,7 +381,10 @@ export default class Gacha extends plugin {
     } else {
       this.gachaData[this.type].isUp4 = true
       /** 一半概率武器 一半4星 */
-      if (lodash.random(1, 100) <= 50 && this.type == 'up-char') {
+      if (
+        lodash.random(1, 100) <= 50 &&
+        (this.type == 'up-char' || this.type == 'collab-char')
+      ) {
         const chars = gachaInfo.gachaPool['four-char']
         tmpName = lodash.sample(chars)
         charDamageType = this.charDamageTypeJson[this.charToCharID[tmpName]]
