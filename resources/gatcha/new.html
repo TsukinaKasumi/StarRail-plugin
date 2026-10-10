@@ -27,12 +27,22 @@
             <div class="col">
               <div>{{ currInfo.totalNum }}<span>抽</span><p>本期已抽</p></div>
             </div>
-            <div class="col">
-              <div>{{ currInfo.last['11']['5'] }}<span>抽</span><p>角色未出五星</p></div>
-            </div>
-            <div class="col">
-              <div>{{ currInfo.last['12']['5'] }}<span>抽</span><p>光锥未出五星</p></div>
-            </div>
+            {{ if type == 21 }}
+              <div class="col">
+                <div>{{ currInfo.last['21']['5'] }}<span>抽</span><p>联动角色未出五星</p></div>
+              </div>
+            {{ else if type == 22 }}
+              <div class="col">
+                <div>{{ currInfo.last['22']['5'] }}<span>抽</span><p>联动光锥未出五星</p></div>
+              </div>
+            {{ else }}
+              <div class="col">
+                <div>{{ currInfo.last['11']['5'] }}<span>抽</span><p>角色未出五星</p></div>
+              </div>
+              <div class="col">
+                <div>{{ currInfo.last['12']['5'] }}<span>抽</span><p>光锥未出五星</p></div>
+              </div>
+            {{ /if }}
           </div>
           {{ if type == 0 }}
             <div class="row">
