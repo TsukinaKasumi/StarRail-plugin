@@ -11,6 +11,11 @@ import {
   findSrJsonQQ,
   readJsonFile
 } from '../utils/gatcha/sync.js'
+import {
+  collectLocalRecords,
+  buildUigfV4,
+  getPluginVersion
+} from '../utils/gatcha/uigf.js'
 import { gatchaType } from '../utils/gatcha/gatcha.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
 
@@ -27,6 +32,12 @@ export class GatchaSync extends plugin {
         {
           reg: `^${rulePrefix}同步抽卡记录$`,
           fnc: 'syncGatcha'
+        },
+        {
+          // 导出 UIGF v4；#-星铁词前缀形式（#星铁导出记录json）与本插件正则重叠，
+          // 但 TRSS gcLog（priority 300）先行处理，实际由本插件接管的是 * / ＊ 前缀形式
+          reg: `^${rulePrefix}(导出抽卡记录|导出跃迁记录|导出记录)(json)?$`,
+          fnc: 'exportGatcha'
         }
       ]
     })
@@ -183,5 +194,62 @@ export class GatchaSync extends plugin {
     }
 
     return await e.reply(replyMsg.join('\n'))
+  }
+
+  /**
+   * *导出记录 / *导出抽卡记录 / *导出跃迁记录 [json]：导出 UIGF v4（hkrpg 块）文件
+   * 合并全部本地类型（1/11/12/21/22），按 time 升序（旧在前），
+   * 写 temp/uigf/{uid}.json 后经群/私聊文件接口发送，发送后延迟清理
+   */
+  async exportGatcha (e) {
+    const { uid } = await this.resolveTarget(e)
+    if (!uid) {
+      return await e.reply('未绑定uid，请发送#星铁绑定uid进行绑定')
+    }
+
+    let recordsByType
+    try {
+      recordsByType = collectLocalRecords(uid)
+    } catch (err) {
+      logger.error(err)
+      return await e.reply(`导出失败：${err?.message || err}`)
+    }
+    const typeDetails = SYNC_TYPES
+      .filter((type) => recordsByType[type]?.length)
+      .map((type) => `${gatchaType[type]} ${recordsByType[type].length} 条`)
+    const total = Object.values(recordsByType).reduce((sum, list) => sum + list.length, 0)
+    if (total === 0) {
+      return await e.reply(`本地暂无 UID ${uid} 的抽卡记录，请先发送【*更新抽卡记录】拉取，或【*同步抽卡记录】从 srJson 导入`)
+    }
+
+    const { uigf } = buildUigfV4(recordsByType, uid, getPluginVersion())
+    const saveDir = path.join(pluginRoot, 'temp', 'uigf')
+    const saveFile = path.join(saveDir, `${uid}.json`)
+    await fs.promises.mkdir(saveDir, { recursive: true })
+    await fs.promises.writeFile(saveFile, JSON.stringify(uigf, null, '\t'), 'utf-8')
+
+    // 兼容写法（参考 TRSS exportLog）：群聊优先群文件接口，私聊好友文件接口
+    let sent = false
+    try {
+      if (e.group?.sendFile) {
+        await e.group.sendFile(saveFile)
+        sent = true
+      } else if (e.friend?.sendFile) {
+        await e.friend.sendFile(saveFile)
+        sent = true
+      }
+    } catch (err) {
+      logger.error(err)
+    }
+    if (!sent) {
+      await fs.promises.unlink(saveFile).catch(() => {})
+      return await e.reply('导出失败：当前适配器暂不支持发送文件')
+    }
+
+    // 延迟清理，避免适配器异步读取文件时已被删除
+    setTimeout(() => {
+      fs.promises.unlink(saveFile).catch(() => {})
+    }, 60 * 1000)
+    return await e.reply(`UIGF v4 导出成功：${uid}.json\n${typeDetails.join('\n')}\n共 ${total} 条，请接收文件`)
   }
 }
