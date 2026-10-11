@@ -359,10 +359,11 @@ test('character.json 新条目：8005/8006 行迹小节点属性抽核（引擎 
 
 /* ============================================================
  * 六、批次4 终检：SkillData 总数 98 → 104
+ * （风堇 1409 补遗后总数 105，改为下限口径——同批次3 先例，终态由 hyacine.test.js 锁定）
  * ============================================================ */
 test('批次4 终检：6 个开拓者旧形态条目全部收录，SkillData 总数 98 → 104', () => {
   const ids = Object.keys(skilldict)
-  assert.equal(ids.length, 104, `SkillData 条目数应为 104（实际 ${ids.length}）`)
+  assert.ok(ids.length >= 104, `SkillData 条目数应 ≥ 104（实际 ${ids.length}）`)
   for (const id of ['8001', '8002', '8003', '8004', '8005', '8006']) {
     assert.ok(skilldict[id] && skilldict[id].skillList && Object.keys(skilldict[id].skillList).length > 0,
       `${id} 应有 skillList 伤害行`)

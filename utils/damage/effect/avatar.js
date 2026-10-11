@@ -128,6 +128,8 @@ let TbDesXeBase = null;           // 毁灭终结技副目标（Xe 槽位按终�
 let TbPreNormalBase = null;       // 存护普攻（1魂 +25% 防御折入倍率）
 let TbPreTalentBase = null;       // 存护强化普攻（Talent 槽位按普攻等级改写常量）
 let TbPreUltraBase = null;        // 存护终结技（攻击+防御复合倍率的防御折入）
+// 风堇（1409，批次规划遗漏的单角色补遗）倍率基线缓存
+let FengJinMeBase = null;         // 忆灵技（累计治疗基数按面板/命途/等级每次重算折入倍率）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -752,6 +754,81 @@ const Avatar = (data, base_attr, attribute_bonus) => {
                 attribute_bonus['QuantumResistancePenetration'] =
                     0.2 + get_let_value(attribute_bonus, 'QuantumResistancePenetration');
             }
+        },
+        '1409': () => {
+            // 风堇（丰饶·记忆；批次规划遗漏角色的单角色补遗）
+            // 战技/终结技/忆灵天赋/1魂附加全部为治疗行，引擎无治疗通道，跳过并披露；
+            // 直伤行照抄 miao calc.js：普攻（生命倍率）与忆灵技（miao 默认展示行
+            // 「忆灵技对单伤害-我方6目标-无烧血C」档，defDmgIdx=5）——7 目标烧血C 档
+            // 与「战技回复遐蝶新蕊百分点」行为单槽位不重复展示/无引擎通道，跳过并披露
+            const d = skilldict['1409'];
+            const eLv = stdLevel(data, 1);
+            const qLv = stdLevel(data, 2);
+            const tLv = stdLevel(data, 3);
+            const mtLv = memoSkillLevel(data, '302');
+            // 2魂：我方目标生命值降低时速度提高 30%（miao 口径按常驻计，仅影响暴风停歇速度档）
+            if (data.rank >= 2) {
+                attribute_bonus['SpeedAddedRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'SpeedAddedRatio');
+            }
+            // 终结技【雨过天晴】（miao 全部展示行均按此状态）：生命上限提高
+            //  [q 表 生命提高·百分比生命 + 1魂 50%]×基数 + [q 表 固定值]（先加，注入按提高后生命计）
+            attribute_bonus['HPAddedRatio'] =
+                levelValue(d.Q_HpPct, qLv) + (data.rank >= 1 ? 0.5 : 0) +
+                get_let_value(attribute_bonus, 'HPAddedRatio');
+            attribute_bonus['HPDelta'] =
+                levelValue(d.Q_HpFlat, qLv) + get_let_value(attribute_bonus, 'HPDelta');
+            // 行迹-暴风停歇：速度 > 200 时生命上限提高 20%（治疗量档位与 4魂暴伤见下）
+            const speed = panelSpeed(base_attr, attribute_bonus);
+            const stormy = speed > 200;
+            if (stormy) {
+                attribute_bonus['HPAddedRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'HPAddedRatio');
+            }
+            // 行迹-阴云莞尔：风堇和小伊卡的暴击率提高 100%（引擎暴击率上限 min(1,·) 饱和）
+            attribute_bonus['CriticalChanceBase'] =
+                1 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            // 4魂（暴风停歇强化）：每超 1 点速度，暴击伤害额外提高 2%（无上限）
+            if (data.rank >= 4 && stormy) {
+                attribute_bonus['CriticalDamageBase'] =
+                    (speed - 200) * 2 / 100 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 6) {
+                // 6魂：小伊卡在场时我方全体全属性抗性穿透提高 20%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+            // 天赋：风堇或小伊卡提供治疗时小伊卡伤害提高（3 层满，仅作用忆灵技行——
+            //  键名须为无下划线技能位写法 MeDmgAdd，'Me_DmgAdd' 经 split('DmgAdd') 得 'Me_' 永不命中）
+            attribute_bonus['MeDmgAdd'] =
+                levelValue(d.Talent, tLv) * 3 + get_let_value(attribute_bonus, 'MeDmgAdd');
+            // 伤害基数注入：普攻行为生命倍率（钩子时点遗器/行迹小节点/光锥静态词条已并入；
+            //  光锥与套装特效若再提供攻击加成会引入近似偏差，引擎架构限制，同遐蝶先例）
+            const hp = panelHp(base_attr, attribute_bonus);
+            injectHpAsAttack(base_attr, attribute_bonus, hp);
+            // 忆灵技行：miao「我方6目标-无烧血C」档累计治疗基数（照抄 calc.js 模拟口径）——
+            //  治疗量加成仅暴风停歇超出速度部分（引擎无光锥治疗增益通道，近似）；
+            //  专武「愿虹光永驻天空」全队烧血触发的小伊卡治疗 miao 按 11 次计入
+            const healMult = 1 + (stormy ? Math.min(speed - 200, 200) : 0) / 100;
+            const perHeal = healMult * (hp * levelValue(d.Mt_HealPct, mtLv) + levelValue(d.Mt_HealFlat, mtLv));
+            const cureDelta = data.equipment && data.equipment.id === 23042 ? 11 * perHeal : 0;
+            // 战技/终结技：除小伊卡外我方 5 目标 + 小伊卡自身各回复一次
+            const nume = healMult * (5 * (hp * levelValue(d.E_HealPct, eLv) + levelValue(d.E_HealFlat, eLv)) +
+                hp * levelValue(d.E_MemoHealPct, eLv) + levelValue(d.E_MemoHealFlat, eLv)) + cureDelta;
+            const numq = healMult * (5 * (hp * levelValue(d.Q_HealPct, qLv) + levelValue(d.Q_HealFlat, qLv)) +
+                hp * levelValue(d.Q_MemoHealPct, qLv) + levelValue(d.Q_MemoHealFlat, qLv)) + cureDelta;
+            // 风堇技能平均治疗（2 战技 + 1 终结技 / 3 回合）+ 受击治疗 7 次 + 1魂攻击附加 6 次
+            const numEQ = (nume * 2 + numq) / 3;
+            const numHit = 7 * perHeal;
+            const numCon1 = data.rank >= 1 ? 6 * healMult * hp * 0.08 : 0;
+            // 稳定累积治疗参考值（miao 经验系数：6魂 3.4 / 其他 1.6，代替等比数列循环求和）
+            const cureAmount = (numEQ + numHit + numCon1) * (data.rank === 6 ? 3.4 : 1.6);
+            // 折入忆灵技倍率：行伤害 = hp × 倍率 × 区 = cureAmount × me 倍率 × 区
+            // （按面板/命途/等级每次重算，基线缓存可回退不累积）
+            if (!FengJinMeBase) {
+                FengJinMeBase = [...d.Me];
+            }
+            d.Me = FengJinMeBase.map(v => round10(v * cureAmount / hp));
         },
         '1415': () => {
             // 昔涟（全部伤害行为生命上限倍率 → 注入）
