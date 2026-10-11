@@ -332,9 +332,8 @@
 let skillTree = {{@(JSON.stringify( skillTree || [] )) }};
 const skillTreeBkg = "{{ pluResPath }}{{ skillTreeBkg }}";
 const lockIcon = "{{ pluResPath }}panel/resources/skill_tree/lock.png";
-const config = {
-  imgBaseURL: "https://avocado.wiki"
-}
+// 行迹节点图标：本地资源目录（原 avocado.wiki CDN 已停服，全部节点曾显示「加载失败」）
+const skillIconBase = "{{ pluResPath }}panel/resources/skill/";
 const type1 = [
   "Point09",
   "Point10",
@@ -388,7 +387,6 @@ const dom = document.querySelector('.skill_tree');
           }
           if ( skill?.level ) level = skill.level;
           if ( !skill ) return;
-          icon.src = `${ config.imgBaseURL }${ skill.icon }`;
           if ( type1.includes( skill.anchor ) ) {
             level = null;
             imageColor = "rgb(0,0,0)";
@@ -402,44 +400,52 @@ const dom = document.querySelector('.skill_tree');
             imageColor = "rgb(0,0,0)";
             width = height = 144;
           }
-          icon.onload = () => {
-            // ctx.drawImage( icon, x + 5, y + 5, width - 10, height - 10 );
-            applyImageColor(
-              icon,
-              imageColor,
-              x + 5,
-              y + 5,
-              width - 10,
-              height - 10
-            );
+          if ( skill.icon ) {
+            // 游戏路径 icon/skill/{id}_{slot}.png → 本地同命名资源
+            icon.src = `${ skillIconBase }${ skill.icon.split( '/' ).pop() }`;
+            icon.onload = () => {
+              // ctx.drawImage( icon, x + 5, y + 5, width - 10, height - 10 );
+              applyImageColor(
+                icon,
+                imageColor,
+                x + 5,
+                y + 5,
+                width - 10,
+                height - 10
+              );
 
+              resolve( true );
+            };
+            icon.onerror = () => {
+              ctx.fillStyle = lock ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0)";
+              ctx.beginPath();
+              ctx.arc( x + width / 2, y + height / 2, width / 2, 0, 2 * Math.PI );
+              ctx.fill();
+              // 在相应位置写上文字加载失败
+              ctx.strokeStyle = "rgb(255,255,255)";
+              ctx.font = "30px SR";
+              ctx.lineWidth = 4;
+              ctx.textAlign = "center";
+              ctx.strokeText(
+                "加载失败",
+                x + width / 2,
+                y + height / 2,
+                width
+              );
+              ctx.fillStyle = "rgb(0,0,0)";
+              ctx.fillText(
+                "加载失败",
+                x + width / 2,
+                y + height / 2,
+                width
+              );
+              resolve( false );
+            };
+          } else {
+            // 属性小节点无独立图标资源（游戏数据 icon 为空串）：
+            // 不发起加载（base+空串必失败），仅保留 SVG 背景的锚点底圆
             resolve( true );
-          };
-          icon.onerror = () => {
-            ctx.fillStyle = lock ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0)";
-            ctx.beginPath();
-            ctx.arc( x + width / 2, y + height / 2, width / 2, 0, 2 * Math.PI );
-            ctx.fill();
-            // 在相应位置写上文字加载失败
-            ctx.strokeStyle = "rgb(255,255,255)";
-            ctx.font = "30px SR";
-            ctx.lineWidth = 4;
-            ctx.textAlign = "center";
-            ctx.strokeText(
-              "加载失败",
-              x + width / 2,
-              y + height / 2,
-              width
-            );
-            ctx.fillStyle = "rgb(0,0,0)";
-            ctx.fillText(
-              "加载失败",
-              x + width / 2,
-              y + height / 2,
-              width
-            );
-            resolve( false );
-          };
+          }
           if ( level ) {
             ctx.strokeStyle = "rgb(0,0,0)";
             ctx.font = "60px SR";
