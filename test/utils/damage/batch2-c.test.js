@@ -309,9 +309,9 @@ test('SkillData 覆盖：C 组 5 条目数组长度（普攻 9 级 miao 口径�
   }
 })
 
-test('批次2 终检：21 个 2.x 条目全部收录，SkillData 总数 54 → 75', () => {
+test('批次2 终检：21 个 2.x 条目全部收录（总数随后续批次递增，下限 75）', () => {
   const ids = Object.keys(skilldict)
-  assert.equal(ids.length, 75, `SkillData 条目数应为 75（实际 ${ids.length}）`)
+  assert.ok(ids.length >= 75, `SkillData 条目数应 ≥ 75（实际 ${ids.length}）`)
   const batch2 = ['1214', '1217', '1218', '1220', '1221', '1222', '1223', '1225',
     '1302', '1303', '1304', '1305', '1306', '1307', '1308', '1309', '1310',
     '1312', '1313', '1314', '1315']

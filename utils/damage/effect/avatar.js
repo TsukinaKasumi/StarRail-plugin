@@ -106,6 +106,16 @@ let ShaJinTalentBase = null;      // 砂金天赋追击（4魂 7段→10段）
 let ZhiGengNiaoUltraBase = null;  // 知更鸟终结技附加伤害（终结技攻击增益折入倍率）
 let LiuYingBPSkillBase = null;    // 流萤强化战技（击破特攻档倍率加成）
 let HuangQuanBase = null;         // 黄泉全行（行迹-奈落 ×1.6 + 雷心对单 +1.5）
+// 批次3（1.x 剩余角色）倍率基线缓存（命魂/面板/等级驱动的动态改写，按次重算、可回退不累积）
+let DanHengSlowBase = null;      // 丹恒减速档终结技（Talent 槽位按终结技等级改写常量）
+let ArLanTalentBase = null;       // 阿兰终结技副目标（Talent 槽位按终结技等级改写常量；6魂取主目标倍率）
+let XiLuWaNormalBase = null;      // 希露瓦普攻（1魂 ×1.6——miao 将随机相邻附加折入主行）
+let XiLuWaXeBase = null;          // 希露瓦战技单体（Xe 槽位按战技等级改写常量）
+let HuKeTalentBase = null;        // 虎克强化战技主目标（Talent 槽位按战技等级改写常量）
+let HuKeXeBase = null;            // 虎克强化战技副目标（Xe 槽位按战技等级改写常量）
+let LuKaTalentBase = null;        // 卢卡强化普攻（Talent 槽位按普攻等级改写常量）
+let SuShangTalentBase = null;     // 素裳战技+剑势（Talent 槽位按战技等级改写常量）
+let SuShangXeBase = null;         // 素裳满剑势战技（Xe 槽位按战技等级改写常量）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -2144,6 +2154,192 @@ const Avatar = (data, base_attr, attribute_bonus) => {
                 //（miao calc check params.q 永不命中为死代码，按官方文本修正为常驻）
                 attribute_bonus['AllDamageResistancePenetration'] =
                     0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+        },
+        // ==================== 批次3 A 组：1.x 直伤输出角色 ====================
+        '1002': () => {
+            // 丹恒（减速档终结技置于 Talent 槽位；天赋风抗穿/行迹罡风按 miao 默认常驻；
+            //  秘技开场攻击 buff 为战斗外增益，不入引擎（披露））
+            const d = skilldict['1002'];
+            // 天赋-穿云：成为我方技能目标时风抗性穿透（按天赋等级表；miao 无条件常驻）
+            attribute_bonus['WindResistancePenetration'] =
+                levelValue(d.T_Kx, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'WindResistancePenetration');
+            // 行迹-罡风：普攻对减速目标伤害+40%（miao 无条件常驻）
+            attribute_bonus['NormalDmgAdd'] =
+                0.4 + get_let_value(attribute_bonus, 'NormalDmgAdd');
+            if (data.rank >= 1) {
+                // 1魂：对生命≥50% 目标暴击率+12%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.12 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            // 减速档终结技（Talent 槽位按终结技等级改写常量）
+            if (!DanHengSlowBase) {
+                DanHengSlowBase = [...d.Talent];
+            }
+            d.Talent = DanHengSlowBase.map(() =>
+                levelValue(DanHengSlowBase, stdLevel(data, 2)));
+        },
+        '1008': () => {
+            // 阿兰（天赋按损失生命增伤取表值档；副目标行置于 Talent 槽位——
+            //  6魂起终结技位增伤对副目标行的加成经 Talent 槽位键补齐）
+            const d = skilldict['1008'];
+            const qLv = stdLevel(data, 2);
+            // 天赋-至痛至怒：按损失生命获得伤害加成（按天赋等级表，miao 默认档）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.T_DmgUp, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            if (data.rank >= 1) {
+                // 1魂：生命≤50% 时战技伤害+10%
+                attribute_bonus['BPSkillDmgAdd'] =
+                    0.1 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+            }
+            if (data.rank >= 6) {
+                // 6魂：生命≤50% 时终结技伤害+20%（主/副两行，副目标行在 Talent 槽位）
+                attribute_bonus['UltraDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'UltraDmgAdd');
+                attribute_bonus['TalentDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            }
+            // 副目标行（Talent 槽位按终结技等级改写常量；6魂取主目标倍率）
+            if (!ArLanTalentBase) {
+                ArLanTalentBase = [...d.Talent];
+            }
+            d.Talent = ArLanTalentBase.map(() =>
+                levelValue(data.rank >= 6 ? d.Ultra : ArLanTalentBase, qLv));
+        },
+        '1013': () => {
+            // 黑塔（行迹效率/冰结与战技高生命增伤按 miao 默认常驻；
+            //  秘技开场攻击 buff 不入引擎（披露）；1魂普攻附加行 miao 未展示，同不虚构）
+            // 行迹-效率：战技伤害+25%；战技：对生命≥50% 目标伤害+20%
+            attribute_bonus['BPSkillDmgAdd'] =
+                0.45 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+            // 行迹-冰结：终结技对冻结目标伤害+20%
+            attribute_bonus['UltraDmgAdd'] =
+                0.2 + get_let_value(attribute_bonus, 'UltraDmgAdd');
+            if (data.rank >= 2) {
+                // 2魂：天赋 5 层暴击率+15%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.15 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            if (data.rank >= 4) {
+                // 4魂：天赋追加攻击伤害+10%
+                attribute_bonus['TalentDmgAdd'] =
+                    0.1 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            }
+            if (data.rank >= 6) {
+                // 6魂：施放终结技后攻击力+25%
+                attribute_bonus['AttackAddedRatio'] =
+                    0.25 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+        },
+        '1103': () => {
+            // 希露瓦（触电 DOT 行引擎不支持，跳过并披露；战技单体行置于 Xe 槽位；
+            //  行迹-狂热按 miao 默认常驻）
+            const d = skilldict['1103'];
+            const eLv = stdLevel(data, 1);
+            // 行迹-狂热：消灭敌方后攻击力+20%（miao 无条件常驻）
+            attribute_bonus['AttackAddedRatio'] =
+                0.2 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            if (data.rank >= 6) {
+                // 6魂：对触电目标伤害+30%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 1魂：普攻对随机相邻目标额外 60% 普攻伤害（miao 折入主行 ×1.6）
+            if (!XiLuWaNormalBase) {
+                XiLuWaNormalBase = [...d.Normal];
+            }
+            d.Normal = data.rank >= 1
+                ? XiLuWaNormalBase.map(v => round10(v * 1.6))
+                : [...XiLuWaNormalBase];
+            // 战技单体行（Xe 槽位按战技等级改写常量）
+            if (!XiLuWaXeBase) {
+                XiLuWaXeBase = [...d.Xe];
+            }
+            d.Xe = XiLuWaXeBase.map(() => levelValue(XiLuWaXeBase, eLv));
+        },
+        '1109': () => {
+            // 虎克（灼烧 DOT 行引擎不支持；强化战技主/副两行置于 Talent/Xe 槽位——
+            //  战技位光锥增伤只命中普通战技行，引擎架构限制（披露））
+            const d = skilldict['1109'];
+            const eLv = stdLevel(data, 1);
+            if (data.rank >= 1) {
+                // 1魂：强化战技伤害+20%（主/副两行；官方文本仅强化战技生效，
+                //  miao eDmg 键会同时命中普通战技行，按官方文本收窄）
+                attribute_bonus['TalentDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+                attribute_bonus['XeDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'XeDmgAdd');
+            }
+            if (data.rank >= 6) {
+                // 6魂：对灼烧目标伤害+20%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 强化战技主/副目标（Talent/Xe 槽位按战技等级改写常量）
+            if (!HuKeTalentBase) {
+                HuKeTalentBase = [...d.Talent];
+            }
+            if (!HuKeXeBase) {
+                HuKeXeBase = [...d.Xe];
+            }
+            d.Talent = HuKeTalentBase.map(() => levelValue(HuKeTalentBase, eLv));
+            d.Xe = HuKeXeBase.map(() => levelValue(HuKeXeBase, eLv));
+        },
+        '1111': () => {
+            // 卢卡（裂伤 DOT 行与 6魂引爆行引擎不支持，跳过并披露；
+            //  强化普攻总伤置于 Talent 槽位，按普攻等级改写常量——a2 表与普攻等级联动）
+            const d = skilldict['1111'];
+            // 终结技：敌方受到的伤害提高（易伤，按终结技等级表）
+            attribute_bonus['DmgRatio'] =
+                levelValue(d.Q_EnemyDmg, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            if (data.rank >= 1) {
+                // 1魂：对裂伤目标伤害+15%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.15 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            if (data.rank >= 4) {
+                // 4魂：4 层斗志攻击力+20%
+                attribute_bonus['AttackAddedRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+            // 强化普攻总伤（3 段直冲拳 + 碎天拳）
+            if (!LuKaTalentBase) {
+                LuKaTalentBase = [...d.Talent];
+            }
+            d.Talent = LuKaTalentBase.map(() =>
+                levelValue(LuKaTalentBase, stdLevel(data, 0)));
+        },
+        '1206': () => {
+            // 素裳（行迹-逐寇 +20% 已折入剑势倍率数组；天赋加速/4魂击破特攻不入直伤行；
+            //  战技+剑势/满剑势两行置于 Talent/Xe 槽位，按战技等级改写常量）
+            const d = skilldict['1206'];
+            const eLv = stdLevel(data, 1);
+            if (!SuShangTalentBase) {
+                SuShangTalentBase = [...d.Talent];
+            }
+            if (!SuShangXeBase) {
+                SuShangXeBase = [...d.Xe];
+            }
+            d.Talent = SuShangTalentBase.map(() => levelValue(SuShangTalentBase, eLv));
+            d.Xe = SuShangXeBase.map(() => levelValue(SuShangXeBase, eLv));
+        },
+        '1224': () => {
+            // 三月七·巡猎（miao calc 仅强化普攻/终结技两行，普攻基础行照抄不虚构；
+            //  2魂师父协战追加行与终结技「初始段数+2」miao 均未展示，同不虚构（披露））
+            const d = skilldict['1224'];
+            // 天赋-师父我悟了：充能≥1 时造成的伤害提高（按天赋等级表）
+            //（miao calc 误标 cons:1——官方 1魂为速度+10%，天赋增伤为基础机制，
+            //  按官方星魂文本修正为常驻）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.T_DmgUp, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            if (data.rank >= 6) {
+                // 6魂：终结技后下一次强化普攻暴击伤害+50%
+                attribute_bonus['Normal_CriticalDamageBase'] =
+                    0.5 + get_let_value(attribute_bonus, 'Normal_CriticalDamageBase');
             }
         },
     };
