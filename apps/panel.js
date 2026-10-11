@@ -157,11 +157,8 @@ export class Panel extends plugin {
       // 强化形态（2xxx）等静态数据未收录的角色降级渲染（charpath 为 undefined 时
       // 模板跳过命途文字与行迹画布，伤害计算同样按未收录降级），不中断整个面板查询
       data.charpath = charData[data.avatarId]?.path
-      data.relics.forEach((item, i) => {
-        data.relics[i].path = relicsPathData[item.id]?.icon
-      })
-      // 行迹（记忆/欢愉等新命途暂无背景图与坐标数据：skillTreeBkg 为 undefined、
-      // handleSkillTree 降级返回不带坐标的列表，模板按 skillTreeBkg 跳过行迹渲染）
+      this.fixupRelicMeta(data.relics)
+      // 行迹（无背景/坐标数据的命途：模板按 skillTreeBkg 跳过行迹渲染）
       data.skillTreeBkg = skillTreeImg[data.charpath]
       data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
       data.skilllist = _.cloneDeep(data.behaviorList)
@@ -206,6 +203,27 @@ export class Panel extends plugin {
       logger.error('SR-panelApi', error)
       return await e.reply(error.message)
     }
+  }
+
+  /**
+   * 渲染前遗器静态元数据重解析（就地修补，仅影响本次渲染数据，不回写缓存）
+   *
+   * 旧缓存条目产生于 relics.json 未收录该 ID 的时期：转换器（miaoSync/mysConverter）
+   * 当时把名称降级为「遗器{id}」烙进了缓存文件，icon 也取不到（path 为 undefined）。
+   * 静态表补齐后，对这类条目用 relics.json 重新解析 name 与 icon；
+   * name 正常的条目仅按表补 path（兼容 512x512 老图 / 128x128 新图混合的图标目录）。
+   */
+  fixupRelicMeta (relics) {
+    if (!Array.isArray(relics)) return relics
+    relics.forEach((item, i) => {
+      const meta = relicsPathData[item.id]
+      if (!meta) return
+      if (!item.name || /^遗器\d+$/.test(item.name)) {
+        relics[i].name = meta.name
+      }
+      item.path = meta.icon
+    })
+    return relics
   }
 
   /** 处理行迹 */
@@ -282,8 +300,8 @@ export class Panel extends plugin {
   /** 处理技能树 */
   handleSkillTree (data, charpath) {
     let _data = _.cloneDeep(data)
-    // 记忆/欢愉等新命途暂无行迹坐标数据（skillTree.json 仅覆盖 7 命途）：
-    // 降级返回不带坐标的列表，配合 skillTreeBkg 缺失时模板跳过行迹渲染，不抛错
+    // skillTree.json 未收录的命途（未来新命途）：降级返回不带坐标的列表，
+    // 配合 skillTreeBkg 缺失时模板跳过行迹渲染，不抛错
     if (!skillTreeData[charpath]) {
       return _data.map(item => {
         return {

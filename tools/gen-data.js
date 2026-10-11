@@ -12,10 +12,12 @@
  *      - resources/meta-sr/info/index.js         poolNameSr（跃迁名）/ poolDetailSr（1.0→当前 全量卡池时间线）
  *   2. StarRailRes 在线仓库（https://github.com/Mar-7th/StarRailRes）
  *      - index_new/cn/characters.json / light_cones.json  索引（英文命途/元素枚举、星级、图标路径）
+ *      - index_new/cn/relics.json                        遗器索引（id/set_id/name/rarity/type/icon）
  *      - icon/character/{id}.png                  角色头像（256x256，方形，抽卡分析头像用）
  *      - image/character_preview/{id}.png         角色半身像（376x512，模拟抽卡立绘用）
  *      - image/character_portrait/{id}.png        角色立绘（2048x2048，面板立绘用）
- *      - icon/light_cone/{id}.png                光锥图标（128x128，实际路径以索引 icon 字段为准）
+ *      - icon/light_cone/{id}.png                光锥图标（128x128，面板图标用，实际路径以索引 icon 字段为准）
+ *      - icon/relic/{set}_{n}.png                遗器图标（128x128，面板遗器列表用）
  *   3. tools/collab-pools.json                   联动卡池补充条目（miao 不收录联动池）
  *   4. （可选校验源）BWiki SMW API api.php?action=ask —— 仅人工抽查时使用，
  *      注意 EdgeOne 安全防护会拦截高频抓取，需串行且加间隔。
@@ -23,13 +25,15 @@
  * 用法：
  *   node tools/gen-data.js                     # 全部生成（默认 all）
  *   node tools/gen-data.js --only=appdata      # 模拟抽卡 appdata 四个映射表
- *   node tools/gen-data.js --only=images       # 补缺各类图片资源（幂等，已存在跳过）
+ *   node tools/gen-data.js --only=images       # 补缺各类图片资源（幂等，已存在且合法跳过）
  *   node tools/gen-data.js --only=pooldata     # utils/gatcha/poolData.js 卡池时间线
  *   node tools/gen-data.js --only=paneldata    # 面板 character.json + baseData 两表
+ *   node tools/gen-data.js --only=relicdata    # 面板 relics.json 全量重建（StarRailRes 遗器索引）
  *
  * 注意：
  *   - 生成的数据文件 / 图片不随 tools/ 一起提交，由维护者审查后另行提交。
  *   - 图片下载串行 + 每次间隔约 300ms，失败自动重试 3 次（指数退避），404 视为永久失败不重试。
+ *   - images 阶段对已存在文件做 PNG 魔数校验，损坏的存量文件会被重新下载覆盖。
  *   - miao-plugin 路径默认为 <本插件>/../miao-plugin，可用环境变量 MIAO_ROOT 覆盖。
  */
 import fs from 'node:fs'
@@ -47,6 +51,7 @@ const MIAO_ROOT = process.env.MIAO_ROOT
 const SRR_BASE = 'https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/'
 const SRR_CHARS_INDEX = `${SRR_BASE}index_new/cn/characters.json`
 const SRR_LCS_INDEX = `${SRR_BASE}index_new/cn/light_cones.json`
+const SRR_RELICS_INDEX = `${SRR_BASE}index_new/cn/relics.json`
 
 /** 中文元素 → 英文元素（chardamagetype.json 值域） */
 const ELEMENT_MAP = {
@@ -82,6 +87,8 @@ const P = {
   gatchaChar: path.join(ROOT, 'resources/gatcha/images/char'),
   panelChar: path.join(ROOT, 'resources/panel/resources/char_image'),
   panelWeapon: path.join(ROOT, 'resources/panel/resources/weapon'),
+  panelRelic: path.join(ROOT, 'resources/panel/resources/relic'),
+  panelRelicsData: path.join(ROOT, 'resources/panel/data/relics.json'),
   poolData: path.join(ROOT, 'utils/gatcha/poolData.js'),
   panelCharacter: path.join(ROOT, 'resources/panel/data/character.json'),
   baseCharacters: path.join(ROOT, 'resources/baseData/characters.json'),
@@ -179,13 +186,15 @@ async function fetchWithRetry (url, { retries = 3, timeout = 30000 } = {}) {
 
 async function loadSrrIndex () {
   log('拉取 StarRailRes 索引 ...')
-  const [charsRes, lcsRes] = await Promise.all([
+  const [charsRes, lcsRes, relicsRes] = await Promise.all([
     fetchWithRetry(SRR_CHARS_INDEX),
-    fetchWithRetry(SRR_LCS_INDEX)
+    fetchWithRetry(SRR_LCS_INDEX),
+    fetchWithRetry(SRR_RELICS_INDEX)
   ])
   return {
     chars: await charsRes.json(),
-    lightCones: await lcsRes.json()
+    lightCones: await lcsRes.json(),
+    relics: await relicsRes.json()
   }
 }
 
@@ -483,12 +492,64 @@ function genPanelData (miao, srr) {
   log(`paneldata 完成：panel ${before}→${nPanel}，baseData ${nBase}/${nBaseLc}`)
 }
 
+/* ============================== relicdata（面板遗器索引） ============================== */
+
+/**
+ * 面板 relics.json 全量重建：StarRailRes 遗器索引 → 本插件条目形状。
+ *
+ * 字段形状与存量 454 条完全一致（id/set_id/name/rarity/type/max_level/main_affix_id/
+ * sub_affix_id/icon），仅 icon 归一化为 basename（索引为 "icon/relic/101_0.png" → "101_0.png"，
+ * 与本地 resources/panel/resources/relic/ 命名一致）。
+ * 消费点：apps/panel.js relicsPathData[id].icon（渲染路径）、utils/panel/{miaoSync,mysConverter}
+ * 的遗器 meta 查表（名称/稀有度/max_level）。未收录 ID 曾导致新套装降级显示「遗器{id}」。
+ */
+function genRelicData (srr) {
+  const index = srr.relics
+  const out = {}
+  for (const id of Object.keys(index).sort((a, b) => numId(a) - numId(b))) {
+    const r = index[id]
+    out[id] = {
+      id: String(r.id),
+      set_id: String(r.set_id),
+      name: r.name,
+      rarity: r.rarity,
+      type: r.type,
+      max_level: r.max_level,
+      main_affix_id: String(r.main_affix_id),
+      sub_affix_id: String(r.sub_affix_id),
+      icon: r.icon.split('/').pop()
+    }
+  }
+
+  // 自检：条目数与索引一致；新 4.x 套装锚点；存量字段形状锚点
+  const count = Object.keys(out).length
+  if (count !== Object.keys(index).length) throw new Error('relics 自检失败：条目数与索引不符')
+  if (!out['63265'] || out['63265'].name !== '千星城的传媒总部') {
+    throw new Error('relics 自检失败：缺 4.x 遗器 63265（千星城的传媒总部）')
+  }
+  if (out['61011']?.name !== '过客的逢春木簪' || out['61011']?.icon !== '101_0.png') {
+    throw new Error('relics 自检失败：存量条目 61011 字段形状漂移')
+  }
+  for (const set of ['115', '134', '325', '326', '327', '328']) {
+    if (!Object.values(out).some(r => r.set_id === set)) {
+      throw new Error(`relics 自检失败：缺套装 ${set}`)
+    }
+  }
+  const badIcon = Object.values(out).filter(r => !/^\d+_\d\.png$/.test(r.icon))
+  if (badIcon.length) throw new Error(`relics 自检失败：icon 非 basename 形式（${badIcon[0].id}: ${badIcon[0].icon}）`)
+
+  writeJSON(P.panelRelicsData, out)
+  summary.categories.push(`relicdata: relics.json ${count} 条（StarRailRes 索引全量重建）`)
+  log(`relicdata 完成：relics.json ${count} 条`)
+}
+
 /* ============================== images（图片补缺） ============================== */
+
+const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
 
 async function downloadImage (url, dest) {
   const res = await fetchWithRetry(url)
   const buf = Buffer.from(await res.arrayBuffer())
-  const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
   if (buf.length < 100 || (!buf.subarray(0, 8).equals(PNG_MAGIC))) {
     throw new Error(`非 PNG 内容（${buf.length} 字节）`)
   }
@@ -496,16 +557,41 @@ async function downloadImage (url, dest) {
   fs.writeFileSync(dest, buf)
 }
 
+/** 存量文件是否为合法 PNG（本目录树全部为 PNG 资产；JPEG 冒名等历史脏数据返回 false） */
+function isPngFile (file) {
+  try {
+    const fd = fs.openSync(file, 'r')
+    try {
+      const buf = Buffer.alloc(8)
+      return fs.readSync(fd, buf, 0, 8, 0) === 8 && buf.equals(PNG_MAGIC)
+    } finally {
+      fs.closeSync(fd)
+    }
+  } catch {
+    return false
+  }
+}
+
 /**
- * 串行补缺一组图片。
- * @param {Array<{id:string,url:string,dest:string,permanentSkip?:string}>} items
+ * 串行补缺一组图片。已存在文件先做合法性校验（PNG 魔数 + 可选 item.validate），
+ * 不合法则重新下载覆盖（历史脏数据 / 规格不符自愈），合法才跳过。
+ * @param {Array<{id:string,url:string,dest:string,permanentSkip?:string,validate?:(buf:Buffer)=>boolean}>} items
  */
 async function fillImages (label, items) {
   let ok = 0
   let skip = 0
+  let heal = 0
   let fail = 0
   for (const item of items) {
-    if (fs.existsSync(item.dest)) { skip++; continue }
+    if (fs.existsSync(item.dest)) {
+      let valid = isPngFile(item.dest)
+      if (valid && item.validate) {
+        valid = item.validate(fs.readFileSync(item.dest))
+      }
+      if (valid) { skip++; continue }
+      heal++
+      summary.skips.push(`[${label}] ${item.id}：存量文件校验不通过，重新下载覆盖`)
+    }
     if (item.permanentSkip) {
       summary.skips.push(`[${label}] ${item.id}：${item.permanentSkip}`)
       skip++
@@ -520,8 +606,8 @@ async function fillImages (label, items) {
     }
     await sleep(300)
   }
-  summary.categories.push(`images/${label}: 新下载 ${ok}，已存在跳过 ${skip}，失败 ${fail}`)
-  log(`images/${label} 完成：下载 ${ok} / 跳过 ${skip} / 失败 ${fail}`)
+  summary.categories.push(`images/${label}: 新下载 ${ok}，已存在跳过 ${skip}，校验自愈重下 ${heal}，失败 ${fail}`)
+  log(`images/${label} 完成：下载 ${ok} / 跳过 ${skip} / 自愈重下 ${heal} / 失败 ${fail}`)
 }
 
 async function genImages (miao, srr) {
@@ -569,8 +655,23 @@ async function genImages (miao, srr) {
     dest: path.join(P.panelWeapon, `${id}.png`)
   })))
 
+  // 5.2 面板：遗器图标（panel/resources/relic，128x128，命名 {set}_{pos}.png 与 relics.json
+  //     icon 字段一致；另补套装级 {set}.png 保持与存量命名族一致）
+  //     图标清单以 StarRailRes 遗器索引（srr.relics）为准 —— 本地 relics.json 未重建时也能补全。
+  const relicIcons = new Map()
+  for (const r of Object.values(srr.relics)) {
+    const base = r.icon.split('/').pop()
+    const set = String(r.set_id)
+    relicIcons.set(base, `${SRR_BASE}icon/relic/${base}`)
+    relicIcons.set(`${set}.png`, `${SRR_BASE}icon/relic/${set}.png`)
+  }
+  await fillImages('panel/relic', [...relicIcons.entries()].map(([name, url]) => ({
+    id: name,
+    url,
+    dest: path.join(P.panelRelic, name)
+  })))
+
   // 5.5 面板：技能图标（panel/resources/skill，命名 {avatarId}_{后缀}.png 与 panel.js handleBehaviorList 一致）
-  //     StarRailRes icon/skill/ 与面板命名完全一致；后缀集合与既有素材相同（9 个/角色）。
   //     强化角色(2xxx) StarRailRes 无 → 复制原角色同名图标占位（有更好图源后可替换）。
   //     忆灵技/忆灵天赋/欢愉技图标（_me/_mt/_xe/_xe2）StarRailRes 暂无收录，本阶段不涉及
   //     （面板模板对缺失图标有 onerror 兜底）。
@@ -635,7 +736,7 @@ async function genImages (miao, srr) {
 function parseOnly () {
   const match = process.argv.slice(2).join(' ').match(/--only[=\s]+(\w+)/)
   const val = match ? match[1] : 'all'
-  const valid = ['appdata', 'images', 'pooldata', 'paneldata', 'all']
+  const valid = ['appdata', 'images', 'pooldata', 'paneldata', 'relicdata', 'all']
   if (!valid.includes(val)) {
     console.error(`[gen-data] 未知 --only 值：${val}（可选：${valid.join(' | ')}）`)
     process.exit(1)
@@ -657,12 +758,15 @@ async function main () {
     await genPoolData(miao)
   } else if (only === 'paneldata') {
     genPanelData(miao, await loadSrrIndex())
+  } else if (only === 'relicdata') {
+    genRelicData(await loadSrrIndex())
   } else if (only === 'images') {
     await genImages(miao, await loadSrrIndex())
   } else {
     genAppdata(miao)
     await genPoolData(miao)
     genPanelData(miao, await loadSrrIndex())
+    genRelicData(await loadSrrIndex())
     await genImages(miao, await loadSrrIndex())
   }
 
