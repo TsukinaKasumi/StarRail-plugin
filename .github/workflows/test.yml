@@ -25,3 +25,10 @@ jobs:
         run: npm install --no-fund --no-audit
       - name: 运行单元测试
         run: node --test "test/**/*.test.js"
+      - name: 检查测试是否污染仓库（测试严禁改动源码/数据文件）
+        run: |
+          if [ -n "$(git status --porcelain -- utils/ resources/ defSet/ apps/ tools/)" ]; then
+            echo "::error::测试运行修改了仓库文件："
+            git status --porcelain -- utils/ resources/ defSet/ apps/ tools/
+            exit 1
+          fi

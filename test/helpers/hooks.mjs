@@ -24,6 +24,9 @@ const STUB_MAP = [
   ['node-fetch', 'node-fetch']  // 网络请求：一律走 mock（见 helpers/fetch-mock.mjs），测试禁真实网络
 ]
 
+/** 供 register(HOOKS_URL) 使用（子目录测试文件免手写相对路径） */
+export const HOOKS_URL = new URL("./hooks.mjs", import.meta.url).href
+
 export async function resolve (specifier, context, nextResolve) {
   for (const [fragment, stub] of STUB_MAP) {
     if (specifier.includes(fragment)) {

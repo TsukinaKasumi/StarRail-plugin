@@ -1,6 +1,6 @@
 # 单元测试
 
-基于 Node 内置测试器（`node:test`，零第三方测试框架）。运行：`npm test` 或 `node --test test/`。
+基于 Node 内置测试器（`node:test`，零第三方测试框架）。运行：`npm test` 或 `node --test "test/**/*.test.js"`（注意：Node 24 不支持目录参数，须用引号包住的 glob）。
 
 ## 目录结构（与源码镜像，按模块分层）
 
@@ -29,7 +29,7 @@ test/
 1. **数据脱敏（硬性）**：fixtures 与测试内数据全部合成；禁止出现真实 QQ/UID/抽卡记录，
    禁止任何 cookie/stoken/authKey 形态的字符串。需要请求数据时用 factories 生成或 Mock。
 2. **依赖 Yunzai 运行时的被测模块**：先 `import './helpers/globals.mjs'`（副作用），
-   再 `register('./helpers/hooks.mjs', import.meta.url)`，最后**动态 import** 被测模块
+   再 `register(HOOKS_URL)`（HOOKS_URL 从 helpers/hooks.mjs 导入，子目录文件免手写相对路径），最后**动态 import** 被测模块
    （静态 import 会在钩子注册前解析）。
 3. **依赖 pluginRoot 路径的被测模块**：先 `bootFakeRoot()`（chdir 到伪根）再动态 import，
    本地数据写入走沙箱，不污染仓库与线上数据。

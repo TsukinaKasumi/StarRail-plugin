@@ -18,7 +18,7 @@ import { bootFakeRoot } from '../../helpers/boot.mjs'
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
 const sandbox = bootFakeRoot()
-fs.symlinkSync(
+if (!fs.existsSync(path.join(sandbox.pluginRoot, 'utils'))) fs.symlinkSync(
   path.join(REPO_ROOT, 'utils'),
   path.join(sandbox.pluginRoot, 'utils'),
   process.platform === 'win32' ? 'junction' : 'dir'
