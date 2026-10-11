@@ -116,6 +116,10 @@ let HuKeXeBase = null;            // 虎克强化战技副目标（Xe 槽位按�
 let LuKaTalentBase = null;        // 卢卡强化普攻（Talent 槽位按普攻等级改写常量）
 let SuShangTalentBase = null;     // 素裳战技+剑势（Talent 槽位按战技等级改写常量）
 let SuShangXeBase = null;         // 素裳满剑势战技（Xe 槽位按战技等级改写常量）
+let SanQiTalentBase = null;       // 三月七反击（4魂 +防御 30% 折入倍率）
+let SanQiBPSkillBase = null;      // 三月七冻结附加（BPSkill 槽位按终结技等级改写常量）
+let NaTaShaNormalBase = null;     // 娜塔莎普攻（6魂 +生命上限 40% 折入倍率）
+let SangBoBPSkillBase = null;     // 桑博战技（1魂 5 段→6 段）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -2341,6 +2345,89 @@ const Avatar = (data, base_attr, attribute_bonus) => {
                 attribute_bonus['Normal_CriticalDamageBase'] =
                     0.5 + get_let_value(attribute_bonus, 'Normal_CriticalDamageBase');
             }
+        },
+        // ==================== 批次3 B 组：1.x 存护·虚无·丰饶角色 ====================
+        '1001': () => {
+            // 三月七（存护：战技/2魂护盾行引擎不支持，跳过并披露；
+            //  冻结附加伤害置于 BPSkill 槽位——战技位光锥增伤会误命中该行（披露））
+            const d = skilldict['1001'];
+            const qLv = stdLevel(data, 2);
+            // 4魂：反击伤害提高，提高数值 = 防御力 30%（折入倍率 mult + def×0.3/atk，
+            //  按面板重算，基线缓存可回退）
+            if (!SanQiTalentBase) {
+                SanQiTalentBase = [...d.Talent];
+            }
+            if (data.rank >= 4) {
+                const def = panelDefence(base_attr, attribute_bonus);
+                const atk = panelAttack(base_attr, attribute_bonus);
+                d.Talent = SanQiTalentBase.map(v => round10(v + def * 0.3 / atk));
+            } else {
+                d.Talent = [...SanQiTalentBase];
+            }
+            // 冻结附加伤害（BPSkill 槽位按终结技等级改写常量）
+            if (!SanQiBPSkillBase) {
+                SanQiBPSkillBase = [...d.BPSkill];
+            }
+            d.BPSkill = SanQiBPSkillBase.map(() => levelValue(SanQiBPSkillBase, qLv));
+        },
+        '1104': () => {
+            // 杰帕德（存护：终结技/秘技护盾行引擎不支持；行迹-战意 防御→攻击折算）
+            // 行迹-战意：基于防御值提高攻击力 35%（固定值注入，按面板防御重算）
+            attribute_bonus['AttackDelta'] =
+                panelDefence(base_attr, attribute_bonus) * 0.35 +
+                get_let_value(attribute_bonus, 'AttackDelta');
+        },
+        '1105': () => {
+            // 娜塔莎（丰饶：治疗行引擎不支持；6魂普攻附加生命上限 40% 的物理伤害，
+            //  折入倍率 mult + hp×0.4/atk，按面板重算，基线缓存可回退）
+            const d = skilldict['1105'];
+            if (!NaTaShaNormalBase) {
+                NaTaShaNormalBase = [...d.Normal];
+            }
+            if (data.rank >= 6) {
+                const hp = panelHp(base_attr, attribute_bonus);
+                const atk = panelAttack(base_attr, attribute_bonus);
+                d.Normal = NaTaShaNormalBase.map(v => round10(v + hp * 0.4 / atk));
+            } else {
+                d.Normal = [...NaTaShaNormalBase];
+            }
+        },
+        '1106': () => {
+            // 佩拉（虚无：终结技-【通解】防御降低按无视防御计；行迹-痛击/追歼按
+            //  miao 默认常驻合计 +40% 增伤）
+            const d = skilldict['1106'];
+            // 终结技：敌方防御力降低（按终结技等级表，按无视防御计）
+            attribute_bonus['ignore_defence'] =
+                levelValue(d.Q_DefDown, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'ignore_defence');
+            // 行迹-痛击：对负面效果目标伤害+20%；行迹-追歼：解除增益后下次攻击+20%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.4 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            if (data.rank >= 4) {
+                // 4魂：施放战技使敌方冰抗性降低 12%
+                attribute_bonus['IceResistancePenetration'] =
+                    0.12 + get_let_value(attribute_bonus, 'IceResistancePenetration');
+            }
+        },
+        '1108': () => {
+            // 桑博（虚无：风化 DOT 行与 4魂引爆行引擎不支持，跳过并披露；
+            //  终结技受持续伤害提高仅作用 DOT 行，同不入）
+            const d = skilldict['1108'];
+            // 战技 5 段合计；1魂对随机单体额外 1 段（miao 口径折总 ×6/5）
+            if (!SangBoBPSkillBase) {
+                SangBoBPSkillBase = [...d.BPSkill];
+            }
+            d.BPSkill = SangBoBPSkillBase.map(v =>
+                round10(v / 5 * (data.rank >= 1 ? 6 : 5)));
+        },
+        '1110': () => {
+            // 玲可（丰饶：治疗行引擎不支持；普攻为生命倍率，
+            //  注入生命为攻击基数（同 1217 藿藿；光锥/套装特效后续攻击增益为近似值））
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+        },
+        '1211': () => {
+            // 白露（丰饶：治疗行引擎不支持，仅普攻伤害行；
+            //  miao 无直伤 buff——2魂为治疗增益、4魂为我方伤害增益，均不入）
         },
     };
     String(data.avatarId) in avatarGetter &&
