@@ -1,0 +1,26 @@
+{
+  "_comment": "合成 miao 角色表（欢愉）：80 级 6 突破 hp = 750 + 7.5×79 = 1342.5。目录名非角色 ID，验证 miaoSync 按 data.id 建索引",
+  "id": 1501,
+  "key": "sparkle-synth",
+  "name": "火花",
+  "star": 5,
+  "elem": "火",
+  "weapon": "欢愉",
+  "attr": {
+    "0": {
+      "promote": 0,
+      "maxLevel": 20,
+      "grow": { "hp": 7.5, "atk": 5, "def": 3.1, "speed": 0 },
+      "attrs": { "hp": 190, "atk": 125, "def": 78, "speed": 102, "cpct": 5, "cdmg": 50, "aggro": 100 }
+    },
+    "6": {
+      "promote": 6,
+      "maxLevel": 80,
+      "grow": { "hp": 7.5, "atk": 5, "def": 3.1, "speed": 0 },
+      "attrs": { "hp": 750, "atk": 500, "def": 310, "speed": 102, "cpct": 5, "cdmg": 50, "aggro": 100 }
+    }
+  },
+  "tree": {
+    "1501201": { "key": "cpct", "value": 4 }
+  }
+}

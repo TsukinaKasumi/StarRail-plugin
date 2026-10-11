@@ -1,0 +1,10 @@
+{
+  "_comment": "utils/damage/json/RelicSetSkill.json 的合成最小表（结构同真实文件 {setId:{件数:{Property,Value}}}），测试启动时写入沙箱 pluginRoot/utils/damage/json/ 供 miaoSync 的套装常驻聚合读取。数值为合成的整值便于手算：101 四件套 HP+12%、301 两件套 ATK+8%",
+  "101": {
+    "2": { "Property": "SpeedDelta", "Value": 6 },
+    "4": { "Property": "HPAddedRatio", "Value": 0.12 }
+  },
+  "301": {
+    "2": { "Property": "AttackAddedRatio", "Value": 0.08 }
+  }
+}

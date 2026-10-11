@@ -1,0 +1,31 @@
+{
+  "_comment": "miao-plugin resources/meta-sr/character/<名>/data.json 的最小合成副本：仅含 miaoSync 读取的字段（id/name/elem/attr[promote].attrs+grow/tree{pointId:{key,value}}）。attr 数值为合成整数便于手算：80 级 6 突破 hp = 800 + 10×79 = 1590。tree 键语义对照 miao Attr.setCharAttr（atk/hp/def 为百分比、speed 为平砍、joy 非面板属性）",
+  "id": 1104,
+  "key": "gepard-synth",
+  "name": "杰帕德",
+  "star": 5,
+  "elem": "冰",
+  "weapon": "存护",
+  "attr": {
+    "0": {
+      "promote": 0,
+      "maxLevel": 20,
+      "grow": { "hp": 10, "atk": 4.5, "def": 5, "speed": 0 },
+      "attrs": { "hp": 200, "atk": 90, "def": 120, "speed": 101, "cpct": 5, "cdmg": 50, "aggro": 125 }
+    },
+    "6": {
+      "promote": 6,
+      "maxLevel": 80,
+      "grow": { "hp": 10, "atk": 4.5, "def": 5, "speed": 0 },
+      "attrs": { "hp": 800, "atk": 350, "def": 460, "speed": 101, "cpct": 5, "cdmg": 50, "aggro": 125 }
+    }
+  },
+  "tree": {
+    "1104101": { "key": "cpct", "value": 4 },
+    "1104201": { "key": "def", "value": 10 },
+    "1104202": { "key": "hp", "value": 8 },
+    "1104203": { "key": "speed", "value": 2 },
+    "1104204": { "key": "joy", "value": 5 },
+    "1104205": { "key": "atkPct", "value": 4 }
+  }
+}
