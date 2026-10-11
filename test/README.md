@@ -16,6 +16,7 @@ test/
 │   ├── factories.mjs          #   合成数据工厂（抽卡记录/srJson 树）
 │   └── fetch-mock.mjs         #   网络请求 mock（测试禁真实网络）
 ├── fixtures/                  # 静态合成数据（按域分目录；严禁真实用户数据）
+├── apps/                      # 与 apps/ 镜像（命令分派等 app 层测试）
 └── utils/                     # 与 src 的 utils/ 镜像
     ├── gacha/                 #   抽卡记录域（poolData/stat/url/sync/uigf）
     ├── gachasimulation/       #   模拟抽卡域（pools/probability/simulate）
