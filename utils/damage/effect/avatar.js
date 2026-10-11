@@ -121,6 +121,13 @@ let SanQiBPSkillBase = null;      // 三月七冻结附加（BPSkill 槽位按�
 let NaTaShaNormalBase = null;     // 娜塔莎普攻（6魂 +生命上限 40% 折入倍率）
 let SangBoBPSkillBase = null;     // 桑博战技（1魂 5 段→6 段）
 let JiaLaHeTalentBase = null;     // 加拉赫强化普攻（Talent 槽位按普攻等级改写常量）
+// 批次4（开拓者旧形态）倍率基线缓存（命魂/等级/面板驱动的动态改写，按次重算、可回退不累积；
+// 穹/星同命途形态 SkillData 条目内容一致，基线缓存跨形态共享安全，配对一致性由测试固化）
+let TbDesTalentBase = null;       // 毁灭终结技主目标（Talent 槽位按终结技等级改写常量）
+let TbDesXeBase = null;           // 毁灭终结技副目标（Xe 槽位按终结技等级改写常量）
+let TbPreNormalBase = null;       // 存护普攻（1魂 +25% 防御折入倍率）
+let TbPreTalentBase = null;       // 存护强化普攻（Talent 槽位按普攻等级改写常量）
+let TbPreUltraBase = null;        // 存护终结技（攻击+防御复合倍率的防御折入）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -158,6 +165,81 @@ function trailblazerMemory(data, base_attr, attribute_bonus) {
         attribute_bonus['Ultra_CriticalChance'] =
             1 + get_let_value(attribute_bonus, 'Ultra_CriticalChance');
     }
+}
+// 穹·毁灭/星·毁灭（开拓者·毁灭，两者数据完全相同；展示行照抄 miao calc.js）
+function trailblazerDestruction(data, base_attr, attribute_bonus) {
+    const dict = skilldict[String(data.avatarId)];
+    // 天赋-牵制盗垒：击破弱点后攻击力提高（最多叠 2 层，miao buff 按单层计，照抄）
+    attribute_bonus['AttackAddedRatio'] =
+        levelValue(dict.T_AtkPct, stdLevel(data, 3)) +
+        get_let_value(attribute_bonus, 'AttackAddedRatio');
+    // 行迹-坚韧：天赋每层防御力+10%（miao 按 2 层计 20%；本形态无防御倍率行，
+    //  不影响任何伤害输出，忠实照抄 miao）
+    attribute_bonus['DefenceAddedRatio'] =
+        0.2 + get_let_value(attribute_bonus, 'DefenceAddedRatio');
+    // 行迹-斗志：施放战技或终结技【全胜•安息全垒打】时对指定目标伤害+25%
+    //  （miao 仅标 params.buff 的战技/终结技主目标两行；主目标行置于 Talent 槽位，
+    //    经 TalentDmgAdd 命中——战技位/终结技位光锥增伤无法命中 Talent/Xe 槽位的
+    //    终结技行，引擎架构限制，同批次3 虎克先例披露）
+    attribute_bonus['BPSkillDmgAdd'] =
+        0.25 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+    attribute_bonus['TalentDmgAdd'] =
+        0.25 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+    // 终结技主/副目标（Talent/Xe 槽位按终结技等级改写常量——miao 两行均取 q 表）
+    const qLv = stdLevel(data, 2);
+    if (!TbDesTalentBase) {
+        TbDesTalentBase = [...dict.Talent];
+    }
+    if (!TbDesXeBase) {
+        TbDesXeBase = [...dict.Xe];
+    }
+    dict.Talent = TbDesTalentBase.map(() => levelValue(TbDesTalentBase, qLv));
+    dict.Xe = TbDesXeBase.map(() => levelValue(TbDesXeBase, qLv));
+}
+// 穹·存护/星·存护（开拓者·存护，两者数据完全相同；天赋护盾量行引擎无护盾通道，
+// 跳过并披露——直伤 3 行照抄 miao calc.js，防御倍率部分折入攻击倍率）
+function trailblazerPreservation(data, base_attr, attribute_bonus) {
+    const dict = skilldict[String(data.avatarId)];
+    // 6魂：施放强化普攻或终结技后防御力+10%，最多 3 层（miao 按满层 30% 计；
+    //  先注入再取面板，折入倍率的防御部分与 miao attr.def 口径一致）
+    if (data.rank >= 6) {
+        attribute_bonus['DefenceAddedRatio'] =
+            0.3 + get_let_value(attribute_bonus, 'DefenceAddedRatio');
+    }
+    // 1魂：普攻/强化普攻额外造成 25%/50%（每目标）防御力的火属性伤害；
+    //  终结技为「攻击力倍率+防御力倍率」复合伤害——防御部分一律折入倍率
+    //  （mult + def×比例/atk，按面板重算，基线缓存可回退；光锥/套装特效增益
+    //   未并入钩子时点属性，引擎架构内的近似，同三月七/娜塔莎先例）
+    const def = panelDefence(base_attr, attribute_bonus);
+    const atk = panelAttack(base_attr, attribute_bonus);
+    const bLv = stdLevel(data, 0);
+    if (!TbPreNormalBase) {
+        TbPreNormalBase = [...dict.Normal];
+    }
+    dict.Normal = data.rank >= 1
+        ? TbPreNormalBase.map(v => round10(v + def * 0.25 / atk))
+        : [...TbPreNormalBase];
+    // 强化普攻扩散总伤（Talent 槽位按普攻等级改写常量；1魂附加 50%×3 防御）
+    if (!TbPreTalentBase) {
+        TbPreTalentBase = [...dict.Talent];
+    }
+    const enhanced = levelValue(TbPreTalentBase, bLv) +
+        (data.rank >= 1 ? def * 0.5 * 3 / atk : 0);
+    dict.Talent = TbPreTalentBase.map(() => round10(enhanced));
+    // 终结技：攻击力倍率 + 防御力倍率×def/atk（同等级位对位折入，Ultra_Def 隐藏表）
+    if (!TbPreUltraBase) {
+        TbPreUltraBase = [...dict.Ultra];
+    }
+    dict.Ultra = TbPreUltraBase.map((v, i) =>
+        round10(v + dict.Ultra_Def[i] * def / atk));
+}
+// 穹·同谐/星·同谐（开拓者·同谐，两者数据完全相同；超击破/文本行引擎无击破通道，
+// 跳过并披露——miao calc 仅战技 1 个直伤行，照抄不虚构）
+function trailblazerHarmony(data) {
+    const dict = skilldict[String(data.avatarId)];
+    // 6魂：战技的额外伤害次数 +2（5 段→7 段，两档数组 BPSkill5/BPSkill7 按命途切换；
+    //  终结技击破特攻为队友增益、行迹-卫我起舞仅作用超击破，均不入直伤行）
+    dict.BPSkill = data.rank >= 6 ? [...dict.BPSkill7] : [...dict.BPSkill5];
 }
 const Avatar = (data, base_attr, attribute_bonus) => {
     const avatarGetter = {
@@ -588,6 +670,35 @@ const Avatar = (data, base_attr, attribute_bonus) => {
         '8010': () => {
             // 星·欢愉
             trailblazerElation(data, base_attr, attribute_bonus);
+        },
+        // ==================== 开拓者旧形态（1.x-2.x，批次4） ====================
+        // 每对穹/星同命途形态技能组相同（SkillData 两份条目、钩子共享函数），
+        // buff 数值与倍率组合一律对照 miao-plugin 各形态 calc.js
+        '8001': () => {
+            // 穹·毁灭（与星·毁灭数据完全相同；4魂对弱点击破目标暴击率+25% 为
+            //  miao calc 未收录的条件加成，照抄 miao 不虚构，披露）
+            trailblazerDestruction(data, base_attr, attribute_bonus);
+        },
+        '8002': () => {
+            // 星·毁灭
+            trailblazerDestruction(data, base_attr, attribute_bonus);
+        },
+        '8003': () => {
+            // 穹·存护（与星·存护数据完全相同；行迹-行胜思 持护盾攻击+15% 为
+            //  miao calc 未收录的条件加成，照抄 miao 不虚构，披露）
+            trailblazerPreservation(data, base_attr, attribute_bonus);
+        },
+        '8004': () => {
+            // 星·存护
+            trailblazerPreservation(data, base_attr, attribute_bonus);
+        },
+        '8005': () => {
+            // 穹·同谐（与星·同谐数据完全相同）
+            trailblazerHarmony(data);
+        },
+        '8006': () => {
+            // 星·同谐
+            trailblazerHarmony(data);
         },
         // ==================== 记忆命途（3.x+）角色 ====================
         // buff 数值与转化公式一律对照 miao-plugin 各角色 calc.js；
