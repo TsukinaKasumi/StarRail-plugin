@@ -24,7 +24,7 @@ import { detectAndRemapAvatar } from './enhanced.js'
 import {
   propertyTypeToAffix, propertyTypeToMiaoAttr, elemToDamageType,
   damageTypeToAddedKey, anchorBySlot, mainSlotType, mainSlotIcon,
-  mainSlotMaxLevel, extraSlotType, extraSlotIcon, starData,
+  mainSlotMaxLevel, extraSlotType, extraSlotIcon, extraSlotMaxLevel, starData,
   weaponRarityById, weaponRarityStr, relicRarityById, statNodeIcon
 } from './affixData.js'
 
@@ -354,7 +354,8 @@ function makeSkillEntry (pointId, slot, type, skill, avatarId) {
     type,
     anchor: anchorBySlot[slot] || null,
     icon: skill.icon || synthMainIcon(avatarId, slot),
-    max_level: Number(skill.max_level) || mainSlotMaxLevel[slot] || 1
+    max_level: Number(skill.max_level) || extraSlotMaxLevel[slot] ||
+      mainSlotMaxLevel[slot] || 1
   }
 }
 

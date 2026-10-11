@@ -115,12 +115,15 @@ export const damageTypeToAddedKey = {
 // 槽位规律（与 utils/damage/json/character.json 行迹节点键一致）：
 // 001-004 = 普攻/战技/终结技/天赋升级节点，007 = 秘技节点（Point01-05），
 // 101-103 = 能力节点（Point06-08），201-210 = 属性小节点（Point09-18）
+// 301/302 = 忆灵技/忆灵天赋（记忆命途），420/421 = 欢愉技/强化欢愉技（欢愉命途）
+// 坐标在 skillTree.json 按命途查表（欢愉的 Point19=欢愉技位，记忆的 Point19/20=忆灵技/忆灵天赋位）
 export const anchorBySlot = {
   1: 'Point01', 2: 'Point02', 3: 'Point03', 4: 'Point04', 7: 'Point05',
   101: 'Point06', 102: 'Point07', 103: 'Point08',
   201: 'Point09', 202: 'Point10', 203: 'Point11', 204: 'Point12',
   205: 'Point13', 206: 'Point14', 207: 'Point15', 208: 'Point16',
-  209: 'Point17', 210: 'Point18'
+  209: 'Point17', 210: 'Point18',
+  301: 'Point19', 302: 'Point20', 420: 'Point19', 421: 'Point19'
 }
 
 // 主技能槽位 -> behaviorList type 展示名（米游社 remake 字段同名）
@@ -144,6 +147,10 @@ export const extraSlotType = {
 export const extraSlotIcon = {
   301: 'memosprite_skill', 302: 'memosprite_talent', 420: 'elation', 421: 'elation'
 }
+
+// 扩展技能槽位 -> 满级等级（欢愉技 10 级；忆灵技/忆灵天赋 6 级。
+// 旧缓存与 miao 数据同步均写 1，渲染与转换时按此表规范）
+export const extraSlotMaxLevel = { 301: 6, 302: 6, 420: 10, 421: 10 }
 
 // 属性小节点（槽位 201-210）的游戏数据 icon 为空串，需按 角色+槽位 查属性 key
 // 再映射到本地属性图标（resources/panel/resources/skill/tree-{key}.webp，

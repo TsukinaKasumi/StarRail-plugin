@@ -35,8 +35,8 @@ import { buildRelicSets } from './mysConverter.js'
 import {
   miaoAttrToAffix, elemToDamageType, anchorBySlot, mainSlotType,
   mainSlotIcon, mainSlotMaxLevel, extraSlotType, extraSlotIcon,
-  starData, mainIdx, weaponRarityById, weaponRarityStr, relicRarityById,
-  statNodeIcon
+  extraSlotMaxLevel, starData, mainIdx, weaponRarityById, weaponRarityStr,
+  relicRarityById, statNodeIcon
 } from './affixData.js'
 import { relicsetskill, equipment_dict } from '../damage/data/data.js'
 
@@ -382,9 +382,9 @@ function buildBehaviorList (avatarId, av, meta) {
         id: avatarId * 1000 + slotStr,
         level,
         type: extraSlotType[slotStr],
-        anchor: null,
+        anchor: anchorBySlot[slotStr] || null,
         icon: synthSkillIcon(avatarId, slotStr),
-        max_level: 1
+        max_level: extraSlotMaxLevel[slotStr]
       })
     }
   }

@@ -23,7 +23,7 @@ import {avatar_ability} from '../utils/damage/effect/avatar.js'
 import {weapon_ability} from '../utils/damage/effect/weapon.js'
 import {relice_ability} from '../utils/damage/effect/relice.js'
 import {detectAndRemapAvatar} from '../utils/panel/enhanced.js'
-import {statNodeIcon} from '../utils/panel/affixData.js'
+import {statNodeIcon, anchorBySlot, extraSlotIcon, extraSlotMaxLevel} from '../utils/panel/affixData.js'
 import {convertMysAvatarList} from '../utils/panel/mysConverter.js'
 import {damageTypeToMiaoElem, scoreRelics} from '../utils/panel/relicScore.js'
 import {getMiaoProfileTime, importMiaoPlayerData} from '../utils/panel/miaoSync.js'
@@ -323,13 +323,27 @@ export class Panel extends plugin {
       })
     }
     _data = _data.map(item => {
+      // 旧缓存（锚点映射加入前写入）的扩展技能条目 anchor 为 null：按 pointId 末三位查槽位表兜底。
+      // anchor 必须写回条目：模板 type1/2/3 分类、尺寸与等级文字都依赖它
+      const slot = Number(item.id.toString().slice(-3))
+      const anchor = item.anchor || anchorBySlot[slot]
+      let icon = item.icon || statNodeIcon(avatarId, slot)
+      // 扩展技能位图标规范：旧缓存早期命名（_xe/_me/_mt）或空值 → extraSlotIcon 名
+      // （{avatarId}_elation/_memosprite_*，模板按文件名取本地资源）
+      if (extraSlotIcon[slot]) {
+        const want = `icon/skill/${avatarId}_${extraSlotIcon[slot]}.png`
+        if (icon !== want && (!icon ||
+          !fs.existsSync(`${pluginResources}/panel/resources/skill/${icon.split('/').pop()}`))) {
+          icon = want
+        }
+      }
       return {
         ...item,
-        // 属性小节点（Point09-18）游戏数据 icon 为空串：按 角色+槽位 查
-        // skillTreeStats 补属性图标，旧缓存（avocado/miao 同步早期）无需重拉
-        icon: item.icon ||
-          statNodeIcon(avatarId, Number(item.id.toString().slice(-3))),
-        position: skillTreeData[charpath][item.anchor]
+        anchor,
+        icon,
+        // 扩展技能满级：欢愉技 10 / 忆灵技、忆灵天赋 6（旧缓存与 miao 同步均写 1）
+        max_level: extraSlotMaxLevel[slot] || item.max_level,
+        position: skillTreeData[charpath][anchor]
       }
     })
     return _data

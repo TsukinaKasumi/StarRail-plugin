@@ -10,7 +10,9 @@
  *     存量 Knight 命途存在约 3px 的历史手测偏差，属可接受视觉误差）
  *
  * 记忆/欢愉（4.x 新命途）：背景为本插件自建（Memory.svg / Joy.svg，风格对齐既有 7 命途），
- * 坐标与 SVG 锚点由 tools/gen-data 同族脚本成对生成，本文件验证成对一致性。
+ * 布局按 BWiki 行迹页实测形态重排（欢愉 19 锚点含欢愉技 Point19；记忆 20 锚点含忆灵技
+ * Point19/忆灵天赋 Point20），坐标与 SVG 锚点由 temp/gen-skilltree-svg.mjs 成对生成，
+ * 本文件验证成对一致性。
  */
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
@@ -37,11 +39,11 @@ const charTable = JSON.parse(fs.readFileSync(
 
 /** 节点图标框边长（canvas 空间，new_panel.html type1/2/3 绘制尺寸） */
 const anchorWidth = (anchor) =>
-  /^Point0[1-5]$/.test(anchor) ? 138 : /^Point0[6-8]$/.test(anchor) ? 144 : 102
+  /^(Point0[1-5]|Point19|Point20)$/.test(anchor) ? 138 : /^Point0[6-8]$/.test(anchor) ? 144 : 102
 
 /** 锚点圆半径容差窗（r≈34.5/34 双圆主技能插座、r≈36 能力节点、r≈25.5 属性小节点） */
 const anchorRadiusWindow = (anchor) =>
-  /^Point0[1-5]$/.test(anchor) ? [32, 36] : /^Point0[6-8]$/.test(anchor) ? [34, 38] : [23, 27]
+  /^(Point0[1-5]|Point19|Point20)$/.test(anchor) ? [32, 36] : /^Point0[6-8]$/.test(anchor) ? [34, 38] : [23, 27]
 
 /** 提取 SVG 全部 circle/ellipse 的最终圆心与半径（解析 matrix/translate 变换） */
 function extractAnchorShapes (svg) {
@@ -91,13 +93,15 @@ test('skillTreeImg：覆盖 skillTree.json 全部命途且背景文件存在', (
   }
 })
 
-test('坐标换算固化断言：每个命途 18 坐标均命中 SVG 锚点圆（换算关系防漂移）', () => {
+test('坐标换算固化断言：每命途锚点数（18/欢愉19/记忆20）均命中 SVG 锚点圆（换算关系防漂移）', () => {
+  const expectedCount = { 欢愉: 19, 记忆: 20 }
   for (const [charpath, points] of Object.entries(tree)) {
     const file = path.join(treeDir, path.basename(skillTreeImg[charpath]))
     const svg = fs.readFileSync(file, 'utf8')
     const svgW = parseFloat(svg.match(/width="(\d+)"/)[1])
     const svgH = parseFloat(svg.match(/height="(\d+)"/)[1])
-    assert.equal(Object.keys(points).length, 18, `${charpath} 应有 18 个锚点坐标`)
+    assert.equal(Object.keys(points).length, expectedCount[charpath] ?? 18,
+      `${charpath} 应有 ${expectedCount[charpath] ?? 18} 个锚点坐标`)
     const shapes = extractAnchorShapes(svg)
     for (const [anchor, pos] of Object.entries(points)) {
       const w = anchorWidth(anchor)
@@ -118,7 +122,8 @@ test('坐标换算固化断言：每个命途 18 坐标均命中 SVG 锚点圆�
 /**
  * 合成面板缓存形态的 behaviorList（与 miaoSync/mysConverter 产出同构）：
  * 5 主技能（Point01-05 游戏图标路径）+ 3 能力节点（skilltree1-3）+ 10 属性小节点
- * （icon 空串——游戏数据对属性小节点无独立图标）+ 新命途扩展技能位（anchor null）。
+ * （icon 空串——游戏数据对属性小节点无独立图标）+ 新命途扩展技能位（anchor null，
+ * 模拟锚点映射加入前的旧缓存——handleSkillTree 按 pointId 末三位兜底解析）。
  */
 function synthBehaviorList (avatarId, extraSlots = []) {
   const mains = {
@@ -176,26 +181,33 @@ const NEW_PATH_CASES = [
 ]
 
 for (const { charpath, avatarId, extraSlots } of NEW_PATH_CASES) {
-  test(`渲染链（${charpath}/${avatarId}）：18 坐标齐全、扩展位无坐标、节点图标本地存在`, () => {
+  test(`渲染链（${charpath}/${avatarId}）：${18 + extraSlots.length} 坐标齐全（含扩展位）、节点图标本地存在`, () => {
     const behaviorList = synthBehaviorList(avatarId, extraSlots)
-    const skillTree = panel.handleSkillTree(behaviorList, charpath)
+    const skillTree = panel.handleSkillTree(behaviorList, charpath, avatarId)
     assert.equal(skillTree.length, behaviorList.length)
 
-    // 18 锚点全部解析到坐标（老代码对无坐标命途返回 position:null 降级，现在必须齐全）
+    // 18 基础锚点 + 扩展位（301/302→Point19/20、420→Point19）全部解析到坐标
     const anchored = skillTree.filter(s => s.anchor)
-    assert.equal(anchored.length, 18)
+    assert.equal(anchored.length, 18 + extraSlots.length)
     for (const s of anchored) {
       assert.ok(Array.isArray(s.position) && s.position.length === 2,
         `${charpath} ${s.anchor} 应有坐标（此前降级为 null）`)
       assert.ok(s.position.every(n => Number.isFinite(n)), `${charpath} ${s.anchor} 坐标应为数值`)
     }
-    // 扩展技能位（忆灵/欢愉技能）：anchor null → 无坐标，模板跳过画布绘制
+    // 扩展技能位（忆灵/欢愉技能）：旧缓存 anchor null 兜底为 Point19/Point20，
+    // 空图标规范到 extraSlotIcon 命名，画布按主技能尺寸（138px）绘制
+    const extraAnchorBySlot = { 301: 'Point19', 302: 'Point20', 420: 'Point19', 421: 'Point19' }
+    const extraMaxBySlot = { 301: 6, 302: 6, 420: 10, 421: 10 }
     for (const slot of extraSlots) {
       const extra = skillTree.find(s => s.id === avatarId * 1000 + slot)
       assert.ok(extra, `扩展位 ${slot} 应保留在列表`)
-      assert.ok(!extra.position, `扩展位 ${slot} 无行迹画布坐标（画布不绘制）`)
+      assert.equal(extra.anchor, extraAnchorBySlot[slot], `扩展位 ${slot} anchor 应兜底为 ${extraAnchorBySlot[slot]}`)
+      assert.ok(Array.isArray(extra.position), `扩展位 ${slot} 应有行迹画布坐标`)
+      assert.match(extra.icon, new RegExp(`^icon/skill/${avatarId}_(elation|memosprite_(skill|talent))\\.png$`),
+        `扩展位 ${slot} 图标应规范到 extraSlotIcon 命名（实际 ${extra.icon}）`)
+      assert.equal(extra.max_level, extraMaxBySlot[slot], `扩展位 ${slot} 满级应规范（欢愉技 10 / 忆灵 6）`)
     }
-    // 节点图标（Point01-08 有图标路径的节点）本地资源存在 —— 模板已本地化不再走 avocado CDN
+    // 节点图标（含属性小节点按 skillTreeStats 补的属性图标）本地资源存在 —— 模板已本地化不再走 avocado CDN
     for (const s of anchored.filter(n => n.icon)) {
       const file = path.join(skillDir, s.icon.split('/').pop())
       assert.ok(fs.existsSync(file), `${charpath} ${s.anchor} 图标缺失：${s.icon}`)
