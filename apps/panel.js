@@ -991,23 +991,12 @@ function readJson (file, root = pluginRoot) {
  * @param {object} data 面板角色数据（与传入 damageCalculator 的同一对象）
  * @return {number} 引擎口径的 joy/joyPlus/joyPct 三键之和
  */
-function getJoyValue (data) {
-  // 伤害引擎 utils/damage/main.js 的 damage() 只返回伤害列表，不暴露内部的
-  // attribute_bonus；这里按引擎同一聚合链复算欢愉键合计（欢愉伤害分支消费的
-  // 即该合计）：遗器词条/行迹/光锥基础属性/套装常驻词条 → 角色钩子 → 光锥
-  // 钩子 → 套装钩子。特效钩子与数据字典直接复用 utils/damage 的导出，与引擎
-  // 同源，钩子数据更新无需同步本函数；聚合口径需与 main.js 的
-  // get_attribute_bonus / getdamages_num 保持同步，引擎若直接暴露该值，
-  // 此处应改为直接取用。
-  // 基础属性（引擎 get_base_attr 口径：基础攻防生速 + 基础双暴 5%/50%）
-  let base_attr = {
-    hp: data.properties.hpBase,
-    attack: data.properties.attackBase,
-    defence: data.properties.defenseBase,
-    CriticalChanceBase: 0.05,
-    CriticalDamageBase: 0.5,
-    speed: data.properties.speedBase
-  }
+export function getJoyValue (data) {
+  // 面板欢愉度显示口径：对齐 miao-plugin 面板（models/attr/Attr.calc）——
+  // 只聚合静态源（遗器主/副词条 + 行迹小节点 + 光锥静态属性 + 套装常驻词条），
+  // 不含角色被动转化（如砂金•戏浪速度转欢愉）、光锥/套装效果钩子——这些
+  // 动态 buff 在 miao 侧仅进 DmgAttr 伤害计算、不进面板显示（用户以 miao 显示为准）。
+  // 引擎伤害计算的欢愉消费（utils/damage/main.js elation 分支）不受本函数影响。
   let attribute_bonus = {}
   let addBonus = (name, value) => {
     attribute_bonus[name] = (attribute_bonus[name] || 0) + value
@@ -1029,7 +1018,7 @@ function getJoyValue (data) {
       addBonus(properties.type, properties.value)
     }
   })
-  // 光锥基础属性（未知光锥降级为空）
+  // 光锥静态属性（未知光锥降级为空）
   if (data.equipment.id) {
     let equipattr = (equipment_dict[data.equipment.id] || {})[data.equipment.rank] || []
     equipattr.forEach(attr => {
@@ -1045,15 +1034,6 @@ function getJoyValue (data) {
       if (set_skill && set_skill.Property) {
         addBonus(set_skill.Property, set_skill.Value)
       }
-    })
-  }
-  // 特效钩子链（与引擎 getdamages_num 同顺序：角色 → 光锥 → 套装）
-  attribute_bonus = avatar_ability(data, base_attr, attribute_bonus)
-  attribute_bonus = weapon_ability(data.equipment,
-    skilldict[String(data.avatarId)].Ultra_Use, base_attr, attribute_bonus)
-  if (data.relic_sets && data.relic_sets.length > 0) {
-    data.relic_sets.forEach(relic_set => {
-      attribute_bonus = relice_ability(relic_set, base_attr, attribute_bonus)
     })
   }
   return (attribute_bonus.joy || 0) +
