@@ -167,23 +167,21 @@ export default class GatchaData {
       })
     }
 
-    if (gatchaType === 1 || gatchaType === 0) {
-      map.set(1, withList(await this.getData(1)))
+    // 各类型记录拉取：
+    // - 总览(0) 展示已有数据，对缺失的类型跳过（如未抽过/未同步联动池的用户没有 21/22 文件，
+    //   C12 后曾因无条件拉取导致总览直接报"抽卡记录不存在"）；
+    //   全部类型均无数据时仍抛错，保留"本地暂无记录"的引导提示
+    // - 显式查询单一类型（含 2 新手池实时拉取）保持严格：缺失即报错
+    const types = gatchaType === 0 ? [1, 11, 12, 21, 22] : [gatchaType]
+    for (const t of types) {
+      try {
+        map.set(t, withList(await this.getData(t)))
+      } catch (err) {
+        if (gatchaType !== 0) throw err
+      }
     }
-    if (gatchaType === 2) {
-      map.set(2, withList(await this.getData(2)))
-    }
-    if (gatchaType === 11 || gatchaType === 0) {
-      map.set(11, withList(await this.getData(11)))
-    }
-    if (gatchaType === 12 || gatchaType === 0) {
-      map.set(12, withList(await this.getData(12)))
-    }
-    if (gatchaType === 21 || gatchaType === 0) {
-      map.set(21, withList(await this.getData(21)))
-    }
-    if (gatchaType === 22 || gatchaType === 0) {
-      map.set(22, withList(await this.getData(22)))
+    if (map.size === 0) {
+      return Promise.reject('抽卡记录不存在')
     }
 
     obj.totalNum = getMapValueLength(map, 1) + getMapValueLength(map, 11) + getMapValueLength(map, 12) +

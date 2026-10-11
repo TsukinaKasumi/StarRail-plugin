@@ -309,3 +309,34 @@ test('getData 文件分支：存在即读取，缺失/未指定 type 时以字�
   await assert.rejects(() => gd.getData(1), (err) => err === '抽卡记录不存在', '未落盘类型应以字符串 reject')
   await assert.rejects(() => new GatchaData(uid).getData(), (err) => err === '查询type为空', '未指定 type 应 reject')
 })
+
+// ---- 回归：总览容忍缺失类型（线上反馈 2026-10-11，曾因 C12 无条件拉取 21/22 崩溃）----
+
+test('⑧ stat(0) 无 21/22 文件（未抽联动池用户）：总览跳过缺失类型不报错', async () => {
+  const uid = '100000008'
+  writePluginGatcha(sandbox, uid, makeRecordSet([
+    { type: 1, time: '2026-10-01 10:00:00', name: '姬子', rank: 5 },
+    { type: 11, time: '2026-10-01 10:01:00', name: '真珠', rank: 5 },
+    { type: 12, time: '2026-10-01 10:02:00', name: '献给明日的色彩', rank: 5, itemId: '23061' }
+  ]))
+  const stat = await new GatchaData(uid).stat(0)
+  assert.equal(stat.totalNum, 3)
+  assert.deepEqual(stat.data.map((d) => d.typeName), ['群星跃迁', '限定跃迁', '光锥跃迁'], '缺失的 21/22 不产生数据块')
+  assert.equal(stat.totalNum21, 0)
+  assert.equal(stat.totalNum22, 0)
+  // currInfo.last 含 21/22 键（初始化结构完整，渲染模板按类型读）
+  assert.ok(stat.currInfo.last[21] && stat.currInfo.last[22])
+})
+
+test('⑨ 缺失类型的显式查询仍严格报错；总览全空保留引导提示语义', async () => {
+  const uid = '100000009'
+  writePluginGatcha(sandbox, uid, makeRecordSet([
+    { type: 11, time: '2026-10-01 10:00:00', name: '真珠', rank: 5 }
+  ]))
+  const gd = new GatchaData(uid)
+  await assert.rejects(() => gd.stat(21), (err) => err === '抽卡记录不存在',
+    '显式查询联动池（无记录）应报错引导同步/更新')
+  await assert.rejects(() => gd.stat(22), (err) => err === '抽卡记录不存在')
+  // 完全无记录的 uid：总览也 reject（渲染层转为"本地暂无抽卡记录"提示）
+  await assert.rejects(() => new GatchaData('100000010').stat(0), (err) => err === '抽卡记录不存在')
+})
