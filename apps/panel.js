@@ -35,16 +35,20 @@ const relicsPathData = readJson('resources/panel/data/relics.json')
 const charData = readJson('resources/panel/data/character.json')
 // 引入技能树位置
 const skillTreeData = readJson('resources/panel/data/skillTree.json')
-// 技能树背景图
+// 技能树背景图（导出供测试消费：test/apps/panel-skilltree.test.js 校验映射与坐标完备性）
 const skillTreeImgBaseURL = 'panel/resources/skill_tree/'
-const skillTreeImg = {
+export const skillTreeImg = {
   存护: `${skillTreeImgBaseURL}Knight.svg`,
   智识: `${skillTreeImgBaseURL}Mage.svg`,
   丰饶: `${skillTreeImgBaseURL}Priest.svg`,
   巡猎: `${skillTreeImgBaseURL}Rogue.svg`,
   毁灭: `${skillTreeImgBaseURL}Warrior.svg`,
   同谐: `${skillTreeImgBaseURL}Shaman.svg`,
-  虚无: `${skillTreeImgBaseURL}Warlock.svg`
+  虚无: `${skillTreeImgBaseURL}Warlock.svg`,
+  // 记忆/欢愉：4.x 新命途，背景与坐标为本插件自建（Memory.svg/Joy.svg +
+  // skillTree.json 同名键），风格对齐既有 7 命途
+  记忆: `${skillTreeImgBaseURL}Memory.svg`,
+  欢愉: `${skillTreeImgBaseURL}Joy.svg`
 }
 
 export class Panel extends plugin {
@@ -158,7 +162,8 @@ export class Panel extends plugin {
       // 模板跳过命途文字与行迹画布，伤害计算同样按未收录降级），不中断整个面板查询
       data.charpath = charData[data.avatarId]?.path
       this.fixupRelicMeta(data.relics)
-      // 行迹（无背景/坐标数据的命途：模板按 skillTreeBkg 跳过行迹渲染）
+      // 行迹画布背景与坐标（记忆/欢愉已自建；再往后的新命途在两者缺位时由
+      // 模板 {{if skillTreeBkg}} 跳过行迹渲染、handleSkillTree 返回无坐标列表降级）
       data.skillTreeBkg = skillTreeImg[data.charpath]
       data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
       data.skilllist = _.cloneDeep(data.behaviorList)
