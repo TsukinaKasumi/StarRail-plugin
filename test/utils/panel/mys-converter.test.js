@@ -253,12 +253,13 @@ test('记忆角色（阿格莱雅）：servant_skills 的忆灵技/忆灵天赋 
     [1402001, 1, '普攻'], [1402002, 6, '战技'], [1402003, 10, '终结技'],
     [1402004, 6, '天赋'], [1402007, 1, '秘技']
   ])
+  // mys 原始 point_id 为 8 位（fixture 14020301/14020302），转换器规范化为 avatarId×1000+槽位
   assert.deepEqual(bl[5], {
-    id: 14020301, level: 10, type: '忆灵技', anchor: null,
+    id: 1402301, level: 10, type: '忆灵技', anchor: null,
     icon: 'icon/skill/1402_me.png', max_level: 1
   })
   assert.deepEqual(bl[6], {
-    id: 14020302, level: 10, type: '忆灵天赋', anchor: null,
+    id: 1402302, level: 10, type: '忆灵天赋', anchor: null,
     icon: 'icon/skill/1402_mt.png', max_level: 1
   })
 })

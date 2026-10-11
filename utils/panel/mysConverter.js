@@ -91,7 +91,18 @@ function convertOne (ds) {
   }
   entry.relic_sets = buildRelicSets(relics)
   // 强化形态（刃Pro 等）：avatarId/point_id 前缀重映射
-  return detectAndRemapAvatar(entry)
+  const remapped = detectAndRemapAvatar(entry)
+  // pointId 规范化：统一为 avatarId×1000+槽位 的标准形（与 miaoSync/avocado 契约一致）。
+  // 米游社对忆灵技/忆灵天赋返回 8 位原始 point_id（如 14020301 → 规范为 1402301），
+  // 下游面板星魂加级按完整 pointId 匹配，非标准形会失配；
+  // 强化形态经上面重写后已是 7 位标准形，长度判定不受影响
+  for (const s of remapped.behaviorList) {
+    const canonical = remapped.avatarId * 1000 + Number(String(s.id).slice(-3))
+    if (String(s.id).length > String(canonical).length) {
+      s.id = canonical
+    }
+  }
+  return remapped
 }
 
 /** damage_type 解析：米游社 element（中文/英文枚举）→ 本插件角色表兜底 */
