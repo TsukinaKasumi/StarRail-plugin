@@ -759,10 +759,12 @@ const Avatar = (data, base_attr, attribute_bonus) => {
             }
             if (data.rank >= 2) {
                 // 2魂：我方全体持续伤害+33%——引擎无 DOT 专属增伤键，近似注入两个引爆行（直伤部分被同乘，偏差见提交说明）
-                attribute_bonus['BPSkill_DmgAdd'] =
-                    0.33 + get_let_value(attribute_bonus, 'BPSkill_DmgAdd');
-                attribute_bonus['Ultra_DmgAdd'] =
-                    0.33 + get_let_value(attribute_bonus, 'Ultra_DmgAdd');
+                // 键名必须为无下划线的技能位写法（BPSkillDmgAdd/UltraDmgAdd）：
+                // main.js 按 attr.split('DmgAdd')[0] 匹配技能位，'BPSkill_DmgAdd' 会得到 'BPSkill_' 永不命中（曾为死代码）
+                attribute_bonus['BPSkillDmgAdd'] =
+                    0.33 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+                attribute_bonus['UltraDmgAdd'] =
+                    0.33 + get_let_value(attribute_bonus, 'UltraDmgAdd');
             }
         },
         '2006': () => {

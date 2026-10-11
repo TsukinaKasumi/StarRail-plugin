@@ -248,12 +248,11 @@ test('卡芙卡Pro（2005）手算对照：rank0 / rank6（战技/终结技 DOT 
     //（普攻/追加攻击行不吃 1 魂的技能位键）
     const injury = 1 + 0.085
     const detoRatio = 1 + (rank >= 1 ? 0.3 : 0)
-    // 已知问题（2026-10 抽查发现，待引擎侧修复）：2 魂本应给两个引爆行注入增伤 +33%，
-    // 但 2005 钩子用的键名 'BPSkill_DmgAdd'/'Ultra_DmgAdd'（带下划线）无法被 main.js 的
-    // DmgAdd 匹配命中（attr.split('DmgAdd')[0] 得到 'BPSkill_'，与技能位 'BPSkill' 不等；
-    // 其余全部钩子均用无下划线的 'BPSkillDmgAdd' 等），该注入目前是死代码——
-    // 手算按现状口径（引爆行增伤仍为 1.085）；修复钩子键名后此处应改为 1.415 并同步本注释。
-    const detoInjury = injury
+    // 2魂：我方全体持续伤害+33% 注入两个引爆行（键名 BPSkillDmgAdd/UltraDmgAdd，
+    // 与雷伤遗器同属加算增伤池：rank>=2 时引爆行增伤区 = 1 + 0.085 + 0.33 = 1.415）。
+    // （曾为死代码：钩子误用带下划线的 'BPSkill_DmgAdd' 键名，引擎技能位匹配永不命中，
+    //   2026-10 单元测试抽查发现后已修复键名）
+    const detoInjury = injury + (rank >= 2 ? 0.33 : 0)
     const common = attack * 0.5 * 1.0 * 0.9 // 防御区 0.5、抗性区 1.0、减伤 0.9
     const expected = {
       '普攻': common * normalMult * injury,
