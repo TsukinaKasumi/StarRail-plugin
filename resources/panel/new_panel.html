@@ -219,29 +219,30 @@
     </div>
     <div class="hr"></div>
     {{/if}}
-    <div class="talent">
-        {{each behaviorList behavior i}}{{if 5 > i}}
-        <div class="item">
-            <div class="img">
-                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
-            </div>
-            <div class="level">{{behavior.level}}</div>
-            <div class="type">{{behavior.type}}</div>
-        </div>
-        {{/if}}{{/each}}
-    </div>
-    {{if behaviorList.length > 5}}<div class="extra-skill-box">
-        <!-- 占位原型：忆灵技/忆灵天赋/欢愉技暂以 10px 绿框展示，位置待确认后调整 -->
-        {{each behaviorList behavior i}}{{if i > 4}}
+    {{set skillSlotOrder = ['301','302','420','421','007']}}<div class="talent{{if behaviorList.length > 6}} talent-count-7{{else if behaviorList.length > 5}} talent-count-6{{/if}}">
+        <!-- 单一技能行（自适应密度）：普攻/战技/终结技/天赋 + 扩展技能 + 秘技。
+             behaviorList 前四项恒为 a/e/q/t（apps/panel.js handleBehaviorList 按索引配图标），
+             第 5 项起按 pointId 末三位经 skillSlotOrder 重排渲染：
+             301 忆灵技 / 302 忆灵天赋 / 420 欢愉技 / 421 强化欢愉技（插在天赋后）→ 007 秘技收尾；
+             条数 >5 时挂 talent-count-6/-7 缩小图标与文字（见 new_panel.css）防溢出换行 -->
+        {{each behaviorList behavior i}}{{if 4 > i}}
         <div class="item">
             <div class="img">
                 <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="" onerror="this.style.visibility='hidden'">
             </div>
             <div class="level">{{behavior.level}}</div>
-            <div class="type">{{behavior.path.indexOf('_xe2')>-1?'强化欢愉技':behavior.path.indexOf('_xe')>-1?'欢愉技':behavior.path.indexOf('_me')>-1?'忆灵技':behavior.path.indexOf('_mt')>-1?'忆灵天赋':'扩展技能'}}</div>
+            <div class="type">{{behavior.type}}</div>
         </div>
-        {{/if}}{{/each}}
-    </div>{{/if}}
+        {{/if}}{{/each}}{{each skillSlotOrder slot}}{{each behaviorList behavior i}}{{if i > 3 && behavior.id.toString().slice(-3) == slot}}
+        <div class="item">
+            <div class="img">
+                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="" onerror="this.style.visibility='hidden'">
+            </div>
+            <div class="level">{{behavior.level}}</div>
+            <div class="type">{{behavior.type || (slot == '301' ? '忆灵技' : slot == '302' ? '忆灵天赋' : slot == '421' ? '强化欢愉技' : slot == '007' ? '秘技' : '欢愉技')}}</div>
+        </div>
+        {{/if}}{{/each}}{{/each}}
+    </div>
 </div>
 <div class="other-info">
     <div class="uid">UID：{{uid}}</div>

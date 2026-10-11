@@ -243,6 +243,7 @@ ul {
         .item {
             position: relative;
             width: 33%;
+            min-width: 0;
 
             .img {
                 width: 50px;
@@ -276,57 +277,45 @@ ul {
             .type {
                 margin-top: 13px;
                 text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
-    }
 
-    /* 占位原型：新命途扩展技能位（忆灵技/忆灵天赋/欢愉技）以 10px 绿框展示，位置待确认后调整 */
-    .extra-skill-box {
-        display: flex;
-        gap: 8px;
-        border: 10px solid #23c343;
-        border-radius: 12px;
-        margin-top: 10px;
-        padding: 8px 6px 2px;
-
-        .item {
-            position: relative;
-            flex: 1;
-            max-width: 20%;
-
-            .img {
-                width: 50px;
-                height: 50px;
-                border: 2px solid #23c343;
-                border-radius: 50%;
-                overflow: hidden;
-                margin: 0 auto;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                }
+        /* 技能行自适应密度：扩展技能并入单行后，6/7 个技能时整体缩小防溢出换行
+           （5 个及以下维持原尺寸；模板按 behaviorList.length 挂 talent-count-6/-7） */
+        &.talent-count-6 {
+            .item .img {
+                width: 42px;
+                height: 42px;
             }
 
-            .level {
-                margin: 0 auto;
-                border: 2px solid #23c343;
-                width: 30px;
-                text-shadow: 1px 1px 1px #000;
-                background: #5a5a5a90;
-                text-align: center;
-                border-radius: 5px;
-                font-size: 12px;
-                position: absolute;
-                top: 40px;
-                left: 50%;
-                transform: translateX(-50%);
+            .item .level {
+                width: 26px;
+                font-size: 11px;
+                top: 34px;
             }
 
-            .type {
-                margin-top: 13px;
-                text-align: center;
-                font-size: 12px;
+            .item .type {
+                font-size: 11px;
+            }
+        }
+
+        &.talent-count-7 {
+            .item .img {
+                width: 36px;
+                height: 36px;
+            }
+
+            .item .level {
+                width: 24px;
+                font-size: 10px;
+                top: 29px;
+            }
+
+            .item .type {
+                font-size: 10px;
             }
         }
     }
