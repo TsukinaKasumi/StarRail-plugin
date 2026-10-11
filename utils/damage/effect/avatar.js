@@ -87,6 +87,8 @@ let HeiTaUltraBase = null;        // 大黑塔终结技（+99 层谜底 / 6魂 +
 let NaKeXiaBase = null;           // 那刻夏全行（6魂 ×1.3）
 let KeLyuUltraBase = null;        // 刻律德菈终结技（4魂 +2.4）
 let KeLyuTalentBase = null;       // 刻律德菈天赋附加（6魂 +3.0）
+let WanDiBPSkillBase = null;      // 万敌弑神登神（1魂 +0.3）
+let DanHengTalentBase = null;     // 丹恒•腾荒强化龙灵追击（q 表 + 同袍攻击组合）
 let FireflyProBase = null;
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
@@ -1219,6 +1221,345 @@ const Avatar = (data, base_attr, attribute_bonus) => {
             }
             // 6魂「造成的战技伤害无视 20% 防御力」为战技行专属，引擎无技能位无视防御键，
             // 不注入（避免污染普攻/终结技/追加行；miao calc.js 该 buff 亦为永不生效的死代码）
+        },
+        // ==================== 批次1：3.x 常规限定角色 ====================
+        // buff 数值与倍率组合一律对照 miao-plugin 各角色 calc.js；情景参数取 miao 默认档
+        '1404': () => {
+            // 万敌（生命倍率角色 → 注入；miao 默认【血仇】状态档）
+            const d = skilldict['1404'];
+            // 天赋【血仇】：生命上限提高，数值等同于当前生命上限的 50%（先加，注入按提高后生命计）
+            attribute_bonus['HPDelta'] =
+                panelHp(base_attr, attribute_bonus) * 0.5 +
+                get_let_value(attribute_bonus, 'HPDelta');
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 行迹-血祥罩衫：生命上限高于 4000 每 100 点暴击率 +1.2%（计入上限 40 档，按提高后生命）
+            const hp = panelHp(base_attr, attribute_bonus);
+            const steps = Math.min(Math.floor(hp - 4000) / 100, 40);
+            if (steps > 0) {
+                attribute_bonus['CriticalChanceBase'] =
+                    steps * 0.012 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            if (data.rank >= 2) {
+                // 2魂：血仇期间无视敌方 15% 防御力
+                attribute_bonus['ignore_defence'] =
+                    0.15 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 4) {
+                // 4魂：血仇期间暴击伤害 +30%
+                attribute_bonus['CriticalDamageBase'] =
+                    0.3 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            // 1魂：弑神登神对主目标倍率 +30%（基线缓存可回退）
+            if (!WanDiBPSkillBase) {
+                WanDiBPSkillBase = [...d.BPSkill];
+            }
+            d.BPSkill = data.rank >= 1
+                ? WanDiBPSkillBase.map(v => round10(v + 0.3))
+                : [...WanDiBPSkillBase];
+        },
+        '1401': () => {
+            // 大黑塔（miao 强化战技/终结技默认档：解读层数 42/1魂起 63、99 层谜底）
+            const d = skilldict['1401'];
+            // 行迹-冷漠的诚实：解读满层时伤害提高 50%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.5 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-视界外来信：队伍 2 智识时全体暴击伤害 +80%
+            attribute_bonus['CriticalDamageBase'] =
+                0.8 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 终结技：施放时攻击力提高（按终结技等级表）
+            attribute_bonus['AttackAddedRatio'] =
+                levelValue(d.Q_AtkUp, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'AttackAddedRatio');
+            if (data.rank >= 6) {
+                // 6魂：冰属性抗性穿透 +20%
+                attribute_bonus['IceResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'IceResistancePenetration');
+            }
+            // 强化战技 = e2技能×3 + e2所有目标 + 天赋主目标每层×2×解读层数（42 / 1魂起 63；
+            // 天赋表按天赋等级取当前值、常量并入，基线缓存可回退）
+            if (!HeiTaBPSkillBase) {
+                HeiTaBPSkillBase = [...d.BPSkill];
+            }
+            const stacks = data.rank >= 1 ? 63 : 42;
+            const perStack = levelValue(d.T_PerStack, stdLevel(data, 3));
+            d.BPSkill = HeiTaBPSkillBase.map(v => round10(v + perStack * 2 * stacks));
+            // 终结技 = q技能 + 行迹-饥饿的地景 99 层谜底 +99% + 6魂 1 名敌人档 +400%
+            if (!HeiTaUltraBase) {
+                HeiTaUltraBase = [...d.Ultra];
+            }
+            d.Ultra = HeiTaUltraBase.map(v => round10(v + 0.99 + (data.rank >= 6 ? 4 : 0)));
+        },
+        '1403': () => {
+            // 缇宝（生命倍率角色 → 注入）
+            const d = skilldict['1403'];
+            // 行迹-长翅膀的玻璃球：生命上限提高我方全体生命之和的 9%（按自身生命 9% 计，先加再注入）
+            attribute_bonus['HPDelta'] =
+                panelHp(base_attr, attribute_bonus) * 0.09 +
+                get_let_value(attribute_bonus, 'HPDelta');
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 战技【神启】：我方全体全属性抗性穿透提高（按战技等级表）
+            attribute_bonus['AllDamageResistancePenetration'] =
+                levelValue(d.E_Kx, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            // 终结技：敌方受到的伤害提高（易伤，按终结技等级表）
+            attribute_bonus['DmgRatio'] =
+                levelValue(d.Q_EnemyDmg, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            // 行迹-城墙外的羊羔儿…：天赋追击后伤害提高 72%，最多 3 层（满层 216%）
+            attribute_bonus['AllDamageAddedRatio'] =
+                2.16 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            if (data.rank >= 4) {
+                // 4魂：神启期间我方无视 18% 防御
+                attribute_bonus['ignore_defence'] =
+                    0.18 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：天赋追加攻击伤害提高 729%
+                attribute_bonus['TalentDmgAdd'] =
+                    7.29 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            }
+        },
+        '1405': () => {
+            // 那刻夏（战技默认 1 个敌方目标档 +20% 增伤）
+            const d = skilldict['1405'];
+            attribute_bonus['BPSkillDmgAdd'] =
+                0.2 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+            // 天赋：对【质性揭露】目标伤害提高（按天赋等级表）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.T_DmgUp, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-必要的留白：2 智识时全体伤害 +50%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.5 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-质性的嬗变：7 弱点时无视 28% 防御
+            attribute_bonus['ignore_defence'] =
+                0.28 + get_let_value(attribute_bonus, 'ignore_defence');
+            if (data.rank >= 1) {
+                // 1魂：战技命中使目标防御力降低 16%
+                attribute_bonus['ignore_defence'] =
+                    0.16 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 2) {
+                // 2魂：敌方全体全属性抗性降低 20%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+            if (data.rank >= 4) {
+                // 4魂：施放战技时攻击力提高（最多 2 层 ×30%）
+                attribute_bonus['AttackAddedRatio'] =
+                    0.6 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：造成的伤害为原伤害的 130%（全行 ×1.3，基线缓存可回退）+ 暴伤 +140%
+                attribute_bonus['CriticalDamageBase'] =
+                    1.4 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+                if (!NaKeXiaBase) {
+                    NaKeXiaBase = {
+                        Normal: [...d.Normal], BPSkill: [...d.BPSkill], Ultra: [...d.Ultra]
+                    };
+                }
+                d.Normal = NaKeXiaBase.Normal.map(v => round10(v * 1.3));
+                d.BPSkill = NaKeXiaBase.BPSkill.map(v => round10(v * 1.3));
+                d.Ultra = NaKeXiaBase.Ultra.map(v => round10(v * 1.3));
+            }
+        },
+        '1406': () => {
+            // 赛飞儿（相邻目标行与 4魂 0.5 攻击附加伤害行不另设槽位，见提交说明）
+            // 战技：攻击力提高 30%
+            attribute_bonus['AttackAddedRatio'] =
+                0.3 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            // 行迹-神行宝鞋：速度≥140 暴击率 +25%，≥170 +50%
+            const speed = panelSpeed(base_attr, attribute_bonus);
+            if (speed >= 170) {
+                attribute_bonus['CriticalChanceBase'] =
+                    0.5 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            } else if (speed >= 140) {
+                attribute_bonus['CriticalChanceBase'] =
+                    0.25 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            // 行迹-偷天换日：天赋追加暴伤 +100%；在场时敌方受到的伤害 +40%（易伤）
+            attribute_bonus['Talent_CriticalDamageBase'] =
+                1 + get_let_value(attribute_bonus, 'Talent_CriticalDamageBase');
+            attribute_bonus['DmgRatio'] =
+                0.4 + get_let_value(attribute_bonus, 'DmgRatio');
+            if (data.rank >= 1) {
+                // 1魂：施放天赋追击时攻击力 +80%
+                attribute_bonus['AttackAddedRatio'] =
+                    0.8 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+            if (data.rank >= 2) {
+                // 2魂：击中使目标受到的伤害 +30%（易伤）
+                attribute_bonus['DmgRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'DmgRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：天赋追加攻击伤害 +350%
+                attribute_bonus['TalentDmgAdd'] =
+                    3.5 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            }
+        },
+        '1408': () => {
+            // 白厄（卡厄斯兰那形态默认档：qBuff/Khaslana 行）
+            const d = skilldict['1408'];
+            // 天赋：成为队友技能目标时暴击伤害提高（按天赋等级表）
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.T_Cdmg, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 卡厄斯兰那天赋：变身期间攻击力提高（t2 表按天赋等级）
+            attribute_bonus['AttackAddedRatio'] =
+                levelValue(d.T2_Atk, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AttackAddedRatio');
+            // 行迹-身承炎炬万千：造成的伤害提高 45%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.45 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-照见英雄本色：攻击力提高 50%×2
+            attribute_bonus['AttackAddedRatio'] =
+                1 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            if (data.rank >= 1) {
+                // 1魂：施放终结技时暴击伤害 +50%
+                attribute_bonus['CriticalDamageBase'] =
+                    0.5 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 2) {
+                // 2魂：卡厄斯兰那物理属性抗性穿透 +20%
+                attribute_bonus['PhysicalResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'PhysicalResistancePenetration');
+            }
+        },
+        '1410': () => {
+            // 海瑟音（DOT/引爆行引擎不支持，见提交说明；仅收录直伤行）
+            const d = skilldict['1410'];
+            // 战技：敌方全体受到的伤害提高（易伤，按战技等级表）
+            attribute_bonus['DmgRatio'] =
+                levelValue(d.E_EnemyDmg, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            // 结界：敌方防御力降低（按终结技等级表，按无视防御计）
+            attribute_bonus['ignore_defence'] =
+                levelValue(d.Q_DefDown, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'ignore_defence');
+            // 行迹-珍珠的琴弦：效果命中高于 60% 每超 10% 伤害 +15%
+            const effPct = get_let_value(attribute_bonus, 'StatusProbabilityBase') * 100;
+            const dmgUp = Math.floor(Math.max(0, effPct - 60) / 10) * 0.15;
+            if (dmgUp > 0) {
+                attribute_bonus['AllDamageAddedRatio'] =
+                    dmgUp + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            if (data.rank >= 4) {
+                // 4魂：结界期间敌方全体全属性抗性降低 20%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+            //（calc.js 首条「卡芙卡额外能力-折磨」buff 为模板残留——海瑟音行迹无此节点，不注入）
+        },
+        '1412': () => {
+            // 刻律德菈（miao 口径：无【军功】buff；战技为增益技无伤害行）
+            const d = skilldict['1412'];
+            // 行迹-来者：攻击力大于 2000 每超 100 点暴击伤害 +18%（最多 360%）
+            const atk = panelAttack(base_attr, attribute_bonus);
+            const steps = Math.min(Math.floor(Math.max(atk - 2000, 0) / 100), 20);
+            if (steps > 0) {
+                attribute_bonus['CriticalDamageBase'] =
+                    steps * 0.18 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            // 行迹-见者：暴击率 +100%（引擎 min(1,·) 饱和）
+            attribute_bonus['CriticalChanceBase'] =
+                1 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            if (data.rank >= 2) {
+                // 2魂：存在持有【军功】队友时自身伤害 +160%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    1.6 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 4魂：终结技倍率提高 240%（qPct 语义：倍率 +2.4，基线缓存可回退）
+            if (!KeLyuUltraBase) {
+                KeLyuUltraBase = [...d.Ultra];
+            }
+            d.Ultra = data.rank >= 4
+                ? KeLyuUltraBase.map(v => round10(v + 2.4))
+                : [...KeLyuUltraBase];
+            // 6魂：【军功】附加伤害倍率提高 300%（tPct 语义：倍率 +3.0）；全属性抗性穿透 +20%
+            if (!KeLyuTalentBase) {
+                KeLyuTalentBase = [...d.Talent];
+            }
+            d.Talent = data.rank >= 6
+                ? KeLyuTalentBase.map(v => round10(v + 3))
+                : [...KeLyuTalentBase];
+            if (data.rank >= 6) {
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+        },
+        '1413': () => {
+            // 长夜月（忆灵，生命倍率角色 → 注入全额生命；忆灵行 50% 生命基数已折入倍率数组）
+            const d = skilldict['1413'];
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+            // 天赋-今夜与我同行：生命降低时暴击伤害提高（按天赋等级表）
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.T_Cdmg, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 忆灵天赋-孤独，浮游，漆黑：在场时长夜月与忆灵伤害提高（按忆灵天赋等级）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.Mt_DmgUp, memoSkillLevel(data, '302')) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-天黑黑，月寂寂：暴击率 +35%、暴击伤害 +15%
+            attribute_bonus['CriticalChanceBase'] =
+                0.35 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            attribute_bonus['CriticalDamageBase'] =
+                0.15 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 2魂：长夜月与忆灵暴击伤害 +40%（先加，再计入下方忆灵暴伤转化）
+            if (data.rank >= 2) {
+                attribute_bonus['CriticalDamageBase'] =
+                    0.4 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            // 终结技-【至暗之谜】+ 战技/行迹 忆灵暴伤转化（miao 口径仅作用于终结技忆灵行）：
+            // 终结技行增伤 +q表、易伤 +q表、暴伤 +（当前爆伤×忆灵暴伤提高[e] + 行迹天亮了 5%）
+            const qLv = stdLevel(data, 2);
+            attribute_bonus['UltraDmgAdd'] =
+                levelValue(d.Q_DmgUp, qLv) + get_let_value(attribute_bonus, 'UltraDmgAdd');
+            attribute_bonus['Ultra_DmgRatio'] =
+                levelValue(d.Q_EnemyDmg, qLv) + get_let_value(attribute_bonus, 'Ultra_DmgRatio');
+            const cdmgNow = get_let_value(base_attr, 'CriticalDamageBase') +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            attribute_bonus['Ultra_CriticalDamageBase'] =
+                cdmgNow * levelValue(d.E_MeCdmg, stdLevel(data, 1)) + 0.05 +
+                get_let_value(attribute_bonus, 'Ultra_CriticalDamageBase');
+            if (data.rank >= 1) {
+                // 1魂：我方忆灵伤害提高（1 名敌人档 50%）——Me 行与终结技忆灵行
+                attribute_bonus['MeDmgAdd'] =
+                    0.5 + get_let_value(attribute_bonus, 'MeDmgAdd');
+                attribute_bonus['UltraDmgAdd'] =
+                    0.5 + get_let_value(attribute_bonus, 'UltraDmgAdd');
+            }
+            if (data.rank >= 6) {
+                // 6魂：我方全体全属性抗性穿透 +20%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+        },
+        '1414': () => {
+            // 丹恒•腾荒（护盾行引擎不支持，见提交说明；默认档 miao defParams comradeAtk=3000、峥嵘行迹）
+            const d = skilldict['1414'];
+            if (data.rank >= 1) {
+                // 1魂：【同袍】全属性抗性穿透 +18%（作用于追击行的自身+同袍伤害，经技能位键注入）
+                attribute_bonus['Talent_AllDamageResistancePenetration'] =
+                    0.18 + get_let_value(attribute_bonus, 'Talent_AllDamageResistancePenetration');
+            }
+            if (data.rank >= 6) {
+                // 6魂：存在【同袍】时敌方受到的伤害 +20%（易伤，仅追击行按 miao check 口径）
+                attribute_bonus['Talent_DmgRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'Talent_DmgRatio');
+            }
+            // 终结技强化龙灵追击 = 自身攻击×q追加攻击伤害 + 同袍攻击(3000)×(q附加伤害×[2魂×2] + 峥嵘 0.4)
+            //（两段攻击基数不同——以同袍/自身攻击比折入倍率常量；Talent 槽位按天赋等级索引，
+            //  与 q 等级无关，改写为按当前 q 等级与面板攻击的常量数组）
+            if (!DanHengTalentBase) {
+                DanHengTalentBase = [...d.Talent];
+            }
+            const qLv = stdLevel(data, 2);
+            const atk = panelAttack(base_attr, attribute_bonus);
+            const comradeAtk = 3000;
+            const comradePct = levelValue(d.Q_FuJia, qLv) * (data.rank >= 2 ? 2 : 1) + 0.4;
+            const combined = round10(levelValue(DanHengTalentBase, qLv) + comradeAtk / atk * comradePct);
+            d.Talent = DanHengTalentBase.map(() => combined);
         },
     };
     String(data.avatarId) in avatarGetter &&
