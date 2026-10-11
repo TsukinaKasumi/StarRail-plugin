@@ -19,7 +19,13 @@ export function extractRules () {
     const re = /reg:\s*(?:'([^']+)'|`([^`]+)`)[\s\S]{0,120}?fnc:\s*'(\w+)'/g
     let m
     while ((m = re.exec(source))) {
-      const reg = (m[1] || m[2]).replaceAll('${rulePrefix}', RULE_PREFIX)
+      // 还原 JS 字符串字面量转义为运行时语义（单引号与模板字面量都会处理 \\ 转义：
+      // 文件文本 '\\d' 的运行时值是 \d、'\d' 是 d）。须在 ${rulePrefix} 替换之前做，
+      // 避免前缀里的 \\* 被二次还原
+      const ESCAPE_MAP = { n: '\n', r: '\r', t: '\t', b: '\b', f: '\f', v: '\v', '0': '\0' }
+      const unescape = (s) => s.replace(/\\([\s\S])/g, (all, c) => ESCAPE_MAP[c] ?? c)
+      const raw = unescape(m[2] ?? m[1])
+      const reg = raw.replaceAll('${rulePrefix}', RULE_PREFIX)
       let regex
       try {
         regex = new RegExp(reg)
