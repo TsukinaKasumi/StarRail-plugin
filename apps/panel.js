@@ -24,6 +24,7 @@ import {weapon_ability} from '../utils/damage/effect/weapon.js'
 import {relice_ability} from '../utils/damage/effect/relice.js'
 import {detectAndRemapAvatar} from '../utils/panel/enhanced.js'
 import {convertMysAvatarList} from '../utils/panel/mysConverter.js'
+import {damageTypeToMiaoElem, scoreRelics} from '../utils/panel/relicScore.js'
 import {getMiaoProfileTime, importMiaoPlayerData} from '../utils/panel/miaoSync.js'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import NoteUser from '../../genshin/model/mys/NoteUser.js'
@@ -162,6 +163,11 @@ export class Panel extends plugin {
       // 模板跳过命途文字与行迹画布，伤害计算同样按未收录降级），不中断整个面板查询
       data.charpath = charData[data.avatarId]?.path
       this.fixupRelicMeta(data.relics)
+      // 遗器本地评分（avocado.wiki 服务端评分已死，缓存数据无分值）：
+      // 就地覆盖 relic.score 与 sub_affix_id[i].weight，旧缓存残留的旧分值一并覆盖
+      scoreRelics(data.avatarId, data.relics, {
+        elem: damageTypeToMiaoElem[data.damage_type]
+      })
       // 行迹画布背景与坐标（记忆/欢愉已自建；再往后的新命途在两者缺位时由
       // 模板 {{if skillTreeBkg}} 跳过行迹渲染、handleSkillTree 返回无坐标列表降级）
       data.skillTreeBkg = skillTreeImg[data.charpath]
