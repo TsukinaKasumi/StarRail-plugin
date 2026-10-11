@@ -382,7 +382,10 @@ const dom = document.querySelector('.skill_tree');
           let level = null;
           let max_level = null;
           const icon = new Image();
-          icon.setAttribute( "crossOrigin", "anonymous" );
+          // 注意：不可设置 crossOrigin——本插件经 Yunzai 渲染器以 file:// 协议加载页面，
+          // file:// + anonymous 在 Chromium 必然 CORS 失败导致全部节点图标 onerror（画「加载失败」）。
+          // applyImageColor 仅 drawImage+source-in 填色（无 getImageData），截图走浏览器级
+          // page.screenshot，均不受 canvas taint 影响，无需 CORS。
           if ( !active?.includes( skill.id.toString() ) ) {
             lock = true;
           }
