@@ -35,7 +35,8 @@ import { buildRelicSets } from './mysConverter.js'
 import {
   miaoAttrToAffix, elemToDamageType, anchorBySlot, mainSlotType,
   mainSlotIcon, mainSlotMaxLevel, extraSlotType, extraSlotIcon,
-  starData, mainIdx, weaponRarityById, weaponRarityStr, relicRarityById
+  starData, mainIdx, weaponRarityById, weaponRarityStr, relicRarityById,
+  statNodeIcon
 } from './affixData.js'
 import { relicsetskill, equipment_dict } from '../damage/data/data.js'
 
@@ -411,7 +412,7 @@ function synthTreeIcon (avatarId, slot) {
   if (slot >= 101 && slot <= 103) {
     return `icon/skill/${avatarId}_skilltree${slot - 100}.png`
   }
-  return ''
+  return statNodeIcon(avatarId, slot)
 }
 
 /** 突破等级推导（SR：1-20-30-40-50-60-70-80 八段，miao 未存 promote 时兜底） */

@@ -192,12 +192,12 @@ test('behaviorList 契约：前 5 项 = 普攻/战技/终结技/天赋/秘技，
     // mys skills 缺秘技 → 1 级占位保持索引稳定
     { id: 1104007, level: 1, type: '秘技', anchor: 'Point05', icon: 'icon/skill/1104_technique.png', max_level: 1 }
   ])
-  // 行迹节点：能力节点(101)带图标，属性小节点(201-210)无独立资源；未激活 level=0
+  // 行迹节点：能力节点(101)带图标，属性小节点(201-210)查 skillTreeStats 属性表补图标；未激活 level=0
   assert.deepEqual(bl.slice(5), [
     { id: 1104101, level: 1, type: '行迹', anchor: 'Point06', icon: 'icon/skill/1104_skilltree1.png', max_level: 1 },
-    { id: 1104201, level: 1, type: '行迹', anchor: 'Point09', icon: '', max_level: 1 },
-    { id: 1104202, level: 0, type: '行迹', anchor: 'Point10', icon: '', max_level: 1 },
-    { id: 1104203, level: 0, type: '行迹', anchor: 'Point11', icon: '', max_level: 1 }
+    { id: 1104201, level: 1, type: '行迹', anchor: 'Point09', icon: 'icon/skill/tree-ice.webp', max_level: 1 },
+    { id: 1104202, level: 0, type: '行迹', anchor: 'Point10', icon: 'icon/skill/tree-effDef.webp', max_level: 1 },
+    { id: 1104203, level: 0, type: '行迹', anchor: 'Point11', icon: 'icon/skill/tree-ice.webp', max_level: 1 }
   ])
 })
 
@@ -344,6 +344,34 @@ test('affixData.starData/mainIdx 与 miao-plugin artifact meta.json 一致（快
     for (const subId of Object.keys(miaoStar.sub)) {
       const { key, base, step } = miaoStar.sub[subId]
       assert.deepEqual(ours.sub[subId], [key, base, step], `${rarity} 星副词条 ${subId}`)
+    }
+  }
+})
+
+// ---------- 属性小节点图标（skillTreeStats.json + statNodeIcon） ----------
+
+test('statNodeIcon：槽位 201-210 按角色查属性图标，非属性槽位与未收录角色返回空串', () => {
+  assert.equal(affixData.statNodeIcon(1204, 201), 'icon/skill/tree-atk.webp', '景元 201=攻击')
+  assert.equal(affixData.statNodeIcon(1204, 202), 'icon/skill/tree-cpct.webp', '景元 202=暴击率')
+  assert.equal(affixData.statNodeIcon(1513, 204), 'icon/skill/tree-joy.webp', '砂金•戏浪 204=欢愉')
+  assert.equal(affixData.statNodeIcon(2205, 201), 'icon/skill/tree-hp.webp', '刃Pro 2205 表直查')
+  assert.equal(affixData.statNodeIcon(1204, 1), '', '主技能槽位非属性节点')
+  assert.equal(affixData.statNodeIcon(1204, 101), '', '能力节点槽位非属性节点')
+  assert.equal(affixData.statNodeIcon(1204, 211), '', '槽位越界')
+  assert.equal(affixData.statNodeIcon(9999, 201), '', '未收录角色')
+})
+
+test('skillTreeStats 数据一致性：每角色 201-210 全槽位，引用的属性图标文件全部存在', () => {
+  const stats = JSON.parse(fs.readFileSync(
+    path.resolve(here, '../../../resources/panel/data/skillTreeStats.json'), 'utf8'))
+  assert.ok(Object.keys(stats).length >= 100, `角色覆盖应 >=100（现 ${Object.keys(stats).length}）`)
+  const skillDir = path.resolve(here, '../../../resources/panel/resources/skill')
+  const have = new Set(fs.readdirSync(skillDir))
+  for (const [avatarId, slots] of Object.entries(stats)) {
+    for (const slot of ['201', '202', '203', '204', '205', '206', '207', '208', '209', '210']) {
+      assert.ok(slots[slot], `${avatarId} 缺槽位 ${slot}`)
+      assert.ok(have.has(`tree-${slots[slot]}.webp`),
+        `${avatarId} 槽位 ${slot} 属性 ${slots[slot]} 缺图标文件`)
     }
   }
 })

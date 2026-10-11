@@ -247,13 +247,14 @@ test('转换（杰帕德）：behaviorList = talent 槽位 + 已激活行迹（m
     { id: 1104004, level: 10, type: '天赋', anchor: 'Point04', icon: 'icon/skill/1104_talent.png', max_level: 10 },
     { id: 1104007, level: 1, type: '秘技', anchor: 'Point05', icon: 'icon/skill/1104_technique.png', max_level: 1 }
   ])
-  // talent 缺失技能按 1 级占位；行迹节点全部 level=1（miao 口径：只存已激活）
+  // talent 缺失技能按 1 级占位；行迹节点全部 level=1（miao 口径：只存已激活），
+  // 属性小节点(201-210)查 skillTreeStats 属性表补图标
   assert.deepEqual(bl.slice(5), [
     { id: 1104101, level: 1, type: '行迹', anchor: 'Point06', icon: 'icon/skill/1104_skilltree1.png', max_level: 1 },
-    { id: 1104201, level: 1, type: '行迹', anchor: 'Point09', icon: '', max_level: 1 },
-    { id: 1104202, level: 1, type: '行迹', anchor: 'Point10', icon: '', max_level: 1 },
-    { id: 1104204, level: 1, type: '行迹', anchor: 'Point12', icon: '', max_level: 1 },
-    { id: 1104205, level: 1, type: '行迹', anchor: 'Point13', icon: '', max_level: 1 }
+    { id: 1104201, level: 1, type: '行迹', anchor: 'Point09', icon: 'icon/skill/tree-ice.webp', max_level: 1 },
+    { id: 1104202, level: 1, type: '行迹', anchor: 'Point10', icon: 'icon/skill/tree-effDef.webp', max_level: 1 },
+    { id: 1104204, level: 1, type: '行迹', anchor: 'Point12', icon: 'icon/skill/tree-def.webp', max_level: 1 },
+    { id: 1104205, level: 1, type: '行迹', anchor: 'Point13', icon: 'icon/skill/tree-ice.webp', max_level: 1 }
   ])
 })
 
@@ -322,7 +323,7 @@ test('转换（阿格莱雅）：me/mt talent → 301/302 忆灵槽位；缺 pro
     icon: 'icon/skill/1402_memosprite_talent.png', max_level: 1
   })
   assert.deepEqual(bl[7], {
-    id: 1402201, level: 1, type: '行迹', anchor: 'Point09', icon: '', max_level: 1
+    id: 1402201, level: 1, type: '行迹', anchor: 'Point09', icon: 'icon/skill/tree-elec.webp', max_level: 1
   })
 })
 

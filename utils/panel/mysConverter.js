@@ -25,7 +25,7 @@ import {
   propertyTypeToAffix, propertyTypeToMiaoAttr, elemToDamageType,
   damageTypeToAddedKey, anchorBySlot, mainSlotType, mainSlotIcon,
   mainSlotMaxLevel, extraSlotType, extraSlotIcon, starData,
-  weaponRarityById, weaponRarityStr, relicRarityById
+  weaponRarityById, weaponRarityStr, relicRarityById, statNodeIcon
 } from './affixData.js'
 
 // 米游社 remake -> 主技能槽位（普攻=001、战技=002、终结技=003、天赋=004、秘技=007）
@@ -364,10 +364,10 @@ function synthMainIcon (avatarId, slot) {
   return name ? `icon/skill/${avatarId}_${name}.png` : ''
 }
 
-/** 行迹节点图标：能力节点(101-103)用 skilltree1-3，属性小节点无独立资源 */
+/** 行迹节点图标：能力节点(101-103)用 skilltree1-3，属性小节点(201-210)查属性表 */
 function synthTreeIcon (avatarId, slot) {
   if (slot >= 101 && slot <= 103) {
     return `icon/skill/${avatarId}_skilltree${slot - 100}.png`
   }
-  return ''
+  return statNodeIcon(avatarId, slot)
 }

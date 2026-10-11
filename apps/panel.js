@@ -23,6 +23,7 @@ import {avatar_ability} from '../utils/damage/effect/avatar.js'
 import {weapon_ability} from '../utils/damage/effect/weapon.js'
 import {relice_ability} from '../utils/damage/effect/relice.js'
 import {detectAndRemapAvatar} from '../utils/panel/enhanced.js'
+import {statNodeIcon} from '../utils/panel/affixData.js'
 import {convertMysAvatarList} from '../utils/panel/mysConverter.js'
 import {damageTypeToMiaoElem, scoreRelics} from '../utils/panel/relicScore.js'
 import {getMiaoProfileTime, importMiaoPlayerData} from '../utils/panel/miaoSync.js'
@@ -171,7 +172,7 @@ export class Panel extends plugin {
       // 行迹画布背景与坐标（记忆/欢愉已自建；再往后的新命途在两者缺位时由
       // 模板 {{if skillTreeBkg}} 跳过行迹渲染、handleSkillTree 返回无坐标列表降级）
       data.skillTreeBkg = skillTreeImg[data.charpath]
-      data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath)
+      data.skillTree = this.handleSkillTree(data.behaviorList, data.charpath, data.avatarId)
       data.skilllist = _.cloneDeep(data.behaviorList)
       data.behaviorList = this.handleBehaviorList(data.behaviorList, data.avatarId, data.rank)
       // 面板图
@@ -309,7 +310,7 @@ export class Panel extends plugin {
   }
 
   /** 处理技能树 */
-  handleSkillTree (data, charpath) {
+  handleSkillTree (data, charpath, avatarId) {
     let _data = _.cloneDeep(data)
     // skillTree.json 未收录的命途（未来新命途）：降级返回不带坐标的列表，
     // 配合 skillTreeBkg 缺失时模板跳过行迹渲染，不抛错
@@ -324,6 +325,10 @@ export class Panel extends plugin {
     _data = _data.map(item => {
       return {
         ...item,
+        // 属性小节点（Point09-18）游戏数据 icon 为空串：按 角色+槽位 查
+        // skillTreeStats 补属性图标，旧缓存（avocado/miao 同步早期）无需重拉
+        icon: item.icon ||
+          statNodeIcon(avatarId, Number(item.id.toString().slice(-3))),
         position: skillTreeData[charpath][item.anchor]
       }
     })

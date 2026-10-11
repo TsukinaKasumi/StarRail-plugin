@@ -11,6 +11,9 @@
  * 词条基础数值为版本稳定的游戏配置，新稀有度出现时需同步更新本表。
  */
 
+import fs from 'fs'
+import { pluginRoot } from '../path.js'
+
 // 米游社 property_type 数字 -> 词条属性
 // tag：引擎属性键（relics main_affix_tag / sub_affix_id[].tag）
 // name：面板展示名；percent：true 时值为小数（0.052），false 为平砍值（33.87）
@@ -140,6 +143,25 @@ export const extraSlotType = {
 // 忆灵天赋=_memosprite_talent、欢愉技=_elation；xe2 强化欢愉技无独立资源，复用 _elation）
 export const extraSlotIcon = {
   301: 'memosprite_skill', 302: 'memosprite_talent', 420: 'elation', 421: 'elation'
+}
+
+// 属性小节点（槽位 201-210）的游戏数据 icon 为空串，需按 角色+槽位 查属性 key
+// 再映射到本地属性图标（resources/panel/resources/skill/tree-{key}.webp，
+// key 集：atk/atkPct/hp/hpPct/def/defPct/cpct/cdmg/speed/stance/effDef/effPct/
+// 七元素伤害/joy）。映射表快照自 miao-plugin meta-sr character/{角色}/data.json
+// 的 tree 字段（数值快照，非运行时依赖 miao-plugin），由 tools 同步提取。
+const skillTreeStats = JSON.parse(
+  fs.readFileSync(`${pluginRoot}/resources/panel/data/skillTreeStats.json`, 'utf8')
+)
+
+/** 槽位 201-210 的属性小节点 -> 属性图标路径；非属性槽位或未收录角色返回 '' */
+export function statNodeIcon (avatarId, slot) {
+  if (slot < 201 || slot > 210) return ''
+  const id = String(avatarId)
+  const table = skillTreeStats[id] ||
+    (id.startsWith('2') ? skillTreeStats[id.replace(/^2/, '1')] : null)
+  const key = table?.[slot]
+  return key ? `icon/skill/tree-${key}.webp` : ''
 }
 
 // 光锥 ID -> 稀有度（HSR 编号规律：20xxx=3星，21xxx/22xxx=4星，23xxx+=5星）
