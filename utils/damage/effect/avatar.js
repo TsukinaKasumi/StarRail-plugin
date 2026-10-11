@@ -120,6 +120,7 @@ let SanQiTalentBase = null;       // 三月七反击（4魂 +防御 30% 折入�
 let SanQiBPSkillBase = null;      // 三月七冻结附加（BPSkill 槽位按终结技等级改写常量）
 let NaTaShaNormalBase = null;     // 娜塔莎普攻（6魂 +生命上限 40% 折入倍率）
 let SangBoBPSkillBase = null;     // 桑博战技（1魂 5 段→6 段）
+let JiaLaHeTalentBase = null;     // 加拉赫强化普攻（Talent 槽位按普攻等级改写常量）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -2428,6 +2429,108 @@ const Avatar = (data, base_attr, attribute_bonus) => {
         '1211': () => {
             // 白露（丰饶：治疗行引擎不支持，仅普攻伤害行；
             //  miao 无直伤 buff——2魂为治疗增益、4魂为我方伤害增益，均不入）
+        },
+        // ==================== 批次3 C 组：1.x 同谐增益与辅助直伤角色 ====================
+        '1009': () => {
+            // 艾丝妲（同谐：普攻灼烧 DOT 行引擎不支持；1魂战技额外弹射段
+            //  miao 未并入展示行，同不并入（披露））
+            const d = skilldict['1009'];
+            // 天赋-蓄能 5 层：攻击力提高（按天赋等级表 ×5，miao 默认满层档）
+            attribute_bonus['AttackAddedRatio'] =
+                levelValue(d.T_AtkPct, stdLevel(data, 3)) * 5 +
+                get_let_value(attribute_bonus, 'AttackAddedRatio');
+            // 行迹-点燃：我方全体火属性伤害+18%（含自身）
+            attribute_bonus['FireAddedRatio'] =
+                0.18 + get_let_value(attribute_bonus, 'FireAddedRatio');
+        },
+        '1101': () => {
+            // 布洛妮娅（同谐：miao 仅普攻伤害行为直伤行，其余为队友增益文本行）
+            // 行迹-军势：在场时我方全体伤害+10%（含自身）
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.1 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-号令：普攻暴击率提高至 100%（引擎暴击率上限 min(1,·)，注入 1 即饱和）
+            attribute_bonus['Normal_CriticalChance'] =
+                1 + get_let_value(attribute_bonus, 'Normal_CriticalChance');
+        },
+        '1202': () => {
+            // 停云（同谐：miao 仅普攻伤害行为直伤行——赐福/终结技为队友增益，
+            //  天赋附加伤害作用于被赐福者攻击，均不入自身行）
+            // 行迹-止厄：普攻伤害+40%
+            attribute_bonus['NormalDmgAdd'] =
+                0.4 + get_let_value(attribute_bonus, 'NormalDmgAdd');
+        },
+        '1203': () => {
+            // 罗刹（丰饶：治疗行引擎不支持；天赋/行迹治疗同跳过）
+            if (data.rank >= 1) {
+                // 1魂：结界中我方全体攻击力+20%（含自身）
+                attribute_bonus['AttackAddedRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：终结技使敌方全体全属性抗性降低 20%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+        },
+        '1207': () => {
+            // 驭空（同谐：miao 仅普攻/终结技两行为直伤行；
+            //  鸣弦号令自身攻击/暴击/暴伤增益按 miao 默认常驻）
+            const d = skilldict['1207'];
+            // 战技-天阙鸣弦：攻击力提高（按战技等级表）
+            attribute_bonus['AttackAddedRatio'] =
+                levelValue(d.E_AtkPct, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'AttackAddedRatio');
+            // 终结技-贯云饮羽：暴击率/暴击伤害提高（按终结技等级表）
+            attribute_bonus['CriticalChanceBase'] =
+                levelValue(d.Q_Cpct, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'CriticalChanceBase');
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.Q_Cdmg, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 行迹-迟彝：虚数属性伤害+12%
+            attribute_bonus['ImaginaryAddedRatio'] =
+                0.12 + get_let_value(attribute_bonus, 'ImaginaryAddedRatio');
+            if (data.rank >= 4) {
+                // 4魂：持有【鸣弦号令】时造成的伤害+30%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+        },
+        '1210': () => {
+            // 桂乃芬（虚无：灼烧 DOT 行与终结技引爆行引擎不支持，跳过并披露；
+            //  2魂灼烧倍率+40% 仅作用 DOT 同不适用）
+            const d = skilldict['1210'];
+            // 天赋-吞火：敌方受到的伤害提高（易伤，按天赋等级表 ×层数；6魂 3→4 层）
+            const stacks = data.rank >= 6 ? 4 : 3;
+            attribute_bonus['DmgRatio'] =
+                levelValue(d.T_EnemyDmg, stdLevel(data, 3)) * stacks +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            // 行迹-逾锋：对灼烧目标伤害+20%（miao 无条件常驻）
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.2 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+        },
+        '1215': () => {
+            // 寒鸦（同谐：miao 仅普攻/战技两行为直伤行——终结技/天赋罚恶在
+            //  miao 中标注 AEQ 通吃，引擎仅并入现有两行（披露））
+            const d = skilldict['1215'];
+            // 天赋-罚恶：对标记敌人普攻/战技伤害提高（按天赋等级表；6魂额外+10%）
+            const dmgUp = levelValue(d.T_DmgUp, stdLevel(data, 3)) + (data.rank >= 6 ? 0.1 : 0);
+            attribute_bonus['NormalDmgAdd'] =
+                dmgUp + get_let_value(attribute_bonus, 'NormalDmgAdd');
+            attribute_bonus['BPSkillDmgAdd'] =
+                dmgUp + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+        },
+        '1301': () => {
+            // 加拉赫（丰饶：治疗/击破行引擎不支持；miao calc 仅普攻/强化普攻两行
+            //  ——终结技直伤行 miao 未展示，照抄不虚构（披露）；天赋-鏖战正酣与
+            //  行迹-崭新配方均为击破/治疗增益不入）
+            const d = skilldict['1301'];
+            // 强化普攻（Talent 槽位按普攻等级改写常量——a2 表与普攻等级联动）
+            if (!JiaLaHeTalentBase) {
+                JiaLaHeTalentBase = [...d.Talent];
+            }
+            d.Talent = JiaLaHeTalentBase.map(() =>
+                levelValue(JiaLaHeTalentBase, stdLevel(data, 0)));
         },
     };
     String(data.avatarId) in avatarGetter &&
