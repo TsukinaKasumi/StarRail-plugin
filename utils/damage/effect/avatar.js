@@ -90,6 +90,18 @@ let KeLyuTalentBase = null;       // 刻律德菈天赋附加（6魂 +3.0）
 let WanDiBPSkillBase = null;      // 万敌弑神登神（1魂 +0.3）
 let DanHengTalentBase = null;     // 丹恒•腾荒强化龙灵追击（q 表 + 同袍攻击组合）
 let FireflyProBase = null;
+// 批次2（2.x 常规角色）倍率基线缓存（命魂/面板驱动的动态改写，按次重算、可回退不累积）
+let YinZhiTalentBase = null;      // 银枝终结技（Talent 槽位按终结技等级改写常量）
+let FeiXiaoUltraBase = null;      // 飞霄终结技结束伤害（1魂 ×1.5）
+let FeiXiaoNormalBase = null;     // 飞霄Q最多造成伤害（Normal 槽位按终结技等级改写常量）
+let FeiXiaoTalentBase = null;     // 飞霄天赋追加（6魂 +1.4）
+let YunLiNormalBase = null;       // 云璃勘破灭随机（Normal 槽位按终结技等级改写常量）
+let YunLiBPSkillBase = null;      // 云璃勘破灭相邻（BPSkill 槽位按终结技等级改写常量）
+let MoZeTalentBase = null;        // 貊泽天赋追加（6魂 +0.25）
+let ZhenLiTalentBase = null;      // 真理医生追加攻击（2魂 +0.6）
+let MiShaUltraBase = null;        // 米沙终结技10段（4魂 +0.6）
+let MiShaTalentBase = null;       // 米沙终结技15段（Talent 槽位按终结技等级改写常量 + 4魂 +0.9）
+let FeiCuiBPSkillBase = null;     // 翡翠强化追击（BPSkill 槽位按天赋/终结技双等级改写常量）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -1560,6 +1572,303 @@ const Avatar = (data, base_attr, attribute_bonus) => {
             const comradePct = levelValue(d.Q_FuJia, qLv) * (data.rank >= 2 ? 2 : 1) + 0.4;
             const combined = round10(levelValue(DanHengTalentBase, qLv) + comradeAtk / atk * comradePct);
             d.Talent = DanHengTalentBase.map(() => combined);
+        },
+        // ==================== 批次2 A 组：直伤输出角色 ====================
+        // buff 数值与倍率组合一律对照 miao-plugin 各角色 calc.js；情景参数取 miao 默认档
+        '1214': () => {
+            // 雪衣（终结技增伤取满层【恶报】档、天赋追击按 3 段预合成进倍率数组）
+            const d = skilldict['1214'];
+            // 终结技-天罚贯身：终结技伤害提高（按终结技等级表，取【恶报】增伤上限档）
+            attribute_bonus['UltraDmgAdd'] =
+                levelValue(d.Q_DmgUp, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'UltraDmgAdd');
+            // 行迹-摧锋轴承：对韧性≥自身上限50%的敌人终结技伤害再+10%
+            attribute_bonus['UltraDmgAdd'] =
+                0.1 + get_let_value(attribute_bonus, 'UltraDmgAdd');
+            // 行迹-预兆机杼：基于击破特攻提高造成的伤害 min(stance,240)%
+            //（4魂施放终结技击破特攻+40% 先行计入换算；面板击破特攻为小数存储 ×100）
+            const stance = get_let_value(attribute_bonus, 'BreakDamageAddedRatioBase') * 100 +
+                (data.rank >= 4 ? 40 : 0);
+            attribute_bonus['AllDamageAddedRatio'] =
+                Math.min(stance, 240) / 100 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            if (data.rank >= 1) {
+                // 1魂：天赋的追加攻击伤害提高 40%
+                attribute_bonus['TalentDmgAdd'] =
+                    0.4 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            }
+            //（6魂【恶报】层数上限降低为机制调整，不产生数值 buff）
+        },
+        '1218': () => {
+            // 椒丘（天赋持续伤害 DOT 行引擎不支持，跳过并披露；2魂 DOT 倍率提高 300% 同不适用）
+            const d = skilldict['1218'];
+            // 终结技：敌方受到的终结技伤害提高（易伤，按终结技等级表）
+            attribute_bonus['Ultra_DmgRatio'] =
+                levelValue(d.Q_UltraDmg, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'Ultra_DmgRatio');
+            // 天赋-满层【烬煨】：敌方受到的伤害提高（1层 + 叠加×层数；6魂层数上限 4→8）
+            const stacks = data.rank >= 6 ? 8 : 4;
+            attribute_bonus['DmgRatio'] =
+                levelValue(d.T_Layer1, stdLevel(data, 3)) +
+                levelValue(d.T_Stack, stdLevel(data, 3)) * stacks +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            // 行迹-举炊：效果命中>80% 每超 15% 攻击力+60%（最多 4 档 240%）
+            const effPct = get_let_value(attribute_bonus, 'StatusProbabilityBase') * 100;
+            const atkUp = Math.min(Math.floor((effPct - 80) / 15), 4) * 0.6;
+            if (atkUp > 0) {
+                attribute_bonus['AttackAddedRatio'] =
+                    atkUp + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            }
+            if (data.rank >= 1) {
+                // 1魂：我方对【烬煨】目标造成的伤害提高 40%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.4 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：【烬煨】上限 9 层，每层全属性抗性降低 3%（9×3%=27%）
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.27 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+        },
+        '1220': () => {
+            // 飞霄（miao 无普攻行照抄不虚构；Normal 槽位承载 Q最多造成伤害——
+            //  槽位等级取普攻等级，与 q 表错位，钩子改写为按终结技等级的常量数组）
+            const d = skilldict['1220'];
+            const qLv = stdLevel(data, 2);
+            // 天赋-雷狩：发动天赋攻击时伤害提高（按天赋等级表）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.T_DmgUp, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 行迹-解形：追加攻击暴击伤害+36%
+            attribute_bonus['Talent_CriticalDamageBase'] =
+                0.36 + get_let_value(attribute_bonus, 'Talent_CriticalDamageBase');
+            // 行迹-电举：施放战技时攻击力+48%
+            attribute_bonus['AttackAddedRatio'] =
+                0.48 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            // 1魂：终结技伤害额外提高（5层×10% 原伤害 → 倍率×1.5，基线缓存可回退）
+            if (!FeiXiaoUltraBase) {
+                FeiXiaoUltraBase = [...d.Ultra];
+            }
+            d.Ultra = data.rank >= 1
+                ? FeiXiaoUltraBase.map(v => round10(v * 1.5))
+                : [...FeiXiaoUltraBase];
+            if (!FeiXiaoNormalBase) {
+                FeiXiaoNormalBase = [...d.Normal];
+            }
+            d.Normal = FeiXiaoNormalBase.map(() => levelValue(FeiXiaoNormalBase, qLv));
+            if (data.rank >= 6) {
+                // 6魂：终结技全抗穿+20%（Q结束/Q最多两行 + 天赋追加视为终结技同享），天赋追加倍率+140%
+                attribute_bonus['Ultra_AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'Ultra_AllDamageResistancePenetration');
+                attribute_bonus['Normal_AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'Normal_AllDamageResistancePenetration');
+                attribute_bonus['Talent_AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'Talent_AllDamageResistancePenetration');
+                if (!FeiXiaoTalentBase) {
+                    FeiXiaoTalentBase = [...d.Talent];
+                }
+                d.Talent = FeiXiaoTalentBase.map(v => round10(v + 1.4));
+            }
+            //（4魂追加攻击速度+8% 对伤害无贡献，不入钩子）
+        },
+        '1221': () => {
+            // 云璃（勘破灭相邻/随机两行槽位等级错位，钩子改写为按终结技等级的常量数组）
+            const d = skilldict['1221'];
+            const qLv = stdLevel(data, 2);
+            // 行迹：施放反击时攻击力+30%
+            attribute_bonus['AttackAddedRatio'] =
+                0.3 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            // 终结技：下一次反击暴击伤害提高（按终结技等级表）
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.Q_Cdmg, qLv) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            if (!YunLiNormalBase) {
+                YunLiNormalBase = [...d.Normal];
+                YunLiBPSkillBase = [...d.BPSkill];
+            }
+            d.Normal = YunLiNormalBase.map(() => levelValue(YunLiNormalBase, qLv));
+            d.BPSkill = YunLiBPSkillBase.map(() => levelValue(YunLiBPSkillBase, qLv));
+            if (data.rank >= 1) {
+                // 1魂：【勘破•斩/灭】伤害提高 20%（勘破灭三行；「额外伤害次数+3」
+                // 作用于随机段次数，引擎行按单次展示不并入）
+                attribute_bonus['UltraDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'UltraDmgAdd');
+                attribute_bonus['BPSkillDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+                attribute_bonus['NormalDmgAdd'] =
+                    0.2 + get_let_value(attribute_bonus, 'NormalDmgAdd');
+            }
+            if (data.rank >= 2) {
+                // 2魂：反击无视 20% 防御（全行）
+                attribute_bonus['ignore_defence'] =
+                    0.2 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：勘破斩/灭暴击率+15%、物理抗穿+20%（勘破灭三行）
+                attribute_bonus['Ultra_CriticalChance'] =
+                    0.15 + get_let_value(attribute_bonus, 'Ultra_CriticalChance');
+                attribute_bonus['BPSkill_CriticalChance'] =
+                    0.15 + get_let_value(attribute_bonus, 'BPSkill_CriticalChance');
+                attribute_bonus['Normal_CriticalChance'] =
+                    0.15 + get_let_value(attribute_bonus, 'Normal_CriticalChance');
+                attribute_bonus['Ultra_PhysicalResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'Ultra_PhysicalResistancePenetration');
+                attribute_bonus['BPSkill_PhysicalResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'BPSkill_PhysicalResistancePenetration');
+                attribute_bonus['Normal_PhysicalResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'Normal_PhysicalResistancePenetration');
+            }
+        },
+        '1223': () => {
+            // 貊泽（天赋附加伤害行不另设槽位，披露；miao 2魂 buff 误标 cons:1，
+            //  按官方星魂文本「我方全体对【猎物】暴伤+40%」修正为 2 魂生效）
+            const d = skilldict['1223'];
+            // 天赋：终结技造成伤害视为追加攻击——【猎物】受追加攻击伤害提高 25%（易伤）
+            attribute_bonus['Talent_DmgRatio'] =
+                0.25 + get_let_value(attribute_bonus, 'Talent_DmgRatio');
+            attribute_bonus['Ultra_DmgRatio'] =
+                0.25 + get_let_value(attribute_bonus, 'Ultra_DmgRatio');
+            if (data.rank >= 2) {
+                // 2魂（修正 miao cons 笔误）：对【猎物】暴击伤害+40%
+                attribute_bonus['CriticalDamageBase'] =
+                    0.4 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 4) {
+                // 4魂：施放终结技时伤害提高 20%（官方文本为参数化数值 #1[f1]%，取 miao 口径 20%）
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 6魂：天赋追加攻击倍率 +25%（基线缓存可回退）
+            if (!MoZeTalentBase) {
+                MoZeTalentBase = [...d.Talent];
+            }
+            d.Talent = data.rank >= 6
+                ? MoZeTalentBase.map(v => round10(v + 0.25))
+                : [...MoZeTalentBase];
+        },
+        '1302': () => {
+            // 银枝（Talent 槽位承载普通终结技（q 表），与天赋等级错位——钩子改写常量）
+            const d = skilldict['1302'];
+            // 行迹-勇气：对生命≤50% 敌人伤害提高 15%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.15 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 天赋-崇高的客体：【升格】暴击率提高（10层 25% / 4魂 12层 30%）
+            attribute_bonus['CriticalChanceBase'] =
+                (data.rank >= 4 ? 0.3 : 0.25) + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            if (data.rank >= 1) {
+                // 1魂：每层【升格】暴伤+4%（10层 40% / 4魂 12层 48%）
+                attribute_bonus['CriticalDamageBase'] =
+                    (data.rank >= 4 ? 0.48 : 0.4) + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 2) {
+                // 2魂：终结技命中 3+ 敌人攻击力+40%（两个终结技行经技能位键注入）
+                attribute_bonus['UltraAttackAddedRatio'] =
+                    0.4 + get_let_value(attribute_bonus, 'UltraAttackAddedRatio');
+                attribute_bonus['TalentAttackAddedRatio'] =
+                    0.4 + get_let_value(attribute_bonus, 'TalentAttackAddedRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：施放终结技时无视 30% 防御（引擎无技能位无视防御键，全局注入近似，
+                // 普攻/战技行一并吃到，披露见提交说明）
+                attribute_bonus['ignore_defence'] =
+                    0.3 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (!YinZhiTalentBase) {
+                YinZhiTalentBase = [...d.Talent];
+            }
+            d.Talent = YinZhiTalentBase.map(() => levelValue(YinZhiTalentBase, stdLevel(data, 2)));
+        },
+        '1305': () => {
+            // 真理医生（miao 默认档 debuffCount=3；5负面追加行与 3负面行仅差 2魂附加 0.6→0.8，
+            //  不另设槽位，披露）
+            const d = skilldict['1305'];
+            // 行迹-归纳：满层暴击率/暴伤提高（6层 15%/30%，1魂起 10层 25%/50%）
+            attribute_bonus['CriticalChanceBase'] =
+                (data.rank >= 1 ? 0.25 : 0.15) + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            attribute_bonus['CriticalDamageBase'] =
+                (data.rank >= 1 ? 0.5 : 0.3) + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 行迹-推理：目标每个负面状态伤害+10%（默认 3 负面档 → +30%）
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.3 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 2魂：追加攻击对 3 负面目标附加 3×20%=60% 攻击力（折入倍率 +0.6，基线缓存可回退）
+            if (!ZhenLiTalentBase) {
+                ZhenLiTalentBase = [...d.Talent];
+            }
+            d.Talent = data.rank >= 2
+                ? ZhenLiTalentBase.map(v => round10(v + 0.6))
+                : [...ZhenLiTalentBase];
+            if (data.rank >= 6) {
+                // 6魂：天赋的追加攻击伤害提高 50%
+                attribute_bonus['TalentDmgAdd'] =
+                    0.5 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+            }
+        },
+        '1312': () => {
+            // 米沙（15段行依赖 1魂，引擎无法按命途隐藏行——E1 前亦展示，披露；
+            //  Talent 槽位按终结技等级改写常量）
+            const d = skilldict['1312'];
+            const qLv = stdLevel(data, 2);
+            // 行迹-传冲：对冻结敌人暴击伤害+30%
+            attribute_bonus['CriticalDamageBase'] =
+                0.3 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            if (data.rank >= 2) {
+                // 2魂：终结技每段概率减防 16%
+                attribute_bonus['ignore_defence'] =
+                    0.16 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：施放终结技时伤害提高 30%
+                attribute_bonus['AllDamageAddedRatio'] =
+                    0.3 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 4魂：终结技每段倍率+6%（10段 +0.6 / 15段 +0.9，基线缓存可回退）
+            if (!MiShaUltraBase) {
+                MiShaUltraBase = [...d.Ultra];
+                MiShaTalentBase = [...d.Talent];
+            }
+            const perSeg = data.rank >= 4 ? 0.06 : 0;
+            d.Ultra = MiShaUltraBase.map(v => round10(v + perSeg * 10));
+            d.Talent = MiShaTalentBase.map(() => round10(levelValue(MiShaTalentBase, qLv) + perSeg * 15));
+            //（行迹-锁接终结技时效果命中+60% 对直伤无贡献，不入钩子）
+        },
+        '1314': () => {
+            // 翡翠（强化追击 = 天赋追击[天赋等级] + 追加攻击倍率提高[终结技等级]，
+            //  双表等级不同——BPSkill 槽位每次按双等级重写常量；d.Talent 保持静态源表）
+            const d = skilldict['1314'];
+            // 天赋-剔烁之牙：50层【当品】暴伤提高（每层按天赋等级表 ×50）
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.T_CdmgPer, stdLevel(data, 3)) * 50 +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 行迹-绝当品：50层【当品】攻击力 +25%
+            attribute_bonus['AttackAddedRatio'] =
+                0.25 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            if (!FeiCuiBPSkillBase) {
+                FeiCuiBPSkillBase = [...d.BPSkill];
+            }
+            const combined = round10(levelValue(d.Talent, stdLevel(data, 3)) +
+                levelValue(d.Q_ChaseUp, stdLevel(data, 2)));
+            d.BPSkill = FeiCuiBPSkillBase.map(() => combined);
+            if (data.rank >= 1) {
+                // 1魂：天赋的追加攻击伤害提高 32%（追击/强化追击两行）
+                attribute_bonus['TalentDmgAdd'] =
+                    0.32 + get_let_value(attribute_bonus, 'TalentDmgAdd');
+                attribute_bonus['BPSkillDmgAdd'] =
+                    0.32 + get_let_value(attribute_bonus, 'BPSkillDmgAdd');
+            }
+            if (data.rank >= 2) {
+                // 2魂：【当品】15层暴击率+18%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.18 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            if (data.rank >= 4) {
+                // 4魂：施放终结技后无视 12% 防御
+                attribute_bonus['ignore_defence'] =
+                    0.12 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：量子属性抗性穿透+20%
+                attribute_bonus['QuantumResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'QuantumResistancePenetration');
+            }
         },
     };
     String(data.avatarId) in avatarGetter &&
