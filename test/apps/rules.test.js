@@ -50,6 +50,10 @@ const CORPUS = [
   { group: 'collab-stat', msg: '*光锥联动记录', apps: ['gatcha'] },
   { group: 'collab-stat', msg: '*武器联动记录', apps: ['gatcha'] },
   { group: 'collab-stat', msg: '*光锥联动分析', apps: ['gatcha'] },
+  // ---- 面板同步命令 → panel 独占（miao 自动同步的显式入口） ----
+  { group: 'panel-sync', msg: '*同步面板', apps: ['panel'] },
+  { group: 'panel-sync', msg: '*同步面板更新', apps: ['panel'] },
+  { group: 'panel-sync', msg: '#星铁同步面板', apps: ['panel'] },
   // ---- 新命令：同步/导出 → gatchasync 独占 ----
   { group: 'sync', msg: '*同步抽卡记录', apps: ['gatchasync'] },
   { group: 'sync', msg: '＊同步抽卡记录', apps: ['gatchasync'] },

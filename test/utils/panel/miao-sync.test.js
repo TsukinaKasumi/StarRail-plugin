@@ -387,3 +387,53 @@ test('时间戳同步：miao 数据文件不存在 → getMiaoProfileTime=0，�
   assert.deepEqual(data.map(d => d.avatarId), [1220])
   assert.equal(data[0].is_new, undefined, '不经 updateData 的本地条目保持原状')
 })
+
+// ---------- 第三方拉取失败时的 miao 兜底（fetch 分支回退） ----------
+
+test('兜底：空缓存 + 第三方拉取失败 + miao 有数据 → 自动导入返回（boot 首次数入路径）', async () => {
+  fs.rmSync(localPanelFile, { force: true }) // 清掉前序测试留下的本地缓存，验证真正的空缓存路径
+  writeMiaoPlayer() // _profile = 1700000005000
+  const { setFallback, resetFetchMock } = await import('../../helpers/fetch-mock.mjs')
+  setFallback(() => { throw new Error('面板服务连接超时（模拟）') })
+  const panel = new Panel()
+  panel.e = { reply: async () => {} } // 拉取分支的"正在获取"提示桩
+  const data = await panel.getPanelData(UID, true) // isForce 走拉取分支
+  resetFetchMock()
+  assert.deepEqual(data.map(d => d.avatarId), [1104, 1402, 1501], '应导入 miao 数据')
+  assert.equal(data[0].lastUpdateTime, 1700000005000)
+  // 兜底后频控不应被占用（失败查询不写 60s 冷却）
+  assert.equal(await globalThis.redis.get('STAR_RAILWAY:userPanelDataTime:' + UID), null)
+})
+
+test('兜底：本地缓存较旧（miao 更新）时兜底导入并与本地合并', async () => {
+  writeMiaoPlayer() // 1700000005000
+  writeLocalPanel(1700000000000) // 本地较旧
+  const { setFallback, resetFetchMock } = await import('../../helpers/fetch-mock.mjs')
+  setFallback(() => { throw new Error('面板服务连接超时（模拟）') })
+  const panel = new Panel()
+  panel.e = { reply: async () => {} }
+  const data = await panel.getPanelData(UID, true)
+  resetFetchMock()
+  assert.deepEqual(data.map(d => d.avatarId), [1104, 1402, 1501, 1220], '导入条目与本地缓存合并')
+})
+
+test('兜底：miao 不比本地新 → 不兜底，如实抛出第三方错误', async () => {
+  writeMiaoPlayer() // 1700000005000
+  writeLocalPanel(1700000009000) // 本地较新
+  const { setFallback, resetFetchMock } = await import('../../helpers/fetch-mock.mjs')
+  setFallback(() => { throw new Error('面板服务连接超时（模拟）') })
+  const panel = new Panel()
+  panel.e = { reply: async () => {} }
+  await assert.rejects(() => panel.getPanelData(UID, true), /连接超时|超时/)
+  resetFetchMock()
+})
+
+test('兜底：无 miao 数据 → 维持原报错', async () => {
+  fs.rmSync(miaoFile, { force: true })
+  const { setFallback, resetFetchMock } = await import('../../helpers/fetch-mock.mjs')
+  setFallback(() => { throw new Error('面板服务连接超时（模拟）') })
+  const panel = new Panel()
+  panel.e = { reply: async () => {} }
+  await assert.rejects(() => panel.getPanelData(UID, true), /连接超时|超时/)
+  resetFetchMock()
+})

@@ -37,6 +37,14 @@ export const helpList = [
         title: '*更新面板(uid)',
         desc: '更新星铁面板数据'
       }, {
+        icon: 63,
+        title: '*米游社更新面板',
+        desc: '米游社直连更新面板数据'
+      }, {
+        icon: 63,
+        title: '*同步面板',
+        desc: '从miao-plugin导入面板(查询时也会自动同步)'
+      }, {
         icon: 66,
         title: '*希儿面板(uid)',
         desc: '星铁角色面板详情'

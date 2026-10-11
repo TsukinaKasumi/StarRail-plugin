@@ -57,8 +57,12 @@ export class Panel extends plugin {
       priority: 1,
       rule: [
         {
-          reg: `^${rulePrefix}(?!米游社)(.+)面板(更新)?(.*)`,
+          reg: `^${rulePrefix}(?!米游社)(?!同步)(.+)面板(更新)?(.*)`,
           fnc: 'panel'
+        },
+        {
+          reg: `^${rulePrefix}同步面板(更新)?$`,
+          fnc: 'syncMiao'
         },
         {
           reg: `^${rulePrefix}面板(列表)?$`,
@@ -589,6 +593,93 @@ export class Panel extends plugin {
     return charInfo
   }
 
+  /** 面板命令的 uid 解析（NoteUser 优先，redis 绑定兜底，支持 @ 代查） */
+  async resolvePanelUid (e) {
+    let user = e.user_id
+    const ats = e.message.filter((m) => m.type === 'at')
+    let atTarget = ''
+    if (ats.length > 0 && !e.atBot) {
+      atTarget = String(ats[0].qq)
+      user = atTarget
+    }
+    if (cfg.package.name != 'yunzai') {
+      const u = await NoteUser.create(atTarget || user)
+      const uid = u?.getUid('sr')
+      if (uid) return uid
+    }
+    return await redis.get(`STAR_RAILWAY:UID:${user}`)
+  }
+
+  /**
+   * *同步面板：手动从 miao-plugin 导入面板数据（只读 miao 数据文件，绝不回写）。
+   * 查询面板时也会自动按时间戳同步（getPanelData 缓存分支），
+   * 本命令用于显式触发/引导，尤其适合本地无缓存的首次数入。
+   */
+  async syncMiao (e) {
+    const uid = await this.resolvePanelUid(e)
+    if (!uid) {
+      return await e.reply('尚未绑定uid，请发送#星铁绑定uid进行绑定')
+    }
+    const fmt = (t) => moment(Number(t)).format('YYYY-MM-DD HH:mm:ss')
+    const miaoTime = getMiaoProfileTime(uid)
+    if (miaoTime <= 0) {
+      return await e.reply([
+        `未找到 UID ${uid} 的 miao-plugin 面板数据`,
+        '可先在 miao 侧更新：#星铁更新面板 或 #星铁米游社更新面板',
+        '或使用本插件直连更新：*米游社更新面板'
+      ].join('\n'))
+    }
+    const local = await readData(uid)
+    const maxLocal = local.length
+      ? Math.max(...local.map((i) => Number(i && i.lastUpdateTime) || 0))
+      : 0
+    if (miaoTime <= maxLocal) {
+      return await e.reply([
+        `miao-plugin 侧数据（${fmt(miaoTime)}）不比本地缓存（${fmt(maxLocal)}）新，无需同步`,
+        '如需刷新最新数据可发送：*米游社更新面板'
+      ].join('\n'))
+    }
+    const imported = importMiaoPlayerData(uid)
+    if (!imported || imported.length < 1) {
+      return await e.reply('miao-plugin 侧没有可导入的角色数据')
+    }
+    const merged = await updateData(local, imported, miaoTime)
+    saveData(uid, merged)
+    return await e.reply([
+      `面板数据同步完成（UID：${uid}）`,
+      `从 miao-plugin 导入 ${imported.length} 名角色（数据时间 ${fmt(miaoTime)}）`,
+      '发送 *面板列表 查看已有角色，*角色名面板 查询详情'
+    ].join('\n'))
+  }
+
+  /**
+   * 第三方面板服务不可用时的 miao-plugin 数据兜底：
+   * miao 侧存在数据且比本地缓存新（或本地为空）时整包导入，返回合并数据；
+   * 否则返回 null，维持原报错（强制更新时 miao 也不比本地新则如实报失败）。
+   */
+  async fallbackToMiao (uid) {
+    try {
+      const miaoTime = getMiaoProfileTime(uid)
+      if (miaoTime <= 0) return null
+      const local = await readData(uid)
+      const maxLocal = local.length
+        ? Math.max(...local.map((i) => Number(i && i.lastUpdateTime) || 0))
+        : 0
+      if (maxLocal > 0 && miaoTime <= maxLocal) return null
+      const imported = importMiaoPlayerData(uid)
+      if (!imported || imported.length < 1) return null
+      const merged = await updateData(local, imported, miaoTime)
+      saveData(uid, merged)
+      logger.info(
+        `SR-panelApi 第三方面板服务不可用，已回退 miao 数据：uid${uid} 导入 ${imported.length} 名角色`
+      )
+      return merged
+    } catch (err) {
+      logger.warn('SR-panelApi miao 数据兜底失败', err)
+      return null
+    }
+  }
+
   /**
    * 获取面板数据
    * @param {number|string} uid 角色UID
@@ -627,15 +718,24 @@ export class Panel extends plugin {
           cardData = await res.json()
         } catch (error) {
           logger.error(error)
+          // 第三方面板服务不可用：回退 miao-plugin 数据（存在且不比本地缓存旧时导入）
+          const rescued = await this.fallbackToMiao(uid)
+          if (rescued) return rescued
           throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         }
         if (!res) {
+          const rescued = await this.fallbackToMiao(uid)
+          if (rescued) return rescued
           throw Error(`UID:${uid}更新面板失败\n面板服务连接超时，请稍后重试`)
         }
-        // 设置查询时间
-        await redis.setEx(timeKey, 360 * 60, Date.now().toString())
-        if ('detail' in cardData) throw Error(cardData.detail)
+        if ('detail' in cardData) {
+          const rescued = await this.fallbackToMiao(uid)
+          if (rescued) return rescued
+          throw Error(cardData.detail)
+        }
         if (!('playerDetailInfo' in cardData)) {
+          const rescued = await this.fallbackToMiao(uid)
+          if (rescued) return rescued
           throw Error(`uid:${uid}未查询到任何数据`)
         }
         if (!cardData.playerDetailInfo.isDisplayAvatarList) {
@@ -643,6 +743,8 @@ export class Panel extends plugin {
             `uid:${uid}更新面板失败\n可能是角色展柜未开启或者该用户不存在`
           )
         }
+        // 设置查询时间（仅在第三方数据校验通过后，失败查询不应占用 60s 冷却）
+        await redis.setEx(timeKey, 360 * 60, Date.now().toString())
         const assistRole = cardData.playerDetailInfo.assistAvatar
         const displayRoles = cardData.playerDetailInfo.displayAvatars || []
         const findAssRoleInBehaRole = displayRoles.findIndex(
