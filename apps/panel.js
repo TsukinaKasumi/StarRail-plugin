@@ -283,13 +283,13 @@ export class Panel extends plugin {
           break
       }
       // 第 5 项之后仅保留的新命途扩展技能位：按 pointId 末三位取图标名
-      // （面板图标资源后续按 <角色ID>_me.png / _mt.png / _xe.png / _xe2.png 补充）
+      // （StarRailRes 命名：忆灵技=_memosprite_skill、忆灵天赋=_memosprite_talent、欢愉技=_elation）
       if (i > 4) {
         const extraPathName = {
-          '301': 'me',
-          '302': 'mt',
-          '420': 'xe',
-          '421': 'xe2'
+          '301': 'memosprite_skill',
+          '302': 'memosprite_talent',
+          '420': 'elation',
+          '421': 'elation'
         }[item.id.toString().slice(-3)]
         if (extraPathName) {
           pathName = extraPathName

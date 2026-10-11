@@ -286,7 +286,7 @@ test('转换（火花）：xe talent → 420 欢愉槽位；光锥 meta 缺失�
   ])
   assert.deepEqual(bl[5], {
     id: 1501 * 1000 + 420, level: 12, type: '欢愉技', anchor: null,
-    icon: 'icon/skill/1501_xe.png', max_level: 1
+    icon: 'icon/skill/1501_elation.png', max_level: 1
   })
 })
 
@@ -315,11 +315,11 @@ test('转换（阿格莱雅）：me/mt talent → 301/302 忆灵槽位；缺 pro
   ])
   assert.deepEqual(bl[5], {
     id: 1402 * 1000 + 301, level: 10, type: '忆灵技', anchor: null,
-    icon: 'icon/skill/1402_me.png', max_level: 1
+    icon: 'icon/skill/1402_memosprite_skill.png', max_level: 1
   })
   assert.deepEqual(bl[6], {
     id: 1402 * 1000 + 302, level: 10, type: '忆灵天赋', anchor: null,
-    icon: 'icon/skill/1402_mt.png', max_level: 1
+    icon: 'icon/skill/1402_memosprite_talent.png', max_level: 1
   })
   assert.deepEqual(bl[7], {
     id: 1402201, level: 1, type: '行迹', anchor: 'Point09', icon: '', max_level: 1

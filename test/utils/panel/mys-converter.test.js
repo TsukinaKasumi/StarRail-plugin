@@ -230,7 +230,7 @@ test('欢愉角色（火花）：欢愉技 420 槽位；缺 name/element/propert
   // 欢愉技：point_id 1501420（avatarId×1000+420），type 取 remake 同名展示名
   assert.deepEqual(bl[5], {
     id: 1501420, level: 12, type: '欢愉技', anchor: null,
-    icon: 'icon/skill/1501_xe.png', max_level: 1
+    icon: 'icon/skill/1501_elation.png', max_level: 1
   })
 })
 
@@ -256,11 +256,11 @@ test('记忆角色（阿格莱雅）：servant_skills 的忆灵技/忆灵天赋 
   // mys 原始 point_id 为 8 位（fixture 14020301/14020302），转换器规范化为 avatarId×1000+槽位
   assert.deepEqual(bl[5], {
     id: 1402301, level: 10, type: '忆灵技', anchor: null,
-    icon: 'icon/skill/1402_me.png', max_level: 1
+    icon: 'icon/skill/1402_memosprite_skill.png', max_level: 1
   })
   assert.deepEqual(bl[6], {
     id: 1402302, level: 10, type: '忆灵天赋', anchor: null,
-    icon: 'icon/skill/1402_mt.png', max_level: 1
+    icon: 'icon/skill/1402_memosprite_talent.png', max_level: 1
   })
 })
 

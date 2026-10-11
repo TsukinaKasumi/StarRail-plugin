@@ -136,9 +136,10 @@ export const extraSlotType = {
   301: '忆灵技', 302: '忆灵天赋', 420: '欢愉技', 421: '强化欢愉技'
 }
 
-// 扩展技能槽位 -> 技能图标名后缀（新命途暂缺图标资源时模板走 alt 降级）
+// 扩展技能槽位 -> 技能图标名后缀（StarRailRes 命名：忆灵技=_memosprite_skill、
+// 忆灵天赋=_memosprite_talent、欢愉技=_elation；xe2 强化欢愉技无独立资源，复用 _elation）
 export const extraSlotIcon = {
-  301: 'me', 302: 'mt', 420: 'xe', 421: 'xe2'
+  301: 'memosprite_skill', 302: 'memosprite_talent', 420: 'elation', 421: 'elation'
 }
 
 // 光锥 ID -> 稀有度（HSR 编号规律：20xxx=3星，21xxx/22xxx=4星，23xxx+=5星）
