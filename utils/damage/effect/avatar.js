@@ -104,6 +104,8 @@ let MiShaTalentBase = null;       // 米沙终结技15段（Talent 槽位按终�
 let FeiCuiBPSkillBase = null;     // 翡翠强化追击（BPSkill 槽位按天赋/终结技双等级改写常量）
 let ShaJinTalentBase = null;      // 砂金天赋追击（4魂 7段→10段）
 let ZhiGengNiaoUltraBase = null;  // 知更鸟终结技附加伤害（终结技攻击增益折入倍率）
+let LiuYingBPSkillBase = null;    // 流萤强化战技（击破特攻档倍率加成）
+let HuangQuanBase = null;         // 黄泉全行（行迹-奈落 ×1.6 + 雷心对单 +1.5）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -1999,6 +2001,149 @@ const Avatar = (data, base_attr, attribute_bonus) => {
                 //（黑天鹅为风属性 → 风抗降低命中自身，按全抗穿注入）
                 attribute_bonus['AllDamageResistancePenetration'] =
                     0.25 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+        },
+        // ==================== 批次2 C 组：击破体系直伤角色 ====================
+        // 击破/超击破行引擎不支持，仅收录直伤行（披露见提交说明）
+        '1310': () => {
+            // 流萤（对齐 2310 流萤Pro 口径：miao defDmgIdx 指向超击破行，引擎不支持，
+            //  收录强化普攻/强化战技主目标直伤行；「完全燃烧」默认档）
+            const d = skilldict['1310'];
+            // 击破特攻（%）：遗器词条/行迹小节点（BreakDamageAddedRatioBase 小数存储）
+            //  + 行迹-α模组偏时迸发「完全燃烧」+25%
+            const stance = get_let_value(attribute_bonus, 'BreakDamageAddedRatioBase') * 100 + 25;
+            // 行迹-γ模组过载核心：攻击力 ≥1800 每超 10 点击破特攻+0.8%
+            const atk = panelAttack(base_attr, attribute_bonus);
+            const stanceTotal = stance + (atk >= 1800 ? Math.floor((atk - 1800) / 10) * 0.8 : 0);
+            // 强化战技主目标倍率 + min(击破特攻×0.2, 72)%（官方最多计入 360% 击破特攻，
+            //  按面板重算，基线缓存；光锥/套装特效若再提供击破特攻存在近似偏差）
+            if (!LiuYingBPSkillBase) {
+                LiuYingBPSkillBase = [...d.BPSkill];
+            }
+            d.BPSkill = LiuYingBPSkillBase.map(v =>
+                round10(v + Math.min(stanceTotal * 0.2, 72) / 100));
+            if (data.rank >= 1) {
+                // 1魂：施放强化战技时无视目标 15% 防御
+                attribute_bonus['ignore_defence'] =
+                    0.15 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：完全燃烧状态下火属性抗性穿透+20%
+                attribute_bonus['FireResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'FireResistancePenetration');
+            }
+        },
+        '1225': () => {
+            // 忘归人（击破/超击破行引擎不支持，仅收录对三直伤；默认持【狐祈】档——
+            //  miao defDmgIdx=7 为持狐祈破韧后终结技行）
+            const d = skilldict['1225'];
+            // 狐祈持有者攻击时概率使敌方防御力降低（按战技等级表，按无视防御计）
+            attribute_bonus['ignore_defence'] =
+                levelValue(d.E_DefDown, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'ignore_defence');
+            //（1魂击破效率/4魂击破伤害/6魂狐祈扩散均为击破体系增益，直伤行不适用）
+        },
+        '1315': () => {
+            // 波提欧（口袋击破行引擎不支持，仅收录直伤；默认【绝命对峙】档）
+            const d = skilldict['1315'];
+            // 战技：处于【绝命对峙】的敌方受到的伤害提高（易伤，按战技等级表）
+            attribute_bonus['DmgRatio'] =
+                levelValue(d.E_EnemyDmg, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'DmgRatio');
+            // 行迹-幽灵装填：基于击破特攻暴击率 min(stance×0.1,30)% / 暴伤 min(stance×0.5,150)%
+            //（2魂对峙获得口袋时击破特攻+30% 先行计入换算）
+            const stance = get_let_value(attribute_bonus, 'BreakDamageAddedRatioBase') * 100 +
+                (data.rank >= 2 ? 30 : 0);
+            attribute_bonus['CriticalChanceBase'] =
+                Math.min(stance * 0.1, 30) / 100 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            attribute_bonus['CriticalDamageBase'] =
+                Math.min(stance * 0.5, 150) / 100 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            if (data.rank >= 1) {
+                // 1魂：造成伤害时无视 16% 防御
+                attribute_bonus['ignore_defence'] =
+                    0.16 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 4) {
+                // 4魂：对峙目标受到的伤害额外提高 12%（易伤）
+                attribute_bonus['DmgRatio'] =
+                    0.12 + get_let_value(attribute_bonus, 'DmgRatio');
+            }
+            //（6魂击破倍率+40% 仅作用于击破伤害，直伤行不适用）
+        },
+        '1308': () => {
+            // 黄泉（行迹-奈落：普攻/战技/终结技伤害 ×1.6；行迹-雷心：伤害+90% 且
+            //  终结技对单额外 150% 攻击力；Talent 槽位对无花行按终结技等级改写常量）
+            const d = skilldict['1308'];
+            const qLv = stdLevel(data, 2);
+            // 行迹-雷心：造成的伤害提高 90%
+            attribute_bonus['AllDamageAddedRatio'] =
+                0.9 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 天赋-红叶时雨：终结技期间敌方全属性抗性降低（两个终结技行；
+            //  6魂普攻/战技视为终结技伤害同享）
+            const kx = levelValue(d.T_Kx, stdLevel(data, 3));
+            attribute_bonus['Ultra_AllDamageResistancePenetration'] =
+                kx + get_let_value(attribute_bonus, 'Ultra_AllDamageResistancePenetration');
+            attribute_bonus['Talent_AllDamageResistancePenetration'] =
+                kx + get_let_value(attribute_bonus, 'Talent_AllDamageResistancePenetration');
+            if (data.rank >= 1) {
+                // 1魂：对负面状态目标暴击率+18%
+                attribute_bonus['CriticalChanceBase'] =
+                    0.18 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            if (data.rank >= 4) {
+                // 4魂：终结技易伤 8%（两个终结技行；6魂起普攻/战技同享）
+                attribute_bonus['Ultra_DmgRatio'] =
+                    0.08 + get_let_value(attribute_bonus, 'Ultra_DmgRatio');
+                attribute_bonus['Talent_DmgRatio'] =
+                    0.08 + get_let_value(attribute_bonus, 'Talent_DmgRatio');
+            }
+            if (data.rank >= 6) {
+                // 6魂：终结技全抗穿 20%——全行（普攻/战技视为终结技，两终结技行本为终结技）
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+                // 普攻/战技行视为终结技：同享天赋抗降与 4魂易伤
+                attribute_bonus['Normal_AllDamageResistancePenetration'] =
+                    kx + get_let_value(attribute_bonus, 'Normal_AllDamageResistancePenetration');
+                attribute_bonus['BPSkill_AllDamageResistancePenetration'] =
+                    kx + get_let_value(attribute_bonus, 'BPSkill_AllDamageResistancePenetration');
+                attribute_bonus['Normal_DmgRatio'] =
+                    0.08 + get_let_value(attribute_bonus, 'Normal_DmgRatio');
+                attribute_bonus['BPSkill_DmgRatio'] =
+                    0.08 + get_let_value(attribute_bonus, 'BPSkill_DmgRatio');
+            }
+            // 行迹-奈落 ×1.6（普攻/战技/终结技行；Ultra 对单另 +雷心 150%），
+            // 基线缓存可回退（Talent 常量按终结技等级取值）
+            if (!HuangQuanBase) {
+                HuangQuanBase = {
+                    Normal: [...d.Normal], BPSkill: [...d.BPSkill],
+                    Ultra: [...d.Ultra], Talent: [...d.Talent]
+                };
+            }
+            d.Normal = HuangQuanBase.Normal.map(v => round10(v * 1.6));
+            d.BPSkill = HuangQuanBase.BPSkill.map(v => round10(v * 1.6));
+            d.Ultra = HuangQuanBase.Ultra.map(v => round10((v + 1.5) * 1.6));
+            d.Talent = HuangQuanBase.Talent.map(() =>
+                round10(levelValue(HuangQuanBase.Talent, qLv) * 1.6));
+        },
+        '1222': () => {
+            // 灵砂（治疗行与击破行引擎不支持，仅收录终结技直伤）
+            // 行迹-朱燎：基于击破特攻攻击力 min(stance×0.25, 50)%
+            //（2魂施放终结技击破特攻+40% 先行计入——miao calc 误写 20%，
+            //  按官方星魂文本修正为 40）
+            const stance = get_let_value(attribute_bonus, 'BreakDamageAddedRatioBase') * 100 +
+                (data.rank >= 2 ? 40 : 0);
+            attribute_bonus['AttackAddedRatio'] =
+                Math.min(stance * 0.25, 50) / 100 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            if (data.rank >= 1) {
+                // 1魂：敌方弱点击破时防御力降低 20%
+                attribute_bonus['ignore_defence'] =
+                    0.2 + get_let_value(attribute_bonus, 'ignore_defence');
+            }
+            if (data.rank >= 6) {
+                // 6魂：浮元在场时敌方全体全属性抗性降低 20%
+                //（miao calc check params.q 永不命中为死代码，按官方文本修正为常驻）
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.2 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
             }
         },
     };
