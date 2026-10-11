@@ -102,6 +102,8 @@ let ZhenLiTalentBase = null;      // 真理医生追加攻击（2魂 +0.6）
 let MiShaUltraBase = null;        // 米沙终结技10段（4魂 +0.6）
 let MiShaTalentBase = null;       // 米沙终结技15段（Talent 槽位按终结技等级改写常量 + 4魂 +0.9）
 let FeiCuiBPSkillBase = null;     // 翡翠强化追击（BPSkill 槽位按天赋/终结技双等级改写常量）
+let ShaJinTalentBase = null;      // 砂金天赋追击（4魂 7段→10段）
+let ZhiGengNiaoUltraBase = null;  // 知更鸟终结技附加伤害（终结技攻击增益折入倍率）
 
 // 星·欢愉/穹·欢愉（开拓者·欢愉，两者 calc 数据完全相同）
 function trailblazerElation(data, base_attr, attribute_bonus) {
@@ -1868,6 +1870,135 @@ const Avatar = (data, base_attr, attribute_bonus) => {
                 // 6魂：量子属性抗性穿透+20%
                 attribute_bonus['QuantumResistancePenetration'] =
                     0.2 + get_let_value(attribute_bonus, 'QuantumResistancePenetration');
+            }
+        },
+        // ==================== 批次2 B 组：特殊基数与增益型角色 ====================
+        '1217': () => {
+            // 藿藿（丰饶治疗型：治疗行引擎不支持，仅收录普攻伤害行——普攻为生命倍率，
+            //  注入生命为攻击基数；终结技为队友充能+攻击增益，增益对象非自身，不入钩子）
+            injectHpAsAttack(base_attr, attribute_bonus, panelHp(base_attr, attribute_bonus));
+        },
+        '1304': () => {
+            // 砂金（防御倍率角色 → 注入防御为攻击基数；战技/追击护盾行引擎不支持，见提交说明）
+            const d = skilldict['1304'];
+            if (data.rank >= 4) {
+                // 4魂：触发天赋追击时防御力+40%（先行计入，注入与杠杆换算均按提高后防御）
+                attribute_bonus['DefenceAddedRatio'] =
+                    0.4 + get_let_value(attribute_bonus, 'DefenceAddedRatio');
+            }
+            const def = panelDefence(base_attr, attribute_bonus);
+            injectHpAsAttack(base_attr, attribute_bonus, def);
+            // 行迹-杠杆：防御>1600 每超 100 点暴击率+2%（上限 48%）
+            const steps = Math.min(Math.floor(Math.max(def - 1600, 0) / 100), 24);
+            if (steps > 0) {
+                attribute_bonus['CriticalChanceBase'] =
+                    steps * 0.02 + get_let_value(attribute_bonus, 'CriticalChanceBase');
+            }
+            // 终结技-惊惶：命中【惊惶】目标暴击伤害提高（按终结技等级表）
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.Q_Cdmg, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            if (data.rank >= 1) {
+                // 1魂：暴击伤害+20%
+                attribute_bonus['CriticalDamageBase'] =
+                    0.2 + get_let_value(attribute_bonus, 'CriticalDamageBase');
+            }
+            if (data.rank >= 2) {
+                // 2魂：施放普攻后目标全属性抗性降低 12%
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.12 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
+            }
+            if (data.rank >= 6) {
+                // 6魂：每有 1 个队友持有护盾伤害+50%（3 队友满档 150%，取 miao 满档口径）
+                attribute_bonus['AllDamageAddedRatio'] =
+                    1.5 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            }
+            // 天赋追击：7 段（4魂 10 段），按每段伤害表重算，基线缓存可回退
+            if (!ShaJinTalentBase) {
+                ShaJinTalentBase = [...d.Talent];
+            }
+            const segs = data.rank >= 4 ? 10 : 7;
+            d.Talent = ShaJinTalentBase.map(() =>
+                round10(levelValue(d.T_PerSeg, stdLevel(data, 3)) * segs));
+        },
+        '1309': () => {
+            // 知更鸟（终结技附加伤害：必定暴击 + 爆伤固定 150%（6魂 600%）+
+            //  终结技攻击增益折入倍率，普攻行不受终结技增益影响）
+            const d = skilldict['1309'];
+            // 天赋-调性合颂：我方全体暴伤提高（按天赋等级表）
+            attribute_bonus['CriticalDamageBase'] =
+                levelValue(d.T_Cdmg, stdLevel(data, 3)) +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            // 战技Buff：我方全体伤害提高（按战技等级表）
+            attribute_bonus['AllDamageAddedRatio'] =
+                levelValue(d.E_DmgUp, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            const qLv = stdLevel(data, 2);
+            // 附加伤害行必定暴击（暴击率注入 1，引擎 min(1,·) 饱和 → 期望=暴击）
+            attribute_bonus['Ultra_CriticalChance'] =
+                1 + get_let_value(attribute_bonus, 'Ultra_CriticalChance');
+            // 爆伤固定 150%（6魂 600%）：以负向技能位爆伤对冲面板爆伤
+            //（钩子时点已并入遗器/行迹/光锥基础属性；光锥/套装特效若再提供爆伤
+            //  存在近似偏差，引擎架构限制）
+            const panelCdmg = get_let_value(base_attr, 'CriticalDamageBase') +
+                get_let_value(attribute_bonus, 'CriticalDamageBase');
+            const fixedCdmg = data.rank >= 6 ? 6 : 1.5;
+            attribute_bonus['Ultra_CriticalDamageBase'] =
+                fixedCdmg - panelCdmg + get_let_value(attribute_bonus, 'Ultra_CriticalDamageBase');
+            // 终结技Buff：协奏期间攻击力提高（百分比×攻击 + 固定值），折入附加伤害倍率：
+            //  atk×mult + (pct×atk+flat)×mult = atk×(mult×(1+pct) + mult×flat/atk)
+            //（atk 取钩子时点面板攻击，光锥/套装特效攻击加成存在近似偏差，架构限制）
+            if (!ZhiGengNiaoUltraBase) {
+                ZhiGengNiaoUltraBase = [...d.Ultra];
+            }
+            const atk = panelAttack(base_attr, attribute_bonus);
+            const pct = levelValue(d.Q_AtkPct, qLv);
+            const flat = levelValue(d.Q_AtkFlat, qLv);
+            d.Ultra = ZhiGengNiaoUltraBase.map(v =>
+                round10(v * (1 + pct) + v * flat / atk));
+            if (data.rank >= 1) {
+                // 1魂：协奏期间我方全体全属性抗性穿透+24%（终结技行）
+                attribute_bonus['Ultra_AllDamageResistancePenetration'] =
+                    0.24 + get_let_value(attribute_bonus, 'Ultra_AllDamageResistancePenetration');
+            }
+            //（2魂速度 16%/4魂效果抵抗 50% 对伤害无贡献，不入钩子）
+        },
+        '1306': () => {
+            // 花火（miao calc 仅普攻伤害行为伤害行，其余为队友增益文本行）
+            // 行迹-夜想曲：攻击力提高 20%（含自身面板）
+            attribute_bonus['AttackAddedRatio'] =
+                0.2 + get_let_value(attribute_bonus, 'AttackAddedRatio');
+            //（2魂天赋满层无视防御 24% 为我方目标增益，miao 以文本行展示、不作用于
+            //  自身普攻行，照抄不注入；6魂为战技暴伤扩散，无自身伤害行）
+        },
+        '1313': () => {
+            // 星期日（miao calc.js 全部为队友增益文本行——战技增伤/暴击率、终结技爆伤，
+            //  增益对象为队友非自身，引擎无文本行通道；普攻行取 data.json a 表收录）
+        },
+        '1303': () => {
+            // 阮•梅（miao calc 仅普攻伤害行为直伤行，其余为击破伤害行——引擎不支持；
+            //  战技弦外音我方增伤/终结技结界抗穿按 miao 口径均不作用于自身普攻行）
+        },
+        '1307': () => {
+            // 黑天鹅（DOT 行——奥迹 3/7/50 层持续伤害——引擎无 DOT 通道，跳过并披露）
+            const d = skilldict['1307'];
+            // 行迹-烛影朕兆：基于效果命中提高伤害 min(effPct×0.6, 72)%
+            const effPct = get_let_value(attribute_bonus, 'StatusProbabilityBase') * 100;
+            attribute_bonus['AllDamageAddedRatio'] =
+                Math.min(effPct * 0.6, 72) / 100 + get_let_value(attribute_bonus, 'AllDamageAddedRatio');
+            // 战技：目标防御力降低（按战技等级表，按无视防御计）
+            attribute_bonus['ignore_defence'] =
+                levelValue(d.E_DefDown, stdLevel(data, 1)) +
+                get_let_value(attribute_bonus, 'ignore_defence');
+            // 终结技【揭露】：目标受到的伤害提高（易伤，按终结技等级表）
+            attribute_bonus['Ultra_DmgRatio'] =
+                levelValue(d.Q_EnemyDmg, stdLevel(data, 2)) +
+                get_let_value(attribute_bonus, 'Ultra_DmgRatio');
+            if (data.rank >= 1) {
+                // 1魂：风化/裂伤/灼烧/触电目标对应属性抗性降低 25%
+                //（黑天鹅为风属性 → 风抗降低命中自身，按全抗穿注入）
+                attribute_bonus['AllDamageResistancePenetration'] =
+                    0.25 + get_let_value(attribute_bonus, 'AllDamageResistancePenetration');
             }
         },
     };
