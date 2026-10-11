@@ -16,6 +16,7 @@
  *      - icon/character/{id}.png                  角色头像（256x256，方形，抽卡分析头像用）
  *      - image/character_preview/{id}.png         角色半身像（376x512，模拟抽卡立绘用）
  *      - image/character_portrait/{id}.png        角色立绘（2048x2048，面板立绘用）
+ *      - image/light_cone_preview/{id}.png        光锥竖版卡面（348x408，模拟抽卡卡面用）
  *      - icon/light_cone/{id}.png                光锥图标（128x128，面板图标用，实际路径以索引 icon 字段为准）
  *      - icon/relic/{set}_{n}.png                遗器图标（128x128，面板遗器列表用）
  *      - icon/skill/{id}_{slot}.png              技能/行迹图标（128x128，面板技能区与行迹画布用）
@@ -34,7 +35,8 @@
  * 注意：
  *   - 生成的数据文件 / 图片不随 tools/ 一起提交，由维护者审查后另行提交。
  *   - 图片下载串行 + 每次间隔约 300ms，失败自动重试 3 次（指数退避），404 视为永久失败不重试。
- *   - images 阶段对已存在文件做 PNG 魔数校验，损坏的存量文件会被重新下载覆盖。
+ *   - images 阶段对已存在文件做 PNG 魔数校验（+ 光锥卡面另加竖版规格校验），
+ *     损坏 / 规格不符的存量文件会被重新下载覆盖（存量历史脏数据自愈）。
  *   - miao-plugin 路径默认为 <本插件>/../miao-plugin，可用环境变量 MIAO_ROOT 覆盖。
  */
 import fs from 'node:fs'
@@ -627,11 +629,14 @@ async function genImages (miao, srr) {
     permanentSkip: id === DEV_CHAR_ID ? 'dev 白板角色，StarRailRes 无此图片（模拟池也不会抽出）' : undefined
   })))
 
-  // 2. 模拟抽卡：光锥图标（weapon）
+  // 2. 模拟抽卡：光锥卡面（weapon）
+  //    存量为 256x300~348x408 竖版卡面 → StarRailRes image/light_cone_preview 同规格；
+  //    校验规则：竖版（高>宽），历史上误用 128x128 图标源的存量文件会被自动重下覆盖。
   await fillImages('gachasimulation/weapon', weaponIds.map((id) => ({
     id,
-    url: `${SRR_BASE}${lcIcon(id)}`,
-    dest: path.join(P.gachaSimImages, 'weapon', `${id}.png`)
+    url: `${SRR_BASE}image/light_cone_preview/${id}.png`,
+    dest: path.join(P.gachaSimImages, 'weapon', `${id}.png`),
+    validate: (buf) => buf.readUInt32BE(20) > buf.readUInt32BE(16)
   })))
 
   // 3. 抽卡分析：角色头像（gatcha/images/char，含开拓者 8001-8010）
