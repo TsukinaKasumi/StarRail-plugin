@@ -4,6 +4,7 @@ import setting from '../utils/setting.js'
 import fetch from 'node-fetch'
 import _ from 'lodash'
 import { getCk, rulePrefix } from '../utils/common.js'
+import { parseArchiveArgs } from '../utils/archiveArgs.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import MysInfo from '../../genshin/model/mys/mysInfo.js'
@@ -38,15 +39,15 @@ export class Rogue extends plugin {
           fnc: 'rogue_tourn'
         },
         {
-          reg: `^${rulePrefix}常规(差分(宇宙)?|演算)(战绩|回顾|战报|记录)?(一|二|三)?`,
+          reg: `^${rulePrefix}常规(差分(宇宙)?|演算)(战绩|回顾|战报|记录)?(\\d+)?(\\s*\\d+)?$`,
           fnc: 'rogue_tourn_normal'
         },
         {
-          reg: `^${rulePrefix}(本期|上期|本周|上周)(差分(宇宙)?|演算)(战绩|回顾|战报|记录)?(一|二|三)?`,
+          reg: `^${rulePrefix}(本期|上期|本周|上周)(差分(宇宙)?|演算)(战绩|回顾|战报|记录)?(\\d+)?(\\s*\\d+)?$`,
           fnc: 'rogue_tourn_week'
         },
         {
-          reg: `^${rulePrefix}周期(差分(宇宙)?|演算)(战绩|回顾|战报|记录)?(一|二|三)?`,
+          reg: `^${rulePrefix}周期(差分(宇宙)?|演算)(战绩|回顾|战报|记录)?(\\d+)?(\\s*\\d+)?$`,
           fnc: 'rogue_tourn_week_help'
         }
       ]
@@ -174,12 +175,14 @@ export class Rogue extends plugin {
     this.e.isSr = true
     this.isSr = true
 
-    let uid = await this.userUid(e)
-    let ck = await this.userCk(e, uid)
+    // 数字下标与uid并存：≤2位数字=记录下标，≥3位数字=uid查他人（*常规演算1 123456789，同 *宇宙(uid)）；
+    // @人不进 e.msg，由 e.at 走 getUid 的 at 分支
+    let { index, queryUid } = parseArchiveArgs(e.msg)
 
-    let indexMap = { 一: 1, 二: 2, 三: 3 }
-    let indexStr = e.msg.match(/(一|二|三)$/)?.[0]
-    let index = indexMap[indexStr] || 1
+    let uid = queryUid || await MysInfo.getUid(e, false)
+    if (!uid) return false
+    let ck = await this.userCk(e, uid)
+    if (!ck) return false
 
     let api = new MysSRApi(uid, ck)
     let deviceFp = await api.getData('getFp')
@@ -193,17 +196,18 @@ export class Rogue extends plugin {
     }
 
     let data = res.data
-    if (!data.normal_detail?.records || data.normal_detail.records.length < index) {
-      return e.reply(`未找到差分宇宙·常规演算第${index}条记录：${periodName}共有${weekDetail.records.length || 0}条记录`)
+    let records = data.normal_detail?.records || []
+    if (records.length < index) {
+      return e.reply(`未找到差分宇宙·常规演算第${index}条记录：共${records.length}条记录`)
     }
 
-    let record = data.normal_detail.records[index - 1]
+    let record = records[index - 1]
     let renderData = {
       uid,
       role: data.role,
       basic: data.basic,
       record: record,
-      index_of_archive: `${index} / ${data.normal_detail.records.length}`
+      index_of_archive: `${index} / ${records.length}`
     }
 
     // 格式化时间
@@ -225,15 +229,15 @@ export class Rogue extends plugin {
     this.e.isSr = true
     this.isSr = true
 
-    let uid = await this.userUid(e)
-    let ck = await this.userCk(e, uid)
-
-    let indexMap = { 一: 1, 二: 2, 三: 3 }
-    let indexStr = e.msg.match(/(一|二|三)/)?.[0]
-    let index = indexMap[indexStr] || 1
-
+    // 数字下标与uid并存（同常规演算）：≤2位=下标，≥3位=uid；@走 e.at
+    let { index, queryUid } = parseArchiveArgs(e.msg)
     let period = e.msg.match(/上期|上周/) ? 'last_week_detail' : 'cur_week_detail'
     let periodName = e.msg.match(/上期|上周/) ? '上期' : '本期'
+
+    let uid = queryUid || await MysInfo.getUid(e, false)
+    if (!uid) return false
+    let ck = await this.userCk(e, uid)
+    if (!ck) return false
 
     let api = new MysSRApi(uid, ck)
     let deviceFp = await api.getData('getFp')

@@ -11,8 +11,8 @@
  *
  * 注意：本文件为静态正则断言；TRSS 运行时 loader 会把 * 星铁词 前缀标准化为 #星铁
  * （lib/plugins/loader.js srReg），本插件 rulePrefix 两种形态均覆盖，不影响结论。
- * 已知提取器缺口：源码里以 '\\d'/'\\S'/'\\*' 形态书写的正则被按原文提取（反斜杠未还原），
- * 受影响命令（*米游社更新面板 半角星、*设置默认攻略1、*绑定uid 123456789 等）不入用例表。
+ * 提取器已还原字符串转义语义（042b42a）：源码 '\\d'/'\\*' 形态按运行时值提取，
+ * 此类命令（*常规演算1、*绑定uid 123456789 等）可入用例表。
  */
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
@@ -104,6 +104,26 @@ const CORPUS = [
   { group: 'regress', msg: '*寰宇蝗灾', apps: ['rogue'] },
   { group: 'regress', msg: '*黄金与机械', apps: ['rogue'] },
   { group: 'regress', msg: '*不可知域', apps: ['rogue'] },
+  // ---- 常规演算：数字下标/uid 形态 → rogue.rogue_tourn_normal ----
+  { group: 'tourn-normal', msg: '*常规演算', apps: ['rogue'] },
+  { group: 'tourn-normal', msg: '*常规演算1', apps: ['rogue'] },
+  { group: 'tourn-normal', msg: '*常规演算123456789', apps: ['rogue'] }, // ≥3位数字=uid
+  { group: 'tourn-normal', msg: '*常规演算1 123456789', apps: ['rogue'] }, // 下标 + uid
+  { group: 'tourn-normal', msg: '*常规演算战绩1 123456789', apps: ['rogue'] },
+  { group: 'tourn-normal', msg: '#星铁常规演算1', apps: ['rogue'] },
+  { group: 'tourn-normal', msg: '*常规差分宇宙1 123456789', apps: ['rogue'] },
+  // ---- 周期演算：数字下标/uid 形态 → rogue.rogue_tourn_week ----
+  { group: 'tourn-week', msg: '*本期演算', apps: ['rogue'] },
+  { group: 'tourn-week', msg: '*本期演算2', apps: ['rogue'] },
+  { group: 'tourn-week', msg: '*上期演算2 123456789', apps: ['rogue'] },
+  { group: 'tourn-week', msg: '*本周演算战绩3 123456789', apps: ['rogue'] },
+  { group: 'tourn-week', msg: '#星铁上期演算1', apps: ['rogue'] },
+  { group: 'tourn-week', msg: '*周期演算', apps: ['rogue'] }, // 引导命令
+  // ---- 货币战争战绩：数字下标/uid 形态 → gridFight.grid_fight_archive ----
+  { group: 'grid-fight', msg: '*货币战绩', apps: ['gridFight'] },
+  { group: 'grid-fight', msg: '*货币战绩1', apps: ['gridFight'] },
+  { group: 'grid-fight', msg: '*货币战绩10 123456789', apps: ['gridFight'] }, // 两位下标（共10条）
+  { group: 'grid-fight', msg: '*币战回顾2', apps: ['gridFight'] },
   { group: 'regress', msg: '#星铁希儿面板', apps: ['MiaoOrStarrail', 'panel'] }, // 已知面板分工
   { group: 'regress', msg: '*面板', apps: ['panel'] },
   { group: 'regress', msg: '*面板列表', apps: ['panel'] },
@@ -120,7 +140,12 @@ const CORPUS = [
   { group: 'reject', msg: '*同步抽卡', apps: [] }, // 不完整命令
   { group: 'reject', msg: '*十连武器', apps: [] }, // 不支持词（武器池应说 光锥）
   { group: 'reject', msg: '*十连光锥联动', apps: [] }, // 不支持词序（应为 联动光锥）
-  { group: 'reject', msg: '*十连角色联动', apps: [] } // 不支持词序（应为 联动角色）
+  { group: 'reject', msg: '*十连角色联动', apps: [] }, // 不支持词序（应为 联动角色）
+  { group: 'reject', msg: '*常规演算1 123456 789', apps: [] }, // 三段数字（仅支持下标+uid两段）
+  { group: 'reject', msg: '*常规演算abc', apps: [] }, // 尾随垃圾（原规则缺 $ 锚定，本次收紧）
+  { group: 'reject', msg: '*常规演算二', apps: [] }, // 汉字下标已移除
+  { group: 'reject', msg: '*本期演算三', apps: [] }, // 汉字下标已移除
+  { group: 'reject', msg: '*货币战绩十', apps: [] } // 汉字下标已移除
 ]
 
 const byGroup = (group) => CORPUS.filter((c) => c.group === group)
@@ -182,6 +207,37 @@ test('面板分工：#星铁更新面板 归 MiaoOrStarrail（panel 同命中为
 test('回归：既有命令分派保持', () => {
   for (const c of byGroup('regress')) {
     assertDispatch(c)
+  }
+})
+
+test('常规演算：数字下标/uid 形态归 rogue（rogue_tourn_normal）', () => {
+  for (const c of byGroup('tourn-normal')) {
+    assertDispatch(c)
+    assert.ok(
+      hits(c.msg).some((r) => r.app === 'rogue' && r.fnc === 'rogue_tourn_normal'),
+      `「${c.msg}」应命中 rogue.rogue_tourn_normal`
+    )
+  }
+})
+
+test('周期演算：数字下标/uid 形态归 rogue（rogue_tourn_week / 引导命令）', () => {
+  for (const c of byGroup('tourn-week')) {
+    assertDispatch(c)
+    const fnc = c.msg === '*周期演算' ? 'rogue_tourn_week_help' : 'rogue_tourn_week'
+    assert.ok(
+      hits(c.msg).some((r) => r.app === 'rogue' && r.fnc === fnc),
+      `「${c.msg}」应命中 rogue.${fnc}`
+    )
+  }
+})
+
+test('货币战争战绩：数字下标/uid 形态归 gridFight（grid_fight_archive）', () => {
+  for (const c of byGroup('grid-fight')) {
+    assertDispatch(c)
+    assert.ok(
+      hits(c.msg).some((r) => r.app === 'gridFight' && r.fnc === 'grid_fight_archive'),
+      `「${c.msg}」应命中 gridFight.grid_fight_archive`
+    )
   }
 })
 
