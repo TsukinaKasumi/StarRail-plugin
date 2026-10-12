@@ -890,7 +890,9 @@ export class Panel extends plugin {
   /** 通过米游社获取UID */
   async miYoSummerGetUid () {
     let key = `STAR_RAILWAY:UID:${this.e.user_id}`
-    let ck = getCk(this.e)
+    // getCk 为 async：不 await 拿到的是 Promise（恒真值），MysSRApi 构造时 cookie
+    // 解析为 undefined，getData 里 ck.match 必崩（无 redis 缓存 UID 的首次更新面板触发）
+    let ck = await getCk(this.e)
     if (!ck) return false
     if (await redis.get(key)) return false
     let api = new MysSRApi('', ck)
