@@ -1,0 +1,61 @@
+{
+  "note": "Fate/stay night 联动卡池补充条目。miao-plugin 的 poolDetailSr 只收录常规活动跃迁，联动池由本文件单独维护。字段与 poolDetailSr 同构，额外增加 id/gachaType/poolName。gachaType 对应抽卡记录 gacha_type：21=角色联动跃迁，22=光锥联动跃迁。",
+  "sentinel": {
+    "to": "2036-01-01 00:00:00",
+    "reason": "两期联动池均为长期开放，无既定结束时间。to 采用远期哨兵值，与官方抽卡记录 API 返回的联动池结束时间哨兵一致，生成 poolData.js 时原样写入并附注释。"
+  },
+  "pools": [
+    {
+      "id": "ver3.4collab",
+      "version": "3.4",
+      "half": "联动",
+      "from": "2025-07-11 12:00:00",
+      "to": "2036-01-01 00:00:00",
+      "poolName": "圣剑辉烈之誓·此身剑所天成",
+      "gachaType": 21,
+      "char5": ["Saber", "Archer"],
+      "char4": [],
+      "weapon5": [],
+      "weapon4": []
+    },
+    {
+      "id": "ver3.4collabWeapon",
+      "version": "3.4",
+      "half": "联动",
+      "from": "2025-07-11 12:00:00",
+      "to": "2036-01-01 00:00:00",
+      "poolName": "光锥联动跃迁·Fate/stay night（一期）",
+      "gachaType": 22,
+      "char5": [],
+      "char4": [],
+      "weapon5": ["没有回报的加冕", "理想燃烧的地狱"],
+      "weapon4": []
+    },
+    {
+      "id": "ver4.4collab",
+      "version": "4.4",
+      "half": "联动",
+      "from": "2026-07-24 12:00:00",
+      "to": "2036-01-01 00:00:00",
+      "poolName": "魔石赤染流光·原初开辟之星",
+      "gachaType": 21,
+      "char5": ["远坂凛", "吉尔伽美什"],
+      "char4": [],
+      "weapon5": [],
+      "weapon4": []
+    },
+    {
+      "id": "ver4.4collabWeapon",
+      "version": "4.4",
+      "half": "联动",
+      "from": "2026-07-24 12:00:00",
+      "to": "2036-01-01 00:00:00",
+      "poolName": "光锥联动跃迁·Fate/stay night（二期）",
+      "gachaType": 22,
+      "char5": [],
+      "char4": [],
+      "weapon5": ["星火悄然闪耀", "所见即我"],
+      "weapon4": []
+    }
+  ]
+}

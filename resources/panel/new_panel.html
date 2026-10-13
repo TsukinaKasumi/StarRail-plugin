@@ -6,7 +6,7 @@
 
 {{block 'main'}}
 {{set iconPath = pluResPath + 'panel/resources/icon/value'}}
-<div class="header">
+<div class="header"{{if joy !== undefined}} style="height: 623.5px"{{/if}}>
     <div class="left">
         <img src="{{pluResPath}}{{charImage}}">
     </div>
@@ -162,7 +162,19 @@
                     {{MathPro.floor10(properties[damage_type.toLowerCase() + 'Added']*100,-1)}}%
                 </div>
                 {{/if}}
-            </div>
+            </div>{{if joy !== undefined}}
+            <!-- 欢愉度行（欢愉命途角色或确有欢愉词条时由 apps/panel.js 计算 joy 后展示，
+                 数值为引擎欢愉伤害分支消费的 joy/joyPlus/joyPct 合计；增笑/笑点为纯战斗
+                 增益不展示）。此行使属性区达 12 行，header 已按 577 + 46.5 = 623.5px 加高 -->
+            <div class="attribute-item">
+                <div class="icon">
+                    <img src="{{iconPath}}/IconJoy.png">
+                </div>
+                <div class="name">欢愉度</div>
+                <div class="value">
+                    {{MathPro.floor10(joy,-1)}}%
+                </div>
+            </div>{{/if}}
         </div>
     </div>
 </div>
@@ -207,16 +219,29 @@
     </div>
     <div class="hr"></div>
     {{/if}}
-    <div class="talent">
-        {{each behaviorList behavior i}}
+    {{set skillSlotOrder = ['301','302','420','421','007']}}<div class="talent{{if behaviorList.length > 6}} talent-count-7{{else if behaviorList.length > 5}} talent-count-6{{/if}}">
+        <!-- 单一技能行（自适应密度）：普攻/战技/终结技/天赋 + 扩展技能 + 秘技。
+             behaviorList 前四项恒为 a/e/q/t（apps/panel.js handleBehaviorList 按索引配图标），
+             第 5 项起按 pointId 末三位经 skillSlotOrder 重排渲染：
+             301 忆灵技 / 302 忆灵天赋 / 420 欢愉技 / 421 强化欢愉技（插在天赋后）→ 007 秘技收尾；
+             条数 >5 时挂 talent-count-6/-7 缩小图标与文字（见 new_panel.css）防溢出换行 -->
+        {{each behaviorList behavior i}}{{if 4 > i}}
         <div class="item">
             <div class="img">
-                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="">
+                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="" onerror="this.style.visibility='hidden'">
             </div>
             <div class="level">{{behavior.level}}</div>
             <div class="type">{{behavior.type}}</div>
         </div>
-        {{/each}}
+        {{/if}}{{/each}}{{each skillSlotOrder slot}}{{each behaviorList behavior i}}{{if i > 3 && behavior.id.toString().slice(-3) == slot}}
+        <div class="item">
+            <div class="img">
+                <img src="{{pluResPath}}panel/resources/skill/{{behavior.path}}" alt="" onerror="this.style.visibility='hidden'">
+            </div>
+            <div class="level">{{behavior.level}}</div>
+            <div class="type">{{behavior.type || (slot == '301' ? '忆灵技' : slot == '302' ? '忆灵天赋' : slot == '421' ? '强化欢愉技' : slot == '007' ? '秘技' : '欢愉技')}}</div>
+        </div>
+        {{/if}}{{/each}}{{/each}}
     </div>
 </div>
 <div class="other-info">
@@ -259,9 +284,11 @@
     </div>
     {{/each}}
 </div>
+{{if skillTreeBkg}}
 <div class="skill_tree">
   <canvas id="skillTreeCanvas" width="1000" height="1000"></canvas>
 </div>
+{{/if}}
 {{if damages}}
 <div class="damage">
   <table>
@@ -306,9 +333,8 @@
 let skillTree = {{@(JSON.stringify( skillTree || [] )) }};
 const skillTreeBkg = "{{ pluResPath }}{{ skillTreeBkg }}";
 const lockIcon = "{{ pluResPath }}panel/resources/skill_tree/lock.png";
-const config = {
-  imgBaseURL: "https://avocado.wiki"
-}
+// 行迹节点图标：本地资源目录（原 avocado.wiki CDN 已停服，全部节点曾显示「加载失败」）
+const skillIconBase = "{{ pluResPath }}panel/resources/skill/";
 const type1 = [
   "Point09",
   "Point10",
@@ -321,7 +347,7 @@ const type1 = [
   "Point17",
   "Point18",
 ];
-const type2 = [ "Point01", "Point02", "Point03", "Point04", "Point05" ];
+const type2 = [ "Point01", "Point02", "Point03", "Point04", "Point05", "Point19", "Point20" ];
 const type3 = [ "Point06", "Point07", "Point08" ];
 const dom = document.querySelector('.skill_tree');
   const draw = async () => {
@@ -343,6 +369,11 @@ const dom = document.querySelector('.skill_tree');
       skillTree.forEach( async ( skill ) => {
         const promiseTemp = new Promise( ( resolve ) => {
           const position = skill.position;
+          // 无坐标的行迹节点（新命途降级数据）跳过绘制，避免 undefined 取下标报错
+          if ( !position ) {
+            resolve( false );
+            return;
+          }
           const x = position[ 0 ];
           const y = position[ 1 ];
           let [ width, height ] = [ 0, 0 ];
@@ -351,13 +382,15 @@ const dom = document.querySelector('.skill_tree');
           let level = null;
           let max_level = null;
           const icon = new Image();
-          icon.setAttribute( "crossOrigin", "anonymous" );
+          // 注意：不可设置 crossOrigin——本插件经 Yunzai 渲染器以 file:// 协议加载页面，
+          // file:// + anonymous 在 Chromium 必然 CORS 失败导致全部节点图标 onerror（画「加载失败」）。
+          // applyImageColor 仅 drawImage+source-in 填色（无 getImageData），截图走浏览器级
+          // page.screenshot，均不受 canvas taint 影响，无需 CORS。
           if ( !active?.includes( skill.id.toString() ) ) {
             lock = true;
           }
           if ( skill?.level ) level = skill.level;
           if ( !skill ) return;
-          icon.src = `${ config.imgBaseURL }${ skill.icon }`;
           if ( type1.includes( skill.anchor ) ) {
             level = null;
             imageColor = "rgb(0,0,0)";
@@ -371,44 +404,52 @@ const dom = document.querySelector('.skill_tree');
             imageColor = "rgb(0,0,0)";
             width = height = 144;
           }
-          icon.onload = () => {
-            // ctx.drawImage( icon, x + 5, y + 5, width - 10, height - 10 );
-            applyImageColor(
-              icon,
-              imageColor,
-              x + 5,
-              y + 5,
-              width - 10,
-              height - 10
-            );
+          if ( skill.icon ) {
+            // 游戏路径 icon/skill/{id}_{slot}.png → 本地同命名资源
+            icon.src = `${ skillIconBase }${ skill.icon.split( '/' ).pop() }`;
+            icon.onload = () => {
+              // ctx.drawImage( icon, x + 5, y + 5, width - 10, height - 10 );
+              applyImageColor(
+                icon,
+                imageColor,
+                x + 5,
+                y + 5,
+                width - 10,
+                height - 10
+              );
 
+              resolve( true );
+            };
+            icon.onerror = () => {
+              ctx.fillStyle = lock ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0)";
+              ctx.beginPath();
+              ctx.arc( x + width / 2, y + height / 2, width / 2, 0, 2 * Math.PI );
+              ctx.fill();
+              // 在相应位置写上文字加载失败
+              ctx.strokeStyle = "rgb(255,255,255)";
+              ctx.font = "30px SR";
+              ctx.lineWidth = 4;
+              ctx.textAlign = "center";
+              ctx.strokeText(
+                "加载失败",
+                x + width / 2,
+                y + height / 2,
+                width
+              );
+              ctx.fillStyle = "rgb(0,0,0)";
+              ctx.fillText(
+                "加载失败",
+                x + width / 2,
+                y + height / 2,
+                width
+              );
+              resolve( false );
+            };
+          } else {
+            // 属性小节点无独立图标资源（游戏数据 icon 为空串）：
+            // 不发起加载（base+空串必失败），仅保留 SVG 背景的锚点底圆
             resolve( true );
-          };
-          icon.onerror = () => {
-            ctx.fillStyle = lock ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0)";
-            ctx.beginPath();
-            ctx.arc( x + width / 2, y + height / 2, width / 2, 0, 2 * Math.PI );
-            ctx.fill();
-            // 在相应位置写上文字加载失败
-            ctx.strokeStyle = "rgb(255,255,255)";
-            ctx.font = "30px SR";
-            ctx.lineWidth = 4;
-            ctx.textAlign = "center";
-            ctx.strokeText(
-              "加载失败",
-              x + width / 2,
-              y + height / 2,
-              width
-            );
-            ctx.fillStyle = "rgb(0,0,0)";
-            ctx.fillText(
-              "加载失败",
-              x + width / 2,
-              y + height / 2,
-              width
-            );
-            resolve( false );
-          };
+          }
           if ( level ) {
             ctx.strokeStyle = "rgb(0,0,0)";
             ctx.font = "60px SR";

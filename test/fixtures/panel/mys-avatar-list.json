@@ -1,0 +1,163 @@
+[
+  {
+    "_comment": "普通角色：完整 properties/relics/ornaments/equip/skills（字段名对照 miao-plugin MysPanelHSRData.js：properties[].property_type/base/final、skills[].point_id/level/remake/point_type/is_activated、relics[].pos/id/level/rarity/main_property.property_type/properties[].property_type/value/times/is_preview、equip.id/level/rank）。全部数值为合成数据",
+    "id": 1104,
+    "name": "杰帕德",
+    "level": 80,
+    "rank": 2,
+    "element": "冰",
+    "properties": [
+      { "property_type": 1, "base": "1122.5", "final": "3264.5" },
+      { "property_type": 2, "base": "623.25", "final": "1698.25" },
+      { "property_type": 3, "base": "703.75", "final": "1908.75" },
+      { "property_type": 4, "base": "101", "final": "112.5" },
+      { "property_type": 5, "base": "0.05", "final": "0.3215" },
+      { "property_type": 6, "base": "0.5", "final": "0.647" },
+      { "property_type": 9, "base": "1", "final": "1.25" },
+      { "property_type": 10, "final": "0.1335" },
+      { "property_type": 11, "final": "0.204" },
+      { "property_type": 16, "final": "0.2264" },
+      { "property_type": 58, "final": "0.5364" }
+    ],
+    "relics": [
+      {
+        "pos": 1, "id": 61011, "level": 15, "rarity": 5,
+        "main_property": { "property_type": 27 },
+        "properties": [
+          { "property_type": 5, "value": "3.888%", "times": 3 },
+          { "property_type": 1, "value": "112.32", "times": 2 },
+          { "property_type": 4, "value": "2.3", "times": 2 },
+          { "property_type": 32, "value": "4.32%", "times": 2 },
+          { "property_type": 9, "value": "2%", "times": 1, "is_preview": true }
+        ]
+      },
+      {
+        "pos": 2, "id": 61012, "level": 15, "rarity": 5,
+        "main_property": { "property_type": 29 },
+        "properties": [
+          { "property_type": 33, "value": "8.64%", "times": 1 }
+        ]
+      },
+      {
+        "pos": 3, "id": 61013, "level": 15, "rarity": 5,
+        "main_property": { "property_type": 52 },
+        "properties": [
+          { "property_type": 6, "value": "12.96%", "times": 4 },
+          { "property_type": 58, "value": "5.18%", "times": 2 }
+        ]
+      },
+      {
+        "pos": 4, "id": 61014, "level": 15, "rarity": 5,
+        "main_property": { "property_type": 51 },
+        "properties": [
+          { "property_type": 10, "value": "1.728%", "times": 1 }
+        ]
+      }
+    ],
+    "ornaments": [
+      {
+        "pos": 5, "id": 63015, "level": 15, "rarity": 5,
+        "main_property": { "property_type": 16 },
+        "properties": [
+          { "property_type": 5, "value": "3.456%", "times": 2 }
+        ]
+      },
+      {
+        "pos": 6, "id": 63016, "level": 12, "rarity": 5,
+        "main_property": { "property_type": 54 },
+        "properties": [
+          { "property_type": 2, "value": "33.87", "times": 3 }
+        ]
+      }
+    ],
+    "equip": { "id": 23013, "level": 70, "rank": 3 },
+    "skills": [
+      { "point_id": 1104001, "level": 6, "remake": "普攻", "point_type": 2 },
+      { "point_id": 1104002, "level": 10, "remake": "战技", "point_type": 2 },
+      { "point_id": 1104003, "level": 10, "remake": "终结技", "point_type": 2 },
+      { "point_id": 1104004, "level": 10, "remake": "天赋", "point_type": 2 },
+      { "point_id": 1104201, "point_type": 1, "level": 1, "is_activated": true },
+      { "point_id": 1104202, "point_type": 1, "level": 0, "is_activated": false },
+      { "point_id": 1104203, "point_type": 1, "is_activated": false },
+      { "point_id": 1104101, "point_type": 3, "is_activated": true }
+    ]
+  },
+  {
+    "_comment": "欢愉角色：skills 含 remake=欢愉技（point_id = avatarId*1000+420，对照 miao talent.xe.id 规律 1501_420）；缺 name/element/properties/relics/equip 走降级路径（name/element 取本插件 character.json）",
+    "id": 1501,
+    "level": 80,
+    "rank": 0,
+    "skills": [
+      { "point_id": 1501001, "level": 1, "point_type": 2 },
+      { "point_id": 1501002, "level": 9, "point_type": 2 },
+      { "point_id": 1501003, "level": 9, "point_type": 2 },
+      { "point_id": 1501004, "level": 9, "point_type": 2 },
+      { "point_id": 1501007, "level": 1, "point_type": 2 },
+      { "point_id": 1501420, "level": 12, "remake": "欢愉技", "point_type": 2 }
+    ]
+  },
+  {
+    "_comment": "记忆角色：忆灵技能在 servant_detail.servant_skills（对照 MysPanelHSRData.getTalent 的 servant_skills 参数）",
+    "id": 1402,
+    "name": "阿格莱雅",
+    "level": 70,
+    "rank": 1,
+    "element": "雷",
+    "properties": [
+      { "property_type": 1, "base": "900.5", "final": "1200.5" },
+      { "property_type": 2, "base": "480.25", "final": "610.25" },
+      { "property_type": 3, "base": "350.75", "final": "470.75" },
+      { "property_type": 4, "base": "104", "final": "104" }
+    ],
+    "equip": { "id": 21000, "level": 60, "rank": 2 },
+    "skills": [
+      { "point_id": 1402001, "level": 1, "remake": "普攻", "point_type": 2 },
+      { "point_id": 1402002, "level": 6, "remake": "战技", "point_type": 2 },
+      { "point_id": 1402003, "level": 10, "remake": "终结技", "point_type": 2 },
+      { "point_id": 1402004, "level": 6, "remake": "天赋", "point_type": 2 },
+      { "point_id": 1402007, "level": 1, "remake": "秘技", "point_type": 2 }
+    ],
+    "servant_detail": {
+      "servant_skills": [
+        { "point_id": 14020301, "level": 10, "remake": "忆灵技", "point_type": 2 },
+        { "point_id": 14020302, "level": 10, "remake": "忆灵天赋", "point_type": 2 }
+      ]
+    }
+  },
+  {
+    "_comment": "强化形态：avatarId 仍为原始 1205，技能 point_id 带 '1'+avatarId 前缀（11205003 等 8 位），转换后应重映射为 2205/2205003/刃Pro",
+    "id": 1205,
+    "name": "刃",
+    "level": 80,
+    "rank": 1,
+    "element": "风",
+    "properties": [
+      { "property_type": 1, "base": "1358.28", "final": "1358.28" },
+      { "property_type": 2, "base": "543.312", "final": "543.312" },
+      { "property_type": 3, "base": "485.1", "final": "485.1" },
+      { "property_type": 4, "base": "97", "final": "97" }
+    ],
+    "relics": [
+      {
+        "pos": 1, "id": 61011, "level": 0, "rarity": 5,
+        "main_property": { "property_type": 27 },
+        "properties": []
+      },
+      {
+        "pos": 2, "id": 61012, "level": 0, "rarity": 5,
+        "main_property": { "property_type": 29 },
+        "properties": []
+      }
+    ],
+    "skills": [
+      { "point_id": 11205001, "level": 6, "remake": "普攻", "point_type": 2 },
+      { "point_id": 11205002, "level": 9, "remake": "战技", "point_type": 2 },
+      { "point_id": 11205003, "level": 9, "remake": "终结技", "point_type": 2 },
+      { "point_id": 11205004, "level": 9, "remake": "天赋", "point_type": 2 },
+      { "point_id": 11205007, "level": 1, "remake": "秘技", "point_type": 2 },
+      { "point_id": 11205101, "point_type": 3, "is_activated": true },
+      { "point_id": 11205201, "point_type": 1, "is_activated": true },
+      { "point_id": 11205202, "point_type": 1, "is_activated": false }
+    ]
+  }
+]

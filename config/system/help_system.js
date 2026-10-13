@@ -37,6 +37,14 @@ export const helpList = [
         title: '*更新面板(uid)',
         desc: '更新星铁面板数据'
       }, {
+        icon: 63,
+        title: '*米游社更新面板',
+        desc: '米游社直连更新面板数据'
+      }, {
+        icon: 63,
+        title: '*同步面板',
+        desc: '从miao-plugin导入面板(查询时也会自动同步)'
+      }, {
         icon: 66,
         title: '*希儿面板(uid)',
         desc: '星铁角色面板详情'
@@ -70,8 +78,32 @@ export const helpList = [
         desc: '更新本地抽卡记录'
       }, {
         icon: 97,
-        title: '*跃迁分析(角色|光锥|常驻)',
+        title: '*跃迁分析(角色|光锥|常驻|联动)',
         desc: '抽卡分析默认为总览'
+      }, {
+        icon: 97,
+        title: '*同步抽卡记录',
+        desc: '与miao/TRSS抽卡记录双向同步'
+      }, {
+        icon: 97,
+        title: '*导出记录(json)',
+        desc: '导出UIGF v4抽卡记录文件'
+      }, {
+        icon: 98,
+        title: '*星琼/充值记录',
+        desc: '米游社充值与获取记录'
+      }, {
+        icon: 66,
+        title: '*面板列表',
+        desc: '查看已有面板的角色列表'
+      }, {
+        icon: 66,
+        title: '*原图',
+        desc: '回复面板图片获取原图'
+      }, {
+        icon: 78,
+        title: '*设置xx别名',
+        desc: '角色别名，可用别名查询面板'
       }
     ]
   },
@@ -88,20 +120,20 @@ export const helpList = [
         desc: '差分宇宙信息'
       }, {
         icon: 107,
-        title: '*常规演算(一|二|三)?',
-        desc: '常规演算最近三场记录'
+        title: '*常规演算(1-3)?( uid)?',
+        desc: '常规演算最近三场记录，查他人 *常规演算2 123456789 或 @'
       }, {
         icon: 107,
-        title: '*(本期|上期)演算(一|二|三)?',
-        desc: '周期演算最近三场记录'
+        title: '*(本期|上期)演算(1-3)?( uid)?',
+        desc: '周期演算最近三场记录，查他人 *本期演算2 123456789 或 @'
       }, {
         icon: 107,
         title: '*货币',
         desc: '货币战争信息'
       }, {
         icon: 107,
-        title: '*货币(战绩|回顾)(一|二|三|四|五|六|七|八|九|十)?',
-        desc: '货币战争战绩'
+        title: '*货币(战绩|回顾)(1-10)?( uid)?',
+        desc: '货币战争战绩，查他人 *货币战绩10 123456789 或 @'
       }, {
         icon: 107,
         title: '*寰宇蝗灾',
@@ -145,7 +177,7 @@ export const helpList = [
         desc: '星铁全角色攻略'
       }, {
         icon: 100,
-        title: '*抽卡(角色|常驻|光锥)',
+        title: '*抽卡(角色|常驻|光锥|联动)',
         desc: '模拟星穹铁道抽卡'
       }, {
         icon: 96,
@@ -163,6 +195,10 @@ export const helpList = [
         icon: 111,
         title: '*强度榜',
         desc: '星铁角色强度榜(仅供参考)'
+      }, {
+        icon: 111,
+        title: '*xx配队',
+        desc: '角色配队推荐(仅供参考)'
       }, {
         icon: 99,
         title: '*收益曲线',
@@ -192,6 +228,10 @@ export const helpList = [
       icon: 85,
       title: '*切换面板(1 | 2 | 3)',
       desc: '切换面板服务'
+      }, {
+        icon: 85,
+        title: '*API列表',
+        desc: '查看面板API列表'
     }, {
       icon: 85,
       title: '*(强制)图像更新(github)',

@@ -1,0 +1,14 @@
+{
+  "_comment": "合成 miao 光锥表（目录层级对照真实 miao-plugin resources/meta-sr/weapon/<命途>/<名>/data.json，两层扫描）。70 级 5 突破 atk = 400 + 5×69 = 745、hp = 1000 + 10×69 = 1690、def = 200 + 2×69 = 338",
+  "id": 23013,
+  "name": "合成巡猎光锥",
+  "star": 5,
+  "type": "巡猎",
+  "typeId": 8,
+  "baseAttr": { "atk": 105.6, "hp": 211.2, "def": 42 },
+  "growAttr": { "atk": 5, "hp": 10, "def": 2 },
+  "attr": {
+    "0": { "promote": 0, "maxLevel": 20, "cost": {}, "attrs": { "atk": 105.6, "hp": 211.2, "def": 42 } },
+    "5": { "promote": 5, "maxLevel": 70, "cost": {}, "attrs": { "atk": 400, "hp": 1000, "def": 200 } }
+  }
+}

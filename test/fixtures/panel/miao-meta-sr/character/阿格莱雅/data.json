@@ -1,0 +1,26 @@
+{
+  "_comment": "合成 miao 角色表（记忆）：fixture 未存 promote，miaoSync 按 level 70 推导突破 5 → 读 attr['5']：hp = 700 + 7×69 = 1183",
+  "id": 1402,
+  "key": "aglaea-synth",
+  "name": "阿格莱雅",
+  "star": 5,
+  "elem": "雷",
+  "weapon": "记忆",
+  "attr": {
+    "0": {
+      "promote": 0,
+      "maxLevel": 20,
+      "grow": { "hp": 7, "atk": 4.8, "def": 3, "speed": 0 },
+      "attrs": { "hp": 180, "atk": 120, "def": 75, "speed": 104, "cpct": 5, "cdmg": 50, "aggro": 100 }
+    },
+    "5": {
+      "promote": 5,
+      "maxLevel": 70,
+      "grow": { "hp": 7, "atk": 4.8, "def": 3, "speed": 0 },
+      "attrs": { "hp": 700, "atk": 480, "def": 300, "speed": 104, "cpct": 5, "cdmg": 50, "aggro": 100 }
+    }
+  },
+  "tree": {
+    "1402201": { "key": "atk", "value": 5 }
+  }
+}

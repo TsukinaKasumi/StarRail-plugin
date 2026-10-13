@@ -1,0 +1,2479 @@
+{
+  "_meta": {
+    "_comment": "遗器评分角色权重表（miao-plugin 评分口径的静态移植快照，非运行时依赖）\nweight：各词条权重（miao 键：hp/atk/def/speed/cpct/cdmg/stance/heal/recharge/effPct/effDef/dmg），\n  源自 miao-plugin resources/meta-sr/artifact/artis-mark.js 的 usefulAttr；\nbase：角色 80 级满晋阶基础属性 {hp,atk,def}（不含光锥），小攻击/小生命/小防御\n  词条的 mark 换算用，源自 miao-plugin resources/meta-sr/character/{miao}/data.json 的 baseAttr；\nmiao：移植所用 miao 侧角色键名（溯源/同步校验用）；\ndefault：权重未收录角色（Saber/Archer 等）的兜底权重 = miao SR defaultAttrWeight；\n已知简化：椒丘/缇宝/风堇 在 miao 有按命座/速度的动态权重变体（character/{name}/artis.js），\n  本表按其基础权重收录。再同步时重跑 temp/gen-artis-mark.mjs。",
+    "source": "miao-plugin meta-sr artifact/artis-mark.js + character/*/data.json",
+    "syncedAt": "2026-10-11"
+  },
+  "default": {
+    "hp": 0,
+    "atk": 75,
+    "def": 0,
+    "speed": 100,
+    "cpct": 100,
+    "cdmg": 100,
+    "stance": 0,
+    "heal": 0,
+    "recharge": 0,
+    "effPct": 0,
+    "effDef": 0,
+    "dmg": 100
+  },
+  "chars": {
+    "1001": {
+      "name": "三月七",
+      "miao": "三月七",
+      "weight": {
+        "hp": 50,
+        "atk": 0,
+        "def": 100,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 50,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1058.4,
+        "atk": 511.56,
+        "def": 573.3
+      }
+    },
+    "1002": {
+      "name": "丹恒",
+      "miao": "丹恒",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 882,
+        "atk": 546.84,
+        "def": 396.9
+      }
+    },
+    "1003": {
+      "name": "姬子",
+      "miao": "姬子",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 50,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 756.756,
+        "def": 436.59000000000003
+      }
+    },
+    "1004": {
+      "name": "瓦尔特",
+      "miao": "瓦尔特",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1125.4319999999998,
+        "atk": 620.9280000000001,
+        "def": 509.355
+      }
+    },
+    "1005": {
+      "name": "卡芙卡",
+      "miao": "卡芙卡",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 50,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 75,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 679.1400000000001,
+        "def": 485.1
+      }
+    },
+    "1006": {
+      "name": "银狼",
+      "miao": "银狼",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 640.332,
+        "def": 460.845
+      }
+    },
+    "1008": {
+      "name": "阿兰",
+      "miao": "阿兰",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1199.52,
+        "atk": 599.76,
+        "def": 330.75
+      }
+    },
+    "1009": {
+      "name": "艾丝妲",
+      "miao": "艾丝妲",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 75,
+        "cdmg": 75,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1023.12,
+        "atk": 511.56,
+        "def": 463.04999999999995
+      }
+    },
+    "1013": {
+      "name": "黑塔",
+      "miao": "黑塔",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 952.56,
+        "atk": 582.1199999999999,
+        "def": 396.9
+      }
+    },
+    "1014": {
+      "name": "Saber",
+      "miao": "Saber",
+      "base": {
+        "hp": 1241.8559999889694,
+        "atk": 601.523999995552,
+        "def": 654.8850000067614
+      }
+    },
+    "1015": {
+      "name": "Archer",
+      "miao": "Archer",
+      "base": {
+        "hp": 1164.24000006821,
+        "atk": 620.9279999944847,
+        "def": 485.1000000224449
+      }
+    },
+    "1101": {
+      "name": "布洛妮娅",
+      "miao": "布洛妮娅",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 582.1199999999999,
+        "def": 533.61
+      }
+    },
+    "1102": {
+      "name": "希儿",
+      "miao": "希儿",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 931.392,
+        "atk": 640.332,
+        "def": 363.82500000000005
+      }
+    },
+    "1103": {
+      "name": "希露瓦",
+      "miao": "希露瓦",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 917.28,
+        "atk": 652.6800000000001,
+        "def": 374.85
+      }
+    },
+    "1104": {
+      "name": "杰帕德",
+      "miao": "杰帕德",
+      "weight": {
+        "hp": 50,
+        "atk": 0,
+        "def": 100,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 50,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1397.088,
+        "atk": 543.312,
+        "def": 654.885
+      }
+    },
+    "1105": {
+      "name": "娜塔莎",
+      "miao": "娜塔莎",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 50,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1164.2399999999998,
+        "atk": 476.28,
+        "def": 507.15
+      }
+    },
+    "1106": {
+      "name": "佩拉",
+      "miao": "佩拉",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 100,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 987.8399999999999,
+        "atk": 546.84,
+        "def": 463.04999999999995
+      }
+    },
+    "1107": {
+      "name": "克拉拉",
+      "miao": "克拉拉",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 737.3520000000001,
+        "def": 485.1
+      }
+    },
+    "1108": {
+      "name": "桑博",
+      "miao": "桑博",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1023.12,
+        "atk": 617.4000000000001,
+        "def": 396.9
+      }
+    },
+    "1109": {
+      "name": "虎克",
+      "miao": "虎克",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1340.6399999999999,
+        "atk": 617.4000000000001,
+        "def": 352.79999999999995
+      }
+    },
+    "1110": {
+      "name": "玲可",
+      "miao": "玲可",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 50,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1058.4,
+        "atk": 493.91999999999996,
+        "def": 551.25
+      }
+    },
+    "1111": {
+      "name": "卢卡",
+      "miao": "卢卡",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 75,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 75,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 917.28,
+        "atk": 582.1199999999999,
+        "def": 485.1
+      }
+    },
+    "1112": {
+      "name": "托帕&账账",
+      "miao": "托帕&账账",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 931.392,
+        "atk": 620.9280000000001,
+        "def": 412.33500000000004
+      }
+    },
+    "1201": {
+      "name": "青雀",
+      "miao": "青雀",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1023.12,
+        "atk": 652.6800000000001,
+        "def": 441
+      }
+    },
+    "1202": {
+      "name": "停云",
+      "miao": "停云",
+      "weight": {
+        "hp": 50,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 846.72,
+        "atk": 529.2,
+        "def": 396.9
+      }
+    },
+    "1203": {
+      "name": "罗刹",
+      "miao": "罗刹",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1280.664,
+        "atk": 756.756,
+        "def": 363.82500000000005
+      }
+    },
+    "1204": {
+      "name": "景元",
+      "miao": "景元",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1164.2399999999998,
+        "atk": 698.544,
+        "def": 485.1
+      }
+    },
+    "1205": {
+      "name": "刃",
+      "miao": "刃",
+      "weight": {
+        "hp": 100,
+        "atk": 50,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1358.2800000000002,
+        "atk": 543.312,
+        "def": 485.1
+      }
+    },
+    "1206": {
+      "name": "素裳",
+      "miao": "素裳",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 50,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 917.28,
+        "atk": 564.48,
+        "def": 418.95000000000005
+      }
+    },
+    "1207": {
+      "name": "驭空",
+      "miao": "驭空",
+      "weight": {
+        "hp": 50,
+        "atk": 75,
+        "def": 50,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 917.28,
+        "atk": 599.76,
+        "def": 374.85
+      }
+    },
+    "1208": {
+      "name": "符玄",
+      "miao": "符玄",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 50,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1474.7040000000002,
+        "atk": 465.696,
+        "def": 606.375
+      }
+    },
+    "1209": {
+      "name": "彦卿",
+      "miao": "彦卿",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 892.5840000000001,
+        "atk": 679.1400000000001,
+        "def": 412.33500000000004
+      }
+    },
+    "1210": {
+      "name": "桂乃芬",
+      "miao": "桂乃芬",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 50,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 75,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 882,
+        "atk": 582.1199999999999,
+        "def": 441
+      }
+    },
+    "1211": {
+      "name": "白露",
+      "miao": "白露",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 50,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1319.4720000000002,
+        "atk": 562.7159999999999,
+        "def": 485.1
+      }
+    },
+    "1212": {
+      "name": "镜流",
+      "miao": "镜流",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1435.8960000000002,
+        "atk": 679.1400000000001,
+        "def": 485.1
+      }
+    },
+    "1213": {
+      "name": "丹恒•饮月",
+      "miao": "丹恒•饮月",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 50,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 698.544,
+        "def": 363.82500000000005
+      }
+    },
+    "1214": {
+      "name": "雪衣",
+      "miao": "雪衣",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1058.4,
+        "atk": 599.76,
+        "def": 396.9
+      }
+    },
+    "1215": {
+      "name": "寒鸦",
+      "miao": "寒鸦",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 917.28,
+        "atk": 564.48,
+        "def": 352.79999999999995
+      }
+    },
+    "1217": {
+      "name": "藿藿",
+      "miao": "藿藿",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 50,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1358.2800000000002,
+        "atk": 601.5239999999999,
+        "def": 509.355
+      }
+    },
+    "1218": {
+      "name": "椒丘",
+      "miao": "椒丘",
+      "weight": {
+        "hp": 75,
+        "atk": 50,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 100,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1358.2800000000002,
+        "atk": 601.5239999999999,
+        "def": 509.355
+      }
+    },
+    "1220": {
+      "name": "飞霄",
+      "miao": "飞霄",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 601.5239999999999,
+        "def": 388.08000000000004
+      }
+    },
+    "1221": {
+      "name": "云璃",
+      "miao": "云璃",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 0,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1358.2800000000002,
+        "atk": 679.1400000000001,
+        "def": 460.845
+      }
+    },
+    "1222": {
+      "name": "灵砂",
+      "miao": "灵砂",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1358.2800000000002,
+        "atk": 679.1400000000001,
+        "def": 436.59000000000003
+      }
+    },
+    "1223": {
+      "name": "貊泽",
+      "miao": "貊泽",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 50,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 811.44,
+        "atk": 599.76,
+        "def": 352.79999999999995
+      }
+    },
+    "1224": {
+      "name": "三月七·巡猎",
+      "miao": "三月七·巡猎",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1058.4,
+        "atk": 564.48,
+        "def": 441
+      }
+    },
+    "1225": {
+      "name": "忘归人",
+      "miao": "忘归人",
+      "weight": {
+        "hp": 50,
+        "atk": 0,
+        "def": 50,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1125.4319999999998,
+        "atk": 582.1199999999999,
+        "def": 557.865
+      }
+    },
+    "1301": {
+      "name": "加拉赫",
+      "miao": "加拉赫",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 100,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1305.3600000000001,
+        "atk": 529.2,
+        "def": 441
+      }
+    },
+    "1302": {
+      "name": "银枝",
+      "miao": "银枝",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 737.3520000000001,
+        "def": 363.82500000000005
+      }
+    },
+    "1303": {
+      "name": "阮•梅",
+      "miao": "阮•梅",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 659.7360000000001,
+        "def": 485.1
+      }
+    },
+    "1304": {
+      "name": "砂金",
+      "miao": "砂金",
+      "weight": {
+        "hp": 0,
+        "atk": 0,
+        "def": 100,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1203.0479999999998,
+        "atk": 446.29200000000003,
+        "def": 654.885
+      }
+    },
+    "1305": {
+      "name": "真理医生",
+      "miao": "真理医生",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 776.1600000000001,
+        "def": 460.845
+      }
+    },
+    "1306": {
+      "name": "花火",
+      "miao": "花火",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1397.088,
+        "atk": 523.908,
+        "def": 485.1
+      }
+    },
+    "1307": {
+      "name": "黑天鹅",
+      "miao": "黑天鹅",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 659.7360000000001,
+        "def": 485.1
+      }
+    },
+    "1308": {
+      "name": "黄泉",
+      "miao": "黄泉",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1125.4319999999998,
+        "atk": 698.544,
+        "def": 436.59000000000003
+      }
+    },
+    "1309": {
+      "name": "知更鸟",
+      "miao": "知更鸟",
+      "weight": {
+        "hp": 75,
+        "atk": 100,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1280.664,
+        "atk": 640.332,
+        "def": 485.1
+      }
+    },
+    "1310": {
+      "name": "流萤",
+      "miao": "流萤",
+      "weight": {
+        "hp": 30,
+        "atk": 100,
+        "def": 30,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 30,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 814.968,
+        "atk": 523.908,
+        "def": 776.1600000000001
+      }
+    },
+    "1312": {
+      "name": "米沙",
+      "miao": "米沙",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1270.08,
+        "atk": 599.76,
+        "def": 396.9
+      }
+    },
+    "1313": {
+      "name": "星期日",
+      "miao": "星期日",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 640.332,
+        "def": 533.61
+      }
+    },
+    "1314": {
+      "name": "翡翠",
+      "miao": "翡翠",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 659.7360000000001,
+        "def": 509.355
+      }
+    },
+    "1315": {
+      "name": "波提欧",
+      "miao": "波提欧",
+      "weight": {
+        "hp": 50,
+        "atk": 50,
+        "def": 50,
+        "speed": 100,
+        "cpct": 50,
+        "cdmg": 50,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 50
+      },
+      "base": {
+        "hp": 1203.0479999999998,
+        "atk": 620.9280000000001,
+        "def": 436.59000000000003
+      }
+    },
+    "1317": {
+      "name": "乱破",
+      "miao": "乱破",
+      "weight": {
+        "hp": 30,
+        "atk": 100,
+        "def": 30,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 30,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 717.9480000000001,
+        "def": 460.845
+      }
+    },
+    "1321": {
+      "name": "大丽花",
+      "miao": "大丽花",
+      "weight": {
+        "hp": 20,
+        "atk": 100,
+        "def": 20,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 30,
+        "effPct": 0,
+        "effDef": 30,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 679.1400000000001,
+        "def": 606.375
+      }
+    },
+    "1401": {
+      "name": "大黑塔",
+      "miao": "大黑塔",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1164.2399999999998,
+        "atk": 679.1400000000001,
+        "def": 485.1
+      }
+    },
+    "1402": {
+      "name": "阿格莱雅",
+      "miao": "阿格莱雅",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 698.544,
+        "def": 485.1
+      }
+    },
+    "1403": {
+      "name": "缇宝",
+      "miao": "缇宝",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 0,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 523.908,
+        "def": 727.6500000000001
+      }
+    },
+    "1404": {
+      "name": "万敌",
+      "miao": "万敌",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1552.3200000000002,
+        "atk": 426.88800000000003,
+        "def": 194.04000000000002
+      }
+    },
+    "1405": {
+      "name": "那刻夏",
+      "miao": "那刻夏",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 970.2,
+        "atk": 756.756,
+        "def": 557.865
+      }
+    },
+    "1406": {
+      "name": "赛飞儿",
+      "miao": "赛飞儿",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 75,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 931.392,
+        "atk": 640.332,
+        "def": 509.355
+      }
+    },
+    "1407": {
+      "name": "遐蝶",
+      "miao": "遐蝶",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 0,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 30,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1629.936,
+        "atk": 523.908,
+        "def": 485.1
+      }
+    },
+    "1408": {
+      "name": "白厄",
+      "miao": "白厄",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 0,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1435.9,
+        "atk": 582.12,
+        "def": 703.4
+      }
+    },
+    "1409": {
+      "name": "风堇",
+      "miao": "风堇",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 75,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 388.08000000000004,
+        "def": 630.6300000000001
+      }
+    },
+    "1410": {
+      "name": "海瑟音",
+      "miao": "海瑟音",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1203.0479999918025,
+        "atk": 601.523999995552,
+        "def": 485.1000000224449
+      }
+    },
+    "1412": {
+      "name": "刻律德菈",
+      "miao": "刻律德菈",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1358.280000017956,
+        "atk": 620.9279999944847,
+        "def": 485.1000000224449
+      }
+    },
+    "1413": {
+      "name": "长夜月",
+      "miao": "长夜月",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1319.472000038484,
+        "atk": 543.312000017846,
+        "def": 582.1200000708923
+      }
+    },
+    "1414": {
+      "name": "丹恒•腾荒",
+      "miao": "丹恒•腾荒",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 50,
+        "cdmg": 50,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 50
+      },
+      "base": {
+        "hp": 1047.815999965649,
+        "atk": 582.1200000708923,
+        "def": 776.1600000206381
+      }
+    },
+    "1415": {
+      "name": "昔涟",
+      "miao": "昔涟",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1397.088,
+        "atk": 446.29200000000003,
+        "def": 582.1199999999999
+      }
+    },
+    "1501": {
+      "name": "火花",
+      "miao": "火花",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 50,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1047.816,
+        "atk": 640.332,
+        "def": 460.845
+      }
+    },
+    "1502": {
+      "name": "爻光",
+      "miao": "爻光",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 465.696,
+        "def": 654.885
+      }
+    },
+    "1503": {
+      "name": "真珠",
+      "miao": "真珠",
+      "weight": {
+        "hp": 0,
+        "atk": 0,
+        "def": 100,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 100,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1203.05,
+        "atk": 465.7,
+        "def": 727.65
+      }
+    },
+    "1504": {
+      "name": "不死途",
+      "miao": "不死途",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 50,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 853.7760000000001,
+        "atk": 776.1600000000001,
+        "def": 388.08000000000004
+      }
+    },
+    "1505": {
+      "name": "绯英",
+      "miao": "绯英",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 50,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.82,
+        "atk": 737.35,
+        "def": 460.85
+      }
+    },
+    "1506": {
+      "name": "银狼LV.999",
+      "miao": "银狼LV.999",
+      "weight": {
+        "hp": 10,
+        "atk": 0,
+        "def": 10,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1047.82,
+        "atk": 388.08,
+        "def": 654.88
+      }
+    },
+    "1507": {
+      "name": "千冶•刃",
+      "miao": "千冶•刃",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 50,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 50
+      },
+      "base": {
+        "hp": 1358.28,
+        "atk": 543.31,
+        "def": 485.1
+      }
+    },
+    "1508": {
+      "name": "远坂凛",
+      "miao": "远坂凛",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.82,
+        "atk": 698.54,
+        "def": 460.85
+      }
+    },
+    "1509": {
+      "name": "吉尔伽美什",
+      "miao": "吉尔伽美什",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 0,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1125.43,
+        "atk": 717.95,
+        "def": 509.35
+      }
+    },
+    "1510": {
+      "name": "姬子•启行",
+      "miao": "姬子•启行",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 0,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1125.43,
+        "atk": 756.76,
+        "def": 485.1
+      }
+    },
+    "1512": {
+      "name": "知更鸟•晴歌",
+      "miao": "知更鸟•晴歌",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 50,
+        "cdmg": 50,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1203.0479999999998,
+        "atk": 601.5239999999999,
+        "def": 485.1
+      }
+    },
+    "1513": {
+      "name": "砂金•戏浪",
+      "miao": "砂金•戏浪",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1164.2399999999998,
+        "atk": 485.1,
+        "def": 606.375
+      }
+    },
+    "2004": {
+      "name": "瓦尔特Pro",
+      "miao": "瓦尔特Pro",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1125.43,
+        "atk": 620.93,
+        "def": 509.35
+      }
+    },
+    "2005": {
+      "name": "卡芙卡Pro",
+      "miao": "卡芙卡Pro",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 50,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 75,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1086.6240000179969,
+        "atk": 679.1400000457652,
+        "def": 485.1000000224449
+      }
+    },
+    "2006": {
+      "name": "银狼Pro",
+      "miao": "银狼Pro",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1047.815999965649,
+        "atk": 640.3319999927189,
+        "def": 460.84499998250976
+      }
+    },
+    "2102": {
+      "name": "希儿Pro",
+      "miao": "希儿Pro",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 931.39,
+        "atk": 640.33,
+        "def": 363.83
+      }
+    },
+    "2205": {
+      "name": "刃Pro",
+      "miao": "刃Pro",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1358.280000017956,
+        "atk": 543.312000017846,
+        "def": 485.1000000224449
+      }
+    },
+    "2212": {
+      "name": "镜流Pro",
+      "miao": "镜流Pro",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 0,
+        "speed": 100,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1435.8960000122897,
+        "atk": 679.1400000457652,
+        "def": 485.1000000224449
+      }
+    },
+    "2217": {
+      "name": "藿藿Pro",
+      "miao": "藿藿Pro",
+      "weight": {
+        "hp": 100,
+        "atk": 0,
+        "def": 50,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 100,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1358.28,
+        "atk": 601.52,
+        "def": 509.35
+      }
+    },
+    "2306": {
+      "name": "花火Pro",
+      "miao": "花火Pro",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1397.088,
+        "atk": 523.908,
+        "def": 485.1
+      }
+    },
+    "2307": {
+      "name": "黑天鹅Pro",
+      "miao": "黑天鹅Pro",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 75,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 100,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 659.7360000000001,
+        "def": 485.1
+      }
+    },
+    "2310": {
+      "name": "流萤Pro",
+      "miao": "流萤Pro",
+      "weight": {
+        "hp": 10,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 0,
+        "effDef": 30,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 814.97,
+        "atk": 523.91,
+        "def": 776.16
+      }
+    },
+    "8001": {
+      "name": "开拓者 (物理)",
+      "miao": "穹·毁灭",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1203.0479999999998,
+        "atk": 620.9280000000001,
+        "def": 460.845
+      }
+    },
+    "8002": {
+      "name": "开拓者 (物理)",
+      "miao": "星·毁灭",
+      "weight": {
+        "hp": 0,
+        "atk": 75,
+        "def": 0,
+        "speed": 75,
+        "cpct": 100,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 100
+      },
+      "base": {
+        "hp": 1203.0479999999998,
+        "atk": 620.9280000000001,
+        "def": 460.845
+      }
+    },
+    "8003": {
+      "name": "开拓者 (火)",
+      "miao": "穹·存护",
+      "weight": {
+        "hp": 50,
+        "atk": 0,
+        "def": 100,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 100,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 601.5239999999999,
+        "def": 606.375
+      }
+    },
+    "8004": {
+      "name": "开拓者 (火)",
+      "miao": "星·存护",
+      "weight": {
+        "hp": 50,
+        "atk": 0,
+        "def": 100,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 0,
+        "effPct": 100,
+        "effDef": 50,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1241.8560000000002,
+        "atk": 601.5239999999999,
+        "def": 606.375
+      }
+    },
+    "8005": {
+      "name": "穹·同谐",
+      "miao": "穹·同谐",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 446.29200000000003,
+        "def": 679.1400000000001
+      }
+    },
+    "8006": {
+      "name": "星·同谐",
+      "miao": "星·同谐",
+      "weight": {
+        "hp": 75,
+        "atk": 0,
+        "def": 75,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 0,
+        "stance": 100,
+        "heal": 0,
+        "recharge": 75,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.624,
+        "atk": 446.29200000000003,
+        "def": 679.1400000000001
+      }
+    },
+    "8007": {
+      "name": "穹·记忆",
+      "miao": "穹·记忆",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1047.815999965649,
+        "atk": 543.312000017846,
+        "def": 630.6300000220072
+      }
+    },
+    "8008": {
+      "name": "星·记忆",
+      "miao": "星·记忆",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 0,
+        "cdmg": 100,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 50,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1047.815999965649,
+        "atk": 543.312000017846,
+        "def": 630.6300000220072
+      }
+    },
+    "8009": {
+      "name": "穹·欢愉",
+      "miao": "穹·欢愉",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 75,
+        "cdmg": 75,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.62,
+        "atk": 465.7,
+        "def": 630.63
+      }
+    },
+    "8010": {
+      "name": "星·欢愉",
+      "miao": "星·欢愉",
+      "weight": {
+        "hp": 0,
+        "atk": 100,
+        "def": 0,
+        "speed": 100,
+        "cpct": 75,
+        "cdmg": 75,
+        "stance": 0,
+        "heal": 0,
+        "recharge": 100,
+        "effPct": 0,
+        "effDef": 0,
+        "dmg": 0
+      },
+      "base": {
+        "hp": 1086.62,
+        "atk": 465.7,
+        "def": 630.63
+      }
+    }
+  }
+}

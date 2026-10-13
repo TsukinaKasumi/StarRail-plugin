@@ -23,7 +23,7 @@ export class StarRail extends plugin {
           fnc: 'update'
         },
         {
-          reg: '^#星铁(?!插件)(?!米游社)(?!更新)(.+)面板$',
+          reg: '^#星铁(?!插件)(?!米游社)(?!更新)(?!同步)(.+)面板$',
           fnc: 'StarRail'
         },
         {
@@ -46,7 +46,15 @@ export class StarRail extends plugin {
   async update () {
     const SR = this.getLatestConfig()
     if (SR.miao) {
-      ((await import("../../miao-plugin/apps/profile/ProfileList.js")).default).refresh(this.e)
+      try {
+        ((await import("../../miao-plugin/apps/profile/ProfileList.js")).default).refresh(this.e)
+      } catch (err) {
+        // miao-plugin 未安装或其模块不可用时降级：不中断，改用本插件兜底提示
+        logger.warn(`miao-plugin 面板更新不可用：${err.message}`)
+        if (!SR.sr) {
+          await this.reply('未检测到 miao-plugin，喵喵面板更新已跳过\n可发送【#星铁插件面板开启】使用 StarRail-plugin 自带面板')
+        }
+      }
     }
 
     if (SR.sr) {
@@ -61,7 +69,15 @@ export class StarRail extends plugin {
   async StarRail () {
     const SR = this.getLatestConfig()
     if (SR.miao) {
-      ((await import("../../miao-plugin/apps/profile/ProfileDetail.js")).default).detail(this.e)
+      try {
+        ((await import("../../miao-plugin/apps/profile/ProfileDetail.js")).default).detail(this.e)
+      } catch (err) {
+        // miao-plugin 未安装或其模块不可用时降级：不中断，改用本插件兜底提示
+        logger.warn(`miao-plugin 面板不可用：${err.message}`)
+        if (!SR.sr) {
+          await this.reply('未检测到 miao-plugin，喵喵面板已跳过\n可发送【#星铁插件面板开启】使用 StarRail-plugin 自带面板')
+        }
+      }
     }
 
     if (SR.sr) {

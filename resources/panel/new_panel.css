@@ -197,6 +197,7 @@ ul {
 .arms-box .talent .item {
   position: relative;
   width: 33%;
+  min-width: 0;
 }
 .arms-box .talent .item .img {
   width: 50px;
@@ -227,6 +228,36 @@ ul {
 .arms-box .talent .item .type {
   margin-top: 13px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 技能行自适应密度：扩展技能并入单行后，6/7 个技能时整体缩小防溢出换行
+   （5 个及以下维持原尺寸；模板按 behaviorList.length 挂 talent-count-6/-7） */
+.arms-box .talent.talent-count-6 .item .img {
+  width: 42px;
+  height: 42px;
+}
+.arms-box .talent.talent-count-6 .item .level {
+  width: 26px;
+  font-size: 11px;
+  top: 34px;
+}
+.arms-box .talent.talent-count-6 .item .type {
+  font-size: 11px;
+}
+.arms-box .talent.talent-count-7 .item .img {
+  width: 36px;
+  height: 36px;
+}
+.arms-box .talent.talent-count-7 .item .level {
+  width: 24px;
+  font-size: 10px;
+  top: 29px;
+}
+.arms-box .talent.talent-count-7 .item .type {
+  font-size: 10px;
 }
 
 .other-info {

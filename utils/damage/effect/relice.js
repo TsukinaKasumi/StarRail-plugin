@@ -213,6 +213,53 @@ const Relic = (relic_set, base_attr, attribute_bonus) => {
                     critical_damage_base + 0.10000000018626451;
             }
         },
+        // ===== 欢愉遗器套装（数值来源 miao-plugin resources/meta-sr/artifact/calc.js）=====
+        // 欢愉键口径与光锥钩子一致：joy/xeIgnore 存百分点数值（8 = 8%）
+        '129': () => {
+            if (!relic_set.set_name.startsWith('4'))
+                return;
+            // 闪耀功勋的魔法少女 4 件套：欢愉伤害无视 10% 防御 + 每累计 5 点笑点额外无视 1%（按满 10 层，miao 默认满层口径）
+            let xe_ignore = get_let_value(attribute_bonus, 'xeIgnore');
+            attribute_bonus['xeIgnore'] = xe_ignore + 20;
+        },
+        '130': () => {
+            if (!relic_set.set_name.startsWith('4'))
+                return;
+            // 应天涉远的卜者 4 件套：速度 >=120/160 暴击率提高 10%/18% + 首次施放欢愉技全队欢愉度提高 10%（视为已触发）
+            let speed = get_let_value(attribute_bonus, 'SpeedDelta') +
+                get_let_value(base_attr, 'speed') *
+                    (get_let_value(attribute_bonus, 'SpeedAddedRatio') + 1);
+            let critical_chance_base = get_let_value(attribute_bonus, 'CriticalChanceBase');
+            if (speed >= 160) {
+                attribute_bonus['CriticalChanceBase'] = critical_chance_base + 0.18;
+            } else if (speed >= 120) {
+                attribute_bonus['CriticalChanceBase'] = critical_chance_base + 0.10;
+            }
+            let joy = get_let_value(attribute_bonus, 'joy');
+            attribute_bonus['joy'] = joy + 10;
+        },
+        '133': () => {
+            if (!relic_set.set_name.startsWith('4'))
+                return;
+            // 戏梦点星的伶人 4 件套：对我方单体施放战技/终结技时目标欢愉度提高 16%（静态口径：计入装备者自身）
+            let joy = get_let_value(attribute_bonus, 'joy');
+            attribute_bonus['joy'] = joy + 16;
+        },
+        '325': () => {
+            if (!relic_set.set_name.startsWith('2'))
+                return;
+            // 零号关卡朋克洛德 2 件套：欢愉度首次达到 40%/80% 时暴击伤害提高 20%/32%
+            // （按装备词条合计欢愉度判定；2 件套常驻欢愉度 +8 在 RelicSetSkill.json）
+            let joy_total = get_let_value(attribute_bonus, 'joy') +
+                get_let_value(attribute_bonus, 'joyPlus') +
+                get_let_value(attribute_bonus, 'joyPct');
+            let critical_damage_base = get_let_value(attribute_bonus, 'CriticalDamageBase');
+            if (joy_total >= 80) {
+                attribute_bonus['CriticalDamageBase'] = critical_damage_base + 0.32;
+            } else if (joy_total >= 40) {
+                attribute_bonus['CriticalDamageBase'] = critical_damage_base + 0.20;
+            }
+        },
     };
     relic_set.set_id in relicGetter && relicGetter[relic_set.set_id]();
     return attribute_bonus;

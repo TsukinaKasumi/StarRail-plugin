@@ -1,0 +1,11 @@
+{
+  "_comment": "utils/damage/json/Equipment.json 的合成最小表（结构同真实文件 {光锥ID:{叠影:[{PropertyType,Value:{Value}}]}}），测试启动时写入沙箱供 miaoSync 的光锥常驻聚合读取。合成光锥 23013：叠影 1 暴伤+20%、叠影 3 暴伤+28%",
+  "23013": {
+    "1": [
+      { "PropertyType": "CriticalDamageBase", "Value": { "Value": 0.2 } }
+    ],
+    "3": [
+      { "PropertyType": "CriticalDamageBase", "Value": { "Value": 0.28 } }
+    ]
+  }
+}

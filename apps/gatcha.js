@@ -22,7 +22,9 @@ export class Gatcha extends plugin {
           fnc: 'bindAuthKey'
         },
         {
-          reg: `^${rulePrefix}(角色|光锥|武器|常驻|新手)?(跃迁|抽卡)?(记录|分析|统计)`,
+          // 注意 alternation 顺序：角色联动/光锥联动/武器联动 必须在 角色/光锥/武器 之前，
+          // 否则"角色联动记录"会先命中"角色"导致整体匹配失败
+          reg: `^${rulePrefix}(角色联动|光锥联动|武器联动|角色|光锥|武器|常驻|新手|联动)?(跃迁|抽卡)?(记录|分析|统计)`,
           fnc: 'gatcha'
         },
         {
@@ -175,7 +177,7 @@ export class Gatcha extends plugin {
       await e.reply(`正在获取[${uid}]的跃迁数据...`)
       const gatcha = new GatchaData(uid, authKey)
       await gatcha.updateData()
-      const msg = await common.makeForwardMsg(e, ['跃迁数据获取成功，你可以使用：', '*跃迁分析\n*角色分析\n*光锥分析\n*常驻分析', '查看具体的跃迁数据'])
+      const msg = await common.makeForwardMsg(e, ['跃迁数据获取成功，你可以使用：', '*跃迁分析\n*角色分析\n*光锥分析\n*常驻分析\n*联动分析', '查看具体的跃迁数据'])
       await e.reply(msg)
     } catch (error) {
       console.log(error)
@@ -214,6 +216,16 @@ export class Gatcha extends plugin {
         }
         case '新手': {
           type = 2
+          break
+        }
+        case '角色联动':
+        case '联动': {
+          type = 21
+          break
+        }
+        case '光锥联动':
+        case '武器联动': {
+          type = 22
           break
         }
         default: {

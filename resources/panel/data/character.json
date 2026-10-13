@@ -1930,6 +1930,37 @@
           }
         }
       },
+      "1002102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 16000
+              },
+              {
+                "id": "110122",
+                "num": 4
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1002103": {
         "max_level": 1,
         "point_type": "3",
@@ -2252,37 +2283,6 @@
               {
                 "id": "111003",
                 "num": 6
-              }
-            ]
-          }
-        }
-      },
-      "1002102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 16000
-              },
-              {
-                "id": "110122",
-                "num": 4
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
               }
             ]
           }
@@ -3066,6 +3066,33 @@
           }
         }
       },
+      "1003101": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point06",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 2,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 5000
+              },
+              {
+                "id": "110131",
+                "num": 3
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1003102": {
         "max_level": 1,
         "point_type": "3",
@@ -3419,33 +3446,6 @@
               {
                 "id": "111003",
                 "num": 8
-              }
-            ]
-          }
-        }
-      },
-      "1003101": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point06",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 2,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 5000
-              },
-              {
-                "id": "110131",
-                "num": 3
-              },
-              {
-                "id": "110501",
-                "num": 1
               }
             ]
           }
@@ -6552,6 +6552,95 @@
           }
         }
       },
+      "1006101": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point06",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 2,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 5000
+              },
+              {
+                "id": "110151",
+                "num": 3
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
+      "1006102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 20000
+              },
+              {
+                "id": "110152",
+                "num": 5
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
+      "1006103": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point08",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 6,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 160000
+              },
+              {
+                "id": "110153",
+                "num": 8
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1006201": {
         "max_level": 1,
         "point_type": "1",
@@ -6843,95 +6932,6 @@
               {
                 "id": "112013",
                 "num": 8
-              }
-            ]
-          }
-        }
-      },
-      "1006101": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point06",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 2,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 5000
-              },
-              {
-                "id": "110151",
-                "num": 3
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
-      "1006102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 20000
-              },
-              {
-                "id": "110152",
-                "num": 5
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
-      "1006103": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point08",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 6,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 160000
-              },
-              {
-                "id": "110153",
-                "num": 8
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
               }
             ]
           }
@@ -7727,6 +7727,37 @@
           }
         }
       },
+      "1008102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 16000
+              },
+              {
+                "id": "110112",
+                "num": 4
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1008103": {
         "max_level": 1,
         "point_type": "3",
@@ -8049,37 +8080,6 @@
               {
                 "id": "111003",
                 "num": 6
-              }
-            ]
-          }
-        }
-      },
-      "1008102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 16000
-              },
-              {
-                "id": "110112",
-                "num": 4
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
               }
             ]
           }
@@ -10029,6 +10029,37 @@
           }
         }
       },
+      "1013102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 16000
+              },
+              {
+                "id": "110132",
+                "num": 4
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1013103": {
         "max_level": 1,
         "point_type": "3",
@@ -10355,37 +10386,6 @@
             ]
           }
         }
-      },
-      "1013102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 16000
-              },
-              {
-                "id": "110132",
-                "num": 4
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
       }
     },
     "version_added": "1.0",
@@ -10399,6 +10399,20 @@
       "guide/OriginMirror/character_overview/1013.png"
     ],
     "character_material": "guide/Nwflower/character_material/1013.png"
+  },
+  "1014": {
+    "id": "1014",
+    "name": "Saber",
+    "rarity": "5",
+    "element": "风",
+    "path": "毁灭"
+  },
+  "1015": {
+    "id": "1015",
+    "name": "Archer",
+    "rarity": "5",
+    "element": "量子",
+    "path": "巡猎"
   },
   "1101": {
     "id": "1101",
@@ -12355,6 +12369,68 @@
           }
         }
       },
+      "1102102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 20000
+              },
+              {
+                "id": "110122",
+                "num": 5
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110502",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
+      "1102103": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point08",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 6,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 160000
+              },
+              {
+                "id": "110123",
+                "num": 8
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110502",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1102201": {
         "max_level": 1,
         "point_type": "1",
@@ -12646,68 +12722,6 @@
               {
                 "id": "111013",
                 "num": 8
-              }
-            ]
-          }
-        }
-      },
-      "1102102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 20000
-              },
-              {
-                "id": "110122",
-                "num": 5
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110502",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
-      "1102103": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point08",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 6,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 160000
-              },
-              {
-                "id": "110123",
-                "num": 8
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110502",
-                "num": 1
               }
             ]
           }
@@ -17437,37 +17451,6 @@
       }
     },
     "skill_tree": {
-      "1107102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 20000
-              },
-              {
-                "id": "110112",
-                "num": 5
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110502",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
       "1107001": {
         "max_level": 6,
         "point_type": "2",
@@ -18156,6 +18139,37 @@
               {
                 "id": "110111",
                 "num": 3
+              },
+              {
+                "id": "110502",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
+      "1107102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 20000
+              },
+              {
+                "id": "110112",
+                "num": 5
+              },
+              {
+                "id": "241",
+                "num": 1
               },
               {
                 "id": "110502",
@@ -19258,6 +19272,33 @@
           }
         }
       },
+      "1108101": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point06",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 2,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 4000
+              },
+              {
+                "id": "110151",
+                "num": 2
+              },
+              {
+                "id": "110502",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1108102": {
         "max_level": 1,
         "point_type": "3",
@@ -19611,33 +19652,6 @@
               {
                 "id": "112013",
                 "num": 6
-              }
-            ]
-          }
-        }
-      },
-      "1108101": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point06",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 2,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 4000
-              },
-              {
-                "id": "110151",
-                "num": 2
-              },
-              {
-                "id": "110502",
-                "num": 1
               }
             ]
           }
@@ -20436,6 +20450,37 @@
           }
         }
       },
+      "1109102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 16000
+              },
+              {
+                "id": "110112",
+                "num": 4
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110502",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1109103": {
         "max_level": 1,
         "point_type": "3",
@@ -20758,37 +20803,6 @@
               {
                 "id": "112013",
                 "num": 6
-              }
-            ]
-          }
-        }
-      },
-      "1109102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 16000
-              },
-              {
-                "id": "110112",
-                "num": 4
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110502",
-                "num": 1
               }
             ]
           }
@@ -22759,6 +22773,37 @@
           }
         }
       },
+      "1202102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 16000
+              },
+              {
+                "id": "110162",
+                "num": 4
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1202103": {
         "max_level": 1,
         "point_type": "3",
@@ -23081,37 +23126,6 @@
               {
                 "id": "113003",
                 "num": 6
-              }
-            ]
-          }
-        }
-      },
-      "1202102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 16000
-              },
-              {
-                "id": "110162",
-                "num": 4
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
               }
             ]
           }
@@ -23922,6 +23936,37 @@
           }
         }
       },
+      "1203102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 20000
+              },
+              {
+                "id": "110172",
+                "num": 5
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1203103": {
         "max_level": 1,
         "point_type": "3",
@@ -24248,37 +24293,6 @@
             ]
           }
         }
-      },
-      "1203102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 20000
-              },
-              {
-                "id": "110172",
-                "num": 5
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
       }
     },
     "version_added": "1.0",
@@ -24385,95 +24399,6 @@
       }
     },
     "skill_tree": {
-      "1204101": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point06",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 2,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 5000
-              },
-              {
-                "id": "110131",
-                "num": 3
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
-      "1204102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 20000
-              },
-              {
-                "id": "110132",
-                "num": 5
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
-      "1204103": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point08",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 6,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 160000
-              },
-              {
-                "id": "110133",
-                "num": 8
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110501",
-                "num": 1
-              }
-            ]
-          }
-        }
-      },
       "1204001": {
         "max_level": 6,
         "point_type": "2",
@@ -25141,6 +25066,95 @@
             "promotion_limit": 0,
             "status_add": {},
             "material_list": []
+          }
+        }
+      },
+      "1204101": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point06",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 2,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 5000
+              },
+              {
+                "id": "110131",
+                "num": 3
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
+      "1204102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 20000
+              },
+              {
+                "id": "110132",
+                "num": 5
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
+      "1204103": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point08",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 6,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 160000
+              },
+              {
+                "id": "110133",
+                "num": 8
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110501",
+                "num": 1
+              }
+            ]
           }
         }
       },
@@ -28586,6 +28600,37 @@
           }
         }
       },
+      "1211102": {
+        "max_level": 1,
+        "point_type": "3",
+        "anchor": "Point07",
+        "pre_point": "",
+        "level_up_skill_id": "",
+        "levels": {
+          "1": {
+            "promotion_limit": 4,
+            "status_add": {},
+            "material_list": [
+              {
+                "id": "2",
+                "num": 20000
+              },
+              {
+                "id": "110172",
+                "num": 5
+              },
+              {
+                "id": "241",
+                "num": 1
+              },
+              {
+                "id": "110502",
+                "num": 1
+              }
+            ]
+          }
+        }
+      },
       "1211103": {
         "max_level": 1,
         "point_type": "3",
@@ -28912,37 +28957,6 @@
             ]
           }
         }
-      },
-      "1211102": {
-        "max_level": 1,
-        "point_type": "3",
-        "anchor": "Point07",
-        "pre_point": "",
-        "level_up_skill_id": "",
-        "levels": {
-          "1": {
-            "promotion_limit": 4,
-            "status_add": {},
-            "material_list": [
-              {
-                "id": "2",
-                "num": 20000
-              },
-              {
-                "id": "110172",
-                "num": 5
-              },
-              {
-                "id": "241",
-                "num": 1
-              },
-              {
-                "id": "110502",
-                "num": 1
-              }
-            ]
-          }
-        }
       }
     },
     "version_added": "1.0",
@@ -28994,6 +29008,55 @@
     "rarity": 5,
     "path": "丰饶",
     "element": "风"
+  },
+  "1218": {
+    "id": "1218",
+    "name": "椒丘",
+    "rarity": "5",
+    "element": "火",
+    "path": "虚无"
+  },
+  "1220": {
+    "id": "1220",
+    "name": "飞霄",
+    "rarity": "5",
+    "element": "风",
+    "path": "巡猎"
+  },
+  "1221": {
+    "id": "1221",
+    "name": "云璃",
+    "rarity": "5",
+    "element": "物理",
+    "path": "毁灭"
+  },
+  "1222": {
+    "id": "1222",
+    "name": "灵砂",
+    "rarity": "5",
+    "element": "火",
+    "path": "丰饶"
+  },
+  "1223": {
+    "id": "1223",
+    "name": "貊泽",
+    "rarity": "4",
+    "element": "雷",
+    "path": "巡猎"
+  },
+  "1224": {
+    "id": "1224",
+    "name": "三月七·巡猎",
+    "rarity": "4",
+    "element": "虚数",
+    "path": "巡猎"
+  },
+  "1225": {
+    "id": "1225",
+    "name": "忘归人",
+    "rarity": "5",
+    "element": "火",
+    "path": "虚无"
   },
   "1301": {
     "id": "1301",
@@ -29083,6 +29146,13 @@
     "path": "毁灭",
     "element": "冰"
   },
+  "1313": {
+    "id": "1313",
+    "name": "星期日",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "同谐"
+  },
   "1314": {
     "id": "1314",
     "name": "翡翠",
@@ -29098,6 +29168,272 @@
     "rarity": 5,
     "path": "巡猎",
     "element": "物理"
+  },
+  "1317": {
+    "id": "1317",
+    "name": "乱破",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "智识"
+  },
+  "1321": {
+    "id": "1321",
+    "name": "大丽花",
+    "rarity": "5",
+    "element": "火",
+    "path": "虚无"
+  },
+  "1401": {
+    "id": "1401",
+    "name": "大黑塔",
+    "rarity": "5",
+    "element": "冰",
+    "path": "智识"
+  },
+  "1402": {
+    "id": "1402",
+    "name": "阿格莱雅",
+    "rarity": "5",
+    "element": "雷",
+    "path": "记忆"
+  },
+  "1403": {
+    "id": "1403",
+    "name": "缇宝",
+    "rarity": "5",
+    "element": "量子",
+    "path": "同谐"
+  },
+  "1404": {
+    "id": "1404",
+    "name": "万敌",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "毁灭"
+  },
+  "1405": {
+    "id": "1405",
+    "name": "那刻夏",
+    "rarity": "5",
+    "element": "风",
+    "path": "智识"
+  },
+  "1406": {
+    "id": "1406",
+    "name": "赛飞儿",
+    "rarity": "5",
+    "element": "量子",
+    "path": "虚无"
+  },
+  "1407": {
+    "id": "1407",
+    "name": "遐蝶",
+    "rarity": "5",
+    "element": "量子",
+    "path": "记忆"
+  },
+  "1408": {
+    "id": "1408",
+    "name": "白厄",
+    "rarity": "5",
+    "element": "物理",
+    "path": "毁灭"
+  },
+  "1409": {
+    "id": "1409",
+    "name": "风堇",
+    "rarity": "5",
+    "element": "风",
+    "path": "记忆"
+  },
+  "1410": {
+    "id": "1410",
+    "name": "海瑟音",
+    "rarity": "5",
+    "element": "物理",
+    "path": "虚无"
+  },
+  "1412": {
+    "id": "1412",
+    "name": "刻律德菈",
+    "rarity": "5",
+    "element": "风",
+    "path": "同谐"
+  },
+  "1413": {
+    "id": "1413",
+    "name": "长夜月",
+    "rarity": "5",
+    "element": "冰",
+    "path": "记忆"
+  },
+  "1414": {
+    "id": "1414",
+    "name": "丹恒•腾荒",
+    "rarity": "5",
+    "element": "物理",
+    "path": "存护"
+  },
+  "1415": {
+    "id": "1415",
+    "name": "昔涟",
+    "rarity": "5",
+    "element": "冰",
+    "path": "记忆"
+  },
+  "1501": {
+    "id": "1501",
+    "name": "火花",
+    "rarity": "5",
+    "element": "火",
+    "path": "欢愉"
+  },
+  "1502": {
+    "id": "1502",
+    "name": "爻光",
+    "rarity": "5",
+    "element": "物理",
+    "path": "欢愉"
+  },
+  "1503": {
+    "id": "1503",
+    "name": "真珠",
+    "rarity": "5",
+    "element": "冰",
+    "path": "欢愉"
+  },
+  "1504": {
+    "id": "1504",
+    "name": "不死途",
+    "rarity": "5",
+    "element": "雷",
+    "path": "巡猎"
+  },
+  "1505": {
+    "id": "1505",
+    "name": "绯英",
+    "rarity": "5",
+    "element": "物理",
+    "path": "欢愉"
+  },
+  "1506": {
+    "id": "1506",
+    "name": "银狼LV.999",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "欢愉"
+  },
+  "1507": {
+    "id": "1507",
+    "name": "千冶•刃",
+    "rarity": "5",
+    "element": "火",
+    "path": "虚无"
+  },
+  "1508": {
+    "id": "1508",
+    "name": "远坂凛",
+    "rarity": "5",
+    "element": "量子",
+    "path": "智识"
+  },
+  "1509": {
+    "id": "1509",
+    "name": "吉尔伽美什",
+    "rarity": "5",
+    "element": "雷",
+    "path": "毁灭"
+  },
+  "1510": {
+    "id": "1510",
+    "name": "姬子•启行",
+    "rarity": "5",
+    "element": "火",
+    "path": "智识"
+  },
+  "1512": {
+    "id": "1512",
+    "name": "知更鸟•晴歌",
+    "rarity": "5",
+    "element": "风",
+    "path": "记忆"
+  },
+  "1513": {
+    "id": "1513",
+    "name": "砂金•戏浪",
+    "rarity": "5",
+    "element": "量子",
+    "path": "欢愉"
+  },
+  "2004": {
+    "id": "2004",
+    "name": "瓦尔特Pro",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "虚无"
+  },
+  "2005": {
+    "id": "2005",
+    "name": "卡芙卡Pro",
+    "rarity": "5",
+    "element": "雷",
+    "path": "虚无"
+  },
+  "2006": {
+    "id": "2006",
+    "name": "银狼Pro",
+    "rarity": "5",
+    "element": "量子",
+    "path": "虚无"
+  },
+  "2102": {
+    "id": "2102",
+    "name": "希儿Pro",
+    "rarity": "5",
+    "element": "量子",
+    "path": "巡猎"
+  },
+  "2205": {
+    "id": "2205",
+    "name": "刃Pro",
+    "rarity": "5",
+    "element": "风",
+    "path": "毁灭"
+  },
+  "2212": {
+    "id": "2212",
+    "name": "镜流Pro",
+    "rarity": "5",
+    "element": "冰",
+    "path": "毁灭"
+  },
+  "2217": {
+    "id": "2217",
+    "name": "藿藿Pro",
+    "rarity": "5",
+    "element": "风",
+    "path": "丰饶"
+  },
+  "2306": {
+    "id": "2306",
+    "name": "花火Pro",
+    "rarity": "5",
+    "element": "量子",
+    "path": "同谐"
+  },
+  "2307": {
+    "id": "2307",
+    "name": "黑天鹅Pro",
+    "rarity": "5",
+    "element": "风",
+    "path": "虚无"
+  },
+  "2310": {
+    "id": "2310",
+    "name": "流萤Pro",
+    "rarity": "5",
+    "element": "火",
+    "path": "毁灭"
   },
   "8001": {
     "id": "8001",
@@ -33702,5 +34038,47 @@
       "guide/OriginMirror/character_overview/8004.png"
     ],
     "character_material": "guide/Nwflower/character_material/8004.png"
+  },
+  "8005": {
+    "id": "8005",
+    "name": "穹·同谐",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "同谐"
+  },
+  "8006": {
+    "id": "8006",
+    "name": "星·同谐",
+    "rarity": "5",
+    "element": "虚数",
+    "path": "同谐"
+  },
+  "8007": {
+    "id": "8007",
+    "name": "穹·记忆",
+    "rarity": "5",
+    "element": "冰",
+    "path": "记忆"
+  },
+  "8008": {
+    "id": "8008",
+    "name": "星·记忆",
+    "rarity": "5",
+    "element": "冰",
+    "path": "记忆"
+  },
+  "8009": {
+    "id": "8009",
+    "name": "穹·欢愉",
+    "rarity": "5",
+    "element": "雷",
+    "path": "欢愉"
+  },
+  "8010": {
+    "id": "8010",
+    "name": "星·欢愉",
+    "rarity": "5",
+    "element": "雷",
+    "path": "欢愉"
   }
 }

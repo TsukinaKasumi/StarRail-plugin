@@ -4,6 +4,7 @@ import setting from '../utils/setting.js'
 import fetch from 'node-fetch'
 import _ from 'lodash'
 import { getCk, rulePrefix } from '../utils/common.js'
+import { parseArchiveArgs } from '../utils/archiveArgs.js'
 import runtimeRender from '../common/runtimeRender.js'
 import GsCfg from '../../genshin/model/gsCfg.js'
 import MysInfo from '../../genshin/model/mys/mysInfo.js'
@@ -21,7 +22,7 @@ export class GridFight extends plugin {
           fnc: 'grid_fight'
         },
         {
-          reg: `^${rulePrefix}(货币(战争)?|币战)(战绩|回顾|战报|记录)(一|二|三|四|五|六|七|八|九|十)?$`,
+          reg: `^${rulePrefix}(货币(战争)?|币战)(战绩|回顾|战报|记录)(\\d+)?(\\s*\\d+)?$`,
           fnc: 'grid_fight_archive'
         }
       ]
@@ -62,12 +63,13 @@ export class GridFight extends plugin {
     this.e.isSr = true
     this.isSr = true
 
-    let uid = await this.userUid(e)
-    let ck = await this.userCk(e, uid)
+    // 数字下标与uid并存（同常规演算）：≤2位=下标（货币战争支持到第10条），≥3位=uid；@走 e.at
+    let { index, queryUid } = parseArchiveArgs(e.msg)
 
-    let indexMap = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 }
-    let indexStr = e.msg.match(/(一|二|三|四|五|六|七|八|九|十)$/)?.[0]
-    let index = indexMap[indexStr] || 1
+    let uid = queryUid || await MysInfo.getUid(e, false)
+    if (!uid) return false
+    let ck = await this.userCk(e, uid)
+    if (!ck) return false
 
     let api = new MysSRApi(uid, ck)
     let deviceFp = await api.getData('getFp')

@@ -1,0 +1,73 @@
+{
+  "_comment": "miao-plugin PlayerData sr/{uid}.json 的合成样本。结构对照 miao-plugin models/Avatar.js toJSON（name/id/elem/level/promote/cons/talent(=originalTalent 明文等级)/trees(已激活行迹 point_id)/weapon{id,level,promote,affix}/artis{pos:{level,id,mainId,attrIds[]}}/_source/_time）与 models/artis/Artis.js toJSON（attrIds = '词条ID,次数,步进'）；顶层 _profile 为 miao ProfileAvatar 写入的最后更新时间戳(ms)。全部数值为合成数据（UID/QQ/时间戳均非真实）",
+  "_profile": 1700000005000,
+  "uid": "100000001",
+  "name": "合成开拓者",
+  "level": 65,
+  "avatars": {
+    "1104": {
+      "name": "杰帕德",
+      "id": 1104,
+      "elem": "冰",
+      "level": 80,
+      "promote": 6,
+      "cons": 2,
+      "talent": { "a": 6, "e": 10, "q": 10, "t": 10 },
+      "trees": [1104201, 1104202, 1104101, 1104204, 1104205],
+      "weapon": { "id": 23013, "level": 70, "promote": 5, "affix": 3 },
+      "artis": {
+        "1": { "id": 61011, "level": 15, "mainId": 1, "attrIds": ["7,2,0", "1,1,0"] },
+        "2": { "id": 61012, "level": 15, "mainId": 1, "attrIds": ["8,2,0"] },
+        "3": { "id": 61013, "level": 15, "mainId": 4, "attrIds": ["9,1,2"] },
+        "4": { "id": 61014, "level": 15, "mainId": 4, "attrIds": [] },
+        "5": { "id": 63015, "level": 15, "mainId": 6, "attrIds": ["11,2,0"] },
+        "6": { "id": 63016, "level": 12, "mainId": 2, "attrIds": ["2,2,0"] }
+      },
+      "_source": "mys",
+      "_time": 1700000005000,
+      "_update": 1700000005000,
+      "_talent": 1700000005000
+    },
+    "1501": {
+      "name": "火花",
+      "id": 1501,
+      "elem": "火",
+      "level": 80,
+      "promote": 6,
+      "cons": 0,
+      "talent": { "a": 1, "e": 9, "q": 9, "t": 9, "xe": 12 },
+      "trees": [],
+      "weapon": { "id": 21005, "level": 60, "promote": 4, "affix": 1 },
+      "_source": "homo",
+      "_time": 1700000004000
+    },
+    "1402": {
+      "name": "阿格莱雅",
+      "id": 1402,
+      "elem": "雷",
+      "level": 70,
+      "cons": 1,
+      "talent": { "a": 1, "e": 6, "q": 10, "t": 6, "me": 10, "mt": 10 },
+      "trees": [1402201],
+      "weapon": { "id": 23013, "level": 70, "promote": 5, "affix": 1 },
+      "artis": {
+        "3": { "id": 61013, "level": 15, "mainId": 4, "attrIds": ["7,1,0"] }
+      },
+      "_source": "enka",
+      "_time": 1700000003000
+    },
+    "1220": {
+      "_comment": "沙箱 miao meta 不提供该角色 data.json：验证 miaoSync 的按角色降级跳过",
+      "name": "飞霄",
+      "id": 1220,
+      "elem": "风",
+      "level": 80,
+      "promote": 6,
+      "cons": 3,
+      "talent": { "a": 1, "e": 10, "q": 10, "t": 10 },
+      "trees": [],
+      "_source": "mys",
+      "_time": 1700000001000
+    }
+  }
+}

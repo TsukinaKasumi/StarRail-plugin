@@ -32,8 +32,8 @@ export default class GatchaData {
 
   // 卡池统计
   async stat (gatchaType = 0) {
-    /** 当前卡池 */
-    const currPool = _.find(poolData, (v) => isDateOnRange(v.from, v.to))
+    /** 当前卡池（排除联动条目：其 to 为 2036 远期哨兵，常规条目空窗期会被其拦截） */
+    const currPool = _.find(poolData, (v) => !v.gachaType && isDateOnRange(v.from, v.to))
     /** 当前总数 */
     const currTotal = {
       /** 角色总数 */
@@ -57,6 +57,10 @@ export default class GatchaData {
       totalNum11: 0,
       /** 光锥池总抽卡数 */
       totalNum12: 0,
+      /** 角色联动池总抽卡数 */
+      totalNum21: 0,
+      /** 光锥联动池总抽卡数 */
+      totalNum22: 0,
       /** 持有总数（包含角色，光锥） */
       holdNum: { num: [0, 0], holdingRate: [0, 0] },
       /** 角色总数 */
@@ -78,7 +82,9 @@ export default class GatchaData {
           1: { 4: 0, 5: 0 },
           2: { 4: 0, 5: 0 },
           11: { 4: 0, 5: 0 },
-          12: { 4: 0, 5: 0 }
+          12: { 4: 0, 5: 0 },
+          21: { 4: 0, 5: 0 },
+          22: { 4: 0, 5: 0 }
         },
         currPool
       }
@@ -149,8 +155,8 @@ export default class GatchaData {
           newItem.className = `char rank${rank}`
         }
 
-        // 卡池数据
-        const poolInfo = getPool(item.time)
+        // 卡池数据（按记录 gacha_type 区分常规/联动归组，见 getPool）
+        const poolInfo = getPool(item.time, type)
         newItem.poolInfo = poolInfo
         newItem.pool = poolInfo.id
         // 判断当前5行是否为up五星
@@ -161,23 +167,30 @@ export default class GatchaData {
       })
     }
 
-    if (gatchaType === 1 || gatchaType === 0) {
-      map.set(1, withList(await this.getData(1)))
+    // 各类型记录拉取：
+    // - 总览(0) 展示已有数据，对缺失的类型跳过（如未抽过/未同步联动池的用户没有 21/22 文件，
+    //   C12 后曾因无条件拉取导致总览直接报"抽卡记录不存在"）；
+    //   全部类型均无数据时仍抛错，保留"本地暂无记录"的引导提示
+    // - 显式查询单一类型（含 2 新手池实时拉取）保持严格：缺失即报错
+    const types = gatchaType === 0 ? [1, 11, 12, 21, 22] : [gatchaType]
+    for (const t of types) {
+      try {
+        map.set(t, withList(await this.getData(t)))
+      } catch (err) {
+        if (gatchaType !== 0) throw err
+      }
     }
-    if (gatchaType === 2) {
-      map.set(2, withList(await this.getData(2)))
-    }
-    if (gatchaType === 11 || gatchaType === 0) {
-      map.set(11, withList(await this.getData(11)))
-    }
-    if (gatchaType === 12 || gatchaType === 0) {
-      map.set(12, withList(await this.getData(12)))
+    if (map.size === 0) {
+      return Promise.reject('抽卡记录不存在')
     }
 
-    obj.totalNum = getMapValueLength(map, 1) + getMapValueLength(map, 11) + getMapValueLength(map, 12)
+    obj.totalNum = getMapValueLength(map, 1) + getMapValueLength(map, 11) + getMapValueLength(map, 12) +
+      getMapValueLength(map, 21) + getMapValueLength(map, 22)
     obj.totalNum1 = getMapValueLength(map, 1)
     obj.totalNum11 = getMapValueLength(map, 11)
     obj.totalNum12 = getMapValueLength(map, 12)
+    obj.totalNum21 = getMapValueLength(map, 21)
+    obj.totalNum22 = getMapValueLength(map, 22)
     obj.data = _.filter([
       {
         type: 1,
@@ -201,6 +214,18 @@ export default class GatchaData {
         typeName: '光锥跃迁',
         records: _.reverse(map.get(12)),
         groups: groupByPool(map.get(12))
+      },
+      {
+        type: 21,
+        typeName: '角色联动跃迁',
+        records: _.reverse(map.get(21)),
+        groups: groupByPool(map.get(21))
+      },
+      {
+        type: 22,
+        typeName: '光锥联动跃迁',
+        records: _.reverse(map.get(22)),
+        groups: groupByPool(map.get(22))
       }
     ], (v) => !_.isEmpty(v.records))
 
@@ -215,6 +240,10 @@ export default class GatchaData {
       await this.writeJSON(this.getFilePath(11), records_11)
       const records_12 = this.merge(await this.readJSON(this.getFilePath(12)), await getRecords(this.uid, 12, this.authKey))
       await this.writeJSON(this.getFilePath(12), records_12)
+      const records_21 = this.merge(await this.readJSON(this.getFilePath(21)), await getRecords(this.uid, 21, this.authKey))
+      await this.writeJSON(this.getFilePath(21), records_21)
+      const records_22 = this.merge(await this.readJSON(this.getFilePath(22)), await getRecords(this.uid, 22, this.authKey))
+      await this.writeJSON(this.getFilePath(22), records_22)
     } else {
       throw new Error('authKey 为空')
     }
@@ -262,15 +291,13 @@ export default class GatchaData {
     const path = `${pluginRoot}/resources/baseData/${type}.json`
     const data = JSON.parse(fs.readFileSync(path, 'utf-8'))
     const dataMap = new Map(Object.entries(data))
-    // 剔除开拓者
+    // 剔除开拓者（8001-8010 及后续新增形态，统一按 80 前缀剔除）
     if (type === 'characters') {
-      dataMap.delete('8001')
-      dataMap.delete('8002')
-      dataMap.delete('8003')
-      dataMap.delete('8004')
-      // dataMap.delete('1005')
-      // dataMap.delete('1006')
-      // dataMap.delete('1203')
+      for (const id of [...dataMap.keys()]) {
+        if (id.startsWith('80')) {
+          dataMap.delete(id)
+        }
+      }
     }
     if (rarity) {
       let total = 0
@@ -320,13 +347,44 @@ function withUntilPlus (obj, rank) {
   return temp
 }
 
-function getPool (time) {
+function getPool (time, gachaType) {
   let pool = false
+  if (gachaType === 21 || gachaType === 22) {
+    // 联动池长期开放且多期时间互相重叠（to 均为 2036 哨兵），纯日期无法区分期次；
+    // gacha_id 理论上可精确到池，但 poolData 未收录 gacha_id，按期次近似归组：
+    // 在同 gachaType 的联动条目中取 from 最晚且早于记录时间的一条（晚于二期开池即归二期）
+    for (let i = 0; i < poolData.length; i++) {
+      const x = poolData[i]
+      if (x.gachaType === gachaType && isDateOnRange(x.from, x.to, moment(time))) {
+        if (!pool || moment(x.from).diff(moment(pool.from)) > 0) {
+          pool = x
+        }
+      }
+    }
+    return pool
+  }
   for (let i = 0; i < poolData.length; i++) {
     const x = poolData[i]
-    if (isDateOnRange(x.from, x.to, moment(time))) {
+    // 常规记录排除联动条目（to 为 2036 哨兵，命中即拦截其后所有常规池归组）
+    if (!x.gachaType && isDateOnRange(x.from, x.to, moment(time))) {
       pool = poolData[i]
       break
+    }
+  }
+  if (!pool) {
+    // 版本边界维护窗口兜底：相邻版本条目之间存在上期 to(14:59:59)~下期 from(次日 06:00)
+    // 的空窗，期间仍可能有真实抽卡记录；回退到 from 早于记录时间的最后一个常规条目
+    // （常规条目按时间升序排列）。距该期结束超过 1 天则视为 poolData 尚未覆盖的新
+    // 版本，不回退（保持无归组，待卡池数据更新）
+    const t = moment(time)
+    for (let i = 0; i < poolData.length; i++) {
+      const x = poolData[i]
+      if (!x.gachaType && t.diff(moment(x.from)) > 0) {
+        pool = x
+      }
+    }
+    if (pool && t.diff(moment(pool.to)) > 24 * 60 * 60 * 1000) {
+      pool = false
     }
   }
   return pool

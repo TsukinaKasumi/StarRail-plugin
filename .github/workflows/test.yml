@@ -1,0 +1,34 @@
+name: test
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [22, 24]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: 安装测试依赖
+        run: npm install --no-fund --no-audit
+      - name: 运行单元测试
+        run: node --test "test/**/*.test.js"
+      - name: 检查测试是否污染仓库（测试严禁改动源码/数据文件）
+        run: |
+          if [ -n "$(git status --porcelain -- utils/ resources/ defSet/ apps/ tools/)" ]; then
+            echo "::error::测试运行修改了仓库文件："
+            git status --porcelain -- utils/ resources/ defSet/ apps/ tools/
+            exit 1
+          fi
