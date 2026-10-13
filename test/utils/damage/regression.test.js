@@ -31,10 +31,11 @@ test('基线完整性：42 用例 = 14 名 1.3 角色 × 3 变体，键不多不
   }
 })
 
-test('回归：42 用例引擎输出与基线逐字段一致', (t) => {
+test('回归：42 用例引擎输出与基线逐字段一致', async (t) => {
   for (const key of Object.keys(baseline).sort((a, b) => Number(a) - Number(b))) {
     const [id, variant] = key.split('-v')
-    t.test(key, () => {
+    // node 22 的 runner 不等待未 await 的子测试队列（父函数返回即取消剩余子测试），必须逐个 await
+    await t.test(key, () => {
       const charinfo = makeRegressionCase(Number(id), Number(variant))
       // 引擎对个别数据缺陷角色的抛错行为也纳入基线（thrown 字段）；当前基线无 thrown 用例
       let ret

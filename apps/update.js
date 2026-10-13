@@ -27,6 +27,36 @@ const checkAuth = async function (e) {
 // 是否在更新中
 let uping = false
 
+/** 图片加量包（PanelPic）仓库地址：默认 gitee，命令带 github 时选 github */
+const RES_URLS = {
+  gitee: 'https://gitee.com/yuan_hu_sheng/StarRail-plugin-PanelPic.git',
+  github: 'https://github.com/yhs21241/StarRail-plugin-PanelPic.git'
+}
+
+/**
+ * 依消息与安装状态构造图片加量包的 git 命令（纯函数，便于单测）
+ *  - 已安装：git pull（强制先还原工作区）；显式 github/gitee 后缀时先 set-url 换源再拉取
+ *    （gitee 后缀此前不生效，且 github 源失联后无法换到 gitee）
+ *  - 未安装：git clone 浅克隆，默认 gitee 源
+ */
+export function buildUpdateResCommand (msg, hasPack, resPath) {
+  const isForce = msg.includes('强制')
+  const isGayhub = msg.includes('github')
+  const isGitee = msg.includes('gitee')
+  const url = isGayhub ? RES_URLS.github : RES_URLS.gitee
+  if (!hasPack) {
+    return `git clone ${url} "${resPath}/pro-file/" --depth=1`
+  }
+  let command = 'git pull'
+  if (isForce) {
+    command = 'git  checkout . && git  pull'
+  }
+  if (isGayhub || isGitee) {
+    command = `git remote set-url origin ${url} && ${command}`
+  }
+  return command
+}
+
 /**
  * 处理插件更新
  */
@@ -54,15 +84,10 @@ export class Update extends plugin {
     if (!await checkAuth(e)) {
       return true
     }
-    let isForce = e.msg.includes('强制')
-    let isGayhub = e.msg.includes('github')
-    let command = ''
-    if (fs.existsSync(`${resPath}/pro-file/`)) {
+    const hasPack = fs.existsSync(`${resPath}/pro-file/`)
+    const command = buildUpdateResCommand(e.msg, hasPack, resPath)
+    if (hasPack) {
       e.reply('开始尝试更新，请耐心等待~')
-      command = 'git pull'
-      if (isForce) {
-        command = 'git  checkout . && git  pull'
-      }
       exec(command, { cwd: `${resPath}/pro-file/` }, function (error, stdout, stderr) {
         console.log(stdout)
         if (/(Already up[ -]to[ -]date|已经是最新的)/.test(stdout)) {
@@ -81,11 +106,6 @@ export class Update extends plugin {
         }
       })
     } else {
-      let url = 'https://gitee.com/yuan_hu_sheng/StarRail-plugin-PanelPic.git'
-      if (isGayhub) {
-        url = 'https://github.com/yhs21241/StarRail-plugin-PanelPic.git'
-      }
-      command = `git clone ${url} "${resPath}/pro-file/" --depth=1`
       e.reply('开始尝试安装图片加量包，可能会需要一段时间，请耐心等待~')
       exec(command, function (error, stdout, stderr) {
         if (error) {
