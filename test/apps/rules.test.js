@@ -91,6 +91,12 @@ const CORPUS = [
   { group: 'regress', msg: '*常驻分析', apps: ['gatcha'] },
   { group: 'regress', msg: '*新手记录', apps: ['gatcha'] },
   { group: 'regress', msg: '*抽卡统计', apps: ['gatcha'] },
+  // ---- 图片加量包命令：update.updateRes（gitee/github 后缀换源） ----
+  { group: 'res-update', msg: '*更新图像', apps: ['update'] },
+  { group: 'res-update', msg: '*强制更新图像', apps: ['update'] },
+  { group: 'res-update', msg: '*图像更新gitee', apps: ['update'] },
+  { group: 'res-update', msg: '*更新图像github', apps: ['update'] },
+  { group: 'res-update', msg: '#星铁强制更新图像github', apps: ['update'] },
   // ---- 回归：深渊/宇宙/面板/其它 ----
   { group: 'regress', msg: '*深渊', apps: ['challenge'] },
   { group: 'regress', msg: '*最新深渊', apps: ['challenge'] },
@@ -145,7 +151,8 @@ const CORPUS = [
   { group: 'reject', msg: '*常规演算abc', apps: [] }, // 尾随垃圾（原规则缺 $ 锚定，本次收紧）
   { group: 'reject', msg: '*常规演算二', apps: [] }, // 汉字下标已移除
   { group: 'reject', msg: '*本期演算三', apps: [] }, // 汉字下标已移除
-  { group: 'reject', msg: '*货币战绩十', apps: [] } // 汉字下标已移除
+  { group: 'reject', msg: '*货币战绩十', apps: [] }, // 汉字下标已移除
+  { group: 'reject', msg: '*更新图像gitlab', apps: [] } // 不支持的源后缀
 ]
 
 const byGroup = (group) => CORPUS.filter((c) => c.group === group)
@@ -202,6 +209,16 @@ test('面板分工：#星铁更新面板 归 MiaoOrStarrail（panel 同命中为
     '#星铁更新面板 应命中 MiaoOrStarrail.update'
   )
   assertDispatch(byGroup('miao-guard').find((x) => x.msg === '#星铁更新面板'))
+})
+
+test('图片加量包：更新图像（含 gitee/github 换源后缀）归 update（updateRes）', () => {
+  for (const c of byGroup('res-update')) {
+    assertDispatch(c)
+    assert.ok(
+      hits(c.msg).some((r) => r.app === 'update' && r.fnc === 'updateRes'),
+      `「${c.msg}」应命中 update.updateRes`
+    )
+  }
 })
 
 test('回归：既有命令分派保持', () => {
