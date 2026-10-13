@@ -19,6 +19,7 @@ const STUB_MAP = [
   ['genshin/model/mys/NoteUser.js', 'noteuser'],
   ['genshin/model/gsCfg.js', 'gscfg'],
   ['genshin/model/mys/mysInfo.js', 'mysinfo'],
+  ['genshin/model/mys/mysApi.js', 'mysapi'],  // runtime/MysSRApi.js 继承的父类：CI 无 genshin 插件，仅桩出继承表面
   ['xiaoyao-cvs-plugin/model/user.js', 'xiaoyao-user'],
   ['chokidar', 'chokidar'],  // setting.js 热更新监听：禁用（否则钉住事件循环）
   ['node-fetch', 'node-fetch']  // 网络请求：一律走 mock（见 helpers/fetch-mock.mjs），测试禁真实网络
