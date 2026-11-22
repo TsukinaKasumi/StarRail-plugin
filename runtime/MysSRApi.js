@@ -24,6 +24,12 @@ export default class MysSRApi extends MysApi {
     }
   }
 
+  static getLtuid(cookie = '') {
+    const ck = String(cookie || '')
+    const v2Id = ck.match(/(?:^|;)\s*(?:ltuid_v2|account_id_v2)=(\d+)\s*(?=;|$)/)?.[1]
+    return v2Id || ck.match(/(?:^|;)\s*(?:ltuid|account_id|stuid)=(\d+)\s*(?=;|$)/)?.[1] || ''
+  }
+
   getServer() {
     switch (String(this.uid).slice(0, -8)) {
       case '5':
@@ -142,8 +148,7 @@ export default class MysSRApi extends MysApi {
   async getData(type, data = { headers: {} }, cached = false) {
     const uid = this.uid
     const ck = this.cookie
-    let ltuid = ck.match(/ltuid=(\d+)/)
-    ltuid = ltuid[1]
+    const ltuid = MysSRApi.getLtuid(ck)
     if (ltuid) {
       let bindInfo = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:BIND`)
       if (bindInfo) {
@@ -194,7 +199,7 @@ export default class MysSRApi extends MysApi {
       headers = { ...headers, ...data.headers }
     }
 
-    if (type !== 'getFp' && !headers['x-rpc-device_fp'] && this._device_fp.data?.device_fp) {
+    if (type !== 'getFp' && !headers['x-rpc-device_fp'] && this._device_fp?.data?.device_fp) {
       headers['x-rpc-device_fp'] = this._device_fp.data.device_fp
     }
 
