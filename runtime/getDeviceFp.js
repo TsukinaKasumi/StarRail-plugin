@@ -3,8 +3,8 @@ import MysSRApi from './MysSRApi.js'
 
 export default class getDeviceFp {
   static async Fp(uid, ck) {
-    let ltuid = ck.match(/ltuid=(\d+)/)
-    ltuid = ltuid[1]
+    const ltuid = MysSRApi.getLtuid(ck)
+    if (!ltuid) return { deviceFp: null }
     let mysapi = new MysSRApi(uid, ck)
     let deviceFp = await redis.get(`ZZZ:DEVICE_FP:${ltuid}:FP`)
     let data = {}
