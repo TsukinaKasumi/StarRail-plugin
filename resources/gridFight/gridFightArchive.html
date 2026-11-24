@@ -215,18 +215,26 @@
         <div class="damage-row">
             <div class="damage-entity-container">
                 {{if d.type === 'DamageTypeTrait'}}
-                <div class="bond-icon-container quality-{{d.entity.quality}} damage-scale">
-                    <img src="{{d.entity.icon}}" class="item-icon">
-                    <div class="bond-count">{{d.entity.trait_count}}</div>
+                <div class="bond-icon-container quality-{{d.entity && d.entity.quality || 0}} damage-scale">
+                    <img src="{{d.entity && d.entity.icon}}" class="item-icon">
+                    {{if d.entity && d.entity.trait_count}}<div class="bond-count">{{d.entity.trait_count}}</div>{{/if}}
                 </div>
-                {{else}}
+                {{else if d.type === 'DamageTypeAugment'}}
+                <div class="strategy-icon-container quality-{{d.entity && d.entity.quality || 1}} damage-scale">
+                    <img src="{{d.entity && d.entity.icon}}" class="item-icon">
+                </div>
+                {{else if d.type === 'DamageTypePortal'}}
+                <div class="environment-icon-container damage-scale">
+                    <img src="{{d.entity && d.entity.icon}}" class="item-icon">
+                </div>
+                {{else if d.entity && d.entity.icon}}
                 <div class="chess-card-container damage-scale">
-                    <div class="chess-box" data-rarity="{{d.entity.rarity}}">
+                    <div class="chess-box" data-rarity="{{d.entity.rarity || 4}}">
                         <div class="chess-main">
                             <img src="{{d.entity.icon}}" class="chess-img">
                             {{if d.entity.is_trial}}<div class="trial-flag">试用</div>{{/if}}
                             <div class="chess-stars">
-                                <% for (var i=0; i < d.entity.star; i++){ %>
+                                <% for (var i=0; i < (d.entity.star || 0); i++){ %>
                                     <img src="{{pluResPath}}/gridFight/gridFight/star.png" class="star-mini">
                                     <% } %>
                             </div>
@@ -234,7 +242,7 @@
                         <div class="chess-bar"></div>
                     </div>
                     <div class="chess-equipments">
-                        {{each d.entity.equip_list.slice(0,3) equip}}
+                        {{each (d.entity.equip_list || []).slice(0,3) equip}}
                         <div class="equip-icon-box">
                             <img src="{{equip.icon}}" class="equip-icon">
                         </div>
@@ -279,6 +287,7 @@
 
     .environment-icon-container { background-image: url('{{pluResPath}}/gridFight/gridFight/environment.png'); }
 
+    .strategy-icon-container { background-image: url('{{pluResPath}}/gridFight/gridFight/strategy_silver.png'); }
     .strategy-icon-container.quality-1 { background-image: url('{{pluResPath}}/gridFight/gridFight/strategy_silver.png'); }
     .strategy-icon-container.quality-2 { background-image: url('{{pluResPath}}/gridFight/gridFight/strategy_gold.png'); }
     .strategy-icon-container.quality-3 { background-image: url('{{pluResPath}}/gridFight/gridFight/strategy-icon-bg-3.b1898bcc.webp'); }

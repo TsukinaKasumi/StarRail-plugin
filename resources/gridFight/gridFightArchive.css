@@ -173,13 +173,17 @@
     height: 100%;
 }
 
-/* Make bond logo larger in damage section to match visual weight */
-.damage-entity-container .bond-icon-container {
+/* Make icons larger in damage section to match visual weight */
+.damage-entity-container .bond-icon-container,
+.damage-entity-container .strategy-icon-container,
+.damage-entity-container .environment-icon-container {
     width: 64px;
     height: 64px;
 }
 
-.damage-entity-container .bond-icon-container .item-icon {
+.damage-entity-container .bond-icon-container .item-icon,
+.damage-entity-container .strategy-icon-container .item-icon,
+.damage-entity-container .environment-icon-container .item-icon {
     width: 48px;
     height: 48px;
 }
