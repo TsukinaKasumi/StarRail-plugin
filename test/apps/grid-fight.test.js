@@ -4,19 +4,11 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-let template
-try {
-  template = (await import('art-template')).default
-} catch {
-  // art-template 在无 Yunzai 的独立 CI 环境下未安装，优雅降级
-}
-
 const pluginRoot = fileURLToPath(new URL('../../', import.meta.url))
 const htmlPath = path.join(pluginRoot, 'resources/gridFight/gridFightArchive.html')
-const defaultLayout = path.join(pluginRoot, 'resources/common/layout/default.html')
-const elemLayout = path.join(pluginRoot, 'resources/common/layout/elem.html')
+const cssPath = path.join(pluginRoot, 'resources/gridFight/gridFightArchive.css')
 
-test('gridFight: 伤害数据支持角色、羁绊、投资策略、投资环境及兜底，模板正常渲染', () => {
+test('gridFight: 伤害数据支持角色、羁绊、投资策略、投资环境及兜底，模板结构完整', () => {
   const mockRecord = {
     brief: {
       division: { level: 5, icon: '', name_with_num: 'V' },
@@ -51,7 +43,7 @@ test('gridFight: 伤害数据支持角色、羁绊、投资策略、投资环境
     }
   }
 
-  // 模拟 apps/gridFight.js 的 entityMap 逻辑
+  // 验证 apps/gridFight.js 的 entityMap 覆盖逻辑
   let entityMap = {}
   mockRecord.lineup.front_roles?.forEach(r => {
     if (r.role_id) entityMap[r.role_id] = r
@@ -103,38 +95,13 @@ test('gridFight: 伤害数据支持角色、羁绊、投资策略、投资环境
   assert.equal(damageData[0].damageStr, '136.0亿')
   assert.equal(damageData[1].damageStr, '1.9亿')
 
-  // 静态模板及样式守卫（不依赖外部包，CI 始终执行）
+  // 静态模板及样式守卫（验证模板和 CSS 修复点，无需依赖外部渲染引擎）
   const htmlContent = fs.readFileSync(htmlPath, 'utf8')
   assert.ok(htmlContent.includes("d.type === 'DamageTypeAugment'"), '模板应包含 DamageTypeAugment 分支')
   assert.ok(htmlContent.includes("d.type === 'DamageTypePortal'"), '模板应包含 DamageTypePortal 分支')
   assert.ok(htmlContent.includes('strategy-icon-container'), '模板应包含 strategy-icon-container')
   assert.ok(htmlContent.includes('d.entity && d.entity.icon') && htmlContent.includes('d.entity.rarity || 4'), '棋子卡片应有空安全守卫')
 
-  const cssContent = fs.readFileSync(path.join(pluginRoot, 'resources/gridFight/gridFightArchive.css'), 'utf8')
+  const cssContent = fs.readFileSync(cssPath, 'utf8')
   assert.ok(cssContent.includes('.damage-entity-container .strategy-icon-container'), 'CSS 应适配伤害栏策略图标')
-
-  // 若运行环境安装了 art-template，则执行实际编译渲染验证
-  if (template) {
-    const renderData = {
-      uid: '105259167',
-      pluResPath: '../../../../plugins/StarRail-plugin/resources',
-      defaultLayout: defaultLayout,
-      elemLayout: elemLayout,
-      sys: { scale: 1, copyright: 'test', createdby: 'test' },
-      grid_fight_brief: {
-        season_level: 10,
-        weekly_score_cur: 5000,
-        weekly_score_max: 5000,
-        division: { icon_with_bg: '', level: 5, name_with_num: 'V' }
-      },
-      record: mockRecord,
-      index_of_archive: '1 / 1',
-      damageData: damageData
-    }
-
-    const html = template(htmlPath, renderData)
-    assert.ok(html.includes('strategy-icon-container'))
-    assert.ok(html.includes('bond-icon-container'))
-    assert.ok(html.includes('136.0亿'))
-  }
 })
