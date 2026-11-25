@@ -114,6 +114,9 @@ export class GridFight extends plugin {
       record.lineup.portal_list?.forEach(p => {
         if (p.portal_id) entityMap[p.portal_id] = p
       })
+      record.lineup.spot_light_list?.forEach(s => {
+        if (s.spot_light_id) entityMap[s.spot_light_id] = s
+      })
 
       damageData = (record.lineup.damage_list || []).map(d => {
         let entity = entityMap[d.id] || {}

@@ -174,18 +174,50 @@
     </div>
 </div>
 
-<!-- Investment Environment -->
-<div class="archive-section">
-    <div class="archive-section-title">投资环境</div>
-    <div class="item-list flex-column">
-        {{each record.lineup.portal_list portal}}
-        <div class="investment-environment-item">
-            <div class="environment-icon-container">
-                <img src="{{portal.icon}}" class="item-icon">
+<!-- Investment Environment & Main Character Aura -->
+<div class="archive-row">
+    <div class="archive-section archive-col-portal">
+        <div class="archive-section-title">投资环境</div>
+        {{if record.lineup.portal_list && record.lineup.portal_list.length > 0}}
+        <div class="item-list flex-column portal-list">
+            {{each record.lineup.portal_list portal}}
+            <div class="investment-environment-item">
+                <div class="environment-icon-container">
+                    <img src="{{portal.icon}}" class="item-icon">
+                </div>
+                <div class="item-name">{{portal.name}}</div>
             </div>
-            <div class="item-name">{{portal.name}}</div>
+            {{/each}}
         </div>
-        {{/each}}
+        {{else}}
+        <div class="empty-hint">暂无投资环境</div>
+        {{/if}}
+    </div>
+    <div class="archive-section archive-col-spotlight">
+        <div class="archive-section-title">主角光环</div>
+        {{if record.lineup.spot_light_list && record.lineup.spot_light_list.length > 0}}
+        <div class="spotlight-list">
+            {{each record.lineup.spot_light_list spot}}
+            <div class="spotlight-item">
+                <div class="spotlight-icon-wrap">
+                    <div class="spotlight-icon-ring">
+                        <img src="{{spot.icon}}" class="spotlight-icon-img">
+                    </div>
+                    {{if spot.role_icon}}
+                    <div class="spotlight-role-badge">
+                        <img src="{{spot.role_icon}}" class="spotlight-role-img">
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="item-info spotlight-info">
+                    <div class="item-name spotlight-name">{{spot.name}}</div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="empty-hint">暂无主角光环</div>
+        {{/if}}
     </div>
 </div>
 
@@ -226,6 +258,17 @@
                 {{else if d.type === 'DamageTypePortal'}}
                 <div class="environment-icon-container damage-scale">
                     <img src="{{d.entity && d.entity.icon}}" class="item-icon">
+                </div>
+                {{else if d.type === 'DamageTypeSpotLight'}}
+                <div class="spotlight-icon-wrap spotlight-damage damage-scale">
+                    <div class="spotlight-icon-ring">
+                        <img src="{{d.entity && d.entity.icon}}" class="spotlight-icon-img">
+                    </div>
+                    {{if d.entity && d.entity.role_icon}}
+                    <div class="spotlight-role-badge">
+                        <img src="{{d.entity.role_icon}}" class="spotlight-role-img">
+                    </div>
+                    {{/if}}
                 </div>
                 {{else if d.entity && d.entity.icon}}
                 <div class="chess-card-container damage-scale">
