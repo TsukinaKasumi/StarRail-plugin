@@ -94,6 +94,145 @@
     font-weight: 500;
 }
 
+/* Side-by-side Portal & Spotlight Row */
+.archive-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 10px;
+}
+
+.archive-col-portal {
+    flex: 3;
+    min-width: 0;
+    margin: 0;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-col-spotlight {
+    flex: 5;
+    min-width: 0;
+    margin: 0;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.portal-list {
+    flex: 1;
+    justify-content: center;
+}
+
+/* Main Character Aura (SpotLight) */
+.spotlight-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex: 1;
+    align-items: center;
+}
+
+.spotlight-item {
+    width: calc(50% - 6px);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    padding: 12px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.spotlight-icon-wrap {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    padding: 1.5px;
+    background: linear-gradient(225deg, #e28bfa 0%, #95fafe 100%);
+    box-sizing: border-box;
+    flex-shrink: 0;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.45);
+}
+
+.spotlight-icon-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #0e101c;
+    background: linear-gradient(180deg, #84335a 0%, #bd363e 100%);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.spotlight-icon-img {
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+}
+
+.spotlight-role-badge {
+    position: absolute;
+    right: -5px;
+    bottom: -2px;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(236, 211, 129, 0.55);
+    background: #272143;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
+}
+
+.spotlight-role-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.spotlight-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.spotlight-name {
+    font-size: 15px;
+    line-height: 1.25;
+    word-break: break-all;
+}
+
+.empty-hint {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 14px;
+    min-height: 60px;
+}
+
+.spotlight-damage {
+    width: 60px;
+    height: 60px;
+}
+
+.spotlight-damage .spotlight-role-badge {
+    width: 28px;
+    height: 28px;
+    right: -6px;
+}
+
 /* Investment Strategy Foreground Colors */
 .strategy-icon-container.quality-2 .item-icon {
     filter: drop-shadow(0 0 2px #ecd381);
@@ -173,13 +312,17 @@
     height: 100%;
 }
 
-/* Make bond logo larger in damage section to match visual weight */
-.damage-entity-container .bond-icon-container {
+/* Make icons larger in damage section to match visual weight */
+.damage-entity-container .bond-icon-container,
+.damage-entity-container .strategy-icon-container,
+.damage-entity-container .environment-icon-container {
     width: 64px;
     height: 64px;
 }
 
-.damage-entity-container .bond-icon-container .item-icon {
+.damage-entity-container .bond-icon-container .item-icon,
+.damage-entity-container .strategy-icon-container .item-icon,
+.damage-entity-container .environment-icon-container .item-icon {
     width: 48px;
     height: 48px;
 }

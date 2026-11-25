@@ -97,15 +97,32 @@ export class GridFight extends plugin {
     if (record.lineup.damage_list) {
       // Create a map for quick lookup
       let entityMap = {}
-      record.lineup.front_roles.forEach(r => { entityMap[r.role_id] = r })
-      record.lineup.back_roles.forEach(r => { entityMap[r.role_id] = r })
-      record.lineup.trait_list.forEach(t => { entityMap[t.trait_id] = t })
+      record.lineup.front_roles?.forEach(r => {
+        if (r.role_id) entityMap[r.role_id] = r
+        if (r.avatar_id) entityMap[r.avatar_id] = r
+      })
+      record.lineup.back_roles?.forEach(r => {
+        if (r.role_id) entityMap[r.role_id] = r
+        if (r.avatar_id) entityMap[r.avatar_id] = r
+      })
+      record.lineup.trait_list?.forEach(t => {
+        if (t.trait_id) entityMap[t.trait_id] = t
+      })
+      record.lineup.augment_list?.forEach(a => {
+        if (a.augment_id) entityMap[a.augment_id] = a
+      })
+      record.lineup.portal_list?.forEach(p => {
+        if (p.portal_id) entityMap[p.portal_id] = p
+      })
+      record.lineup.spot_light_list?.forEach(s => {
+        if (s.spot_light_id) entityMap[s.spot_light_id] = s
+      })
 
-      damageData = record.lineup.damage_list.map(d => {
-        let entity = entityMap[d.id]
+      damageData = (record.lineup.damage_list || []).map(d => {
+        let entity = entityMap[d.id] || {}
         return {
           id: d.id,
-          damage: parseFloat(d.damage),
+          damage: parseFloat(d.damage) || 0,
           type: d.damage_type,
           entity: entity
         }
@@ -117,7 +134,9 @@ export class GridFight extends plugin {
         damageData.forEach(d => {
           d.percent = maxDamage > 0 ? (d.damage / maxDamage * 100).toFixed(2) : 0
           // Format damage numbers
-          if (d.damage >= 10000) {
+          if (d.damage >= 100000000) {
+            d.damageStr = (d.damage / 100000000).toFixed(1) + '亿'
+          } else if (d.damage >= 10000) {
             d.damageStr = (d.damage / 10000).toFixed(1) + '万'
           } else {
             d.damageStr = d.damage.toFixed(0)
